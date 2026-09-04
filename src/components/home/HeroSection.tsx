@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
@@ -38,7 +38,7 @@ export default function HeroSection() {
     };
   }, []);
   return (
-    <section className="relative w-full bg-[#fff7f7] lg:h-[calc(100svh-134px)] lg:min-h-[620px] lg:max-h-[760px] lg:overflow-hidden">
+    <section className="relative w-full overflow-hidden bg-[#fff7f7] lg:min-h-[calc(100svh-134px)]">
       {/* Mobile banner — content ke upar */}
 <div className="relative aspect-[2/1] w-full overflow-hidden bg-[#fff7f7] lg:hidden">
   <Image
@@ -61,8 +61,8 @@ sizes="(min-width: 1024px) 100vw, 1px"
   className="hidden object-fill -translate-y-[3%] scale-[1.02] lg:block"
 />
 
-     <div className="relative z-10 mx-auto flex w-full max-w-[1540px] px-5 pb-10 pt-0 sm:px-10 sm:pb-12 sm:pt-0 lg:h-full lg:items-center lg:px-14 lg:py-0 xl:px-16">
-        <div className="w-full max-w-[650px] lg:-translate-y-3">
+     <div className="relative z-10 mx-auto flex w-full max-w-[1540px] px-5 pb-10 pt-0 sm:px-10 sm:pb-12 sm:pt-0 lg:min-h-[calc(100svh-134px)] lg:items-center lg:px-14 lg:py-6 xl:px-16">
+        <div className="w-full max-w-[650px]">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-red-200 bg-white/70 px-4 py-2 shadow-sm backdrop-blur-sm">
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red-50 text-sm text-[#ed1c24]">
               ✦

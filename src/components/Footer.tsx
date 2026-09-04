@@ -95,6 +95,7 @@ export default function Footer() {
   width={520}
   height={150}
   className="h-auto w-[320px] object-contain drop-shadow-[0_10px_28px_rgba(239,27,35,0.28)] transition-all duration-500 hover:-translate-y-1 hover:scale-[1.03]"
+    loading="eager"
 />
             </Link>
 

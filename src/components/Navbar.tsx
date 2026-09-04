@@ -81,15 +81,19 @@ export default function Navbar() {
       setIsScrolled(window.scrollY > 24);
     };
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    const initialFrame = window.requestAnimationFrame(handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+
+    return () => {
+      window.cancelAnimationFrame(initialFrame);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [pathname]);
+  
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
@@ -154,13 +158,14 @@ export default function Navbar() {
    
 
        <div
-  className={`relative mx-auto flex max-w-[1480px] items-center justify-between px-4 transition-all duration-500 sm:px-6 lg:pl-4 lg:pr-10 ${
-    isScrolled ? "min-h-[78px]" : "min-h-[94px]"
+  className={`relative mx-auto flex max-w-[1480px] items-center justify-between px-4 transition-all duration-500 sm:px-6 lg:px-10 ${
+    isScrolled ? "min-h-[74px]" : "min-h-[88px]"
   }`}
 >
           <Link
   href="/"
-  className="group relative z-10 -ml-8 flex shrink-0 items-center lg:-ml-16 xl:-ml-24"
+   onClick={() => setIsMenuOpen(false)}
+   className="group relative z-10 flex shrink-0 items-center"
   aria-label="City Coolies home"
 >
   <span className="pointer-events-none absolute -inset-4 -z-20 rounded-[28px] bg-[radial-gradient(circle_at_center,rgba(239,27,35,0.18),transparent_68%)] opacity-0 blur-2xl transition-all duration-700 group-hover:scale-110 group-hover:opacity-100" />
@@ -171,19 +176,50 @@ export default function Navbar() {
 
   <span className="pointer-events-none absolute -bottom-2 left-[12%] h-[10px] w-[76%] rounded-full bg-[#ef1b23]/20 opacity-0 blur-xl transition-all duration-500 group-hover:translate-y-1 group-hover:opacity-100" />
 
-  <Image
+  <span
+    className="relative inline-flex shrink-0 items-center"
+    data-city-coolies-trademark="registered"
+  >
+<Image
     src="/city-coolies-logo(2).png"
     alt="City Coolies"
     width={520}
     height={150}
     priority
-    sizes="(max-width: 640px) 280px, (max-width: 1280px) 320px, 370px"
+    loading="eager"
+    sizes="(max-width: 640px) 240px, (max-width: 1280px) 280px, 320px"
     className={`h-auto object-contain drop-shadow-[0_6px_10px_rgba(239,27,35,0.10)] transition-all duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-[1.035] group-hover:drop-shadow-[0_14px_18px_rgba(239,27,35,0.24)] ${
       isScrolled
-        ? "w-[270px] sm:w-[300px] lg:w-[340px]"
-        : "w-[280px] sm:w-[320px] lg:w-[370px]"
+        ? "w-[230px] sm:w-[270px] lg:w-[300px]"
+        : "w-[240px] sm:w-[280px] lg:w-[320px]"
     }`}
   />
+
+    <span
+      aria-hidden="true"
+      className="
+        pointer-events-none
+        absolute
+        right-[-1px]
+        top-[7%]
+        z-20
+        block
+        font-sans
+        text-[7px]
+        font-black
+        leading-none
+        text-[#ef1b23]
+        sm:right-[-1px]
+        sm:top-[6%]
+        sm:text-[8px]
+        lg:right-[-2px]
+        lg:top-[5%]
+        lg:text-[9px]
+      "
+    >
+      ®
+    </span>
+  </span>
 </Link>
 
           <div className="hidden items-center gap-1 xl:flex">
@@ -219,6 +255,16 @@ export default function Navbar() {
           </div>
 
           <div className="hidden items-center gap-3 lg:flex">
+            <a
+              href="tel:+918693986939"
+              aria-label="Call City Coolies now"
+              title="Call City Coolies"
+              className="group relative -left-2 hidden h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#32b84a] text-white shadow-[0_10px_24px_rgba(50,184,74,.30)] transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-[#28a83e] hover:shadow-[0_14px_30px_rgba(50,184,74,.38)] xl:inline-flex"
+            >
+              <span className="flex h-7 w-7 items-center justify-center [&_svg]:h-7 [&_svg]:w-7 [&_svg]:stroke-[2.2]">
+                <PhoneIcon />
+              </span>
+            </a>
             <Link
               href="/vendor-membership"
               className="group relative isolate hidden min-h-13 items-center gap-2 overflow-hidden rounded-full border border-[#ef1b23] bg-[#ef1b23] px-6 text-[13px] font-extrabold tracking-[0.06em] text-white uppercase shadow-[0_14px_30px_-12px_rgba(239,27,35,0.65)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-14px_rgba(239,27,35,0.8)] xl:flex"
@@ -274,6 +320,7 @@ export default function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={() => setIsMenuOpen(false)}
                     style={{ transitionDelay: `${index * 45}ms` }}
                     className={`flex min-h-14 items-center justify-between rounded-2xl border px-5 text-[14px] font-bold tracking-[0.05em] uppercase transition-all duration-300 ${
                       active
@@ -289,6 +336,7 @@ export default function Navbar() {
 
               <Link
                 href="/vendor-membership"
+                onClick={() => setIsMenuOpen(false)}
                 className="group mt-2 flex min-h-14 items-center justify-center gap-2 rounded-2xl bg-[linear-gradient(135deg,#ff2731_0%,#df1119_100%)] px-6 text-sm font-extrabold tracking-[0.06em] text-white uppercase shadow-[0_16px_30px_-12px_rgba(239,27,35,0.75)] transition-all duration-300 hover:-translate-y-0.5"
               >
                 <span>Vendor Membership</span>

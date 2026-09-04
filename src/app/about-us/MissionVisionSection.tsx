@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 
@@ -520,7 +520,7 @@ function TypeText({ text, delay, className = "" }: TypeTextProps) {
                 {character}
               </span>
             ))}
-            {wordIndex < words.length - 1 ? " " : null}
+            {wordIndex < words.length - 1 ? "\u00A0" : null}
           </span>
         );
       })}
@@ -570,8 +570,8 @@ export default function MissionVisionSection() {
             </p>
 
             <h2 className="cc-mv__title" id="mission-vision-title">
-              <TypeText text="Complete property care," delay={670} />{" "}
-              <TypeText text="guided by purpose." delay={960} />
+              <TypeText text="Complete Property Care," delay={670} />{" "}
+              <TypeText text="Guided by Purpose." delay={960} />
             </h2>
           </header>
 

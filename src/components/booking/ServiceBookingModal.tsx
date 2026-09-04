@@ -5,7 +5,7 @@ import type { FormEvent } from "react";
 import { createPortal } from "react-dom";
 import Script from "next/script";
 
-type PaymentMethod = "advance" | "cash";
+type PaymentMethod = "advance";
 type CustomBookingItem = {
   id: string;
   name: string;
@@ -20,6 +20,8 @@ type ServiceBookingModalProps = {
   offerPrice: number;
   triggerLabel?: string;
   customServices?: readonly CustomBookingItem[];
+  fullPayment?: boolean;
+  quoteOnly?: boolean;
 };
 type BookingResponse = {
   success?: boolean;
@@ -750,7 +752,7 @@ const BOOKING_MODAL_STYLES = `
 
   .cc-booking-modal__grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 17px;
   }
 
@@ -858,7 +860,7 @@ const BOOKING_MODAL_STYLES = `
 
   .cc-booking-modal__payment-options {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 12px;
   }
 
@@ -992,7 +994,198 @@ const BOOKING_MODAL_STYLES = `
     opacity: 0.65;
   }
 
-  @media (max-width: 640px) {
+
+  /* CITY_COOLIES_BOOKING_MODAL_COMPACT_FINAL */
+
+  .cc-booking-overlay {
+    padding: 18px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cc-booking-modal {
+    width: min(calc(100vw - 36px), 920px);
+    max-height: calc(100dvh - 36px);
+    border-radius: 20px;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+
+  .cc-booking-modal__header {
+    padding: 20px 24px 16px;
+    padding-right: 70px;
+  }
+
+  .cc-booking-modal__eyebrow {
+    margin-bottom: 5px;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+  }
+
+  .cc-booking-modal__header h2 {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    line-height: 1.1;
+  }
+
+  .cc-booking-modal__header p {
+    margin-top: 6px;
+    font-size: 0.78rem;
+  }
+
+  .cc-booking-modal__close {
+    top: 16px;
+    right: 18px;
+    width: 34px;
+    height: 34px;
+    transition:
+      color 180ms ease,
+      border-color 180ms ease,
+      background-color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .cc-booking-modal__close svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+  }
+
+  .cc-booking-modal__close:hover {
+    color: #ffffff;
+    border-color: #f21f2f;
+    background: #f21f2f;
+    transform: rotate(4deg);
+  }
+
+  .cc-booking-modal__form {
+    padding: 18px 24px 22px;
+  }
+
+  .cc-booking-modal__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 14px;
+    row-gap: 11px;
+  }
+
+  .cc-booking-modal__field {
+    gap: 5px;
+  }
+
+  .cc-booking-modal__field span,
+  .cc-booking-modal__payment-title {
+    font-size: 0.72rem;
+  }
+
+  .cc-booking-modal__field input {
+    min-height: 42px;
+    padding: 0 12px;
+    border-radius: 9px;
+    font-size: 0.8rem;
+  }
+
+  .cc-booking-modal__field textarea {
+    min-height: 76px;
+    padding: 10px 12px;
+  }
+
+  .cc-booking-modal__location {
+    gap: 6px;
+  }
+
+  .cc-booking-modal__location-button {
+    min-height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 15px;
+    border-radius: 9px;
+    font-size: 0.76rem;
+  }
+
+  .cc-booking-modal__location-icon {
+    display: inline-grid;
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    place-items: center;
+  }
+
+  .cc-booking-modal__location-icon svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.65;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .cc-booking-modal__payment {
+    margin-top: 14px;
+    padding-top: 14px;
+  }
+
+  .cc-booking-modal__payment-title {
+    margin-bottom: 8px;
+  }
+
+  .cc-booking-modal__payment-options {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .cc-booking-modal__payment-option span {
+    min-height: 58px;
+    gap: 3px;
+    padding: 10px 13px;
+    border-radius: 10px;
+  }
+
+  .cc-booking-modal__payment-option strong {
+    font-size: 0.8rem;
+  }
+
+  .cc-booking-modal__payment-option small {
+    font-size: 0.68rem;
+  }
+
+  .cc-booking-modal__summary {
+    gap: 6px;
+    margin-top: 12px;
+    padding: 12px 13px;
+    border-radius: 10px;
+  }
+
+  .cc-booking-modal__summary-row {
+    gap: 16px;
+    font-size: 0.74rem;
+  }
+
+  .cc-booking-modal__summary-row--payable {
+    padding-top: 7px;
+  }
+
+  .cc-booking-modal__summary-row--payable strong {
+    font-size: 0.98rem;
+  }
+
+  .cc-booking-modal__consent {
+    gap: 8px;
+    margin-top: 11px;
+    font-size: 0.68rem;
+  }
+
+  .cc-booking-modal__submit {
+    min-height: 46px;
+    margin-top: 12px;
+    border-radius: 9px;
+    font-size: 0.8rem;
+  }
+  @media (max-width: 520px) {
     .cc-booking-overlay {
       padding: 10px;
       align-items: end;
@@ -1028,7 +1221,7 @@ const CUSTOM_CLEANING_STYLES = `
 
   .cc-custom-builder__services {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 14px;
   }
 
@@ -1309,6 +1502,8 @@ export default function ServiceBookingModal({
   offerPrice,
   triggerLabel = "Add",
   customServices = [],
+  fullPayment = false,
+  quoteOnly = false,
 }: ServiceBookingModalProps) {
   const titleId = useId();
   const [isOpen, setIsOpen] = useState(false);
@@ -1325,16 +1520,31 @@ export default function ServiceBookingModal({
 
   const [locationMessage, setLocationMessage] = useState("");
   const advanceAmount = useMemo(
-    () => Math.round(offerPrice * 0.5),
-    [offerPrice],
+    () =>
+      fullPayment
+        ? offerPrice
+        : Math.round(offerPrice * 0.5),
+    [fullPayment, offerPrice],
   );
 
-  const payableNow = paymentMethod === "advance" ? advanceAmount : 0;
+  const payableNow =
+    quoteOnly
+      ? 0
+      : fullPayment
+        ? offerPrice
+        : paymentMethod === "advance"
+          ? advanceAmount
+          : 0;
 
   const remainingAmount =
-    paymentMethod === "advance" ? offerPrice - advanceAmount : offerPrice;
-
-  useEffect(() => {
+    quoteOnly
+      ? 0
+      : fullPayment
+        ? 0
+        : paymentMethod === "advance"
+          ? offerPrice - advanceAmount
+          : offerPrice;
+useEffect(() => {
     if (!isOpen) {
       return;
     }
@@ -1413,7 +1623,7 @@ export default function ServiceBookingModal({
     if (!locationData) {
       setStatus("error");
       setMessage(
-        "Please click “Use My Current Location” before confirming your booking.",
+        "Please click Ã¢â‚¬Å“Use My Current LocationÃ¢â‚¬Â before confirming your booking.",
       );
       return;
     }
@@ -1440,7 +1650,7 @@ export default function ServiceBookingModal({
     setMessage("");
 
     try {
-      if (paymentMethod === "cash") {
+      if (quoteOnly) {
         const response = await fetch("/api/bookings", {
           method: "POST",
           headers: {
@@ -1515,7 +1725,7 @@ export default function ServiceBookingModal({
         amount: orderResult.amount,
         currency: orderResult.currency,
         name: "City Coolies Pvt. Ltd.",
-        description: `${serviceName} - 50% Advance`,
+        description: `${serviceName} - ${fullPayment ? "Site Visit / Survey Payment" : "50% Advance"}`,
         order_id: orderResult.orderId,
 
         prefill: {
@@ -1638,7 +1848,7 @@ export default function ServiceBookingModal({
       />
      <button className="cc-booking-trigger" type="button" onClick={openModal}>
   {triggerLabel}
-  <span aria-hidden="true">＋</span>
+  
 </button>
 
       {isOpen &&
@@ -1664,8 +1874,14 @@ export default function ServiceBookingModal({
                 aria-label="Close booking form"
                 onClick={closeModal}
               >
-                ×
-              </button>
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path d="M6 6 18 18M18 6 6 18" />
+  </svg>
+</button>
 
               <header className="cc-booking-modal__header">
                 <p className="cc-booking-modal__eyebrow">Book Your Service</p>
@@ -1673,7 +1889,7 @@ export default function ServiceBookingModal({
                 <h2 id={titleId}>{serviceName}</h2>
 
                 <p>
-                  Enter your details and select your preferred payment option.
+                  Enter your details and continue with secure online payment.
                 </p>
               </header>
 
@@ -1810,9 +2026,21 @@ export default function ServiceBookingModal({
                       className="cc-booking-modal__location-button"
                       onClick={captureCurrentLocation}
                     >
-                      {locationData
-                        ? "✓ Exact Location Added"
-                        : "⌖ Use My Current Location"}
+                      <>
+  <span
+    className="cc-booking-modal__location-icon"
+    aria-hidden="true"
+  >
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v3M12 19v3M2 12h3M19 12h3" />
+      <path d="M5.6 5.6 7.7 7.7M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" />
+    </svg>
+  </span>
+  {locationData
+    ? "Exact Location Added"
+    : "Use My Current Location"}
+</>
                     </button>
 
                     {locationMessage && (
@@ -1833,9 +2061,45 @@ export default function ServiceBookingModal({
                   </div>
                 </div>
 
+                {quoteOnly ? (
                 <div className="cc-booking-modal__payment">
                   <span className="cc-booking-modal__payment-title">
-                    Choose Payment Method
+                    Quotation Request
+                  </span>
+
+                  <div className="cc-booking-modal__payment-options">
+                    <div className="cc-booking-modal__payment-option">
+                      <span>
+                        <strong>No Payment Required Now</strong>
+                        <small>
+                          Submit your details. The final quotation will be shared after work assessment or site inspection.
+                        </small>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ) : fullPayment ? (
+                <div className="cc-booking-modal__payment">
+                  <span className="cc-booking-modal__payment-title">
+                    Site Visit / Survey Payment
+                  </span>
+
+                  <div className="cc-booking-modal__payment-options">
+                    <div className="cc-booking-modal__payment-option">
+                      <span>
+                        <strong>Site Visit / Survey Charge</strong>
+                        <small>
+                          Pay {formatCurrency(offerPrice)} now to confirm
+                          the site visit / survey.
+                        </small>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+<div className="cc-booking-modal__payment">
+                  <span className="cc-booking-modal__payment-title">
+                    Online Payment
                   </span>
 
                   <div className="cc-booking-modal__payment-options">
@@ -1856,27 +2120,13 @@ export default function ServiceBookingModal({
                         </small>
                       </span>
                     </label>
-
-                    <label className="cc-booking-modal__payment-option">
-                      <input
-                        type="radio"
-                        name="paymentMethod"
-                        value="cash"
-                        checked={paymentMethod === "cash"}
-                        onChange={() => setPaymentMethod("cash")}
-                      />
-
-                      <span>
-                        <strong>Cash on Service</strong>
-                        <small>
-                          Pay the complete amount after the service.
-                        </small>
-                      </span>
-                    </label>
                   </div>
                 </div>
 
-                <div className="cc-booking-modal__summary">
+                
+              )}
+
+              <div className="cc-booking-modal__summary">
                   <div className="cc-booking-modal__summary-row">
                     <span>Original price</span>
                     <del>{formatCurrency(originalPrice)}</del>
@@ -1926,9 +2176,11 @@ export default function ServiceBookingModal({
                 >
                   {status === "submitting"
                     ? "Please wait..."
-                    : paymentMethod === "advance"
-                      ? `Pay ${formatCurrency(advanceAmount)} & Confirm`
-                      : "Confirm Cash on Service"}
+                    : quoteOnly
+                      ? "Submit Quote Request"
+                      : fullPayment
+                        ? `Pay ${formatCurrency(offerPrice)} & Confirm Site Visit`
+                      : `Pay ${formatCurrency(advanceAmount)} & Confirm`}
                 </button>
               </form>
             </div>
@@ -1940,6 +2192,800 @@ export default function ServiceBookingModal({
     </>
   );
 }
+
+type PackersMoversBookingModalProps = {
+  serviceId: string;
+  serviceName: string;
+  estimatedTotal: number;
+  distanceKm: number;
+  inventoryTier: string;
+  packingTier: string;
+  accessType: string;
+  triggerLabel?: string;
+  triggerClassName?: string;
+};
+
+type PackersMoversOrderResponse = {
+  success?: boolean;
+  message?: string;
+  keyId?: string;
+  orderId?: string;
+  amount?: number;
+  currency?: string;
+  advanceAmount?: number;
+};
+
+type PackersMoversBookingResponse = {
+  success?: boolean;
+  message?: string;
+  bookingId?: string;
+  whatsappUrl?: string;
+};
+
+type MoveLocationData = {
+  latitude: number;
+  longitude: number;
+  googleMapsUrl: string;
+};
+
+export function PackersMoversBookingModal({
+  serviceId,
+  serviceName,
+  estimatedTotal,
+  distanceKm,
+  inventoryTier,
+  packingTier,
+  accessType,
+  triggerLabel = "Book Now",
+  triggerClassName,
+}: PackersMoversBookingModalProps) {
+  const titleId = useId();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [status, setStatus] = useState<
+    "idle" | "submitting" | "success" | "error"
+  >("idle");
+
+  const [message, setMessage] = useState("");
+
+  const [pickupLocation, setPickupLocation] =
+    useState<MoveLocationData | null>(null);
+
+  const [dropLocation, setDropLocation] =
+    useState<MoveLocationData | null>(null);
+
+  const [pickupLocationMessage, setPickupLocationMessage] =
+    useState("");
+
+  const [dropLocationMessage, setDropLocationMessage] =
+    useState("");
+
+  const advanceAmount = useMemo(
+    () => Math.round(estimatedTotal * 0.5),
+    [estimatedTotal],
+  );
+
+  const remainingAmount = estimatedTotal - advanceAmount;
+
+  const today = new Date().toISOString().slice(0, 10);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function closeWithEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    }
+
+    window.addEventListener("keydown", closeWithEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeWithEscape);
+    };
+  }, [isOpen]);
+
+  function openModal() {
+    setStatus("idle");
+    setMessage("");
+    setPickupLocation(null);
+    setDropLocation(null);
+    setPickupLocationMessage("");
+    setDropLocationMessage("");
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    if (status !== "submitting") {
+      setIsOpen(false);
+    }
+  }
+
+  function captureLocation(target: "pickup" | "drop") {
+    const setLocation =
+      target === "pickup"
+        ? setPickupLocation
+        : setDropLocation;
+
+    const setLocationMessage =
+      target === "pickup"
+        ? setPickupLocationMessage
+        : setDropLocationMessage;
+
+    if (!navigator.geolocation) {
+      setLocationMessage(
+        "Your browser does not support location access.",
+      );
+      return;
+    }
+
+    setLocationMessage("Getting exact location...");
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        setLocation({
+          latitude,
+          longitude,
+          googleMapsUrl:
+            `https://www.google.com/maps?q=${latitude},${longitude}`,
+        });
+
+        setLocationMessage("Exact Google Maps location added.");
+      },
+      () => {
+        setLocation(null);
+
+        setLocationMessage(
+          "Location could not be captured. Please allow location permission and try again.",
+        );
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 15000,
+        maximumAge: 0,
+      },
+    );
+  }
+
+  function getAddress(
+    formData: FormData,
+    prefix: "pickup" | "drop",
+    googleMapsUrl: string,
+  ) {
+    return {
+      houseNumber: formData.get(`${prefix}HouseNumber`),
+      buildingName: formData.get(`${prefix}BuildingName`),
+      street: formData.get(`${prefix}Street`),
+      area: formData.get(`${prefix}Area`),
+      landmark: formData.get(`${prefix}Landmark`),
+      city: formData.get(`${prefix}City`),
+      state: formData.get(`${prefix}State`),
+      pinCode: formData.get(`${prefix}PinCode`),
+      googleMapsUrl,
+    };
+  }
+
+  async function handleSubmit(
+    event: FormEvent<HTMLFormElement>,
+  ) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    if (!pickupLocation) {
+      setStatus("error");
+      setMessage(
+        "Please add the exact Pickup Google Maps location.",
+      );
+      return;
+    }
+
+    if (!dropLocation) {
+      setStatus("error");
+      setMessage(
+        "Please add the exact Drop Google Maps location.",
+      );
+      return;
+    }
+
+    const pickup = getAddress(
+      formData,
+      "pickup",
+      pickupLocation.googleMapsUrl,
+    );
+
+    const drop = getAddress(
+      formData,
+      "drop",
+      dropLocation.googleMapsUrl,
+    );
+
+    const customer = {
+      name: formData.get("name"),
+      phone: formData.get("phone"),
+      email: formData.get("email"),
+      movingDate: formData.get("movingDate"),
+    };
+
+    const move = {
+      serviceId,
+      distanceKm,
+      inventoryTier,
+      packingTier,
+      accessType,
+    };
+
+    setStatus("submitting");
+    setMessage("");
+
+    try {
+      if (!window.Razorpay) {
+        throw new Error(
+          "Payment window is still loading. Please wait and try again.",
+        );
+      }
+
+      const orderResponse = await fetch(
+        "/api/packers-movers/payments/create-order",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            move,
+          }),
+        },
+      );
+
+      const orderResult =
+        await readJsonResponse<PackersMoversOrderResponse>(
+          orderResponse,
+        );
+
+      if (
+        !orderResponse.ok ||
+        !orderResult.success ||
+        !orderResult.keyId ||
+        !orderResult.orderId ||
+        !orderResult.amount ||
+        !orderResult.currency
+      ) {
+        throw new Error(
+          orderResult.message ||
+            "Payment order could not be created.",
+        );
+      }
+
+      const checkout = new window.Razorpay({
+        key: orderResult.keyId,
+        amount: orderResult.amount,
+        currency: orderResult.currency,
+        name: "City Coolies Pvt. Ltd.",
+        description:
+          `${serviceName} - 50% Advance`,
+        order_id: orderResult.orderId,
+
+        prefill: {
+          name: String(formData.get("name") ?? ""),
+          email: String(formData.get("email") ?? ""),
+          contact: String(formData.get("phone") ?? ""),
+        },
+
+        notes: {
+          serviceId,
+          serviceName,
+        },
+
+        theme: {
+          color: "#f21f2f",
+          backdrop_color: "#fff5f6",
+        },
+
+        retry: {
+          enabled: true,
+          max_count: 3,
+        },
+
+        modal: {
+          confirm_close: true,
+          escape: true,
+          animation: true,
+          ondismiss: () => {
+            setStatus("error");
+            setMessage(
+              "Payment was not completed. You can try again.",
+            );
+          },
+        },
+
+        handler: async (
+          paymentResponse: RazorpaySuccessResponse,
+        ) => {
+          try {
+            setStatus("submitting");
+            setMessage("Verifying your payment...");
+
+            const bookingResponse = await fetch(
+              "/api/packers-movers/bookings",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  customer,
+                  pickup,
+                  drop,
+                  move,
+                  payment: {
+                    razorpayOrderId:
+                      paymentResponse.razorpay_order_id,
+                    razorpayPaymentId:
+                      paymentResponse.razorpay_payment_id,
+                    razorpaySignature:
+                      paymentResponse.razorpay_signature,
+                  },
+                }),
+              },
+            );
+
+            const bookingResult =
+              await readJsonResponse<PackersMoversBookingResponse>(
+                bookingResponse,
+              );
+
+            if (
+              !bookingResponse.ok ||
+              !bookingResult.success
+            ) {
+              throw new Error(
+                bookingResult.message ||
+                  "Payment verification failed.",
+              );
+            }
+
+            if (bookingResult.whatsappUrl) {
+              window.open(
+                bookingResult.whatsappUrl,
+                "_blank",
+                "noopener,noreferrer",
+              );
+            }
+
+            setStatus("success");
+
+            setMessage(
+              bookingResult.bookingId
+                ? `Payment successful. Booking ID: ${bookingResult.bookingId}`
+                : "Payment successful and move booking confirmed.",
+            );
+
+            form.reset();
+            setPickupLocation(null);
+            setDropLocation(null);
+            setPickupLocationMessage("");
+            setDropLocationMessage("");
+          } catch (error) {
+            setStatus("error");
+
+            setMessage(
+              error instanceof Error
+                ? error.message
+                : "Payment verification failed.",
+            );
+          }
+        },
+      });
+
+      checkout.on(
+        "payment.failed",
+        (failure: RazorpayFailureResponse) => {
+          setStatus("error");
+
+          setMessage(
+            failure.error.description ||
+              "Payment failed. Please try another payment method.",
+          );
+        },
+      );
+
+      checkout.open();
+    } catch (error) {
+      setStatus("error");
+
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
+      );
+    }
+  }
+
+  function renderAddressFields(
+    prefix: "pickup" | "drop",
+    title: string,
+    location: MoveLocationData | null,
+    locationMessage: string,
+  ) {
+    const locationLabel =
+      prefix === "pickup"
+        ? "Pickup Google Maps Location"
+        : "Drop Google Maps Location";
+
+    return (
+      <>
+        <div
+          className="cc-booking-modal__field cc-booking-modal__field--full"
+          style={{
+            marginTop: "8px",
+            paddingTop: "15px",
+            borderTop: "1px solid rgba(35,40,50,.1)",
+          }}
+        >
+          <strong
+            style={{
+              color: "#ed1b2b",
+              fontSize: "0.9rem",
+            }}
+          >
+            {title}
+          </strong>
+        </div>
+
+        <label className="cc-booking-modal__field">
+          <span>House / Flat Number</span>
+          <input
+            type="text"
+            name={`${prefix}HouseNumber`}
+            placeholder="House or flat number"
+            required
+          />
+        </label>
+
+        <label className="cc-booking-modal__field">
+          <span>Building / Apartment Name</span>
+          <input
+            type="text"
+            name={`${prefix}BuildingName`}
+            placeholder="Building or apartment name"
+          />
+        </label>
+
+        <label className="cc-booking-modal__field cc-booking-modal__field--full">
+          <span>Street / Road Name</span>
+          <input
+            type="text"
+            name={`${prefix}Street`}
+            placeholder="Street, road or colony name"
+            required
+          />
+        </label>
+
+        <label className="cc-booking-modal__field">
+          <span>Area / Locality</span>
+          <input
+            type="text"
+            name={`${prefix}Area`}
+            placeholder="Area or locality"
+            required
+          />
+        </label>
+
+        <label className="cc-booking-modal__field">
+          <span>Landmark</span>
+          <input
+            type="text"
+            name={`${prefix}Landmark`}
+            placeholder="Nearby landmark"
+          />
+        </label>
+
+        <label className="cc-booking-modal__field">
+          <span>City</span>
+          <input
+            type="text"
+            name={`${prefix}City`}
+            placeholder="Enter city"
+            required
+          />
+        </label>
+
+        <label className="cc-booking-modal__field">
+          <span>State</span>
+          <input
+            type="text"
+            name={`${prefix}State`}
+            placeholder="Enter state"
+            required
+          />
+        </label>
+
+        <label className="cc-booking-modal__field cc-booking-modal__field--full">
+          <span>PIN Code</span>
+          <input
+            type="text"
+            name={`${prefix}PinCode`}
+            inputMode="numeric"
+            pattern="[0-9]{6}"
+            maxLength={6}
+            placeholder="Enter 6-digit PIN code"
+            required
+          />
+        </label>
+
+        <div className="cc-booking-modal__location cc-booking-modal__field--full">
+          <strong
+            style={{
+              display: "block",
+              marginBottom: "8px",
+              color: "#333945",
+              fontSize: "0.78rem",
+            }}
+          >
+            {locationLabel}
+          </strong>
+
+          <button
+            type="button"
+            className="cc-booking-modal__location-button"
+            onClick={() => captureLocation(prefix)}
+          >
+            {location
+              ? "Exact Location Added"
+              : `Use Current ${prefix === "pickup" ? "Pickup" : "Drop"} Location`}
+          </button>
+
+          {locationMessage && (
+            <p className="cc-booking-modal__location-message">
+              {locationMessage}
+            </p>
+          )}
+
+          {location && (
+            <a
+              href={location.googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View {prefix} location on Google Maps
+            </a>
+          )}
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <Script
+        id="razorpay-checkout"
+        src="https://checkout.razorpay.com/v1/checkout.js"
+        strategy="afterInteractive"
+      />
+
+      <button
+        className={
+          triggerClassName || "cc-booking-trigger"
+        }
+        type="button"
+        onClick={openModal}
+      >
+        {triggerLabel}
+        <span aria-hidden="true">&rarr;</span>
+      </button>
+
+      {isOpen &&
+        createPortal(
+          <div
+            className="cc-booking-overlay"
+            role="presentation"
+            onMouseDown={(event) => {
+              if (event.target === event.currentTarget) {
+                closeModal();
+              }
+            }}
+          >
+            <div
+              className="cc-booking-modal"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby={titleId}
+            >
+              <button
+                className="cc-booking-modal__close"
+                type="button"
+                aria-label="Close booking form"
+                onClick={closeModal}
+              >
+                x
+              </button>
+
+              <header className="cc-booking-modal__header">
+                <p className="cc-booking-modal__eyebrow">
+                  Book Packers & Movers
+                </p>
+
+                <h2 id={titleId}>{serviceName}</h2>
+
+                <p>
+                  Enter your moving details. A 50% advance
+                  online payment is required to confirm this
+                  booking.
+                </p>
+              </header>
+
+              <form
+                className="cc-booking-modal__form"
+                onSubmit={handleSubmit}
+              >
+                <div className="cc-booking-modal__grid">
+                  <label className="cc-booking-modal__field">
+                    <span>Full Name</span>
+                    <input
+                      type="text"
+                      name="name"
+                      autoComplete="name"
+                      placeholder="Enter your full name"
+                      required
+                    />
+                  </label>
+
+                  <label className="cc-booking-modal__field">
+                    <span>Phone Number</span>
+                    <input
+                      type="tel"
+                      name="phone"
+                      inputMode="numeric"
+                      pattern="[0-9]{10}"
+                      maxLength={10}
+                      autoComplete="tel"
+                      placeholder="10-digit mobile number"
+                      required
+                    />
+                  </label>
+
+                  <label className="cc-booking-modal__field">
+                    <span>Email Address</span>
+                    <input
+                      type="email"
+                      name="email"
+                      autoComplete="email"
+                      placeholder="Enter your email address"
+                      required
+                    />
+                  </label>
+
+                  <label className="cc-booking-modal__field">
+                    <span>Moving Date</span>
+                    <input
+                      type="date"
+                      name="movingDate"
+                      min={today}
+                      required
+                    />
+                  </label>
+
+                  {renderAddressFields(
+                    "pickup",
+                    "Pickup Address",
+                    pickupLocation,
+                    pickupLocationMessage,
+                  )}
+
+                  {renderAddressFields(
+                    "drop",
+                    "Drop Address",
+                    dropLocation,
+                    dropLocationMessage,
+                  )}
+                </div>
+
+                <div className="cc-booking-modal__payment">
+                  <span className="cc-booking-modal__payment-title">
+                    Payment Method
+                  </span>
+
+                  <div className="cc-booking-modal__payment-options">
+                    <label className="cc-booking-modal__payment-option">
+                      <input
+                        type="radio"
+                        checked
+                        readOnly
+                      />
+
+                      <span>
+                        <strong>
+                          Pay 50% Advance Online
+                        </strong>
+
+                        <small>
+                          Pay {formatCurrency(advanceAmount)}
+                          {" "}now through secure Razorpay
+                          checkout to confirm your move.
+                        </small>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="cc-booking-modal__summary">
+                  <div className="cc-booking-modal__summary-row">
+                    <span>Estimated move price</span>
+                    <strong>
+                      {formatCurrency(estimatedTotal)}
+                    </strong>
+                  </div>
+
+                  <div className="cc-booking-modal__summary-row cc-booking-modal__summary-row--payable">
+                    <span>Pay now - 50% advance</span>
+                    <strong>
+                      {formatCurrency(advanceAmount)}
+                    </strong>
+                  </div>
+
+                  <div className="cc-booking-modal__summary-row">
+                    <span>Remaining amount</span>
+                    <strong>
+                      {formatCurrency(remainingAmount)}
+                    </strong>
+                  </div>
+                </div>
+
+                <label className="cc-booking-modal__consent">
+                  <input type="checkbox" required />
+
+                  <span>
+                    I confirm that the pickup, drop and moving
+                    details are correct and agree to receive
+                    booking updates on WhatsApp.
+                  </span>
+                </label>
+
+                {message && (
+                  <p
+                    className={
+                      status === "success"
+                        ? "cc-booking-modal__success"
+                        : "cc-booking-modal__error"
+                    }
+                    role="status"
+                  >
+                    {message}
+                  </p>
+                )}
+
+                <button
+                  className="cc-booking-modal__submit"
+                  type="submit"
+                  disabled={status === "submitting"}
+                >
+                  {status === "submitting"
+                    ? "Please wait..."
+                    : `Pay ${formatCurrency(advanceAmount)} & Confirm Move`}
+                </button>
+              </form>
+            </div>
+          </div>,
+          document.body,
+        )}
+
+      <style>{BOOKING_MODAL_STYLES}</style>
+    </>
+  );
+}
+
 export function CustomCleaningBuilder() {
   const [quantities, setQuantities] = useState<Record<string, number>>({});
   const [isCalculated, setIsCalculated] = useState(false);
@@ -2018,7 +3064,7 @@ export function CustomCleaningBuilder() {
 
     <p>
       <strong>
-        ₹{service.price.toLocaleString("en-IN")}
+        â‚¹{service.price.toLocaleString("en-IN")}
       </strong>{" "}
       {service.unitLabel}
     </p>
@@ -2037,7 +3083,7 @@ export function CustomCleaningBuilder() {
                       changeQuantity(service.id, -1)
                     }
                   >
-                    −
+                    âˆ’
                   </button>
 
                   <strong aria-live="polite">
@@ -2065,7 +3111,7 @@ export function CustomCleaningBuilder() {
                   aria-pressed={quantity > 0}
                   onClick={() => toggleService(service.id)}
                 >
-                  {quantity > 0 ? "✓ Selected" : "Select"}
+                  {quantity > 0 ? "Ã¢Å“â€œ Selected" : "Select"}
                 </button>
               )}
             </article>
@@ -2092,12 +3138,12 @@ export function CustomCleaningBuilder() {
   <CustomCleaningIcon serviceId={service.id} />
 
   <span>
-    {service.name} × {service.quantity}
+    {service.name} Ã— {service.quantity}
   </span>
 </div>
 
                 <strong>
-                  ₹
+                  â‚¹
                   {service.lineTotal.toLocaleString(
                     "en-IN",
                   )}
@@ -2122,7 +3168,7 @@ export function CustomCleaningBuilder() {
               <span>Total</span>
 
               <strong>
-                ₹{total.toLocaleString("en-IN")}
+                â‚¹{total.toLocaleString("en-IN")}
               </strong>
             </div>
 
@@ -2168,16 +3214,10 @@ const CUSTOM_KITCHEN_BUILDER_STYLES = `
 
 export function CustomKitchenCleaningBuilder() {
   const titleId = useId();
-  const [isMounted, setIsMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedServiceIds, setSelectedServiceIds] =
     useState<Set<string>>(new Set());
   const [isCalculated, setIsCalculated] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
   useEffect(() => {
     if (!isOpen) {
       return;
@@ -2257,8 +3297,7 @@ export function CustomKitchenCleaningBuilder() {
         Add
       </button>
 
-      {isMounted &&
-        isOpen &&
+      {isOpen &&
         createPortal(
           <div
             className="cc-booking-overlay"
@@ -2281,7 +3320,7 @@ export function CustomKitchenCleaningBuilder() {
                 aria-label="Close custom kitchen plan"
                 onClick={closeBuilder}
               >
-                ×
+                Ã—
               </button>
 
               <header className="cc-booking-modal__header">
@@ -2320,7 +3359,7 @@ export function CustomKitchenCleaningBuilder() {
 
                                 <p>
                                   <strong>
-                                    ₹
+                                    â‚¹
                                     {service.price.toLocaleString(
                                       "en-IN",
                                     )}
@@ -2342,7 +3381,7 @@ export function CustomKitchenCleaningBuilder() {
                                 toggleService(service.id)
                               }
                             >
-                              {isSelected ? "✓ Selected" : "Select"}
+                              {isSelected ? "Ã¢Å“â€œ Selected" : "Select"}
                             </button>
                           </article>
                         );
@@ -2375,7 +3414,7 @@ export function CustomKitchenCleaningBuilder() {
                             </div>
 
                             <strong>
-                              ₹
+                              â‚¹
                               {service.lineTotal.toLocaleString(
                                 "en-IN",
                               )}
@@ -2400,7 +3439,7 @@ export function CustomKitchenCleaningBuilder() {
                           <span>Total</span>
 
                           <strong>
-                            ₹{total.toLocaleString("en-IN")}
+                            â‚¹{total.toLocaleString("en-IN")}
                           </strong>
                         </div>
 
@@ -2443,16 +3482,10 @@ export function CustomKitchenCleaningBuilder() {
 }
 export function CustomBathroomCleaningBuilder() {
   const titleId = useId();
-  const [isMounted, setIsMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedServiceIds, setSelectedServiceIds] =
     useState<Set<string>>(new Set());
   const [isCalculated, setIsCalculated] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
   useEffect(() => {
     if (!isOpen) {
       return;
@@ -2532,8 +3565,7 @@ export function CustomBathroomCleaningBuilder() {
         Customize
       </button>
 
-      {isMounted &&
-        isOpen &&
+      {isOpen &&
         createPortal(
           <div
             className="cc-booking-overlay"
@@ -2556,7 +3588,7 @@ export function CustomBathroomCleaningBuilder() {
                 aria-label="Close custom bathroom plan"
                 onClick={closeBuilder}
               >
-                ×
+                Ã—
               </button>
 
               <header className="cc-booking-modal__header">
@@ -2598,7 +3630,7 @@ export function CustomBathroomCleaningBuilder() {
 
                                 <p>
                                   <strong>
-                                    ₹
+                                    â‚¹
                                     {service.price.toLocaleString(
                                       "en-IN",
                                     )}
@@ -2621,7 +3653,7 @@ export function CustomBathroomCleaningBuilder() {
                               }
                             >
                               {isSelected
-                                ? "✓ Selected"
+                                ? "Ã¢Å“â€œ Selected"
                                 : "Select"}
                             </button>
                           </article>
@@ -2655,7 +3687,7 @@ export function CustomBathroomCleaningBuilder() {
                             </div>
 
                             <strong>
-                              ₹
+                              â‚¹
                               {service.lineTotal.toLocaleString(
                                 "en-IN",
                               )}
@@ -2680,7 +3712,7 @@ export function CustomBathroomCleaningBuilder() {
                           <span>Total</span>
 
                           <strong>
-                            ₹{total.toLocaleString("en-IN")}
+                            â‚¹{total.toLocaleString("en-IN")}
                           </strong>
                         </div>
 
@@ -2721,3 +3753,5 @@ export function CustomBathroomCleaningBuilder() {
     </>
   );
 }
+
+

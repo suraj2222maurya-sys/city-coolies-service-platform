@@ -1,4 +1,4 @@
-﻿export type ServicePackage = {
+export type ServicePackage = {
   id: string;
   name: string;
   originalPrice: number;
@@ -186,6 +186,13 @@ export const CUSTOM_BATHROOM_CLEANING_SERVICES: Record<
   },
 };
 const SERVICE_PACKAGES: Record<string, ServicePackage> = {
+  "civil-site-survey": {
+    id: "civil-site-survey",
+    name: "Civil Construction Site Survey",
+    originalPrice: 500,
+    offerPrice: 500,
+    advancePercentage: 100,
+  },
   "1-bhk-home-cleaning": {
     id: "1-bhk-home-cleaning",
     name: "1 BHK Home Cleaning",
@@ -340,6 +347,148 @@ const SERVICE_PACKAGES: Record<string, ServicePackage> = {
     advancePercentage: 50,
   },
 };
+
+for (let quantity = 1; quantity <= 50; quantity += 1) {
+  const price = quantity * 1500;
+  SERVICE_PACKAGES[`civil-manpower-${quantity}`] = {
+    id: `civil-manpower-${quantity}`,
+    name: `All-Rounder Civil Manpower - ${quantity} Person`,
+    originalPrice: price,
+    offerPrice: price,
+    advancePercentage: 50,
+  };
+}
+
+
+/* CITY_COOLIES_PEST_PACKAGES */
+
+Object.assign(SERVICE_PACKAGES, {
+  "pest-kitchen-cockroach": {
+    id: "pest-kitchen-cockroach",
+    name: "Kitchen Cockroach Control",
+    originalPrice: 899,
+    offerPrice: 899,
+    advancePercentage: 50,
+  },
+  "pest-full-home-cockroach": {
+    id: "pest-full-home-cockroach",
+    name: "Full Home Cockroach Control",
+    originalPrice: 1299,
+    offerPrice: 1299,
+    advancePercentage: 50,
+  },
+  "pest-general-control": {
+    id: "pest-general-control",
+    name: "General Pest Control",
+    originalPrice: 999,
+    offerPrice: 999,
+    advancePercentage: 50,
+  },
+  "pest-ant-control": {
+    id: "pest-ant-control",
+    name: "Ant Control",
+    originalPrice: 899,
+    offerPrice: 899,
+    advancePercentage: 50,
+  },
+  "pest-bed-bug-control": {
+    id: "pest-bed-bug-control",
+    name: "Bed Bug Control",
+    originalPrice: 1499,
+    offerPrice: 1499,
+    advancePercentage: 50,
+  },
+  "pest-rodent-control": {
+    id: "pest-rodent-control",
+    name: "Rodent / Rat Control",
+    originalPrice: 999,
+    offerPrice: 999,
+    advancePercentage: 50,
+  },
+  "pest-mosquito-control": {
+    id: "pest-mosquito-control",
+    name: "Mosquito Control",
+    originalPrice: 999,
+    offerPrice: 999,
+    advancePercentage: 50,
+  },
+  "pest-lizard-control": {
+    id: "pest-lizard-control",
+    name: "Lizard Control",
+    originalPrice: 799,
+    offerPrice: 799,
+    advancePercentage: 50,
+  },
+  "pest-spider-silverfish": {
+    id: "pest-spider-silverfish",
+    name: "Spider & Silverfish Control",
+    originalPrice: 799,
+    offerPrice: 799,
+    advancePercentage: 50,
+  },
+  "pest-flea-tick": {
+    id: "pest-flea-tick",
+    name: "Flea & Tick Control",
+    originalPrice: 899,
+    offerPrice: 899,
+    advancePercentage: 50,
+  },
+
+  "pest-post-termite-survey": {
+    id: "pest-post-termite-survey",
+    name: "Post-Construction Termite Control - Site Inspection",
+    originalPrice: 500,
+    offerPrice: 500,
+    advancePercentage: 100,
+  },
+  "pest-pre-termite-survey": {
+    id: "pest-pre-termite-survey",
+    name: "Pre-Construction Anti-Termite Treatment - Site Inspection",
+    originalPrice: 500,
+    offerPrice: 500,
+    advancePercentage: 100,
+  },
+  "pest-office-shop-survey": {
+    id: "pest-office-shop-survey",
+    name: "Office / Shop Pest Control - Site Inspection",
+    originalPrice: 500,
+    offerPrice: 500,
+    advancePercentage: 100,
+  },
+  "pest-restaurant-survey": {
+    id: "pest-restaurant-survey",
+    name: "Restaurant Pest Control - Site Inspection",
+    originalPrice: 500,
+    offerPrice: 500,
+    advancePercentage: 100,
+  },
+  "pest-warehouse-survey": {
+    id: "pest-warehouse-survey",
+    name: "Warehouse Pest Control - Site Inspection",
+    originalPrice: 500,
+    offerPrice: 500,
+    advancePercentage: 100,
+  },
+  "pest-amc-survey": {
+    id: "pest-amc-survey",
+    name: "Annual Pest Control AMC - Site Inspection",
+    originalPrice: 500,
+    offerPrice: 500,
+    advancePercentage: 100,
+  },
+});
+
+
+/* CITY_COOLIES_FABRICATION_SITE_SURVEY */
+Object.assign(SERVICE_PACKAGES, {
+  "fabrication-site-survey": {
+    id: "fabrication-site-survey",
+    name: "Fabrication Works - Site Survey",
+    originalPrice: 500,
+    offerPrice: 500,
+    advancePercentage: 100,
+  },
+});
 
 export function getServicePackage(
   packageId: string,

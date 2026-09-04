@@ -1,8 +1,14 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 
+import PopularServicesSection from "./PopularServicesSection";
 import AllServicesSection from "./AllServicesSection";
+import ServicesTrustOfferSection from "./ServicesTrustOfferSection";
+import ServicesHowItWorksSection from "./ServicesHowItWorksSection";
+import ServicesTrustStatsStrip from "./ServicesTrustStatsStrip";
 import ServicesHeroSection from "./ServicesHeroSection";
 
+
+import ServicesExperienceMotion from "./ServicesExperienceMotion";
 export const metadata: Metadata = {
   title: "Professional Property Services | City Coolies",
   description:
@@ -12,8 +18,13 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <main>
+            <ServicesExperienceMotion />
       <ServicesHeroSection />
+      <PopularServicesSection />
       <AllServicesSection />
+      <ServicesTrustOfferSection />
+      <ServicesHowItWorksSection />
+      <ServicesTrustStatsStrip />
     </main>
   );
 }

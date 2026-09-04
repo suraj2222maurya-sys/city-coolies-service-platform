@@ -370,7 +370,7 @@ export default function CommercialCleaningSection() {
           <span>
             <WalletIcon />
             <strong>
-              50% Online Advance or Cash on Service
+              50% Online Advance or Secure Online Payment
             </strong>
           </span>
 
@@ -968,4 +968,5 @@ const COMMERCIAL_CLEANING_STYLES = `
     }
   }
 `;
+
 

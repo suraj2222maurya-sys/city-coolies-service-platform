@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -241,9 +241,7 @@ export default function CoreServicesSection() {
 
               <div className="relative z-10 flex h-full flex-col justify-between">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-black tracking-[0.16em] text-[#ef1b23] transition-colors duration-500 group-hover:text-white/70">
-                    {service.number}
-                  </span>
+                  
 
                   <span className="grid h-6 w-6 place-items-center rounded-full border border-red-100 bg-red-50 text-[#ef1b23] transition-all duration-500 group-hover:translate-x-0.5 group-hover:border-white group-hover:bg-white">
                     <svg

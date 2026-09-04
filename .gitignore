@@ -50,3 +50,36 @@ out/
 *-installer/
 install-*.mjs
 *.log
+
+# City Coolies local backups / temporary development files
+/.vscode/
+/.website-audit/
+/_favicon-backup/
+/_pest-control-backup-*/
+/_pest-support-final-backup-*/
+/_unused-images-backup/
+/city-coolies-backups/
+
+# Local handoff / audit / temporary helper files
+/CITY_COOLIES_HANDOFF.txt
+/SERVICES_MOBILE_CONTEXT.txt
+/PestServiceIcon.tsx
+/fix_pest_booking_ui.py
+/fix_pest_minus.py
+/improve_pest_icons_content.py
+/install_pest_icons.py
+/packers-movers-current-code.txt
+/pest-control-current.txt
+/unused-images.txt
+/website_audit.py
+
+# Local source backups
+*.backup
+*.broken-*
+*.navbar-layout-backup
+*.hero-layout-backup
+
+# Extra local backup / audit files
+*.backup-*
+/public/*-IMAGE-AUDIT.txt
+/public/*-IMAGE-FILENAMES.txt

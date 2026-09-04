@@ -1,0 +1,259 @@
+.section {
+  --cc-red: #f21f2f;
+  --cc-red-dark: #dd1524;
+  --cc-border: rgba(30, 35, 45, 0.08);
+  --cc-text: #2b3038;
+  --cc-muted-bg: #ffffff;
+
+  width: 100%;
+
+  padding:
+    4px
+    0
+    0;
+
+  background: transparent;
+}
+
+.scroller {
+  width:
+    min(
+      calc(100% - 28px),
+      1820px
+    );
+
+  margin: 0 auto;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scrollbar-width: none;
+}
+
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  min-width: max-content;
+}
+
+.tab,
+.tabActive {
+  position: relative;
+
+  min-height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    0
+    14px;
+
+  border-radius: 11px;
+
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.tab {
+  border:
+    1px solid
+    var(--cc-border);
+
+  background: var(--cc-muted-bg);
+
+  color: #4b525d;
+
+  box-shadow:
+    0 2px 8px rgba(16, 24, 40, 0.03);
+}
+
+.tab:hover {
+  transform: translateY(-1px);
+
+  border-color:
+    rgba(242, 31, 47, 0.16);
+
+  color: var(--cc-text);
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fff8f9 100%
+    );
+}
+
+.tabActive {
+  border:
+    1px solid
+    rgba(242, 31, 47, 0.18);
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff3041 0%,
+      var(--cc-red) 54%,
+      var(--cc-red-dark) 100%
+    );
+
+  box-shadow:
+    0 10px 20px rgba(242, 31, 47, 0.18);
+}
+
+.tabActive:hover {
+  transform: translateY(-1px);
+}
+
+.tab:focus-visible,
+.tabActive:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 3px rgba(242, 31, 47, 0.18);
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .section {
+    padding-top: 2px;
+  }
+
+  .scroller {
+    width:
+      calc(100% - 18px);
+  }
+
+  .tabs {
+    gap: 7px;
+  }
+
+  .tab,
+  .tabActive {
+    min-height: 32px;
+    padding: 0 12px;
+    border-radius: 10px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab,
+  .tabActive {
+    min-height: 30px;
+    padding: 0 11px;
+    font-size: 9px;
+  }
+}
+/* CITY_COOLIES_RENOVATION_ACTIVE_TAB_FINAL */
+
+.tabs button {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* Force selected category to remain City Coolies red.
+   This also protects it from global button styles. */
+.tabs button[aria-selected="true"] {
+  border: 1px solid #f21f2f !important;
+  background:
+    linear-gradient(
+      135deg,
+      #ff3041 0%,
+      #f21f2f 52%,
+      #dc1222 100%
+    ) !important;
+
+  color: #ffffff !important;
+
+  box-shadow:
+    0 7px 18px
+    rgba(242, 31, 47, 0.22) !important;
+
+  font-weight: 850;
+
+  transform: none;
+}
+
+.tabs button[aria-selected="true"]:hover {
+  border-color: #f21f2f !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff3041 0%,
+      #f21f2f 52%,
+      #dc1222 100%
+    ) !important;
+
+  color: #ffffff !important;
+
+  transform: translateY(-1px);
+}
+
+.tabs button[aria-selected="true"]:focus,
+.tabs button[aria-selected="true"]:focus-visible {
+  color: #ffffff !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff3041 0%,
+      #f21f2f 52%,
+      #dc1222 100%
+    ) !important;
+
+  outline: none;
+
+  box-shadow:
+    0 0 0 3px rgba(242, 31, 47, 0.14),
+    0 7px 18px rgba(242, 31, 47, 0.22) !important;
+}
+
+/* Non-selected categories always remain white. */
+.tabs button[aria-selected="false"] {
+  border: 1px solid rgba(30, 35, 45, 0.08) !important;
+
+  background: #ffffff !important;
+
+  color: #303640 !important;
+
+  box-shadow:
+    0 2px 8px
+    rgba(16, 24, 40, 0.025) !important;
+}
+
+.tabs button[aria-selected="false"]:hover {
+  border-color:
+    rgba(242, 31, 47, 0.20) !important;
+
+  background:
+    #fff8f9 !important;
+
+  color: #f21f2f !important;
+}

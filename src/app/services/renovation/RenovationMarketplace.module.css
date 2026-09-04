@@ -1,0 +1,2151 @@
+.marketplace {
+  --red: #f21f2f;
+  --red-dark: #dc1222;
+  --ink: #20242b;
+  --muted: #6c737e;
+  --line: #eee2e4;
+  --pink: #fff4f6;
+
+  width:
+    min(
+      calc(100% - 28px),
+      1820px
+    );
+
+  margin:
+    14px
+    auto
+    70px;
+}
+
+
+/* ============================================================
+   HEADING
+   ============================================================ */
+
+.headingRow {
+  margin:
+    19px
+    0
+    14px;
+}
+
+.headingRow > div {
+  max-width: 660px;
+}
+
+.eyebrow {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--red);
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: .14em;
+}
+
+.headingRow h2 {
+  margin: 0;
+
+  color: var(--ink);
+
+  font-size:
+    clamp(
+      1.7rem,
+      2.4vw,
+      2.45rem
+    );
+
+  line-height: 1;
+
+  letter-spacing: -.035em;
+}
+
+.headingRow p {
+  max-width: 620px;
+
+  margin:
+    7px
+    0
+    0;
+
+  color: var(--muted);
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+
+.layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    255px;
+
+  gap: 13px;
+
+  align-items: start;
+}
+
+.grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      5,
+      minmax(0, 1fr)
+    );
+
+  gap: 9px;
+}
+
+
+/* ============================================================
+   SERVICE CARDS
+   ============================================================ */
+
+.card {
+  height: 228px;
+
+  display: grid;
+
+  grid-template-rows:
+    92px
+    minmax(0, 1fr);
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius: 13px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 5px 15px
+    rgba(42,18,22,.035);
+
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    box-shadow .18s ease;
+}
+
+.card:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(242,31,47,.25);
+
+  box-shadow:
+    0 10px 24px
+    rgba(65,17,24,.07);
+}
+
+.cardSelected {
+  border-color:
+    rgba(242,31,47,.60);
+
+  box-shadow:
+    0 10px 24px
+    rgba(242,31,47,.09);
+}
+
+.cardMedia {
+  position: relative;
+
+  overflow: hidden;
+
+  border-bottom:
+    1px solid
+    #f2e5e7;
+
+  background:
+    radial-gradient(
+      circle at 78% 22%,
+      rgba(242,31,47,.10),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      #fffafa,
+      #fff0f2
+    );
+}
+
+.cardImage {
+  object-fit: cover;
+}
+
+.placeholderIcon {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+
+  place-items: center;
+
+  transform:
+    translate(-50%, -50%);
+
+  border:
+    1px solid
+    rgba(242,31,47,.15);
+
+  border-radius: 12px;
+
+  background:
+    rgba(255,255,255,.92);
+
+  color: var(--red);
+}
+
+.placeholderIcon svg {
+  width: 23px;
+  height: 23px;
+
+  fill: none;
+
+  stroke: currentColor;
+  stroke-width: 1.55;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cardBody {
+  min-height: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  padding:
+    8px
+    9px
+    9px;
+}
+
+.cardCategory {
+  overflow: hidden;
+
+  color: #a05661;
+
+  font-size: 7px;
+
+  font-weight: 850;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.card h3 {
+  min-height: 29px;
+
+  margin:
+    4px
+    0
+    0;
+
+  color: #1e2229;
+
+  font-size: 10.5px;
+
+  font-weight: 880;
+
+  line-height: 1.22;
+}
+
+.cardDescription {
+  display: -webkit-box;
+
+  margin:
+    3px
+    0
+    0;
+
+  overflow: hidden;
+
+  color: var(--muted);
+
+  font-size: 7px;
+
+  line-height: 1.35;
+
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.cardFooter {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 7px;
+
+  margin-top: auto;
+
+  padding-top: 6px;
+
+  border-top:
+    1px solid
+    #f2e8e9;
+}
+
+.cardRate small,
+.cardRate strong {
+  display: block;
+}
+
+.cardRate small {
+  margin-bottom: 2px;
+
+  color: #92969d;
+
+  font-size: 6.5px;
+}
+
+.cardRate strong {
+  color: #20242b;
+
+  font-size: 9px;
+
+  font-weight: 850;
+
+  white-space: nowrap;
+}
+
+.addButton,
+.removeButton {
+  height: 26px;
+
+  border-radius: 7px;
+
+  font: inherit;
+
+  font-size: 8px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    background-color .18s ease,
+    color .18s ease,
+    border-color .18s ease;
+}
+
+.addButton {
+  min-width: 46px;
+
+  padding:
+    0
+    8px;
+
+  border:
+    1px solid
+    rgba(242,31,47,.30);
+
+  background:
+    #fff8f9;
+
+  color: var(--red);
+}
+
+.addButton:hover {
+  border-color:
+    var(--red);
+
+  background:
+    var(--red);
+
+  color: #ffffff;
+}
+
+.removeButton {
+  width: 27px;
+
+  border:
+    1px solid
+    var(--red);
+
+  background:
+    var(--red);
+
+  color: #ffffff;
+
+  font-size: 17px;
+
+  font-weight: 500;
+}
+
+
+/* ============================================================
+   BOOKING PANEL
+   ============================================================ */
+
+.booking {
+  position: sticky;
+
+  top: 16px;
+
+  overflow: hidden;
+
+  padding:
+    0
+    10px
+    10px;
+
+  border:
+    1px solid
+    rgba(242,31,47,.13);
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fffafb 0%,
+      #fff6f7 100%
+    );
+
+  box-shadow:
+    0 12px 30px
+    rgba(77,18,27,.055);
+}
+
+
+/* HEADER */
+
+.bookingTop {
+  min-height: 61px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 8px;
+
+  padding:
+    10px
+    1px
+    8px;
+}
+
+.bookingTop > div > span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--red);
+
+  font-size: 7px;
+
+  font-weight: 900;
+
+  letter-spacing: .08em;
+}
+
+.bookingTop > div > strong {
+  display: block;
+
+  color: var(--ink);
+
+  font-size: 9px;
+
+  font-weight: 880;
+}
+
+.itemCount {
+  min-height: 21px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding:
+    0
+    7px;
+
+  border-radius: 999px;
+
+  background: #ffe6e9;
+
+  color: var(--red);
+
+  font-size: 6.5px;
+
+  font-weight: 900;
+
+  white-space: nowrap;
+}
+
+
+/* SELECTED CARD */
+
+.selectedCard {
+  overflow: hidden;
+
+  padding:
+    3px
+    8px;
+
+  border:
+    1px solid
+    #eee4e5;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 12px
+    rgba(44,18,23,.035);
+}
+
+.selectedItem {
+  min-height: 53px;
+
+  display: grid;
+
+  grid-template-columns:
+    43px
+    minmax(0,1fr)
+    18px;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding:
+    6px
+    0;
+
+  border-bottom:
+    1px solid
+    #f2e9ea;
+}
+
+.selectedItem:last-child {
+  border-bottom: 0;
+}
+
+.selectedThumb {
+  position: relative;
+
+  width: 43px;
+  height: 43px;
+
+  display: grid;
+
+  place-items: center;
+
+  overflow: hidden;
+
+  border-radius: 7px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff1f3,
+      #f5ecee
+    );
+
+  color: var(--red);
+}
+
+.selectedThumb svg {
+  width: 21px;
+  height: 21px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 1.55;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+.selectedImage {
+  object-fit: cover;
+}
+
+.selectedCopy {
+  min-width: 0;
+}
+
+.selectedCopy strong {
+  display: -webkit-box;
+
+  overflow: hidden;
+
+  color: #272b32;
+
+  font-size: 7.5px;
+
+  font-weight: 850;
+
+  line-height: 1.25;
+
+  -webkit-line-clamp: 2;
+
+  -webkit-box-orient: vertical;
+}
+
+.selectedCopy small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #6d737d;
+
+  font-size: 6.5px;
+
+  font-weight: 600;
+}
+
+.selectedRemove {
+  width: 17px;
+  height: 17px;
+
+  display: grid;
+
+  place-items: center;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #9a9da3;
+
+  font-size: 11px;
+
+  cursor: pointer;
+}
+
+.selectedRemove:hover {
+  color: var(--red);
+}
+
+
+/* EMPTY */
+
+.emptySelection {
+  min-height: 72px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding:
+    11px;
+
+  border:
+    1px dashed
+    rgba(242,31,47,.22);
+
+  border-radius: 10px;
+
+  background: #ffffff;
+}
+
+.emptySelection > span {
+  width: 30px;
+  height: 30px;
+
+  flex:
+    0
+    0
+    30px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #ffedf0;
+
+  color: var(--red);
+
+  font-size: 17px;
+}
+
+.emptySelection strong {
+  display: block;
+
+  color: #292d34;
+
+  font-size: 8px;
+}
+
+.emptySelection p {
+  margin:
+    2px
+    0
+    0;
+
+  color: var(--muted);
+
+  font-size: 6.5px;
+}
+
+
+/* SECTIONS */
+
+.bookingSection {
+  margin-top: 13px;
+}
+
+.bookingSection h3 {
+  margin:
+    0
+    0
+    7px;
+
+  color: #2b2f36;
+
+  font-size: 8px;
+
+  font-weight: 900;
+}
+
+
+/* SURVEY CARD */
+
+.surveyCard {
+  min-height: 70px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding:
+    9px;
+
+  border:
+    1px solid
+    #eee1e3;
+
+  border-radius: 10px;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 4px 12px
+    rgba(44,18,23,.03);
+}
+
+.surveyIcon {
+  width: 40px;
+  height: 40px;
+
+  flex:
+    0
+    0
+    40px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 10px;
+
+  color: var(--red);
+
+  background:
+    #fff0f2;
+}
+
+.surveyIcon svg {
+  width: 25px;
+  height: 25px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 1.55;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+.surveyCopy strong {
+  display: block;
+
+  color: #20242a;
+
+  font-size: 16px;
+
+  font-weight: 900;
+}
+
+.surveyCopy span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #555d68;
+
+  font-size: 7px;
+
+  font-weight: 750;
+}
+
+.surveyNote {
+  margin:
+    5px
+    1px
+    0;
+
+  color: #7a8089;
+
+  font-size: 6px;
+
+  line-height: 1.4;
+}
+
+
+/* PAYMENT SUMMARY */
+
+.paymentCard {
+  padding:
+    7px
+    9px;
+
+  border:
+    1px solid
+    #eee1e3;
+
+  border-radius: 10px;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 4px 12px
+    rgba(44,18,23,.03);
+}
+
+.paymentCard > div {
+  min-height: 25px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 7px;
+
+  color: #656c76;
+
+  font-size: 6.5px;
+}
+
+.paymentCard strong {
+  color: #22262d;
+
+  font-size: 7px;
+
+  font-weight: 850;
+}
+
+.totalRow {
+  margin-top: 3px;
+
+  padding-top: 6px;
+
+  border-top:
+    1px solid
+    #efe6e7;
+
+  color: #292d33 !important;
+
+  font-weight: 800;
+}
+
+
+/* NOTICE */
+
+.priceNotice {
+  display: flex;
+
+  gap: 7px;
+
+  margin-top: 10px;
+
+  padding:
+    9px;
+
+  border-radius: 9px;
+
+  background:
+    #fff4e8;
+}
+
+.priceNotice > span {
+  flex:
+    0
+    0
+    16px;
+
+  font-size: 11px;
+}
+
+.priceNotice p {
+  margin: 0;
+
+  color: #665943;
+
+  font-size: 6px;
+
+  line-height: 1.45;
+}
+
+
+/* BOOK BUTTON */
+
+.bookButton {
+  width: 100%;
+
+  min-height: 42px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  margin-top: 11px;
+
+  border: 0;
+
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff2537,
+      #ef1728 55%,
+      #d90e1e
+    );
+
+  box-shadow:
+    0 10px 22px
+    rgba(242,31,47,.20);
+
+  color: #ffffff;
+
+  font: inherit;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease,
+    opacity .18s ease;
+}
+
+.bookButton:not(:disabled):hover {
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 13px 27px
+    rgba(242,31,47,.27);
+}
+
+.bookButton:disabled {
+  cursor: not-allowed;
+
+  opacity: .45;
+}
+
+.bookButton svg {
+  width: 16px;
+  height: 16px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 1.8;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+.onlineOnly {
+  min-height: 29px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 5px;
+
+  color: #777d86;
+
+  font-size: 6.5px;
+
+  font-weight: 700;
+}
+
+.onlineOnly svg {
+  width: 13px;
+  height: 13px;
+
+  fill: none;
+
+  stroke: var(--red);
+
+  stroke-width: 1.7;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1500px) {
+  .grid {
+    grid-template-columns:
+      repeat(
+        4,
+        minmax(0,1fr)
+      );
+  }
+}
+
+@media (max-width: 1160px) {
+  .layout {
+    grid-template-columns:
+      minmax(0,1fr)
+      245px;
+  }
+
+  .grid {
+    grid-template-columns:
+      repeat(
+        3,
+        minmax(0,1fr)
+      );
+  }
+}
+
+@media (max-width: 880px) {
+  .layout {
+    display: block;
+  }
+
+  .grid {
+    grid-template-columns:
+      repeat(
+        3,
+        minmax(0,1fr)
+      );
+  }
+
+  .booking {
+    position: relative;
+
+    top: auto;
+
+    width: min(100%, 360px);
+
+    margin:
+      15px
+      auto
+      0;
+  }
+}
+
+@media (max-width: 650px) {
+  .marketplace {
+    width:
+      calc(100% - 16px);
+  }
+
+  .headingRow {
+    margin-top: 15px;
+  }
+
+  .headingRow h2 {
+    font-size: 1.65rem;
+  }
+
+  .headingRow p {
+    max-width: 95%;
+
+    font-size: 9px;
+  }
+
+  .grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0,1fr)
+      );
+
+    gap: 7px;
+  }
+
+  .card {
+    height: 214px;
+
+    grid-template-rows:
+      82px
+      minmax(0,1fr);
+  }
+}
+
+@media (max-width: 390px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* RENOVATION_CARD_CONTENT_FINAL */
+
+.card {
+  height: 244px;
+}
+
+.card h3 {
+  min-height: 30px;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.cardDescription {
+  display: -webkit-box !important;
+  margin: 5px 0 0 !important;
+  overflow: hidden;
+  color: #343941 !important;
+  font-size: 8.5px !important;
+  font-weight: 800 !important;
+  line-height: 1.38 !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical;
+}
+
+.cardSurveyNote {
+  margin: 5px 0 0;
+  color: #f21f2f;
+  font-size: 7.5px;
+  font-weight: 900;
+  line-height: 1.3;
+}
+
+@media (max-width: 650px) {
+  .card {
+    height: 232px;
+  }
+
+  .cardDescription {
+    font-size: 8px !important;
+  }
+
+  .cardSurveyNote {
+    font-size: 7px;
+  }
+}
+
+/* RENOVATION_MINIMAL_CARD_FINAL */
+
+.card {
+  height: 210px !important;
+
+  grid-template-rows:
+    105px
+    minmax(0, 1fr) !important;
+}
+
+.cardBody {
+  padding:
+    10px
+    10px
+    9px !important;
+}
+
+.card h3 {
+  min-height: 34px !important;
+
+  margin: 0 !important;
+
+  color: #20242b !important;
+
+  font-size: 11.5px !important;
+
+  font-weight: 900 !important;
+
+  line-height: 1.28 !important;
+
+  letter-spacing: -0.01em;
+}
+
+.cardSurveyNote {
+  margin:
+    5px
+    0
+    0 !important;
+
+  color: #f21f2f !important;
+
+  font-size: 8px !important;
+
+  font-weight: 900 !important;
+
+  line-height: 1.3 !important;
+}
+
+.cardAction {
+  display: flex;
+
+  justify-content: flex-end;
+
+  align-items: center;
+
+  margin-top: auto;
+
+  padding-top: 7px;
+
+  border-top:
+    1px solid
+    #f2e7e9;
+}
+
+.addButton {
+  min-width: 55px !important;
+
+  height: 28px !important;
+
+  padding:
+    0
+    10px !important;
+
+  font-size: 8.5px !important;
+
+  font-weight: 900 !important;
+}
+
+.removeButton {
+  width: 28px !important;
+
+  height: 28px !important;
+}
+
+@media (max-width: 650px) {
+  .card {
+    height: 200px !important;
+
+    grid-template-rows:
+      96px
+      minmax(0, 1fr) !important;
+  }
+
+  .card h3 {
+    font-size: 10.5px !important;
+  }
+
+  .cardSurveyNote {
+    font-size: 7.5px !important;
+  }
+}
+
+/* RENOVATION_CARD_RATE_RESTORE_FINAL */
+
+.card {
+  height: 220px !important;
+
+  grid-template-rows:
+    112px
+    minmax(0, 1fr) !important;
+}
+
+.cardBody {
+  min-height: 0;
+
+  display: flex !important;
+
+  flex-direction: column !important;
+
+  padding:
+    10px
+    11px
+    9px !important;
+}
+
+.card h3 {
+  min-height: auto !important;
+
+  margin: 0 !important;
+
+  color: #171b22 !important;
+
+  font-size: 11.5px !important;
+
+  font-weight: 900 !important;
+
+  line-height: 1.28 !important;
+
+  letter-spacing: -0.01em;
+}
+
+.cardSurveyNote {
+  margin:
+    7px
+    0
+    0 !important;
+
+  color: #f21f2f !important;
+
+  font-size: 9.5px !important;
+
+  font-weight: 900 !important;
+
+  line-height: 1.3 !important;
+}
+
+.cardBottom {
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-top: auto;
+
+  padding-top: 8px;
+
+  border-top:
+    1px solid
+    #f1e4e6;
+}
+
+.visibleRate {
+  min-width: 0;
+}
+
+.visibleRate strong {
+  display: block;
+
+  color: #151920;
+
+  font-size: 11px;
+
+  font-weight: 950;
+
+  line-height: 1.15;
+
+  white-space: nowrap;
+}
+
+.addButton {
+  min-width: 58px !important;
+
+  height: 29px !important;
+
+  padding:
+    0
+    10px !important;
+
+  font-size: 8.5px !important;
+
+  font-weight: 900 !important;
+}
+
+.removeButton {
+  width: 29px !important;
+
+  height: 29px !important;
+}
+
+@media (max-width: 650px) {
+  .card {
+    height: 212px !important;
+
+    grid-template-rows:
+      104px
+      minmax(0, 1fr) !important;
+  }
+
+  .card h3 {
+    font-size: 10.5px !important;
+  }
+
+  .cardSurveyNote {
+    font-size: 9px !important;
+  }
+
+  .visibleRate strong {
+    font-size: 10px !important;
+  }
+}
+
+/* RENOVATION_RESPONSIVE_CARD_IMAGE_FINAL */
+
+/*
+  CARD + IMAGE RESPONSIVE SYSTEM
+  - No image cropping
+  - No zoom
+  - Image keeps original 640x280 ratio
+  - Card automatically follows its width
+*/
+
+.card {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  grid-template-rows: none !important;
+
+  overflow: hidden;
+
+  border-radius: 13px;
+}
+
+
+/* IMAGE AREA ALWAYS FOLLOWS CARD WIDTH */
+
+.cardMedia {
+  position: relative;
+
+  width: 100% !important;
+  height: auto !important;
+
+  flex: 0 0 auto;
+
+  aspect-ratio: 16 / 7 !important;
+
+  overflow: hidden;
+
+  background: #fff8f9;
+}
+
+
+/* NEVER CROP / NEVER ZOOM SERVICE IMAGE */
+
+.cardImage {
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: contain !important;
+  object-position: center center !important;
+
+  transform: none !important;
+
+  transition: none !important;
+}
+
+
+/* PLACEHOLDER ALSO STAYS CENTERED */
+
+.placeholderIcon {
+  top: 50% !important;
+  left: 50% !important;
+
+  transform:
+    translate(-50%, -50%) !important;
+}
+
+
+/* CONTENT AUTOMATICALLY FOLLOWS CARD */
+
+.cardBody {
+  width: 100%;
+
+  min-height: 104px;
+
+  flex: 1 1 auto;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  padding:
+    10px
+    11px
+    9px !important;
+}
+
+.card h3 {
+  min-height: 30px !important;
+
+  margin: 0 !important;
+
+  font-size:
+    clamp(
+      10px,
+      .72vw,
+      12px
+    ) !important;
+
+  line-height: 1.28 !important;
+}
+
+.cardSurveyNote {
+  margin:
+    5px
+    0
+    0 !important;
+
+  font-size:
+    clamp(
+      8px,
+      .58vw,
+      9.5px
+    ) !important;
+
+  line-height: 1.3 !important;
+}
+
+.cardBottom {
+  width: 100%;
+
+  margin-top: auto;
+}
+
+
+/* DESKTOP */
+
+.grid {
+  align-items: stretch;
+}
+
+
+/* TABLET */
+
+@media (max-width: 1160px) {
+
+  .cardMedia {
+    aspect-ratio: 16 / 7 !important;
+  }
+
+  .cardBody {
+    min-height: 100px;
+  }
+}
+
+
+/* PHONE */
+
+@media (max-width: 650px) {
+
+  .card {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .cardMedia {
+    width: 100% !important;
+    height: auto !important;
+
+    aspect-ratio: 16 / 7 !important;
+  }
+
+  .cardImage {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+
+  .cardBody {
+    min-height: 96px;
+
+    padding:
+      8px
+      9px
+      8px !important;
+  }
+
+  .card h3 {
+    min-height: 27px !important;
+
+    font-size: 10px !important;
+  }
+
+  .cardSurveyNote {
+    font-size: 8px !important;
+  }
+
+  .visibleRate strong {
+    font-size: 9.5px !important;
+  }
+
+  .addButton {
+    min-width: 52px !important;
+
+    height: 27px !important;
+  }
+}
+
+
+/* VERY SMALL PHONE */
+
+@media (max-width: 390px) {
+
+  .grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      ) !important;
+
+    gap: 6px !important;
+  }
+
+  .cardMedia {
+    aspect-ratio: 16 / 7 !important;
+  }
+
+  .cardBody {
+    min-height: 92px;
+  }
+
+  .card h3 {
+    font-size: 9px !important;
+  }
+
+  .cardSurveyNote {
+    font-size: 7.3px !important;
+  }
+
+  .visibleRate strong {
+    font-size: 8.5px !important;
+  }
+}
+
+/* RENOVATION_FLIPKART_RESPONSIVE_FINAL */
+
+/*
+  Same card structure on laptop and phone.
+  Whole card scales with available width.
+  Images never crop or zoom.
+*/
+
+.card {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  overflow: hidden !important;
+}
+
+/* Image height is calculated automatically from card width */
+.cardMedia {
+  position: relative !important;
+
+  width: 100% !important;
+  height: auto !important;
+
+  aspect-ratio: 16 / 7 !important;
+
+  flex: 0 0 auto !important;
+
+  overflow: hidden !important;
+
+  background: #fff8f9 !important;
+}
+
+/* Full image visible — NO CUT, NO ZOOM */
+.cardImage {
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: contain !important;
+  object-position: center center !important;
+
+  transform: none !important;
+}
+
+/* Content stays part of same card */
+.cardBody {
+  width: 100% !important;
+
+  flex: 1 1 auto !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  box-sizing: border-box !important;
+}
+
+.cardBottom {
+  margin-top: auto !important;
+}
+
+
+/* LARGE LAPTOP / DESKTOP */
+
+@media (min-width: 1501px) {
+  .grid {
+    grid-template-columns:
+      repeat(5, minmax(0, 1fr)) !important;
+  }
+}
+
+
+/* NORMAL LAPTOP */
+
+@media (min-width: 881px) and (max-width: 1500px) {
+  .grid {
+    grid-template-columns:
+      repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+
+/* TABLET */
+
+@media (min-width: 651px) and (max-width: 880px) {
+  .grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+
+/* PHONE — SAME CARD, ONLY SMALLER */
+
+@media (max-width: 650px) {
+  .grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 7px !important;
+  }
+
+  .card {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .cardMedia {
+    width: 100% !important;
+    height: auto !important;
+
+    aspect-ratio: 16 / 7 !important;
+  }
+
+  .cardImage {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: contain !important;
+  }
+
+  .cardBody {
+    padding:
+      8px
+      9px
+      8px !important;
+  }
+
+  .card h3 {
+    font-size: 10px !important;
+    line-height: 1.25 !important;
+  }
+
+  .cardSurveyNote {
+    font-size: 8px !important;
+    line-height: 1.25 !important;
+  }
+
+  .visibleRate strong {
+    font-size: 9.5px !important;
+  }
+
+  .addButton {
+    min-width: 50px !important;
+    height: 27px !important;
+  }
+}
+
+
+/* SMALL PHONE — STILL 2 CARDS */
+
+@media (max-width: 390px) {
+  .grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 6px !important;
+  }
+
+  .cardBody {
+    padding:
+      7px
+      8px
+      7px !important;
+  }
+
+  .card h3 {
+    font-size: 9px !important;
+  }
+
+  .cardSurveyNote {
+    font-size: 7px !important;
+  }
+
+  .visibleRate strong {
+    font-size: 8.5px !important;
+  }
+
+  .addButton {
+    min-width: 46px !important;
+    height: 25px !important;
+    font-size: 7.5px !important;
+  }
+}
+
+/* CITY_COOLIES_RENOVATION_RESPONSIVE_IMAGES_START */
+
+/*
+  Renovation card image system:
+  - Original 640 × 280 ratio
+  - Full image always visible
+  - No crop
+  - No zoom
+  - Automatic phone and laptop adjustment
+*/
+
+.cardMedia {
+  position: relative !important;
+
+  width: 100% !important;
+  height: auto !important;
+
+  aspect-ratio: 16 / 7 !important;
+
+  flex: 0 0 auto !important;
+
+  overflow: hidden !important;
+
+  background: #fff8f9 !important;
+}
+
+.cardImage {
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: contain !important;
+  object-position: center center !important;
+
+  transform: none !important;
+
+  transition: none !important;
+}
+
+.card:hover .cardImage {
+  transform: none !important;
+}
+
+.selectedImage {
+  object-fit: contain !important;
+  object-position: center center !important;
+
+  transform: none !important;
+
+  background: #fff8f9 !important;
+}
+
+@media (max-width: 650px) {
+  .cardMedia {
+    width: 100% !important;
+    height: auto !important;
+
+    aspect-ratio: 16 / 7 !important;
+  }
+
+  .cardImage {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+}
+
+/* CITY_COOLIES_RENOVATION_RESPONSIVE_IMAGES_END */
+
+/* RENOVATION_IMAGES_NO_CROP_START */
+
+.cardMedia {
+  position: relative !important;
+
+  width: 100% !important;
+  height: auto !important;
+
+  aspect-ratio: 16 / 7 !important;
+
+  overflow: hidden !important;
+
+  background: #fff8f9 !important;
+}
+
+.cardImage {
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: contain !important;
+  object-position: center center !important;
+
+  transform: none !important;
+  transition: none !important;
+}
+
+.card:hover .cardImage {
+  transform: none !important;
+}
+
+.selectedImage {
+  object-fit: contain !important;
+  object-position: center center !important;
+
+  transform: none !important;
+}
+
+@media (max-width: 650px) {
+  .cardMedia {
+    width: 100% !important;
+    height: auto !important;
+
+    aspect-ratio: 16 / 7 !important;
+  }
+
+  .cardImage {
+    width: 100% !important;
+    height: 100% !important;
+
+    object-fit: contain !important;
+    object-position: center center !important;
+  }
+}
+
+/* RENOVATION_IMAGES_NO_CROP_END */
+
+/* RENOVATION_SIMPLE_BOOKING_START */
+
+/* Larger service cards and images */
+
+.grid {
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr)) !important;
+
+  gap: 12px !important;
+
+  align-items: stretch;
+}
+
+.card {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  overflow: hidden !important;
+
+  border-radius: 14px !important;
+}
+
+.cardMedia {
+  position: relative !important;
+
+  width: 100% !important;
+  height: auto !important;
+
+  flex: 0 0 auto !important;
+
+  aspect-ratio: 16 / 7 !important;
+
+  overflow: hidden !important;
+
+  background: #fff8f9 !important;
+}
+
+.cardImage {
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: contain !important;
+  object-position: center center !important;
+
+  transform: none !important;
+}
+
+.cardBody {
+  width: 100% !important;
+  min-height: 112px !important;
+
+  flex: 1 1 auto !important;
+
+  box-sizing: border-box !important;
+}
+
+/* Simple booking action */
+
+.bookingAction {
+  width: 100%;
+
+  margin-top: 13px;
+}
+
+.bookingAction :global(button),
+.bookingAction > .bookButton {
+  width: 100% !important;
+  min-height: 46px !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  margin: 0 !important;
+  padding: 0 18px !important;
+
+  border: 0 !important;
+  border-radius: 10px !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff2b3c 0%,
+      #f21f2f 52%,
+      #dc1222 100%
+    ) !important;
+
+  box-shadow:
+    0 11px 24px
+    rgba(242, 31, 47, 0.22) !important;
+
+  color: #ffffff !important;
+
+  font: inherit !important;
+  font-size: 10px !important;
+  font-weight: 900 !important;
+
+  cursor: pointer !important;
+}
+
+.bookingAction > .bookButton:disabled {
+  box-shadow: none !important;
+
+  cursor: not-allowed !important;
+
+  opacity: 0.45 !important;
+}
+
+@media (max-width: 1300px) {
+  .grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 880px) {
+  .grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 8px !important;
+  }
+
+  .cardMedia {
+    aspect-ratio: 16 / 7 !important;
+  }
+
+  .cardImage {
+    object-fit: contain !important;
+    object-position: center !important;
+  }
+
+  .cardBody {
+    min-height: 102px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 6px !important;
+  }
+}
+
+/* RENOVATION_SIMPLE_BOOKING_END */

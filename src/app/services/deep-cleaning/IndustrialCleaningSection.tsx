@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { useState } from "react";
@@ -207,7 +207,7 @@ const featuredEstimate =
           <article className="cc-industrial__featured">
             <div className="cc-industrial__featured-media">
               <ServiceImage service={featuredService} priority />
-              <span className="cc-industrial__most-booked">★ Most Booked</span>
+              <span className="cc-industrial__most-booked">â˜… Most Booked</span>
             </div>
 
             <div className="cc-industrial__featured-content">
@@ -215,7 +215,7 @@ const featuredEstimate =
 
               <div className="cc-industrial__meta">
                 <span className="cc-industrial__rating">
-                  <b>★</b> {featuredService.rating} ({featuredService.reviewCount.toLocaleString("en-IN")})
+                  <b>â˜…</b> {featuredService.rating} ({featuredService.reviewCount.toLocaleString("en-IN")})
                 </span>
                 <span><ShieldIcon />Free site inspection</span>
                 <span><ClockIcon />{featuredService.duration}</span>
@@ -242,7 +242,7 @@ const featuredEstimate =
                     <small>{getIndustrialPricingUnitLabel(featuredService.pricingUnit)}</small>
                   </span>
                   <em id="industrial-area-help">
-                    Starts at ₹{featuredService.rate} / {getIndustrialPricingUnitLabel(featuredService.pricingUnit)}
+                    Starts at â‚¹{featuredService.rate} / {getIndustrialPricingUnitLabel(featuredService.pricingUnit)}
                   </em>
                 </label>
 
@@ -332,7 +332,7 @@ const featuredEstimate =
         <div className="cc-industrial__service-footer">
           <div>
             <strong>
-              ₹{service.rate} / {pricingUnitLabel}
+              â‚¹{service.rate} / {pricingUnitLabel}
             </strong>
 
             <small>
@@ -404,13 +404,13 @@ const featuredEstimate =
         </div>
 
         <p className="cc-industrial__estimate-note">
-          ⓘ Estimate only • Final price confirmed after inspection.
+          â“˜ Estimate only â€¢ Final price confirmed after inspection.
         </p>
 
        
         <div className="cc-industrial__assurance" aria-label="Booking assurances">
           <span><ShieldIcon />Free site inspection</span>
-          <span><WalletIcon />50% online advance & Cash on Service</span>
+          <span><WalletIcon />50% online advance & Secure Online Payment</span>
           <span><WhatsAppIcon />Easy WhatsApp confirmation</span>
         </div>
       </div>
@@ -1117,3 +1117,4 @@ const INDUSTRIAL_CLEANING_STYLES = `
     }
   }
 `;
+

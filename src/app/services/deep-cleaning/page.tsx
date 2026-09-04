@@ -3165,7 +3165,7 @@ function KitchenCleaningSection() {
 
             <span className="cc-kitchen__assurance-copy">
              <strong>Flexible Payment Options</strong>
-<small>50% Online Advance and Cash on Service</small>
+<small>50% Online Advance and Secure Online Payment</small>
             </span>
           </div>
 
@@ -3513,7 +3513,7 @@ function BathroomCleaningSection() {
     <ul className="cc-bathroom__custom-features">
   <li>Choose only the services you need</li>
   <li>Trusted itemized prices with no hidden charges</li>
-  <li>50% online advance & Cash on Service</li>
+  <li>50% online advance & Secure Online Payment</li>
 </ul>
     <div className="cc-bathroom__custom-action">
       <span>
@@ -3575,7 +3575,7 @@ function BathroomCleaningSection() {
 
     <span className="cc-bathroom__assurance-copy">
       <strong>Flexible Payment Options</strong>
-      <small>50% Online Advance & Cash on Service</small>
+      <small>50% Online Advance & Secure Online Payment</small>
     </span>
   </div>
 
@@ -3935,4 +3935,5 @@ return (
     </>
   );
 }
+
 

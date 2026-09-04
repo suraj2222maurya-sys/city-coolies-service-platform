@@ -1,4 +1,5 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { createHash } from "node:crypto";
 
 import {
   getRazorpayClient,
@@ -20,7 +21,12 @@ import { calculateOfficeCleaningPlan } from "@/lib/services/officeCleaningCatalo
 import { calculateVillaCleaningPlan } from "@/lib/services/villaCleaningCatalog";
 import { calculateUpholsteryCleaningPlan } from "@/lib/services/upholsteryCleaningCatalog";
 import { calculateWaterTankCleaningPlan } from "@/lib/services/waterTankCleaningCatalog";
+import { calculateApplianceRepairPlan } from "@/lib/services/applianceRepairCatalog";
+import { calculatePlumbingPlan, calculatePlumbingSiteVisit } from "@/lib/services/plumbingCatalog";
 
+import { calculatePaintingPlan, calculatePaintingSiteSurvey } from "@/lib/services/paintingCatalog";
+import { calculateCarpentryInteriorBooking, calculateCarpentryInteriorSurvey } from "@/lib/services/carpentryInteriorCatalog";
+import { calculateFabricationSurvey } from "@/lib/services/fabricationCatalog";
 type CreateOrderRequest = {
   packageId?: string;
   customServices?: unknown;
@@ -30,6 +36,7 @@ type TrustedService = {
   id: string;
   name: string;
   quantity: number;
+  days?: number;
   unitPrice: number;
   lineTotal: number;
 };
@@ -79,7 +86,17 @@ packageId === "upholstery-cleaning-plan";
 const isWaterTankCleaningPlan =
 packageId === "water-tank-cleaning-plan";
 
+const isApplianceRepairPlan =
+  packageId === "appliance-repair-plan";
+
+const isPlumbingPlan =
+  packageId === "plumbing-works-plan";
+
+    const isPaintingPlan =
+  packageId === "painting-works-plan";
+
     const isDynamicPlan =
+      isPaintingPlan ||
       isCustomHomeCleaning ||
       isCustomKitchenCleaning ||
       isCustomBathroomCleaning ||
@@ -89,7 +106,9 @@ packageId === "water-tank-cleaning-plan";
     isOfficeCleaningPlan ||
     isVillaCleaningPlan ||
 isUpholsteryCleaningPlan ||
-isWaterTankCleaningPlan;
+isWaterTankCleaningPlan ||
+      isPlumbingPlan ||
+      isApplianceRepairPlan;
 
     let serviceName: string;
     let originalPrice: number;
@@ -98,7 +117,13 @@ isWaterTankCleaningPlan;
     let trustedCustomServices: TrustedService[] = [];
 
     if (isDynamicPlan) {
-      const customPlan = isWaterTankCleaningPlan
+      const customPlan = isApplianceRepairPlan
+          ? calculateApplianceRepairPlan(body.customServices)
+          : (isPaintingPlan
+        ? calculatePaintingPlan(body.customServices)
+        : isPlumbingPlan
+        ? calculatePlumbingPlan(body.customServices)
+        : isWaterTankCleaningPlan
 ? calculateWaterTankCleaningPlan(body.customServices)
 : isUpholsteryCleaningPlan
 ? calculateUpholsteryCleaningPlan(body.customServices)
@@ -116,10 +141,16 @@ isWaterTankCleaningPlan;
             ? calculateCustomBathroomCleaningPlan(body.customServices)
             : isCustomKitchenCleaning
               ? calculateCustomKitchenCleaningPlan(body.customServices)
-              : calculateCustomCleaningPlan(body.customServices);
+              : calculateCustomCleaningPlan(body.customServices));
 
       if (!customPlan) {
-        const message = isWaterTankCleaningPlan
+        const message = isApplianceRepairPlan
+          ? "Please select at least one valid appliance service."
+          : (isPaintingPlan
+          ? "Please select a valid painting service."
+          : isPlumbingPlan
+          ? "Please select a valid plumbing service."
+          : isWaterTankCleaningPlan
   ? "Please select a valid tank capacity and quantity."
   : isUpholsteryCleaningPlan
   ? "Please select valid upholstery-cleaning quantities."
@@ -137,7 +168,7 @@ isWaterTankCleaningPlan;
               ? "Please select at least one valid bathroom-cleaning service."
               : isCustomKitchenCleaning
                 ? "Please select at least one valid kitchen-cleaning service."
-                : "Please select at least one valid cleaning service.";
+                : "Please select at least one valid cleaning service.");
 
         return NextResponse.json(
           {
@@ -148,7 +179,13 @@ isWaterTankCleaningPlan;
         );
       }
 
-      serviceName = isWaterTankCleaningPlan
+      serviceName = isApplianceRepairPlan
+          ? "Appliance Repair Plan"
+          : (isPaintingPlan
+        ? "Painting Works Booking"
+        : isPlumbingPlan
+        ? "Plumbing Works Booking"
+        : isWaterTankCleaningPlan
 ? "Water Tank Cleaning Plan"
 : isUpholsteryCleaningPlan
 ? "Mattress & Sofa Cleaning Plan"
@@ -166,14 +203,108 @@ isWaterTankCleaningPlan;
             ? "Custom Bathroom Cleaning Plan"
             : isCustomKitchenCleaning
               ? "Custom Kitchen Cleaning Plan"
-              : "Customized Cleaning Plan";
+              : "Customized Cleaning Plan");
 
       originalPrice = customPlan.total;
       offerPrice = customPlan.total;
       advanceAmount = customPlan.advanceAmount;
       trustedCustomServices = [...customPlan.services];
+    } else if (packageId === "carpentry-interior-booking") {
+      const plan = calculateCarpentryInteriorBooking(body.customServices);
+
+      if (!plan) {
+        return NextResponse.json(
+          { success: false, message: "Please select a valid carpentry or interior service." },
+          { status: 400 },
+        );
+      }
+
+      serviceName = plan.surveyFee > 0 ? "Carpentry & Interior Booking" : "Professional Carpenter Labour Booking";
+      originalPrice = plan.total;
+      offerPrice = plan.total;
+      advanceAmount = plan.advanceAmount;
+      trustedCustomServices = [...plan.services];
+    } else if (packageId === "carpentry-interior-site-survey") {
+      const survey = calculateCarpentryInteriorSurvey(body.customServices);
+
+      if (!survey) {
+        return NextResponse.json(
+          { success: false, message: "Please select at least one valid carpentry or interior service." },
+          { status: 400 },
+        );
+      }
+
+      serviceName = "Carpentry & Interior - Site Survey";
+      originalPrice = survey.total;
+      offerPrice = survey.total;
+      advanceAmount = survey.advanceAmount;
+      trustedCustomServices = [...survey.services];
+    } else if (packageId === "fabrication-site-survey") {
+      const fabricationSurvey = calculateFabricationSurvey(body.customServices);
+
+      if (!fabricationSurvey) {
+        return NextResponse.json(
+          { success: false, message: "Please select at least one valid fabrication requirement." },
+          { status: 400 },
+        );
+      }
+
+      serviceName = "Fabrication Works - Site Survey";
+      originalPrice = fabricationSurvey.total;
+      offerPrice = fabricationSurvey.total;
+      advanceAmount = fabricationSurvey.advanceAmount;
+      trustedCustomServices = [...fabricationSurvey.services];
+    } else if (packageId === "painting-site-survey") {
+      const survey = calculatePaintingSiteSurvey(body.customServices);
+
+      if (!survey) {
+        return NextResponse.json(
+          { success: false, message: "Please select at least one valid painting service." },
+          { status: 400 },
+        );
+      }
+
+      serviceName = "Painting Works - Site Survey";
+      originalPrice = 500;
+      offerPrice = 500;
+      advanceAmount = 500;
+      trustedCustomServices = [...survey.services];
+    } else if (
+      packageId === "plumbing-site-visit"
+    ) {
+      const siteVisit = calculatePlumbingSiteVisit(body.customServices);
+
+      if (!siteVisit) {
+        return NextResponse.json(
+          { success: false, message: "Please select a valid plumbing inspection service." },
+          { status: 400 },
+        );
+      }
+
+      serviceName = siteVisit.services[0]!.name;
+      originalPrice = siteVisit.total;
+      offerPrice = siteVisit.total;
+      advanceAmount = siteVisit.advanceAmount;
+      trustedCustomServices = [...siteVisit.services];
+    } else if (
+      packageId === "new-home-plumbing-site-visit"
+    ) {
+      serviceName = "New Home Complete Plumbing Work - Site Visit";
+      originalPrice = 500;
+      offerPrice = 500;
+      advanceAmount = 500;
+    } else if (
+      packageId ===
+      "full-house-electrical-site-survey"
+    ) {
+      serviceName =
+        "Full House Electrical Wiring - Site Survey";
+      originalPrice = 500;
+      offerPrice = 500;
+      advanceAmount = 500;
     } else {
-      const servicePackage = getServicePackage(packageId);
+      const servicePackage =
+        getServicePackage(packageId);
 
       if (!servicePackage) {
         return NextResponse.json(
@@ -187,10 +318,14 @@ isWaterTankCleaningPlan;
       }
 
       serviceName = servicePackage.name;
-      originalPrice = servicePackage.originalPrice;
-      offerPrice = servicePackage.offerPrice;
+      originalPrice =
+        servicePackage.originalPrice;
+      offerPrice =
+        servicePackage.offerPrice;
       advanceAmount =
-        calculateAdvanceAmount(servicePackage);
+        calculateAdvanceAmount(
+          servicePackage,
+        );
     }
 
     if (
@@ -210,7 +345,21 @@ isWaterTankCleaningPlan;
       .toString(36)
       .slice(2, 8)}`;
 
-    const customPlanType = isWaterTankCleaningPlan
+    const customPlanType = packageId === "carpentry-interior-booking"
+          ? "carpentry-interior-booking"
+          : packageId === "carpentry-interior-site-survey"
+          ? "carpentry-interior-site-survey"
+          : isApplianceRepairPlan
+          ? "appliance"
+          : (packageId === "painting-site-survey"
+? "painting-site-survey"
+: isPaintingPlan
+? "painting"
+: packageId === "plumbing-site-visit"
+? "plumbing-site-visit"
+: isPlumbingPlan
+? "plumbing"
+: isWaterTankCleaningPlan
 ? "water-tank"
 : isUpholsteryCleaningPlan
   ? "upholstery"
@@ -230,14 +379,17 @@ isWaterTankCleaningPlan;
             ? "kitchen"
             : isCustomHomeCleaning
               ? "home"
-              : "fixed";
+              : "fixed");
 
-    const customServiceIds = trustedCustomServices
+    const customServiceIdsRaw = trustedCustomServices
       .map(
         (service) =>
-          `${service.id}:${service.quantity}`,
+          `${service.id}:${service.quantity}${packageId === "carpentry-interior-booking" ? `:${service.days ?? 0}` : ""}`,
       )
       .join("|");
+    const customServiceIds = packageId === "carpentry-interior-booking" || packageId === "carpentry-interior-site-survey"
+      ? `sha256:${createHash("sha256").update(customServiceIdsRaw).digest("hex")}`
+      : customServiceIdsRaw;
 
     const razorpay = getRazorpayClient();
 
@@ -248,7 +400,20 @@ isWaterTankCleaningPlan;
       notes: {
         packageId,
         serviceName,
-        paymentType: "50_percent_advance",
+        paymentType:
+          packageId === "carpentry-interior-booking"
+            ? "full_booking_payment"
+          : packageId === "carpentry-interior-site-survey"
+            ? "full_site_survey_payment"
+          : packageId === "painting-site-survey"
+            ? "full_site_visit_payment"
+          : packageId === "plumbing-site-visit"
+            ? "full_site_visit_payment"
+            : packageId === "new-home-plumbing-site-visit"
+              ? "full_site_visit_payment"
+            : packageId === "full-house-electrical-site-survey"
+              ? "full_site_survey_payment"
+              : "50_percent_advance",
         customPlanType,
         customServiceIds,
       },
@@ -294,4 +459,3 @@ isWaterTankCleaningPlan;
     );
   }
 }
-

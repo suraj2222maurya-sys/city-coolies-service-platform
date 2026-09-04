@@ -383,7 +383,7 @@ export default function CobwebCleaningSection() {
           <span>
             <WalletIcon />
             <strong>
-              50% Online Advance or Cash on Service
+              50% Online Advance or Secure Online Payment
             </strong>
           </span>
 
@@ -981,3 +981,4 @@ const COBWEB_CLEANING_STYLES = `
     }
   }
 `;
+

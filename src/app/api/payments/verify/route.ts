@@ -1,4 +1,4 @@
-﻿import { createHmac, timingSafeEqual } from "node:crypto";
+import { createHmac, timingSafeEqual } from "node:crypto";
 
 import { NextResponse } from "next/server";
 
@@ -49,7 +49,18 @@ export async function POST(request: Request) {
       );
     }
 
-    const servicePackage = getServicePackage(packageId);
+    const servicePackage =
+      packageId ===
+      "full-house-electrical-site-survey"
+        ? {
+            id: "full-house-electrical-site-survey",
+            name:
+              "Full House Electrical Wiring - Site Survey",
+            originalPrice: 500,
+            offerPrice: 500,
+            advancePercentage: 100,
+          }
+        : getServicePackage(packageId);
 
     if (!servicePackage) {
       return NextResponse.json(

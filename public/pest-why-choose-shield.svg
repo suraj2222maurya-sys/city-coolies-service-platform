@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 210">
+  <defs>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff6c78"/><stop offset=".36" stop-color="#ff1d34"/><stop offset=".72" stop-color="#db001a"/><stop offset="1" stop-color="#a90014"/>
+    </linearGradient>
+    <linearGradient id="face" x1=".12" y1="0" x2=".88" y2="1">
+      <stop offset="0" stop-color="#ff4c5d"/><stop offset=".42" stop-color="#ef0d27"/><stop offset="1" stop-color="#c00018"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".38" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="shadow" x="-40%" y="-30%" width="180%" height="190%">
+      <feDropShadow dx="0" dy="12" stdDeviation="9" flood-color="#9b0014" flood-opacity=".28"/>
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <path d="M90 8 165 37l-8 91c-5 33-32 57-67 74-35-17-62-41-67-74l-8-91Z" fill="url(#edge)" filter="url(#shadow)"/>
+  <path d="M90 19 153 43l-7 80c-4 27-25 47-56 64-31-17-52-37-56-64l-7-80Z" fill="url(#face)" stroke="#ff8190" stroke-width="2"/>
+  <path d="M90 19 27 43l7 80c4 27 25 47 56 64Z" fill="url(#shine)" opacity=".38"/>
+  <path d="M90 30v145" stroke="#ff8290" stroke-opacity=".38" stroke-width="2"/>
+  <path d="M39 52 90 32l51 20" fill="none" stroke="#fff" stroke-opacity=".34" stroke-width="3"/>
+  <circle cx="90" cy="99" r="45" fill="#e60a23" fill-opacity=".72" stroke="#fff" stroke-width="4"/>
+  <circle cx="90" cy="99" r="38" fill="none" stroke="#ff8090" stroke-opacity=".36" stroke-width="2"/>
+  <path d="m69 99 14 15 30-35" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>
+  <path d="M49 50c17-9 35-14 55-16" fill="none" stroke="#fff" stroke-opacity=".72" stroke-width="5" stroke-linecap="round"/>
+</svg>

@@ -31,7 +31,7 @@ export const WATER_TANK_CLEANING_SERVICES: readonly WaterTankCleaningService[] =
   {
     id: "complete-water-tank-cleaning",
     name: "Complete Water Tank Cleaning",
-    image: "/water-tank-cleaning.webp",
+    image: "/water-tank-cleaning-service.png",
     description: "Complete dewatering, sludge removal, internal scrubbing, sanitization and final rinse.",
     rating: 4.9,
     reviewCount: 1386,
@@ -62,17 +62,7 @@ export const WATER_TANK_CLEANING_SERVICES: readonly WaterTankCleaningService[] =
     includes: ["Sediment Removal", "Pressure Washing", "Disinfection"],
     capacities: standardCapacities("underground-sump-cleaning", 1.45),
   },
-  {
-    id: "plastic-water-tank-deep-cleaning",
-    name: "Plastic Water Tank Deep Cleaning",
-    image: "/plastic-water-tank-deep-cleaning.webp",
-    description: "Food-safe cleaning care for plastic tanks without damaging internal surfaces.",
-    rating: 4.8,
-    reviewCount: 684,
-    duration: "1–2 hrs",
-    includes: ["Gentle Scrubbing", "Slime Removal", "Safe Sanitization"],
-    capacities: standardCapacities("plastic-water-tank-deep-cleaning", 0.95),
-  },
+  
   {
     id: "concrete-water-tank-cleaning",
     name: "Concrete Water Tank Cleaning",
