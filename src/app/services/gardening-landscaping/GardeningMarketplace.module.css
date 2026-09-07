@@ -1,0 +1,1537 @@
+.marketplace {
+  --cc-red: #f21f2f;
+  --cc-red-dark: #dc1424;
+  --cc-ink: #20242c;
+  --cc-muted: #636b77;
+  --cc-line: rgba(35, 40, 48, 0.1);
+
+  width: 100%;
+
+  padding-bottom: 42px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fffafb 0%,
+      #ffffff 34%,
+      #fffafa 100%
+    );
+}
+
+.layout {
+  width:
+    min(
+      calc(100% - 28px),
+      1820px
+    );
+
+  margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    330px;
+
+  align-items: start;
+
+  gap: 15px;
+}
+
+.grid {
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(245px, 1fr)
+    );
+
+  align-items: start;
+
+  gap: 13px;
+}
+
+.card {
+  min-width: 0;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(36, 41, 49, 0.1);
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 8px 25px rgba(35, 24, 28, 0.045);
+
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+
+  border-color:
+    rgba(242, 31, 47, 0.22);
+
+  box-shadow:
+    0 16px 34px rgba(68, 19, 27, 0.09);
+}
+
+.cardSelected {
+  border-color:
+    rgba(242, 31, 47, 0.32);
+
+  box-shadow:
+    0 14px 31px rgba(242, 31, 47, 0.1);
+}
+
+.cardMedia {
+  position: relative;
+
+  width: 100%;
+  aspect-ratio: 16 / 7;
+
+  overflow: hidden;
+
+  background: #fff4f6;
+}
+
+.cardImage {
+  object-fit: cover;
+  object-position: center;
+
+  transition:
+    filter 260ms ease;
+}
+
+.card:hover .cardImage {
+  filter:
+    saturate(1.05)
+    brightness(1.02);
+}
+
+.labourBadge,
+.toolsBadge,
+.addedBadge {
+  position: absolute;
+  z-index: 2;
+
+  min-height: 24px;
+
+  display: inline-flex;
+  align-items: center;
+
+  padding:
+    0
+    8px;
+
+  border-radius: 8px;
+
+  backdrop-filter: blur(10px);
+
+  font-size: 7px;
+  font-weight: 900;
+}
+
+.labourBadge,
+.toolsBadge {
+  top: 8px;
+  left: 8px;
+}
+
+.labourBadge {
+  color: #313640;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.7);
+
+  background:
+    rgba(255, 255, 255, 0.88);
+}
+
+.toolsBadge {
+  color: #ffffff;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.26);
+
+  background:
+    rgba(242, 31, 47, 0.9);
+}
+
+.addedBadge {
+  top: 8px;
+  right: 8px;
+
+  color: var(--cc-red);
+
+  border:
+    1px solid
+    rgba(242, 31, 47, 0.16);
+
+  background:
+    rgba(255, 255, 255, 0.92);
+}
+
+.cardBody {
+  padding:
+    12px
+    13px
+    13px;
+}
+
+.cardHeading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 10px;
+}
+
+.cardHeading > div {
+  min-width: 0;
+}
+
+.cardHeading span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: var(--cc-red);
+
+  font-size: 7px;
+  font-weight: 900;
+
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.cardHeading h3 {
+  margin: 0;
+
+  color: var(--cc-ink);
+
+  font-size: 12px;
+  font-weight: 920;
+
+  line-height: 1.2;
+}
+
+.cardHeading > strong {
+  flex-shrink: 0;
+
+  color: var(--cc-red);
+
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.includes {
+  display: grid;
+
+  gap: 5px;
+
+  margin:
+    10px
+    0
+    0;
+
+  padding: 0;
+
+  list-style: none;
+}
+
+.includes li {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  color: #505864;
+
+  font-size: 8px;
+  font-weight: 650;
+}
+
+.includes svg {
+  width: 13px;
+  height: 13px;
+
+  flex:
+    0
+    0
+    13px;
+
+  fill: none;
+
+  stroke: var(--cc-red);
+  stroke-width: 2;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cardNote {
+  min-height: 28px;
+
+  margin:
+    9px
+    0
+    0;
+
+  padding-top: 8px;
+
+  border-top:
+    1px solid
+    rgba(242, 31, 47, 0.09);
+
+  color: #757c87;
+
+  font-size: 7px;
+  line-height: 1.4;
+}
+
+.cardFooter {
+  min-height: 39px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin-top: 8px;
+}
+
+.cardFooter small {
+  color: #7c838d;
+
+  font-size: 7px;
+  font-weight: 750;
+}
+
+.addButton {
+  min-width: 72px;
+  min-height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  border:
+    1px solid
+    rgba(242, 31, 47, 0.28);
+
+  border-radius: 10px;
+
+  color: var(--cc-red);
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #fff4f6
+    );
+
+  box-shadow:
+    0 6px 15px rgba(242, 31, 47, 0.06);
+
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.addButton:hover {
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff3949,
+      var(--cc-red),
+      var(--cc-red-dark)
+    );
+
+  box-shadow:
+    0 10px 20px rgba(242, 31, 47, 0.2);
+
+  transform: translateY(-1px);
+}
+
+.addButton svg {
+  width: 13px;
+  height: 13px;
+
+  fill: none;
+
+  stroke: currentColor;
+  stroke-width: 2;
+
+  stroke-linecap: round;
+}
+
+.booking {
+  position: sticky;
+  top: 18px;
+
+  overflow: hidden;
+
+  padding:
+    16px
+    13px
+    14px;
+
+  border:
+    1px solid
+    rgba(242, 31, 47, 0.16);
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      160deg,
+      #ffffff 0%,
+      #fff7f8 55%,
+      #fff1f3 100%
+    );
+
+  box-shadow:
+    0 17px 42px rgba(72, 18, 28, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.booking::before {
+  content: "";
+
+  position: absolute;
+
+  top: -70px;
+  right: -65px;
+
+  width: 160px;
+  height: 160px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(242, 31, 47, 0.07);
+
+  filter: blur(35px);
+
+  pointer-events: none;
+}
+
+.bookingHeader {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 10px;
+}
+
+.bookingHeader span {
+  display: block;
+
+  color: var(--cc-red);
+
+  font-size: 7px;
+  font-weight: 950;
+
+  letter-spacing: 0.11em;
+}
+
+.bookingHeader h2 {
+  margin:
+    5px
+    0
+    0;
+
+  color: var(--cc-ink);
+
+  font-size: 12px;
+  font-weight: 920;
+}
+
+.personCount {
+  min-height: 25px;
+
+  display: inline-flex;
+  align-items: center;
+
+  padding:
+    0
+    8px;
+
+  border-radius: 999px;
+
+  color: var(--cc-red);
+
+  background:
+    rgba(242, 31, 47, 0.09);
+
+  font-size: 7px;
+  font-weight: 900;
+}
+
+.emptyBooking {
+  min-height: 88px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 15px;
+
+  padding:
+    12px;
+
+  border:
+    1px dashed
+    rgba(242, 31, 47, 0.24);
+
+  border-radius: 13px;
+
+  background:
+    rgba(255, 255, 255, 0.72);
+}
+
+.emptyIcon {
+  width: 38px;
+  height: 38px;
+
+  flex:
+    0
+    0
+    38px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  color: var(--cc-red);
+
+  background:
+    #ffecef;
+}
+
+.emptyIcon svg {
+  width: 20px;
+  height: 20px;
+
+  fill: none;
+
+  stroke: currentColor;
+  stroke-width: 1.6;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.emptyBooking strong {
+  color: #323741;
+
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.emptyBooking p {
+  margin:
+    4px
+    0
+    0;
+
+  color: #757c86;
+
+  font-size: 7px;
+}
+
+.selectedList {
+  display: grid;
+
+  gap: 8px;
+
+  margin-top: 14px;
+}
+
+.selectedItem {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    54px
+    minmax(0, 1fr);
+
+  gap: 9px;
+
+  padding:
+    9px;
+
+  border:
+    1px solid
+    rgba(35, 40, 48, 0.09);
+
+  border-radius: 12px;
+
+  background:
+    rgba(255, 255, 255, 0.88);
+
+  box-shadow:
+    0 6px 17px rgba(35, 24, 28, 0.04);
+}
+
+.selectedImage {
+  position: relative;
+
+  width: 54px;
+  height: 42px;
+
+  overflow: hidden;
+
+  border-radius: 8px;
+
+  background: #fff0f2;
+}
+
+.selectedImage img {
+  object-fit: cover;
+}
+
+.selectedDetails {
+  min-width: 0;
+
+  padding-right: 76px;
+}
+
+.selectedDetails strong {
+  display: block;
+
+  overflow: hidden;
+
+  color: #303640;
+
+  font-size: 8px;
+  font-weight: 900;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.selectedDetails span,
+.selectedDetails small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #6c7480;
+
+  font-size: 6.5px;
+  font-weight: 650;
+}
+
+.selectedDetails small {
+  color: var(--cc-red);
+}
+
+.quantityControl {
+  position: absolute;
+
+  right: 8px;
+  bottom: 9px;
+
+  height: 27px;
+
+  display: inline-grid;
+
+  grid-template-columns:
+    25px
+    24px
+    25px;
+
+  align-items: center;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(242, 31, 47, 0.18);
+
+  border-radius: 9px;
+
+  background: #ffffff;
+}
+
+.quantityControl button {
+  height: 100%;
+
+  border: 0;
+
+  color: var(--cc-red);
+
+  background: #fff4f6;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 850;
+
+  cursor: pointer;
+}
+
+.quantityControl strong {
+  color: #2d323a;
+
+  font-size: 8px;
+  text-align: center;
+}
+
+.summary {
+  display: grid;
+
+  gap: 10px;
+
+  margin-top: 14px;
+
+  padding:
+    12px;
+
+  border:
+    1px solid
+    rgba(35, 40, 48, 0.09);
+
+  border-radius: 13px;
+
+  background:
+    rgba(255, 255, 255, 0.9);
+}
+
+.summary > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  color: #68707b;
+
+  font-size: 7px;
+}
+
+.summary strong {
+  color: #2c3139;
+
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.totalRow {
+  margin-top: 2px;
+
+  padding-top: 10px;
+
+  border-top:
+    1px solid
+    rgba(242, 31, 47, 0.13);
+}
+
+.totalRow span,
+.totalRow strong {
+  color: var(--cc-red) !important;
+
+  font-weight: 950 !important;
+}
+
+.totalRow strong {
+  font-size: 14px !important;
+}
+
+.materialNote {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 8px;
+
+  margin-top: 11px;
+
+  padding:
+    9px;
+
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff8e8,
+      #fff2e2
+    );
+}
+
+.materialNote > span {
+  width: 17px;
+  height: 17px;
+
+  flex:
+    0
+    0
+    17px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  color: #9a6412;
+
+  background: #ffffff;
+
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.materialNote p {
+  margin: 0;
+
+  color: #745a35;
+
+  font-size: 6.5px;
+  line-height: 1.45;
+}
+
+.bookButton {
+  width: 100%;
+  min-height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  margin-top: 12px;
+
+  border: 0;
+
+  border-radius: 12px;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff3949,
+      var(--cc-red),
+      var(--cc-red-dark)
+    );
+
+  box-shadow:
+    0 12px 25px rgba(242, 31, 47, 0.21);
+
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease;
+}
+
+.bookButton:not(:disabled):hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 16px 30px rgba(242, 31, 47, 0.28);
+}
+
+.bookButton:disabled {
+  opacity: 0.48;
+
+  cursor: not-allowed;
+
+  box-shadow: none;
+}
+
+.bookButton svg {
+  width: 16px;
+  height: 16px;
+
+  fill: none;
+
+  stroke: currentColor;
+  stroke-width: 1.8;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.secureNote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  margin-top: 10px;
+
+  color: #6e7580;
+
+  font-size: 6.5px;
+  font-weight: 700;
+}
+
+.secureNote svg {
+  width: 13px;
+  height: 13px;
+
+  fill: none;
+
+  stroke: var(--cc-red);
+  stroke-width: 1.7;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 1180px) {
+  .layout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      310px;
+  }
+
+  .grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+}
+
+@media (max-width: 860px) {
+  .layout {
+    grid-template-columns:
+      1fr;
+  }
+
+  .booking {
+    position: relative;
+    top: auto;
+  }
+}
+
+@media (max-width: 580px) {
+  .marketplace {
+    padding-bottom: 28px;
+  }
+
+  .layout {
+    width:
+      calc(100% - 16px);
+
+    gap: 11px;
+  }
+
+  .grid {
+    grid-template-columns:
+      1fr
+      1fr;
+
+    gap: 8px;
+  }
+
+  .card {
+    border-radius: 13px;
+  }
+
+  .cardBody {
+    padding:
+      9px
+      8px
+      10px;
+  }
+
+  .cardHeading {
+    display: block;
+  }
+
+  .cardHeading h3 {
+    font-size: 9px;
+  }
+
+  .cardHeading > strong {
+    display: block;
+
+    margin-top: 6px;
+
+    font-size: 10px;
+  }
+
+  .includes {
+    gap: 4px;
+  }
+
+  .includes li {
+    align-items: flex-start;
+
+    font-size: 6.5px;
+  }
+
+  .cardNote {
+    min-height: 34px;
+
+    font-size: 6px;
+  }
+
+  .cardFooter {
+    align-items: center;
+  }
+
+  .addButton {
+    min-width: 57px;
+    min-height: 31px;
+
+    font-size: 8px;
+  }
+
+  .labourBadge,
+  .toolsBadge,
+  .addedBadge {
+    min-height: 20px;
+
+    padding:
+      0
+      5px;
+
+    font-size: 5.5px;
+  }
+
+  .booking {
+    border-radius: 15px;
+  }
+}
+
+@media (max-width: 390px) {
+  .grid {
+    grid-template-columns:
+      1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .cardImage,
+  .addButton,
+  .bookButton {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* CITY_COOLIES_GARDENER_IMAGE_NATURAL_RATIO_V2 */
+
+/*
+  Images are exactly 640 × 280.
+  The 16:7 media ratio prevents zoom, crop and stretching.
+*/
+
+.grid {
+  align-items: start;
+  grid-auto-rows: max-content;
+}
+
+.card {
+  height: auto !important;
+  min-height: 0 !important;
+  align-self: start;
+}
+
+.cardMedia {
+  width: 100%;
+  height: auto !important;
+
+  aspect-ratio: 16 / 7 !important;
+
+  background: #fff4f6;
+}
+
+.cardImage {
+  object-fit: contain !important;
+  object-position: center center !important;
+
+  transform: none !important;
+  scale: 1 !important;
+
+  transition: none !important;
+}
+
+.card:hover .cardImage {
+  object-fit: contain !important;
+
+  transform: none !important;
+  scale: 1 !important;
+
+  filter: none !important;
+}
+
+.cardBody {
+  height: auto !important;
+  min-height: 0 !important;
+  padding-bottom: 9px;
+}
+
+.cardNote {
+  min-height: 0;
+  margin-top: 7px;
+  padding-top: 7px;
+}
+
+.cardFooter {
+  min-height: 33px;
+
+  justify-content: flex-end;
+  align-items: center;
+
+  margin-top: 7px;
+}
+
+@media (max-width: 1180px) {
+  .cardMedia {
+    height: auto !important;
+    aspect-ratio: 16 / 7 !important;
+  }
+}
+
+@media (max-width: 580px) {
+  .cardMedia {
+    height: auto !important;
+    aspect-ratio: 16 / 7 !important;
+  }
+
+  .cardBody {
+    padding-bottom: 8px;
+  }
+
+  .cardFooter {
+    min-height: 31px;
+    margin-top: 6px;
+  }
+}
+
+@media (max-width: 390px) {
+  .cardMedia {
+    height: auto !important;
+    aspect-ratio: 16 / 7 !important;
+  }
+}
+
+/* CITY_COOLIES_GARDENER_COMPACT_REDESIGN_V3 */
+
+/*
+  Compact service-card redesign:
+  image + name + price + Add button only.
+*/
+
+.grid {
+  align-items: start;
+  grid-auto-rows: max-content;
+}
+
+.card {
+  height: auto !important;
+  min-height: 0 !important;
+
+  align-self: start;
+
+  overflow: hidden;
+
+  border-radius: 14px;
+}
+
+.cardMedia {
+  width: 100%;
+  height: auto !important;
+
+  aspect-ratio: 16 / 7 !important;
+
+  overflow: hidden;
+
+  background: #fff3f5;
+}
+
+.cardImage {
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: contain !important;
+  object-position: center center !important;
+
+  transform: none !important;
+  scale: 1 !important;
+
+  filter: none !important;
+  transition: none !important;
+}
+
+.card:hover .cardImage {
+  transform: none !important;
+  scale: 1 !important;
+  filter: none !important;
+}
+
+.compactBody {
+  padding:
+    10px
+    11px
+    10px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #fffafb 100%
+    );
+}
+
+.compactHeading {
+  min-width: 0;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 9px;
+}
+
+.compactHeading > div {
+  min-width: 0;
+}
+
+.compactDuration {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: var(--cc-red);
+
+  font-size: 7px;
+  font-weight: 950;
+
+  line-height: 1;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.compactHeading h3 {
+  margin: 0;
+
+  overflow: hidden;
+
+  color: var(--cc-ink);
+
+  font-size: 11px;
+  font-weight: 920;
+
+  line-height: 1.2;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.compactPrice {
+  flex-shrink: 0;
+
+  color: var(--cc-red);
+
+  font-size: 11px;
+  font-weight: 950;
+
+  line-height: 1.2;
+}
+
+.compactFooter {
+  min-height: 34px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 8px;
+
+  margin-top: 8px;
+  padding-top: 7px;
+
+  border-top:
+    1px solid
+    rgba(242, 31, 47, 0.1);
+}
+
+.compactFooter > span {
+  color: #747b86;
+
+  font-size: 6.5px;
+  font-weight: 750;
+}
+
+.compactFooter .addButton {
+  min-width: 68px;
+  min-height: 31px;
+
+  padding:
+    0
+    11px;
+
+  border-radius: 9px;
+}
+
+.compactFooter .addButton svg {
+  width: 12px;
+  height: 12px;
+}
+
+@media (max-width: 1180px) {
+  .cardMedia {
+    height: auto !important;
+    aspect-ratio: 16 / 7 !important;
+  }
+}
+
+@media (max-width: 580px) {
+  .card {
+    border-radius: 12px;
+  }
+
+  .cardMedia {
+    height: auto !important;
+    aspect-ratio: 16 / 7 !important;
+  }
+
+  .compactBody {
+    padding:
+      8px
+      7px
+      8px;
+  }
+
+  .compactDuration {
+    font-size: 6px;
+  }
+
+  .compactHeading {
+    display: block;
+  }
+
+  .compactHeading h3 {
+    margin-right: 0;
+
+    font-size: 8px;
+  }
+
+  .compactPrice {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 9px;
+  }
+
+  .compactFooter {
+    min-height: 30px;
+
+    margin-top: 6px;
+    padding-top: 6px;
+  }
+
+  .compactFooter > span {
+    display: none;
+  }
+
+  .compactFooter .addButton {
+    min-width: 58px;
+    min-height: 29px;
+
+    margin-left: auto;
+
+    padding:
+      0
+      8px;
+
+    font-size: 7px;
+  }
+}
+
+@media (max-width: 390px) {
+  .cardMedia {
+    height: auto !important;
+    aspect-ratio: 16 / 7 !important;
+  }
+
+  .compactHeading h3 {
+    font-size: 10px;
+  }
+}
+
+/* CITY_COOLIES_GARDENER_FULL_IMAGE_START */
+
+/* Card size same rahega; image ka original 640x280 ratio rahega. */
+.card {
+  grid-template-rows: auto minmax(0, 1fr) !important;
+}
+
+/* Image area card width ke saath automatically resize hogi. */
+.cardMedia {
+  position: relative !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 7 !important;
+  overflow: hidden !important;
+  background: #fff8f9 !important;
+}
+
+/* No zoom, no crop, no transform. */
+.cardImage {
+  position: relative !important;
+  inset: auto !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  aspect-ratio: 16 / 7 !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  scale: 1 !important;
+  filter: none !important;
+  transition: none !important;
+}
+
+.card:hover .cardImage {
+  transform: none !important;
+  scale: 1 !important;
+}
+
+@media (max-width: 650px) {
+  .cardMedia,
+  .cardImage {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 7 !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    transform: none !important;
+    scale: 1 !important;
+  }
+}
+
+/* CITY_COOLIES_GARDENER_FULL_IMAGE_END */
+
+/* GARDENER_IMAGE_NO_CROP_FINAL_START */
+
+/* Card ka existing size same rahega. */
+.card {
+  overflow: hidden !important;
+}
+
+/* Exact 640x280 image ratio. */
+.cardMedia {
+  position: relative !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 7 !important;
+  flex: 0 0 auto !important;
+  overflow: hidden !important;
+  background: #fff8f9 !important;
+}
+
+/* Complete image visible: no zoom and no crop. */
+.cardImage {
+  position: relative !important;
+  inset: auto !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 7 !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  scale: 1 !important;
+  transition: none !important;
+}
+
+/* Hover par bhi zoom nahi hoga. */
+.card:hover .cardImage,
+.cardSelected .cardImage {
+  transform: none !important;
+  scale: 1 !important;
+}
+
+@media (max-width: 650px) {
+  .cardMedia,
+  .cardImage {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 7 !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    transform: none !important;
+    scale: 1 !important;
+  }
+}
+
+/* GARDENER_IMAGE_NO_CROP_FINAL_END */
+
+/* CITY COOLIES NO-CROP IMAGE FIT START */
+.cardMedia {
+  background: #f7f8f4;
+}
+
+.cardImage {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16 / 7;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: none !important;
+}
+
+.card:hover .cardImage {
+  transform: none !important;
+}
+
+.selectedImage img {
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: none !important;
+}
+/* CITY COOLIES NO-CROP IMAGE FIT END */

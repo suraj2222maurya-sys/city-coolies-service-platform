@@ -5,7 +5,7 @@ import type { FormEvent } from "react";
 import { createPortal } from "react-dom";
 import Script from "next/script";
 
-type PaymentMethod = "advance";
+type PaymentMethod = "advance" | "online" | "cod";
 type CustomBookingItem = {
   id: string;
   name: string;
@@ -22,7 +22,9 @@ type ServiceBookingModalProps = {
   customServices?: readonly CustomBookingItem[];
   fullPayment?: boolean;
   quoteOnly?: boolean;
+  productCheckout?: boolean;
 };
+/* CITY COOLIES PRODUCT CHECKOUT SUPPORT */
 type BookingResponse = {
   success?: boolean;
   message?: string;
@@ -1210,6 +1212,42 @@ const BOOKING_MODAL_STYLES = `
       grid-template-columns: 1fr;
     }
   }
+  /* CITY COOLIES PRODUCT PAYMENT ROW */
+  .cc-booking-modal__payment-options:has(
+    input[value="online"]
+  ) {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .cc-booking-modal__payment-options:has(
+    input[value="online"]
+  ) .cc-booking-modal__payment-option span {
+    min-height: 62px;
+    padding: 11px 13px;
+  }
+
+  .cc-booking-modal__payment-options:has(
+    input[value="online"]
+  ) .cc-booking-modal__payment-option strong {
+    font-size: 0.88rem;
+  }
+
+  .cc-booking-modal__payment-options:has(
+    input[value="online"]
+  ) .cc-booking-modal__payment-option small {
+    font-size: 0.72rem;
+    line-height: 1.35;
+  }
+
+  @media (max-width: 620px) {
+    .cc-booking-modal__payment-options:has(
+      input[value="online"]
+    ) {
+      grid-template-columns: 1fr;
+    }
+  }
 `;
 const CUSTOM_CLEANING_STYLES = `
   .cc-custom-builder {
@@ -1504,6 +1542,7 @@ export default function ServiceBookingModal({
   customServices = [],
   fullPayment = false,
   quoteOnly = false,
+  productCheckout = false,
 }: ServiceBookingModalProps) {
   const titleId = useId();
   const [isOpen, setIsOpen] = useState(false);
@@ -1521,29 +1560,37 @@ export default function ServiceBookingModal({
   const [locationMessage, setLocationMessage] = useState("");
   const advanceAmount = useMemo(
     () =>
-      fullPayment
+      productCheckout || fullPayment
         ? offerPrice
         : Math.round(offerPrice * 0.5),
-    [fullPayment, offerPrice],
+    [fullPayment, offerPrice, productCheckout],
   );
 
   const payableNow =
     quoteOnly
       ? 0
-      : fullPayment
-        ? offerPrice
-        : paymentMethod === "advance"
-          ? advanceAmount
-          : 0;
+      : productCheckout
+        ? paymentMethod === "online"
+          ? offerPrice
+          : 0
+        : fullPayment
+          ? offerPrice
+          : paymentMethod === "advance"
+            ? advanceAmount
+            : 0;
 
   const remainingAmount =
     quoteOnly
       ? 0
-      : fullPayment
-        ? 0
-        : paymentMethod === "advance"
-          ? offerPrice - advanceAmount
-          : offerPrice;
+      : productCheckout
+        ? paymentMethod === "cod"
+          ? offerPrice
+          : 0
+        : fullPayment
+          ? 0
+          : paymentMethod === "advance"
+            ? offerPrice - advanceAmount
+            : offerPrice;
 useEffect(() => {
     if (!isOpen) {
       return;
@@ -1604,7 +1651,7 @@ useEffect(() => {
     setMessage("");
     setLocationData(null);
     setLocationMessage("");
-    setPaymentMethod("advance");
+    setPaymentMethod(productCheckout ? "online" : "advance");
     setIsOpen(true);
   }
 
@@ -1650,7 +1697,7 @@ useEffect(() => {
     setMessage("");
 
     try {
-      if (quoteOnly) {
+      if (quoteOnly || (productCheckout && paymentMethod === "cod")) {
         const response = await fetch("/api/bookings", {
           method: "POST",
           headers: {
@@ -1699,9 +1746,18 @@ useEffect(() => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-  packageId,
-  customServices,
-}),
+          packageId,
+          customServices,
+          fullPayment: productCheckout || fullPayment,
+          paymentType: productCheckout
+            ? "full"
+            : fullPayment
+              ? "full"
+              : "advance",
+          requestedAmount: productCheckout
+            ? offerPrice
+            : undefined,
+        }),
       });
 
       const orderResult =
@@ -1725,7 +1781,7 @@ useEffect(() => {
         amount: orderResult.amount,
         currency: orderResult.currency,
         name: "City Coolies Pvt. Ltd.",
-        description: `${serviceName} - ${fullPayment ? "Site Visit / Survey Payment" : "50% Advance"}`,
+        description: `${serviceName} - ${productCheckout ? "Online Product Payment" : fullPayment ? "Site Visit / Survey Payment" : "50% Advance"}`,
         order_id: orderResult.orderId,
 
         prefill: {
@@ -1771,7 +1827,7 @@ useEffect(() => {
               },
               body: JSON.stringify({
                 packageId,
-                paymentMethod: "advance",
+                paymentMethod: productCheckout ? "full" : "advance",
                 customer,
                 customServices,
                 payment: {
@@ -2061,7 +2117,49 @@ useEffect(() => {
                   </div>
                 </div>
 
-                {quoteOnly ? (
+                {productCheckout ? (
+                  <div className="cc-booking-modal__payment">
+                    <span className="cc-booking-modal__payment-title">
+                      Choose Payment Method
+                    </span>
+
+                    <div className="cc-booking-modal__payment-options">
+                      <label className="cc-booking-modal__payment-option">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="online"
+                          checked={paymentMethod === "online"}
+                          onChange={() => setPaymentMethod("online")}
+                        />
+
+                        <span>
+                          <strong>Online Payment</strong>
+                          <small>
+                            Pay the complete product amount securely online.
+                          </small>
+                        </span>
+                      </label>
+
+                      <label className="cc-booking-modal__payment-option">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          value="cod"
+                          checked={paymentMethod === "cod"}
+                          onChange={() => setPaymentMethod("cod")}
+                        />
+
+                        <span>
+                          <strong>Cash on Delivery</strong>
+                          <small>
+                            Pay when your products are delivered.
+                          </small>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                ) : quoteOnly ? (
                 <div className="cc-booking-modal__payment">
                   <span className="cc-booking-modal__payment-title">
                     Quotation Request
@@ -2176,9 +2274,13 @@ useEffect(() => {
                 >
                   {status === "submitting"
                     ? "Please wait..."
-                    : quoteOnly
-                      ? "Submit Quote Request"
-                      : fullPayment
+                    : productCheckout
+                      ? paymentMethod === "cod"
+                        ? "Confirm Cash on Delivery"
+                        : `Pay ${formatCurrency(offerPrice)} Online`
+                      : quoteOnly
+                        ? "Submit Quote Request"
+                        : fullPayment
                         ? `Pay ${formatCurrency(offerPrice)} & Confirm Site Visit`
                       : `Pay ${formatCurrency(advanceAmount)} & Confirm`}
                 </button>

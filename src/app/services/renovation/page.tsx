@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import RenovationHero from "./RenovationHero";
 import RenovationMarketplace from "./RenovationMarketplace";
+import RenovationCoverageSection from "./RenovationCoverageSection";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -37,6 +38,7 @@ export default function RenovationPage() {
     <main>
       <RenovationHero />
       <RenovationMarketplace />
+      <RenovationCoverageSection />
     </main>
   );
 }

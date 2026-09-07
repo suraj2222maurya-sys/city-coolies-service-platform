@@ -195,30 +195,7 @@ export default function Navbar() {
     }`}
   />
 
-    <span
-      aria-hidden="true"
-      className="
-        pointer-events-none
-        absolute
-        right-[-1px]
-        top-[7%]
-        z-20
-        block
-        font-sans
-        text-[7px]
-        font-black
-        leading-none
-        text-[#ef1b23]
-        sm:right-[-1px]
-        sm:top-[6%]
-        sm:text-[8px]
-        lg:right-[-2px]
-        lg:top-[5%]
-        lg:text-[9px]
-      "
-    >
-      ®
-    </span>
+    
   </span>
 </Link>
 

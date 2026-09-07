@@ -1,0 +1,444 @@
+.section {
+  --coverage-red: #f21f2f;
+  --coverage-ink: #171b22;
+  --coverage-muted: #5f6671;
+
+  position: relative;
+
+  width: min(calc(100% - 28px), 1820px);
+  height: clamp(155px, 12.2vw, 218px);
+
+  margin: 24px auto 64px;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  border: 1px solid rgba(242, 31, 47, 0.09);
+  border-radius: 16px;
+
+  background: #fff8f9;
+
+  box-shadow:
+    0 12px 34px rgba(74, 18, 27, 0.06);
+}
+
+.background {
+  z-index: -3;
+
+  object-fit: cover;
+  object-position: center center;
+
+  user-select: none;
+}
+
+.softOverlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: -2;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 249, 250, 0.05) 34%,
+      rgba(255, 249, 250, 0.18) 43%,
+      rgba(255, 255, 255, 0.06) 100%
+    );
+}
+
+.content {
+  width: 56%;
+  height: 100%;
+
+  margin-left: 40%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 13px 24px 12px 0;
+
+  box-sizing: border-box;
+}
+
+.eyebrow {
+  width: fit-content;
+  min-height: 19px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 9px;
+
+  border: 1px solid rgba(242, 31, 47, 0.13);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.9);
+
+  box-shadow:
+    0 4px 12px rgba(242, 31, 47, 0.07);
+
+  color: var(--coverage-red);
+
+  font-size: clamp(6px, 0.48vw, 8px);
+  font-weight: 900;
+  line-height: 1;
+
+  letter-spacing: 0.02em;
+}
+
+.content h2 {
+  margin: 6px 0 0;
+
+  color: var(--coverage-ink);
+
+  font-size: clamp(17px, 1.6vw, 29px);
+  font-weight: 920;
+  line-height: 0.98;
+
+  letter-spacing: -0.045em;
+}
+
+.content h2 span {
+  display: block;
+
+  margin-top: 3px;
+}
+
+.description {
+  max-width: 610px;
+
+  margin: 7px 0 0;
+
+  color: var(--coverage-muted);
+
+  font-size: clamp(6px, 0.52vw, 9px);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.benefits {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin-top: 10px;
+}
+
+.benefits article {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+}
+
+.icon {
+  width: clamp(20px, 1.8vw, 31px);
+  height: clamp(20px, 1.8vw, 31px);
+
+  flex: 0 0 auto;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid rgba(242, 31, 47, 0.7);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.84);
+
+  color: var(--coverage-red);
+
+  animation:
+    coverageIconFloat 3.2s ease-in-out infinite;
+}
+
+.benefits article:nth-child(2) .icon {
+  animation-delay: 0.2s;
+}
+
+.benefits article:nth-child(3) .icon {
+  animation-delay: 0.4s;
+}
+
+.benefits article:nth-child(4) .icon {
+  animation-delay: 0.6s;
+}
+
+.icon svg {
+  width: 58%;
+  height: 58%;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.benefits strong {
+  overflow: hidden;
+
+  color: var(--coverage-red);
+
+  font-size: clamp(5.5px, 0.47vw, 8px);
+  font-weight: 880;
+  line-height: 1.15;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@keyframes coverageIconFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 980px) {
+  .section {
+    height: 175px;
+  }
+
+  .content {
+    width: 61%;
+
+    margin-left: 36%;
+
+    padding-right: 16px;
+  }
+
+  .benefits {
+    gap: 6px;
+  }
+}
+
+@media (max-width: 720px) {
+  .section {
+    width: calc(100% - 18px);
+    height: 220px;
+
+    border-radius: 14px;
+  }
+
+  .background {
+    object-position: 28% center;
+  }
+
+  .softOverlay {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.22) 0%,
+        rgba(255, 249, 250, 0.83) 35%,
+        rgba(255, 255, 255, 0.96) 100%
+      );
+  }
+
+  .content {
+    width: 68%;
+
+    margin-left: 30%;
+
+    padding:
+      16px
+      12px
+      14px
+      0;
+  }
+
+  .content h2 {
+    font-size: clamp(18px, 4.4vw, 25px);
+  }
+
+  .description {
+    font-size: 7px;
+  }
+
+  .benefits {
+    grid-template-columns: 1fr 1fr;
+
+    gap:
+      7px
+      8px;
+
+    margin-top: 11px;
+  }
+
+  .benefits strong {
+    font-size: 6.5px;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 430px) {
+  .section {
+    height: 224px;
+
+    margin-bottom: 48px;
+  }
+
+  .background {
+    object-position: 22% center;
+  }
+
+  .content {
+    width: 76%;
+
+    margin-left: 21%;
+
+    padding-right: 9px;
+  }
+
+  .eyebrow {
+    min-height: 18px;
+
+    font-size: 6px;
+  }
+
+  .content h2 {
+    font-size: 18px;
+  }
+
+  .description {
+    max-width: 96%;
+
+    font-size: 6.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon {
+    animation: none;
+  }
+}
+
+/* RENOVATION_COVERAGE_NATURAL_IMAGE_START */
+
+/*
+  Final coverage-banner image behaviour:
+  - natural image proportion
+  - no stretch
+  - no zoom
+  - no crop
+  - compact position below services
+*/
+
+.section {
+  height: clamp(170px, 11.5vw, 218px) !important;
+
+  margin:
+    -54px
+    auto
+    52px !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      #fff5f7 0%,
+      #fff8f9 38%,
+      #fffafb 67%,
+      #ffffff 100%
+    ) !important;
+}
+
+.background {
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: contain !important;
+  object-position: left center !important;
+
+  transform: none !important;
+  scale: 1 !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      #fff5f7,
+      #ffffff
+    ) !important;
+}
+
+.softOverlay {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 248, 250, 0.04) 31%,
+      rgba(255, 250, 251, 0.25) 40%,
+      rgba(255, 255, 255, 0.04) 100%
+    ) !important;
+}
+
+@media (max-width: 980px) {
+  .section {
+    height: 180px !important;
+
+    margin-top: -50px !important;
+  }
+
+  .background {
+    object-fit: contain !important;
+    object-position: left center !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .section {
+    width: calc(100% - 18px) !important;
+    height: 220px !important;
+
+    margin:
+      -46px
+      auto
+      46px !important;
+  }
+
+  .background {
+    object-fit: contain !important;
+    object-position: left top !important;
+
+    opacity: 0.54;
+  }
+
+  .softOverlay {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(255, 249, 250, 0.45) 0%,
+        rgba(255, 249, 250, 0.82) 38%,
+        rgba(255, 255, 255, 0.97) 100%
+      ) !important;
+  }
+}
+
+@media (max-width: 430px) {
+  .section {
+    height: 220px !important;
+
+    margin-top: -44px !important;
+  }
+
+  .background {
+    object-fit: contain !important;
+    object-position: left top !important;
+  }
+}
+
+/* RENOVATION_COVERAGE_NATURAL_IMAGE_END */

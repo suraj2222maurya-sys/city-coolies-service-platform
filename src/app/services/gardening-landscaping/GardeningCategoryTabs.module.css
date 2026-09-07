@@ -1,0 +1,314 @@
+.section {
+  --cc-red: #f21f2f;
+  --cc-red-dark: #dc1424;
+  --cc-ink: #242933;
+  --cc-line: rgba(38, 43, 52, 0.09);
+
+  position: relative;
+  z-index: 7;
+
+  width: 100%;
+
+  padding:
+    3px
+    0
+    13px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fffafb 100%
+    );
+}
+
+.scroller {
+  width:
+    min(
+      calc(100% - 28px),
+      1820px
+    );
+
+  margin: 0 auto;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scrollbar-width: none;
+
+  scroll-behavior: smooth;
+
+  -webkit-overflow-scrolling: touch;
+
+  mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0,
+      #000 10px,
+      #000 calc(100% - 10px),
+      transparent 100%
+    );
+}
+
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs {
+  min-width: max-content;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding:
+    4px
+    3px
+    7px;
+}
+
+.button,
+.activeButton {
+  position: relative;
+
+  min-height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    0
+    17px;
+
+  overflow: hidden;
+
+  border-radius: 12px;
+
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 850;
+  line-height: 1;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  opacity: 0;
+
+  transform:
+    translateY(11px)
+    scale(0.97);
+
+  animation:
+    buttonReveal
+    520ms
+    cubic-bezier(0.2, 0.8, 0.2, 1)
+    forwards;
+
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.button span,
+.activeButton span {
+  position: relative;
+  z-index: 2;
+}
+
+.button {
+  border:
+    1px solid
+    var(--cc-line);
+
+  color: var(--cc-ink);
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #fffafb 100%
+    );
+
+  box-shadow:
+    0 5px 15px rgba(28, 35, 48, 0.035),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.button:hover {
+  color: var(--cc-red);
+
+  border-color:
+    rgba(242, 31, 47, 0.22);
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #fff1f3
+    );
+
+  box-shadow:
+    0 8px 19px rgba(242, 31, 47, 0.08),
+    inset 0 1px 0 #ffffff;
+
+  transform:
+    translateY(-2px);
+}
+
+.activeButton {
+  border:
+    1px solid
+    rgba(242, 31, 47, 0.3);
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff3949 0%,
+      var(--cc-red) 52%,
+      var(--cc-red-dark) 100%
+    );
+
+  box-shadow:
+    0 11px 24px rgba(242, 31, 47, 0.23),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.activeButton::before {
+  content: "";
+
+  position: absolute;
+
+  top: -55%;
+  bottom: -55%;
+  left: -55%;
+
+  width: 38%;
+
+  transform:
+    skewX(-20deg);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.55),
+      transparent
+    );
+
+  animation:
+    selectedShine
+    3.8s
+    ease-in-out
+    infinite;
+}
+
+.activeButton:hover {
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 14px 28px rgba(242, 31, 47, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.32);
+}
+
+.button:focus-visible,
+.activeButton:focus-visible {
+  outline:
+    3px solid
+    rgba(242, 31, 47, 0.18);
+
+  outline-offset: 3px;
+}
+
+@keyframes buttonReveal {
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes selectedShine {
+  0%,
+  30% {
+    left: -55%;
+  }
+
+  58%,
+  100% {
+    left: 135%;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding-bottom: 10px;
+  }
+
+  .scroller {
+    width:
+      calc(100% - 18px);
+  }
+
+  .tabs {
+    gap: 7px;
+  }
+
+  .button,
+  .activeButton {
+    min-height: 35px;
+
+    padding:
+      0
+      14px;
+
+    border-radius: 11px;
+
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .button,
+  .activeButton {
+    min-height: 33px;
+
+    padding:
+      0
+      12px;
+
+    border-radius: 10px;
+
+    font-size: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroller {
+    scroll-behavior: auto;
+  }
+
+  .button,
+  .activeButton {
+    opacity: 1;
+    transform: none;
+    animation: none;
+    transition: none;
+  }
+
+  .activeButton::before {
+    display: none;
+  }
+}

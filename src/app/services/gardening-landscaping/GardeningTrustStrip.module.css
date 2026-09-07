@@ -1,0 +1,774 @@
+.section {
+  --cc-red: #f21f2f;
+  --cc-red-dark: #d91424;
+  --cc-ink: #20242c;
+  --cc-muted: #626a76;
+
+  position: relative;
+  z-index: 8;
+
+  width:
+    min(
+      calc(100% - 28px),
+      1820px
+    );
+
+  min-height: 86px;
+
+  margin:
+    -13px
+    auto
+    20px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(0, 1fr)
+    );
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(242, 31, 47, 0.14);
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      105deg,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(255, 246, 248, 0.97) 34%,
+      rgba(255, 255, 255, 0.99) 67%,
+      rgba(255, 242, 245, 0.97) 100%
+    );
+
+  box-shadow:
+    0 18px 48px rgba(76, 17, 27, 0.08),
+    0 4px 14px rgba(242, 31, 47, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  backdrop-filter:
+    blur(18px)
+    saturate(1.15);
+
+  isolation: isolate;
+}
+
+.section::after {
+  content: "";
+
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 8% 50%,
+      rgba(242, 31, 47, 0.08),
+      transparent 17%
+    ),
+    radial-gradient(
+      circle at 58% 30%,
+      rgba(255, 133, 148, 0.08),
+      transparent 20%
+    );
+}
+
+.shine {
+  position: absolute;
+  z-index: 5;
+
+  top: -80%;
+  bottom: -80%;
+  left: -28%;
+
+  width: 18%;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  transform:
+    skewX(-18deg);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.78),
+      rgba(255, 215, 221, 0.35),
+      transparent
+    );
+
+  filter:
+    blur(10px);
+
+  animation:
+    stripShine
+    6.5s
+    ease-in-out
+    1.4s
+    infinite;
+}
+
+.item {
+  position: relative;
+
+  min-width: 0;
+  min-height: 86px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding:
+    13px
+    25px;
+
+  opacity: 0;
+
+  transform:
+    translate3d(
+      0,
+      18px,
+      0
+    )
+    scale(0.97);
+
+  filter:
+    blur(5px);
+
+  animation:
+    itemReveal
+    700ms
+    cubic-bezier(0.2, 0.8, 0.2, 1)
+    forwards;
+
+  transition:
+    transform 240ms ease,
+    background-color 240ms ease;
+}
+
+.item:hover {
+  transform:
+    translateY(-2px);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 235, 239, 0.48)
+    );
+}
+
+.item:not(:last-child)::after {
+  content: "";
+
+  position: absolute;
+
+  top: 23%;
+  right: 0;
+  bottom: 23%;
+
+  width: 1px;
+
+  background:
+    linear-gradient(
+      180deg,
+      transparent,
+      rgba(46, 50, 59, 0.12),
+      rgba(242, 31, 47, 0.1),
+      transparent
+    );
+}
+
+.icon {
+  position: relative;
+
+  width: 48px;
+  height: 48px;
+
+  flex:
+    0
+    0
+    48px;
+
+  display: grid;
+  place-items: center;
+
+  border:
+    1px solid
+    rgba(242, 31, 47, 0.16);
+
+  border-radius: 50%;
+
+  color: var(--cc-red);
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #fff1f3 58%,
+      #ffe8ec 100%
+    );
+
+  box-shadow:
+    0 9px 22px rgba(242, 31, 47, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.96),
+    inset 0 -4px 9px rgba(242, 31, 47, 0.035);
+
+  transform:
+    perspective(160px)
+    rotateX(0deg)
+    rotateY(0deg);
+
+  transition:
+    transform 280ms ease,
+    box-shadow 280ms ease;
+}
+
+.item:hover .icon {
+  transform:
+    perspective(160px)
+    rotateX(5deg)
+    rotateY(-7deg)
+    translateY(-2px);
+
+  box-shadow:
+    0 14px 28px rgba(242, 31, 47, 0.16),
+    inset 0 1px 0 #ffffff,
+    inset 0 -5px 11px rgba(242, 31, 47, 0.05);
+}
+
+.iconGlow {
+  position: absolute;
+
+  inset: 6px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.7);
+
+  filter:
+    blur(7px);
+
+  animation:
+    iconGlow
+    2.8s
+    ease-in-out
+    infinite;
+}
+
+.iconSvg {
+  position: relative;
+  z-index: 2;
+
+  width: 29px;
+  height: 29px;
+
+  overflow: visible;
+
+  fill: none;
+
+  stroke: currentColor;
+  stroke-width: 1.75;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  filter:
+    drop-shadow(
+      0 3px 4px
+      rgba(242, 31, 47, 0.12)
+    );
+}
+
+.copy {
+  min-width: 0;
+}
+
+.copy strong {
+  display: block;
+
+  color: var(--cc-ink);
+
+  font-size: 11px;
+  font-weight: 900;
+
+  line-height: 1.25;
+
+  letter-spacing: -0.015em;
+}
+
+.copy p {
+  margin:
+    4px
+    0
+    0;
+
+  color: var(--cc-muted);
+
+  font-size: 8px;
+  font-weight: 560;
+
+  line-height: 1.35;
+}
+
+/* Verified gardener animation */
+
+.verifiedBadge {
+  transform-box: fill-box;
+  transform-origin: center;
+
+  animation:
+    verifiedPulse
+    2.7s
+    ease-in-out
+    infinite;
+}
+
+.verifiedCheck {
+  stroke-dasharray: 14;
+  stroke-dashoffset: 14;
+
+  animation:
+    checkDraw
+    2.7s
+    ease-in-out
+    infinite;
+}
+
+/* Tools animation */
+
+.toolLeft {
+  transform-box: fill-box;
+  transform-origin: center;
+
+  animation:
+    toolLeftMove
+    3s
+    ease-in-out
+    infinite;
+}
+
+.toolRight {
+  transform-box: fill-box;
+  transform-origin: center;
+
+  animation:
+    toolRightMove
+    3s
+    ease-in-out
+    infinite;
+}
+
+/* Plant animation */
+
+.plantStem {
+  stroke-dasharray: 35;
+  stroke-dashoffset: 35;
+
+  animation:
+    stemGrow
+    3.2s
+    ease-in-out
+    infinite;
+}
+
+.leafLeft,
+.leafRight {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+
+  animation:
+    leafSway
+    2.5s
+    ease-in-out
+    infinite;
+}
+
+.leafRight {
+  animation-delay: 180ms;
+}
+
+.plantShine {
+  transform-box: fill-box;
+  transform-origin: center;
+
+  animation:
+    sparklePulse
+    2.2s
+    ease-in-out
+    infinite;
+}
+
+/* Pot animation */
+
+.potPlant {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+
+  animation:
+    potPlantSway
+    2.8s
+    ease-in-out
+    infinite;
+}
+
+.potTop,
+.potBody {
+  transform-box: fill-box;
+  transform-origin: center;
+
+  animation:
+    potFloat
+    3s
+    ease-in-out
+    infinite;
+}
+
+.potPattern {
+  stroke: var(--cc-red-dark);
+
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+
+  animation:
+    patternDraw
+    3s
+    ease-in-out
+    infinite;
+}
+
+.potSparkle {
+  transform-box: fill-box;
+  transform-origin: center;
+
+  animation:
+    sparklePulse
+    2.1s
+    ease-in-out
+    infinite;
+}
+
+@keyframes itemReveal {
+  to {
+    opacity: 1;
+
+    transform:
+      translate3d(
+        0,
+        0,
+        0
+      )
+      scale(1);
+
+    filter:
+      blur(0);
+  }
+}
+
+@keyframes stripShine {
+  0%,
+  25% {
+    left: -28%;
+    opacity: 0;
+  }
+
+  38% {
+    opacity: 0.72;
+  }
+
+  62% {
+    left: 112%;
+    opacity: 0;
+  }
+
+  100% {
+    left: 112%;
+    opacity: 0;
+  }
+}
+
+@keyframes iconGlow {
+  0%,
+  100% {
+    opacity: 0.45;
+
+    transform:
+      scale(0.86);
+  }
+
+  50% {
+    opacity: 0.92;
+
+    transform:
+      scale(1.08);
+  }
+}
+
+@keyframes verifiedPulse {
+  0%,
+  100% {
+    transform:
+      scale(1);
+  }
+
+  50% {
+    transform:
+      scale(1.12);
+  }
+}
+
+@keyframes checkDraw {
+  0%,
+  20% {
+    stroke-dashoffset: 14;
+  }
+
+  48%,
+  82% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -14;
+  }
+}
+
+@keyframes toolLeftMove {
+  0%,
+  100% {
+    transform:
+      rotate(-2deg);
+  }
+
+  50% {
+    transform:
+      rotate(5deg);
+  }
+}
+
+@keyframes toolRightMove {
+  0%,
+  100% {
+    transform:
+      rotate(2deg);
+  }
+
+  50% {
+    transform:
+      rotate(-5deg);
+  }
+}
+
+@keyframes stemGrow {
+  0% {
+    stroke-dashoffset: 35;
+  }
+
+  40%,
+  78% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -35;
+  }
+}
+
+@keyframes leafSway {
+  0%,
+  100% {
+    transform:
+      rotate(-3deg);
+  }
+
+  50% {
+    transform:
+      rotate(5deg);
+  }
+}
+
+@keyframes sparklePulse {
+  0%,
+  100% {
+    opacity: 0.35;
+
+    transform:
+      scale(0.72)
+      rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+
+    transform:
+      scale(1.18)
+      rotate(90deg);
+  }
+}
+
+@keyframes potPlantSway {
+  0%,
+  100% {
+    transform:
+      rotate(-2deg);
+  }
+
+  50% {
+    transform:
+      rotate(3deg);
+  }
+}
+
+@keyframes potFloat {
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-1.5px);
+  }
+}
+
+@keyframes patternDraw {
+  0%,
+  20% {
+    stroke-dashoffset: 20;
+  }
+
+  55%,
+  82% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -20;
+  }
+}
+
+@media (max-width: 1000px) {
+  .item {
+    padding:
+      12px
+      15px;
+  }
+
+  .icon {
+    width: 43px;
+    height: 43px;
+
+    flex-basis: 43px;
+  }
+
+  .iconSvg {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (max-width: 780px) {
+  .section {
+    grid-template-columns:
+      1fr
+      1fr;
+  }
+
+  .item:nth-child(3)::after {
+    display: none;
+  }
+
+  .item:nth-child(-n + 2) {
+    border-bottom:
+      1px solid
+      rgba(242, 31, 47, 0.09);
+  }
+}
+
+@media (max-width: 520px) {
+  .section {
+    width:
+      calc(100% - 16px);
+
+    margin-top: -9px;
+
+    border-radius: 15px;
+  }
+
+  .item {
+    min-height: 72px;
+
+    gap: 8px;
+
+    padding:
+      9px
+      8px;
+  }
+
+  .item::after {
+    display: none;
+  }
+
+  .item:nth-child(odd) {
+    border-right:
+      1px solid
+      rgba(242, 31, 47, 0.09);
+  }
+
+  .icon {
+    width: 34px;
+    height: 34px;
+
+    flex-basis: 34px;
+  }
+
+  .iconSvg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .copy strong {
+    font-size: 8px;
+  }
+
+  .copy p {
+    margin-top: 3px;
+
+    font-size: 6.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shine,
+  .item,
+  .iconGlow,
+  .verifiedBadge,
+  .verifiedCheck,
+  .toolLeft,
+  .toolRight,
+  .plantStem,
+  .leafLeft,
+  .leafRight,
+  .plantShine,
+  .potPlant,
+  .potTop,
+  .potBody,
+  .potPattern,
+  .potSparkle {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    animation: none;
+  }
+}
