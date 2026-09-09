@@ -83,9 +83,3 @@ install-*.mjs
 *.backup-*
 /public/*-IMAGE-AUDIT.txt
 /public/*-IMAGE-FILENAMES.txt
-
-# Python runtime / local database
-__pycache__/
-*.py[cod]
-/backend/data/
-*.sqlite3

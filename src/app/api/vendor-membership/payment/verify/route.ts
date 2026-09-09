@@ -1,4 +1,4 @@
-﻿import {
+import {
   createHmac,
   timingSafeEqual,
 } from "node:crypto";
