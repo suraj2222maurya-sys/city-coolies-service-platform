@@ -1,5 +1,4 @@
 "use client";
-
 import type { FormEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -9,13 +8,11 @@ type ServiceItem = {
   href: string;
   keywords: string[];
 };
-
 type ServiceCatalog = {
   version: number;
   serviceCount: number;
   services: ServiceItem[];
 };
-
 const HERO_BACKGROUND_IMAGE = "/services-hero-baground.png";
 const CUSTOMER_LOGIN_PATH = "";
 const CONTACT_PATH = "/contact";

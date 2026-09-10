@@ -115,7 +115,7 @@ export default function CoreServicesSection() {
     <section
       ref={sectionRef}
       id="core-services"
-      className="relative overflow-hidden bg-white px-5 py-12 sm:px-8 sm:py-14 lg:px-12 lg:py-16"
+      className="relative overflow-hidden bg-white px-5 pt-0 pb-12 sm:px-8 sm:pt-0 sm:pb-14 lg:px-12 lg:pt-0 lg:pb-16"
     >
       {/* Background design */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">

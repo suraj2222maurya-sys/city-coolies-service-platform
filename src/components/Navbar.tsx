@@ -197,7 +197,13 @@ export default function Navbar() {
 
     
   </span>
-</Link>
+          <span
+            aria-label="Registered trademark"
+            className="pointer-events-none absolute -right-1 top-[31%] z-20 origin-center text-[10px] font-black leading-none text-[#ef1b23] transition-transform duration-500 ease-out group-hover:translate-x-1.5 group-hover:-translate-y-1 group-hover:scale-[1.035] sm:text-[11px] lg:text-[12px]"
+          >
+            ®
+          </span>
+        </Link>
 
           <div className="hidden items-center gap-1 xl:flex">
             {navigationLinks.map((item) => {
@@ -232,23 +238,13 @@ export default function Navbar() {
           </div>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <a
-              href="tel:+918693986939"
-              aria-label="Call City Coolies now"
-              title="Call City Coolies"
-              className="group relative -left-2 hidden h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#32b84a] text-white shadow-[0_10px_24px_rgba(50,184,74,.30)] transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-[#28a83e] hover:shadow-[0_14px_30px_rgba(50,184,74,.38)] xl:inline-flex"
-            >
-              <span className="flex h-7 w-7 items-center justify-center [&_svg]:h-7 [&_svg]:w-7 [&_svg]:stroke-[2.2]">
-                <PhoneIcon />
-              </span>
-            </a>
+            
             <Link
-              href="/vendor-membership"
+              href="/services"
               className="group relative isolate hidden min-h-13 items-center gap-2 overflow-hidden rounded-full border border-[#ef1b23] bg-[#ef1b23] px-6 text-[13px] font-extrabold tracking-[0.06em] text-white uppercase shadow-[0_14px_30px_-12px_rgba(239,27,35,0.65)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-14px_rgba(239,27,35,0.8)] xl:flex"
             >
               <span className="absolute inset-0 -z-10 translate-x-[-120%] skew-x-[-20deg] bg-white/25 transition-transform duration-700 group-hover:translate-x-[120%]" />
-              <span>Vendor Membership</span>
-              <ArrowIcon />
+              <span>BOOK NOW</span>
             </Link>
           </div>
 
@@ -312,12 +308,11 @@ export default function Navbar() {
               })}
 
               <Link
-                href="/vendor-membership"
+                href="/services"
                 onClick={() => setIsMenuOpen(false)}
                 className="group mt-2 flex min-h-14 items-center justify-center gap-2 rounded-2xl bg-[linear-gradient(135deg,#ff2731_0%,#df1119_100%)] px-6 text-sm font-extrabold tracking-[0.06em] text-white uppercase shadow-[0_16px_30px_-12px_rgba(239,27,35,0.75)] transition-all duration-300 hover:-translate-y-0.5"
               >
-                <span>Vendor Membership</span>
-                <ArrowIcon />
+                <span>BOOK NOW</span>
               </Link>
 
               <div className="mt-3 grid gap-2 rounded-2xl border border-red-100 bg-white p-4 text-sm text-[#e71922] sm:grid-cols-2">
