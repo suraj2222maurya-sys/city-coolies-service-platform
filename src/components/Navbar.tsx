@@ -116,7 +116,7 @@ export default function Navbar() {
       <div className="relative overflow-hidden bg-[#ef1b23] text-white">
         <div className="absolute inset-0 bg-[linear-gradient(110deg,transparent_0%,rgba(255,255,255,0.16)_45%,transparent_70%)]" />
 
-        <div className="relative mx-auto flex min-h-10 max-w-[1480px] items-center justify-center px-4 sm:px-6 lg:justify-between lg:px-10">
+        <div data-mobile-topbar-track className="relative mx-auto flex min-h-10 max-w-[1480px] items-center justify-center px-4 sm:px-6 lg:justify-between lg:px-10">
           <p className="hidden text-[12px] font-semibold tracking-[0.18em] uppercase lg:block">
           Complete Property Care. Professional Work. Trusted Results.
           </p>
@@ -256,22 +256,13 @@ export default function Navbar() {
             aria-controls="mobile-navigation"
             aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           >
-            <span className="relative h-5 w-6">
-              <span
-                className={`absolute left-0 top-0 h-0.5 w-6 rounded-full bg-current transition-all duration-300 ${
-                  isMenuOpen ? "top-[9px] rotate-45" : ""
-                }`}
-              />
-              <span
-                className={`absolute left-0 top-[9px] h-0.5 w-6 rounded-full bg-current transition-all duration-300 ${
-                  isMenuOpen ? "scale-x-0 opacity-0" : ""
-                }`}
-              />
-              <span
-                className={`absolute left-0 top-[18px] h-0.5 w-6 rounded-full bg-current transition-all duration-300 ${
-                  isMenuOpen ? "top-[9px] -rotate-45" : ""
-                }`}
-              />
+            <span
+              className="relative block h-5 w-6"
+              aria-hidden="true"
+            >
+              <span className="absolute left-0 top-0 h-0.5 w-6 rounded-full bg-current" />
+              <span className="absolute left-0 top-[9px] h-0.5 w-6 rounded-full bg-current" />
+              <span className="absolute left-0 top-[18px] h-0.5 w-6 rounded-full bg-current" />
             </span>
           </button>
         </div>
@@ -336,6 +327,95 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
+    
+      {/* CITY_COOLIES_MOBILE_TOPBAR */}
+      <style jsx>{`
+        @media (max-width: 1023px) {
+          [data-mobile-topbar-track] {
+            width: max-content;
+            max-width: none;
+            min-height: 40px;
+            margin-inline: 0;
+            padding-inline: 18px;
+            gap: 34px;
+            justify-content: flex-start;
+            white-space: nowrap;
+            will-change: transform;
+            animation: city-coolies-mobile-topbar-pan
+              13s
+              cubic-bezier(0.45, 0, 0.55, 1)
+              infinite
+              alternate;
+          }
+
+          [data-mobile-topbar-track] > p {
+            display: block !important;
+            flex: 0 0 auto;
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 750;
+            line-height: 1;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            white-space: nowrap;
+          }
+
+          [data-mobile-topbar-track] > div {
+            display: flex !important;
+            flex: 0 0 auto;
+            align-items: center;
+            gap: 18px !important;
+            color: #ffffff;
+            font-size: 12px !important;
+            font-weight: 600;
+            white-space: nowrap;
+          }
+
+          [data-mobile-topbar-track] > div > a {
+            display: flex !important;
+            align-items: center;
+            gap: 7px !important;
+            white-space: nowrap;
+          }
+
+          [data-mobile-topbar-track] > div > span {
+            display: block !important;
+            flex: 0 0 1px;
+            width: 1px;
+            height: 16px;
+            background: rgba(255, 255, 255, 0.42) !important;
+          }
+
+          @keyframes city-coolies-mobile-topbar-pan {
+            0%,
+            8% {
+              transform: translate3d(0, 0, 0);
+            }
+
+            92%,
+            100% {
+              transform: translate3d(
+                calc(100vw - 100% - 12px),
+                0,
+                0
+              );
+            }
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) and (max-width: 1023px) {
+          [data-mobile-topbar-track] {
+            width: 100%;
+            padding-inline: 12px;
+            justify-content: center;
+            animation: none;
+          }
+
+          [data-mobile-topbar-track] > p {
+            display: none !important;
+          }
+        }
+      `}</style>
     </header>
   );
 }
