@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 
 export default function BlogHeroSection() {
   const heroRef = useRef<HTMLElement | null>(null);
+  const railRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const hero = heroRef.current;
@@ -148,6 +149,135 @@ export default function BlogHeroSection() {
     };
   }, []);
 
+  /* CC_BLOG_MOBILE_RAIL_AUTOPLAY_START */
+  useEffect(() => {
+    const rail = railRef.current;
+
+    if (!rail) {
+      return;
+    }
+
+    const phoneQuery = window.matchMedia(
+      "(max-width: 600px)",
+    );
+
+    const reducedMotionQuery = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+
+    let intervalId: number | null = null;
+    let isVisible = false;
+    let activeIndex = 0;
+
+    const stopAutoSlide = () => {
+      if (intervalId !== null) {
+        window.clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    const startAutoSlide = () => {
+      stopAutoSlide();
+
+      if (
+        !phoneQuery.matches ||
+        reducedMotionQuery.matches ||
+        !isVisible ||
+        document.hidden
+      ) {
+        return;
+      }
+
+      const items = Array.from(
+        rail.children,
+      ) as HTMLElement[];
+
+      if (items.length < 2) {
+        return;
+      }
+
+      intervalId = window.setInterval(() => {
+        activeIndex =
+          (activeIndex + 1) %
+          items.length;
+
+        rail.scrollTo({
+          left:
+            activeIndex === 0
+              ? 0
+              : items[activeIndex].offsetLeft,
+          behavior: "smooth",
+        });
+      }, 2600);
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible =
+          Boolean(entry?.isIntersecting);
+
+        if (isVisible) {
+          startAutoSlide();
+        } else {
+          stopAutoSlide();
+        }
+      },
+      {
+        threshold: 0.18,
+      },
+    );
+
+    const handleMediaChange = () => {
+      if (!phoneQuery.matches) {
+        activeIndex = 0;
+        rail.scrollLeft = 0;
+      }
+
+      startAutoSlide();
+    };
+
+    const handleVisibilityChange = () => {
+      startAutoSlide();
+    };
+
+    observer.observe(rail);
+
+    phoneQuery.addEventListener(
+      "change",
+      handleMediaChange,
+    );
+
+    reducedMotionQuery.addEventListener(
+      "change",
+      handleMediaChange,
+    );
+
+    document.addEventListener(
+      "visibilitychange",
+      handleVisibilityChange,
+    );
+
+    return () => {
+      stopAutoSlide();
+      observer.disconnect();
+
+      phoneQuery.removeEventListener(
+        "change",
+        handleMediaChange,
+      );
+
+      reducedMotionQuery.removeEventListener(
+        "change",
+        handleMediaChange,
+      );
+
+      document.removeEventListener(
+        "visibilitychange",
+        handleVisibilityChange,
+      );
+    };
+  }, []);
+  /* CC_BLOG_MOBILE_RAIL_AUTOPLAY_END */
   return (
     <section
       ref={heroRef}
@@ -156,6 +286,13 @@ export default function BlogHeroSection() {
       aria-labelledby="cc-bh-heading"
     >
       <div className="cc-bh-stage">
+        <div className="cc-bh-kicker cc-bh-mobile-kicker">
+          <span className="cc-bh-kicker-dot" />
+
+          <strong>
+            CITY COOLIES INSIGHTS
+          </strong>
+        </div>
         <div
           className="cc-bh-background"
           aria-hidden="true"
@@ -393,7 +530,7 @@ export default function BlogHeroSection() {
           </div>
         </div>
 
-        <div className="cc-bh-rail">
+        <div ref={railRef} className="cc-bh-rail">
           <div className="cc-bh-rail-item">
             <span className="cc-bh-rail-icon">
               <svg
@@ -2909,6 +3046,1322 @@ export default function BlogHeroSection() {
 }
 
 /* === CC HERO CINEMATIC REPLAY V3 END === */
+
+/*
+ * CC_BLOG_MOBILE_BANNER_FIRST_START
+ * Phone only: banner first, content and CTA below it.
+ */
+@media (max-width: 700px) {
+  .cc-bh,
+  .cc-bh-stage {
+    background:
+      linear-gradient(
+        180deg,
+        #fff4f7 0%,
+        #ffeef2 52%,
+        #fff7f9 100%
+      );
+  }
+
+  .cc-bh-stage {
+    min-height: auto;
+    overflow: hidden;
+  }
+
+  /*
+   * The phone banner becomes a separate proportional block.
+   * Original ratio: 895 × 601.
+   */
+  .cc-bh-background {
+    position: relative;
+    inset: auto;
+    z-index: 1;
+
+    display: block;
+
+    width: 100%;
+    height: auto;
+    aspect-ratio: 895 / 601;
+
+    background-image:
+      url("/glossy_pink_home_tech_concept.png");
+
+    background-repeat:
+      no-repeat;
+
+    background-position:
+      center center;
+
+    background-size:
+      contain;
+
+    background-color:
+      #fff2f5;
+
+    transform:
+      none !important;
+
+    scale:
+      1 !important;
+
+    animation:
+      none !important;
+  }
+
+  /*
+   * Remove the readability layer from the separated banner.
+   */
+  .cc-bh-stage::after {
+    display: none;
+  }
+
+  /*
+   * Keep decorative atmosphere only over the banner area.
+   */
+  .cc-bh-atmosphere {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+
+    height:
+      calc(
+        100vw *
+        601 /
+        895
+      );
+  }
+
+  /*
+   * Content starts after the banner on its own pink background.
+   */
+  .cc-bh-main {
+    position: relative;
+    z-index: 5;
+
+    width: 100%;
+
+    padding:
+      28px
+      17px
+      30px;
+
+    background:
+      radial-gradient(
+        circle at 92% 8%,
+        rgba(242, 29, 50, 0.09),
+        transparent 34%
+      ),
+      radial-gradient(
+        circle at 8% 88%,
+        rgba(255, 148, 167, 0.12),
+        transparent 38%
+      ),
+      linear-gradient(
+        145deg,
+        #fff8fa 0%,
+        #ffedf1 55%,
+        #fff5f7 100%
+      );
+  }
+
+  .cc-bh-kicker {
+    margin-top: 0;
+  }
+
+  /*
+   * Topics and CTA remain inside the content area.
+   */
+  .cc-bh-topics {
+    position: relative;
+    z-index: 6;
+  }
+
+  .cc-bh-actions {
+    position: relative;
+    z-index: 6;
+
+    margin-bottom: 0;
+  }
+
+  /*
+   * Information rail follows the content naturally.
+   */
+  .cc-bh-rail {
+    position: relative;
+
+    right: auto;
+    bottom: auto;
+    left: auto;
+
+    width:
+      calc(
+        100% -
+        26px
+      );
+
+    margin:
+      14px
+      13px
+      16px;
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        0.82
+      );
+  }
+}
+/* CC_BLOG_MOBILE_BANNER_FIRST_END */
+
+/*
+ * CC_BLOG_MOBILE_FINAL_ORDER_START
+ * Phone order:
+ * insights label, full-width banner, content, CTA and information rail.
+ */
+
+.cc-bh-mobile-kicker {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .cc-bh,
+  .cc-bh-stage {
+    background:
+      linear-gradient(
+        180deg,
+        #fff6f8 0%,
+        #ffecef 58%,
+        #fff5f7 100%
+      );
+  }
+
+  .cc-bh-stage {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    min-height: auto;
+
+    overflow: hidden;
+  }
+
+  /*
+   * The insights label appears above the banner.
+   */
+  .cc-bh-mobile-kicker {
+    position: relative;
+    z-index: 8;
+
+    display: inline-flex;
+    order: 1;
+    align-self: flex-start;
+
+    min-height: 38px;
+
+    margin:
+      16px
+      17px
+      14px;
+
+    opacity: 1;
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        0.72
+      );
+  }
+
+  /*
+   * Hide the original label inside the content because
+   * the phone label is now displayed above the banner.
+   */
+  .cc-bh-main > .cc-bh-kicker {
+    display: none;
+  }
+
+  /*
+   * Use the supplied wide blog banner.
+   * It scales automatically with the phone width.
+   */
+  .cc-bh-background {
+    position: relative;
+    inset: auto;
+    z-index: 2;
+
+    display: block;
+    order: 2;
+
+    width: 100%;
+    height: auto;
+    aspect-ratio: 895 / 601;
+
+    background-image:
+      url("/glassy_pink_orbital_learning_hub.png");
+
+    background-repeat:
+      no-repeat;
+
+    background-position:
+      center center;
+
+    background-size:
+      contain;
+
+    background-color:
+      #fff1f4;
+
+    transform:
+      none !important;
+
+    scale:
+      1 !important;
+
+    animation:
+      none !important;
+  }
+
+  /*
+   * Do not place a white overlay over the mobile banner.
+   */
+  .cc-bh-stage::after {
+    display: none;
+  }
+
+  /*
+   * Keep decorative background effects away from the content.
+   */
+  .cc-bh-atmosphere {
+    top: 54px;
+    right: 0;
+    bottom: auto;
+    left: 0;
+
+    height:
+      calc(
+        100vw *
+        601 /
+        895
+      );
+  }
+
+  /*
+   * Content follows immediately after the banner.
+   */
+  .cc-bh-main {
+    position: relative;
+    z-index: 5;
+
+    order: 3;
+
+    width: 100%;
+
+    margin: 0;
+
+    padding:
+      26px
+      17px
+      30px;
+
+    background:
+      radial-gradient(
+        circle at 94% 8%,
+        rgba(242, 29, 50, 0.09),
+        transparent 34%
+      ),
+      radial-gradient(
+        circle at 7% 88%,
+        rgba(255, 148, 167, 0.11),
+        transparent 38%
+      ),
+      linear-gradient(
+        145deg,
+        #fff8fa 0%,
+        #ffebef 55%,
+        #fff5f7 100%
+      );
+  }
+
+  .cc-bh-main h1 {
+    max-width: 100%;
+
+    margin-top: 0;
+
+    font-size:
+      clamp(
+        34px,
+        10.3vw,
+        46px
+      );
+
+    line-height: 0.95;
+
+    letter-spacing:
+      -0.045em;
+  }
+
+  .cc-bh-description {
+    max-width: 100%;
+
+    margin-top: 18px;
+
+    font-size: 12.5px;
+    line-height: 1.62;
+  }
+
+  .cc-bh-topics {
+    position: relative;
+    z-index: 6;
+
+    gap: 8px;
+
+    margin-top: 19px;
+  }
+
+  .cc-bh-topic {
+    min-height: 40px;
+
+    padding:
+      0
+      12px;
+  }
+
+  .cc-bh-actions {
+    position: relative;
+    z-index: 6;
+
+    display: grid;
+
+    grid-template-columns:
+      1fr;
+
+    gap: 9px;
+
+    width: 100%;
+    max-width: 100%;
+
+    margin-top: 20px;
+  }
+
+  .cc-bh-primary,
+  .cc-bh-secondary {
+    width: 100%;
+    min-width: 0;
+    min-height: 52px;
+  }
+
+  /*
+   * The information rail stays below the content with no large gap.
+   */
+  .cc-bh-rail {
+    position: relative;
+
+    right: auto;
+    bottom: auto;
+    left: auto;
+
+    z-index: 8;
+
+    order: 4;
+
+    width:
+      calc(
+        100% -
+        26px
+      );
+
+    min-height: 0;
+
+    margin:
+      14px
+      13px
+      16px;
+
+    grid-template-columns:
+      1fr;
+
+    border-radius: 18px;
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        0.84
+      );
+  }
+
+  .cc-bh-rail-item {
+    min-height: 69px;
+
+    padding:
+      11px
+      14px;
+  }
+}
+/* CC_BLOG_MOBILE_FINAL_ORDER_END */
+
+/*
+ * CC_BLOG_MOBILE_CONNECTED_LAYOUT_START
+ * Phone only: label over banner and content connected to banner.
+ */
+@media (max-width: 700px) {
+  .cc-bh-stage {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    row-gap: 0;
+  }
+
+  /*
+   * Start the banner immediately after the website header.
+   */
+  .cc-bh-background {
+    order: 1;
+
+    width: 100%;
+    aspect-ratio: 895 / 601;
+
+    margin: 0;
+    padding: 0;
+
+    background-image:
+      url("/glassy_pink_orbital_learning_hub.png");
+
+    background-repeat:
+      no-repeat;
+
+    background-position:
+      center center;
+
+    background-size:
+      contain;
+
+    background-color:
+      #fff1f4;
+  }
+
+  /*
+   * Place the insights label over the upper-left banner area.
+   * It no longer occupies a separate row.
+   */
+  .cc-bh-mobile-kicker {
+    position: absolute;
+
+    top: 14px;
+    left: 14px;
+
+    z-index: 20;
+
+    display: inline-flex;
+
+    margin: 0;
+
+    min-height: 38px;
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        0.88
+      );
+
+    box-shadow:
+      0
+      10px
+      28px
+      rgba(
+        104,
+        0,
+        18,
+        0.08
+      );
+
+    backdrop-filter:
+      blur(9px);
+  }
+
+  /*
+   * Decorative effects remain inside the banner area.
+   */
+  .cc-bh-atmosphere {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+
+    height:
+      calc(
+        100vw *
+        601 /
+        895
+      );
+  }
+
+  /*
+   * Connect the content directly to the banner.
+   */
+  .cc-bh-main {
+    order: 2;
+
+    width: 100%;
+
+    margin: 0;
+
+    padding:
+      14px
+      17px
+      28px;
+
+    border: 0;
+
+    background:
+      radial-gradient(
+        circle at 94% 8%,
+        rgba(242, 29, 50, 0.09),
+        transparent 34%
+      ),
+      radial-gradient(
+        circle at 7% 88%,
+        rgba(255, 148, 167, 0.11),
+        transparent 38%
+      ),
+      linear-gradient(
+        145deg,
+        #fff8fa 0%,
+        #ffebef 55%,
+        #fff5f7 100%
+      );
+  }
+
+  .cc-bh-main h1 {
+    margin-top: 0;
+
+    font-size:
+      clamp(
+        34px,
+        10.3vw,
+        46px
+      );
+
+    line-height: 0.95;
+  }
+
+  /*
+   * Keep the information rail connected below the content.
+   */
+  .cc-bh-rail {
+    order: 3;
+
+    margin:
+      0
+      13px
+      16px;
+  }
+}
+/* CC_BLOG_MOBILE_CONNECTED_LAYOUT_END */
+
+/*
+ * CC_BLOG_MOBILE_BANNER_SIZE_START
+ * Phone only: enlarge the central artwork and fill the banner area.
+ */
+@media (max-width: 700px) {
+  .cc-bh-background {
+    width: 100%;
+    height:
+      clamp(
+        285px,
+        88vw,
+        390px
+      );
+
+    aspect-ratio: auto;
+
+    margin: 0;
+    padding: 0;
+
+    background-image:
+      url("/glassy_pink_orbital_learning_hub.png");
+
+    background-repeat:
+      no-repeat;
+
+    background-position:
+      center center;
+
+    /*
+     * The original artwork contains large empty pink areas.
+     * This controlled enlargement makes the main artwork visible.
+     */
+    background-size:
+      155%
+      auto;
+
+    background-color:
+      #fff0f3;
+  }
+
+  .cc-bh-atmosphere {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+
+    width: 100%;
+    height:
+      clamp(
+        285px,
+        88vw,
+        390px
+      );
+  }
+
+  .cc-bh-main {
+    margin-top: 0;
+
+    padding-top:
+      12px;
+
+    border-top: 0;
+  }
+
+  .cc-bh-mobile-kicker {
+    top: 12px;
+    left: 14px;
+  }
+}
+
+@media (max-width: 390px) {
+  .cc-bh-background,
+  .cc-bh-atmosphere {
+    height:
+      clamp(
+        275px,
+        88vw,
+        345px
+      );
+  }
+
+  .cc-bh-background {
+    background-size:
+      158%
+      auto;
+  }
+}
+/* CC_BLOG_MOBILE_BANNER_SIZE_END */
+
+/*
+ * CC_BLOG_MOBILE_CENTERED_BANNER_START
+ * Phone only: moderate sizing, centered artwork and connected content.
+ */
+@media (max-width: 700px) {
+  .cc-bh-background {
+    width: 100%;
+
+    height:
+      clamp(
+        260px,
+        76vw,
+        330px
+      );
+
+    aspect-ratio: auto;
+
+    margin: 0;
+    padding: 0;
+
+    background-image:
+      url("/glassy_pink_orbital_learning_hub.png");
+
+    background-repeat:
+      no-repeat;
+
+    /*
+     * The artwork is positioned toward the right inside
+     * the source image. This position visually centers it.
+     */
+    background-position: 110% center;
+
+    /*
+     * Moderate enlargement only.
+     * This replaces the previous excessive 155% zoom.
+     */
+    background-size:
+      132%
+      auto;
+
+    background-color:
+      #fff1f4;
+
+    transform:
+      none !important;
+
+    scale:
+      1 !important;
+  }
+
+  .cc-bh-atmosphere {
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+
+    width: 100%;
+
+    height:
+      clamp(
+        260px,
+        76vw,
+        330px
+      );
+  }
+
+  /*
+   * Attach the content closely to the banner.
+   */
+  .cc-bh-main {
+    position: relative;
+    z-index: 6;
+
+    margin-top:
+      -10px;
+
+    padding-top:
+      12px;
+
+    border-radius:
+      12px
+      12px
+      0
+      0;
+  }
+
+  .cc-bh-main h1 {
+    margin-top: 0;
+  }
+
+  .cc-bh-mobile-kicker {
+    top: 12px;
+    left: 14px;
+  }
+}
+
+@media (max-width: 390px) {
+  .cc-bh-background,
+  .cc-bh-atmosphere {
+    height:
+      clamp(
+        250px,
+        76vw,
+        300px
+      );
+  }
+
+  .cc-bh-background {
+    background-position: 110% center;
+
+    background-size:
+      134%
+      auto;
+  }
+
+  .cc-bh-main {
+    margin-top:
+      -10px;
+
+    padding-top:
+      11px;
+  }
+}
+/* CC_BLOG_MOBILE_CENTERED_BANNER_END */
+
+/*
+ * CC_BLOG_MOBILE_SEAMLESS_START
+ * Phone only: remove width seam and connect banner with content.
+ */
+@media (max-width: 700px) {
+  .cc-bh {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    overflow-x: clip;
+
+    background:
+      #fff0f3;
+  }
+
+  .cc-bh-stage {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    row-gap: 0;
+
+    overflow-x: clip;
+
+    background:
+      #fff0f3;
+  }
+
+  .cc-bh-background,
+  .cc-bh-main,
+  .cc-bh-rail {
+    box-sizing:
+      border-box;
+  }
+
+  .cc-bh-background {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 0;
+
+    border: 0;
+    border-radius: 0;
+
+    background-color:
+      #fff0f3;
+  }
+
+  /*
+   * Join content directly with the lower banner color.
+   */
+  .cc-bh-main {
+    width: 100%;
+    max-width: 100%;
+
+    margin:
+      -2px
+      0
+      0;
+
+    padding:
+      8px
+      17px
+      28px;
+
+    border: 0;
+    border-radius: 0;
+
+    background:
+      radial-gradient(
+        circle at 94% 12%,
+        rgba(242, 29, 50, 0.07),
+        transparent 35%
+      ),
+      linear-gradient(
+        180deg,
+        #fff0f3 0%,
+        #ffedf1 48%,
+        #fff5f7 100%
+      );
+  }
+
+  .cc-bh-main h1 {
+    margin-top: 0;
+  }
+
+  .cc-bh-description {
+    margin-top:
+      16px;
+  }
+
+  /*
+   * Keep the bottom information rail aligned to the content.
+   */
+  .cc-bh-rail {
+    max-width:
+      calc(
+        100% -
+        26px
+      );
+
+    margin:
+      0
+      13px
+      16px;
+  }
+}
+/* CC_BLOG_MOBILE_SEAMLESS_END */
+
+/*
+ * CC_BLOG_MOBILE_EDGE_FIX_START
+ * Phone only: remove the scrollbar gutter and connect the design.
+ */
+@media (max-width: 700px) {
+  /*
+   * Hide only the visual scrollbar.
+   * Normal touch, mouse-wheel and keyboard scrolling remain enabled.
+   */
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+
+    overflow-x: hidden;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+
+    width: 0;
+    height: 0;
+  }
+
+  .cc-bh,
+  .cc-bh-stage,
+  .cc-bh-background,
+  .cc-bh-main {
+    box-sizing: border-box;
+
+    width: 100%;
+    max-width: 100%;
+
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .cc-bh,
+  .cc-bh-stage {
+    overflow-x: hidden;
+
+    background:
+      #fff1f4;
+  }
+
+  .cc-bh-background {
+    display: block;
+
+    margin-bottom: 0;
+
+    border: 0;
+
+    background-color:
+      #fff1f4;
+  }
+
+  /*
+   * Connect the content directly to the banner.
+   */
+  .cc-bh-main {
+    margin-top:
+      -1px;
+
+    padding-top:
+      0;
+
+    border: 0;
+    border-radius: 0;
+
+    background:
+      linear-gradient(
+        180deg,
+        #fff1f4 0%,
+        #ffedf1 48%,
+        #fff5f7 100%
+      );
+  }
+
+  .cc-bh-main h1 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+}
+/* CC_BLOG_MOBILE_EDGE_FIX_END */
+
+/*
+ * CC_BLOG_MOBILE_CURVED_EDGE_FIX_START
+ * Phone only: blend the thin curved graphic at the right banner edge.
+ */
+@media (max-width: 700px) {
+  .cc-bh-background {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .cc-bh-background::after {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 3;
+
+    width: 24px;
+
+    content: "";
+
+    pointer-events: none;
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(255, 241, 244, 0) 0%,
+        rgba(255, 241, 244, 0.82) 42%,
+        rgba(255, 241, 244, 0.98) 76%,
+        #fff1f4 100%
+      );
+  }
+}
+/* CC_BLOG_MOBILE_CURVED_EDGE_FIX_END */
+
+        /* CC_BLOG_MOBILE_UNIFIED_SECTION_START */
+        @media (max-width: 700px) {
+          .cc-bh,
+          .cc-bh-stage {
+            background: #fff1f4 !important;
+          }
+
+          .cc-bh-background {
+            display: block !important;
+            flex: 0 0 auto !important;
+            margin: 0 !important;
+            border: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+          }
+
+          .cc-bh-main {
+            position: relative !important;
+            z-index: 5 !important;
+
+            width: 100% !important;
+            max-width: none !important;
+
+            /*
+             * Joins the content directly with the banner
+             * and removes the visible horizontal separation.
+             */
+            margin: -16px 0 0 !important;
+            padding-top: 0 !important;
+
+            border: 0 !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+
+            background: #fff1f4 !important;
+          }
+
+          .cc-bh-main::before {
+            position: absolute;
+            top: -24px;
+            right: 0;
+            left: 0;
+            z-index: -1;
+
+            height: 26px;
+
+            content: "";
+            pointer-events: none;
+
+            background:
+              linear-gradient(
+                180deg,
+                rgba(255, 241, 244, 0) 0%,
+                rgba(255, 241, 244, 0.88) 48%,
+                #fff1f4 100%
+              );
+          }
+
+          .cc-bh-main h1 {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+          }
+        }
+        /* CC_BLOG_MOBILE_UNIFIED_SECTION_END */
+
+        /* CC_BLOG_MOBILE_CTA_ROW_START */
+        @media (max-width: 600px) {
+          .cc-bh-actions {
+            display: grid !important;
+            grid-template-columns:
+              minmax(0, 1fr)
+              minmax(0, 1fr) !important;
+
+            width: 100% !important;
+            max-width: 100% !important;
+
+            gap: 8px !important;
+          }
+
+          .cc-bh-primary,
+          .cc-bh-secondary {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+
+            width: 100% !important;
+            min-width: 0 !important;
+            min-height: 44px !important;
+
+            gap: 0 !important;
+            padding: 0 10px !important;
+
+            font-size: 9.5px !important;
+            line-height: 1.15 !important;
+            white-space: nowrap !important;
+          }
+
+          .cc-bh-primary i,
+          .cc-bh-secondary i {
+            display: none !important;
+          }
+        }
+
+        @media (max-width: 350px) {
+          .cc-bh-actions {
+            gap: 6px !important;
+          }
+
+          .cc-bh-primary,
+          .cc-bh-secondary {
+            min-height: 42px !important;
+            padding: 0 7px !important;
+            font-size: 8.7px !important;
+          }
+        }
+        /* CC_BLOG_MOBILE_CTA_ROW_END */
+
+        
+
+        /* CC_BLOG_MOBILE_RAIL_AUTOSLIDE_START */
+        @media (max-width: 600px) {
+          .cc-bh-rail {
+            position: relative !important;
+            inset: auto !important;
+
+            display: grid !important;
+            grid-template-columns: none !important;
+            grid-auto-flow: column !important;
+            grid-auto-columns:
+              minmax(230px, 76vw) !important;
+
+            width: 100% !important;
+            max-width: none !important;
+            min-height: 0 !important;
+
+            margin:
+              15px
+              0
+              12px !important;
+
+            padding:
+              0
+              14px
+              4px !important;
+
+            gap: 0 !important;
+
+            overflow-x: auto !important;
+            overflow-y: hidden !important;
+
+            border: 0 !important;
+            border-radius: 0 !important;
+
+            background:
+              transparent !important;
+
+            box-shadow:
+              none !important;
+
+            backdrop-filter:
+              none !important;
+
+            scroll-behavior: smooth;
+            scroll-snap-type:
+              x mandatory;
+
+            scrollbar-width: none;
+
+            overscroll-behavior-inline:
+              contain;
+
+            touch-action: pan-x;
+
+            -webkit-overflow-scrolling:
+              touch;
+          }
+
+          .cc-bh-rail::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+          }
+
+          .cc-bh-rail-item {
+            width: auto !important;
+            min-width: 0 !important;
+            min-height: 72px !important;
+
+            padding:
+              10px
+              16px !important;
+
+            border: 0 !important;
+            border-radius: 0 !important;
+
+            background:
+              transparent !important;
+
+            box-shadow:
+              none !important;
+
+            scroll-snap-align:
+              start;
+
+            scroll-snap-stop:
+              always;
+          }
+
+          .cc-bh-rail-item:not(
+            :last-child
+          )::after {
+            top: 12px !important;
+            right: 0 !important;
+            bottom: 12px !important;
+            left: auto !important;
+
+            width: 1px !important;
+            height: auto !important;
+          }
+
+          .cc-bh-rail-icon {
+            width: 42px !important;
+            height: 42px !important;
+
+            flex:
+              0
+              0
+              42px !important;
+          }
+
+          .cc-bh-rail-item strong {
+            font-size: 9px !important;
+          }
+
+          .cc-bh-rail-item small {
+            font-size: 7.5px !important;
+          }
+        }
+        /* CC_BLOG_MOBILE_RAIL_AUTOSLIDE_END */
 `}</style>
     </section>
   );

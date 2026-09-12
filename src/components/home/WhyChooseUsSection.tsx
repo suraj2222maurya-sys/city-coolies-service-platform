@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
 import Link from "next/link";
@@ -299,26 +299,54 @@ export default function WhyChooseUsSection() {
     const animatedElements =
       section.querySelectorAll<HTMLElement>("[data-reveal]");
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const element = entry.target as HTMLElement;
+    let hasRevealed = false;
+    let previousScrollY = window.scrollY;
 
-          if (entry.isIntersecting) {
-            element.classList.add("is-visible");
-          } else {
-            element.classList.remove("is-visible");
-          }
+    const showImmediately = () => {
+      section.classList.add("reveal-instant");
+
+      animatedElements.forEach((element) => {
+        element.classList.add("is-visible");
+      });
+    };
+
+    if (typeof IntersectionObserver === "undefined") {
+      showImmediately();
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const currentScrollY = window.scrollY;
+        const scrollingDown = currentScrollY >= previousScrollY;
+        const enteringFromTop = entry.boundingClientRect.top >= 0;
+
+        previousScrollY = currentScrollY;
+
+        if (!entry.isIntersecting || hasRevealed) {
+          return;
+        }
+
+        hasRevealed = true;
+
+        if (!scrollingDown || !enteringFromTop) {
+          section.classList.add("reveal-instant");
+        }
+
+        animatedElements.forEach((element) => {
+          element.classList.add("is-visible");
         });
+
+        observer.disconnect();
       },
       {
         root: null,
-        threshold: 0.14,
-        rootMargin: "0px 0px -8% 0px",
+        threshold: 0.08,
+        rootMargin: "48px 0px -7% 0px",
       },
     );
 
-    animatedElements.forEach((element) => observer.observe(element));
+    observer.observe(section);
 
     return () => {
       observer.disconnect();
@@ -551,18 +579,18 @@ export default function WhyChooseUsSection() {
         .reveal-item,
         .reveal-card {
           opacity: 0;
-          transform: translate3d(0, 42px, 0);
-          filter: blur(7px);
+          transform: translate3d(0, 36px, 0);
+          filter: blur(6px);
           transition:
-            opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
-            transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
-            filter 900ms cubic-bezier(0.16, 1, 0.3, 1);
+            opacity 680ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 680ms cubic-bezier(0.22, 1, 0.36, 1),
+            filter 680ms cubic-bezier(0.22, 1, 0.36, 1);
           transition-delay: var(--delay, 0ms);
           will-change: opacity, transform, filter;
         }
 
         .reveal-card {
-          transform: translate3d(0, 58px, 0) scale(0.97);
+          transform: translate3d(0, 48px, 0) scale(0.98);
         }
 
         .reveal-item.is-visible,
@@ -572,6 +600,12 @@ export default function WhyChooseUsSection() {
           filter: blur(0);
         }
 
+
+        .reveal-instant .reveal-item,
+        .reveal-instant .reveal-card {
+          transition: none;
+          transition-delay: 0ms;
+        }
         @media (prefers-reduced-motion: reduce) {
           .reveal-item,
           .reveal-card {

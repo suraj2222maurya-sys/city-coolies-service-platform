@@ -284,63 +284,37 @@ export default function CareersOpportunitiesSection() {
         );
     };
 
+    /* CC_OP_ONE_TIME_REVEAL_START */
+    let hasRevealed = false;
+
     const observer =
       new IntersectionObserver(
         ([entry]) => {
-          if (!entry) {
+          if (
+            !entry ||
+            !entry.isIntersecting ||
+            hasRevealed
+          ) {
             return;
           }
 
-          if (
-            entry.isIntersecting
-          ) {
-            section.classList.remove(
-              "cc-op-active",
-            );
+          hasRevealed = true;
 
-            window.requestAnimationFrame(
-              () => {
-                window.requestAnimationFrame(
-                  () => {
-                    section.classList.add(
-                      "cc-op-active",
-                    );
-                  },
-                );
-              },
-            );
-          } else {
-            section.classList.remove(
-              "cc-op-active",
-            );
-          }
+          section.classList.add(
+            "cc-op-active",
+          );
+
+          observer.disconnect();
         },
         {
-          threshold: 0,
-          rootMargin: "240px 0px 240px 0px",
+          threshold: 0.12,
+          rootMargin:
+            "3% 0px -7% 0px",
         },
       );
 
     observer.observe(section);
-
-    /* cc-op-initial-reveal */
-    const initialRect =
-      section.getBoundingClientRect();
-
-    if (
-      initialRect.top <
-        window.innerHeight + 260 &&
-      initialRect.bottom > -260
-    ) {
-      window.requestAnimationFrame(
-        () => {
-          section.classList.add(
-            "cc-op-active",
-          );
-        },
-      );
-    }
-
+    /* CC_OP_ONE_TIME_REVEAL_END */
     window.addEventListener(
       "scroll",
       updateScroll,
@@ -516,10 +490,6 @@ export default function CareersOpportunitiesSection() {
                     </p>
                   </div>
 
-                  <span className="cc-op-card-arrow">
-                    ↗
-                  </span>
-
                   <i className="cc-op-card-light" />
                 </a>
               ),
@@ -555,10 +525,6 @@ export default function CareersOpportunitiesSection() {
               <span>
                 Join Now
               </span>
-
-              <i>
-                ↗
-              </i>
             </a>
           </div>
         </div>

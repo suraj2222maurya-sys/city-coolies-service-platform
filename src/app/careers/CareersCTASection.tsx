@@ -69,44 +69,38 @@ export default function CareersCTASection() {
       return;
     }
 
+    /* CC_CTA_ONE_TIME_REVEAL_START */
+    let hasRevealed = false;
+
     const observer =
       new IntersectionObserver(
         ([entry]) => {
-          if (!entry) {
+          if (
+            !entry ||
+            !entry.isIntersecting ||
+            hasRevealed
+          ) {
             return;
           }
 
-          if (
-            entry.isIntersecting
-          ) {
-            section.classList.remove(
-              "cc-cta-active",
-            );
+          hasRevealed = true;
 
-            window.requestAnimationFrame(
-              () => {
-                window.requestAnimationFrame(
-                  () => {
-                    section.classList.add(
-                      "cc-cta-active",
-                    );
-                  },
-                );
-              },
-            );
-          } else {
-            section.classList.remove(
-              "cc-cta-active",
-            );
-          }
+          section.classList.add(
+            "cc-cta-active",
+          );
+
+          observer.disconnect();
         },
         {
           threshold: 0.10,
+          rootMargin:
+            "3% 0px -7% 0px",
         },
       );
 
     observer.observe(section);
 
+    /* CC_CTA_ONE_TIME_REVEAL_END */
     return () => {
       observer.disconnect();
     };

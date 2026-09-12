@@ -193,37 +193,26 @@ export default function CareersCultureSection() {
           animate,
         );
     };
+    let hasRevealed = false;
 
     const observer =
       new IntersectionObserver(
         ([entry]) => {
-          if (!entry) {
+          if (
+            !entry ||
+            !entry.isIntersecting ||
+            hasRevealed
+          ) {
             return;
           }
 
-          if (
-            entry.isIntersecting
-          ) {
-            section.classList.remove(
-              "cc-culture-active",
-            );
+          hasRevealed = true;
 
-            window.requestAnimationFrame(
-              () => {
-                window.requestAnimationFrame(
-                  () => {
-                    section.classList.add(
-                      "cc-culture-active",
-                    );
-                  },
-                );
-              },
-            );
-          } else {
-            section.classList.remove(
-              "cc-culture-active",
-            );
-          }
+          section.classList.add(
+            "cc-culture-active",
+          );
+
+          observer.disconnect();
         },
         {
           threshold: 0.14,
@@ -415,6 +404,7 @@ export default function CareersCultureSection() {
             </span>
           </p>
 
+          <div className="cc-culture-story-stage">
           <div className="cc-story-shell">
             <span
               className="cc-story-beam"
@@ -484,60 +474,8 @@ export default function CareersCultureSection() {
               )}
             </div>
           </div>
-        </div>
-        <div
-          className="cc-motion-stage"
-          aria-hidden="true"
-        >
-          <div className="cc-reactor-backglow" />
-
-          <div className="cc-reactor-floor">
-            <div className="cc-reactor-floor-light" />
-            <div className="cc-reactor-floor-ring cc-reactor-floor-ring-one" />
-            <div className="cc-reactor-floor-ring cc-reactor-floor-ring-two" />
-            <div className="cc-reactor-floor-ring cc-reactor-floor-ring-three" />
-          </div>
-
-          <div className="cc-reactor-beam">
-            <i />
-          </div>
-
-          <div className="cc-reactor-world">
-            <div className="cc-reactor-halo cc-reactor-halo-one">
-              <i />
-            </div>
-
-            <div className="cc-reactor-halo cc-reactor-halo-two">
-              <i />
-            </div>
-
-            <div className="cc-reactor-halo cc-reactor-halo-three">
-              <i />
-            </div>
-
-            <div className="cc-reactor-blades">
-              <span className="cc-reactor-blade cc-reactor-blade-one" />
-              <span className="cc-reactor-blade cc-reactor-blade-two" />
-              <span className="cc-reactor-blade cc-reactor-blade-three" />
-              <span className="cc-reactor-blade cc-reactor-blade-four" />
-            </div>
-
-            <div className="cc-reactor-core-shell">
-              <span className="cc-reactor-core" />
-            </div>
-
-            <span className="cc-reactor-spark cc-reactor-spark-one" />
-            <span className="cc-reactor-spark cc-reactor-spark-two" />
-            <span className="cc-reactor-spark cc-reactor-spark-three" />
-            <span className="cc-reactor-spark cc-reactor-spark-four" />
-            <span className="cc-reactor-spark cc-reactor-spark-five" />
-
-            <span className="cc-reactor-glass cc-reactor-glass-one" />
-            <span className="cc-reactor-glass cc-reactor-glass-two" />
-            <span className="cc-reactor-glass cc-reactor-glass-three" />
           </div>
         </div>
-
 
         <div
           className="cc-culture-ticker"
@@ -4754,6 +4692,162 @@ export default function CareersCultureSection() {
 }
 
 /* === CC CULTURE CINEMATIC TEXT V1 END === */
+
+        /*
+         * CC_CULTURE_STORY_STAGE_START
+         * Position the existing culture story where the reactor was removed.
+         */
+        @media (min-width: 761px) {
+          .cc-culture-story-stage {
+            position: absolute;
+            top: 50%;
+            left: calc(100% + clamp(24px, 3.5vw, 68px));
+            z-index: 7;
+
+            width: min(40vw, 650px);
+
+            transform: translateY(-50%);
+          }
+
+          .cc-culture-story-stage .cc-story-shell {
+            width: 100%;
+            max-width: none;
+            margin-top: 0;
+          }
+        }
+
+        @media (min-width: 761px) and (max-width: 1030px) {
+          .cc-culture-story-stage {
+            left: calc(100% + 18px);
+            width: 36vw;
+          }
+
+          .cc-culture-story-stage .cc-story h3 {
+            font-size: clamp(25px, 3.2vw, 36px);
+          }
+        }
+
+        @media (max-width: 760px) {
+          .cc-culture-story-stage {
+            position: relative;
+            width: 100%;
+          }
+        }
+        /* CC_CULTURE_STORY_STAGE_END */
+
+        /*
+         * CC_CULTURE_STORY_STAGE_START
+         * Desktop story position and synchronized first reveal.
+         */
+        @media (min-width: 761px) {
+          .cc-culture-story-stage {
+            position: absolute;
+            top: 50%;
+            left: calc(100% - clamp(18px, 2vw, 34px));
+            z-index: 7;
+
+            width: min(41vw, 650px);
+
+            transform: translateY(-50%);
+          }
+
+          .cc-culture-story-stage .cc-story-shell {
+            width: 100%;
+            max-width: none;
+            margin-top: 0;
+          }
+
+          .cc-culture-active
+          .cc-culture-story-stage
+          .cc-story-shell {
+            animation-delay: 0.72s !important;
+          }
+        }
+
+        @media (min-width: 761px) and (max-width: 1030px) {
+          .cc-culture-story-stage {
+            left: calc(100% - 12px);
+            width: 38vw;
+          }
+
+          .cc-culture-story-stage .cc-story h3 {
+            font-size: clamp(25px, 3.2vw, 36px);
+          }
+        }
+
+        @media (max-width: 760px) {
+          .cc-culture-story-stage {
+            position: relative;
+            width: 100%;
+          }
+        }
+        /* CC_CULTURE_STORY_STAGE_END */
+
+        /*
+         * CC_CULTURE_DESKTOP_GAP_FIX_START
+         * Remove the empty desktop space without changing mobile layout.
+         */
+        @media (min-width: 761px) {
+          .cc-culture {
+            min-height: auto;
+          }
+
+          .cc-culture-container {
+            min-height: auto;
+
+            padding-bottom:
+              clamp(
+                32px,
+                3vw,
+                46px
+              );
+          }
+
+          .cc-culture-ticker {
+            position: relative;
+
+            right: auto;
+            bottom: auto;
+            left: auto;
+
+            width: 100%;
+
+            margin-top:
+              clamp(
+                24px,
+                2.5vw,
+                38px
+              );
+          }
+        }
+        /* CC_CULTURE_DESKTOP_GAP_FIX_END */
+
+        /*
+         * CC_CULTURE_BACKGROUND_COLOR_START
+         * Reduce excessive white and keep a premium light-pink background.
+         */
+        .cc-culture {
+          background:
+            radial-gradient(
+              circle at 84% 25%,
+              rgba(240, 32, 48, 0.20) 0%,
+              rgba(255, 183, 196, 0.15) 27%,
+              transparent 54%
+            ),
+            radial-gradient(
+              circle at 18% 78%,
+              rgba(240, 32, 48, 0.08) 0%,
+              transparent 42%
+            ),
+            linear-gradient(
+              116deg,
+              #fff4f6 0%,
+              #ffeaee 38%,
+              #ffdee5 72%,
+              #ffedf1 100%
+            ) !important;
+        }
+        /* CC_CULTURE_BACKGROUND_COLOR_END */
 `}</style>
     </section>
   );

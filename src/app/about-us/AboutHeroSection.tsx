@@ -1,7 +1,7 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
-import Link from "next/link";
+
 import { useEffect, useRef, useState } from "react";
 
 const trustItems = [
@@ -61,7 +61,12 @@ export default function AboutHeroSection() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        if (!entry.isIntersecting) {
+        return;
+      }
+
+      setIsVisible(true);
+      observer.disconnect();
       },
       {
         threshold: 0.15,
@@ -94,7 +99,47 @@ export default function AboutHeroSection() {
         className="aboutHeroBackground"
         aria-hidden="true"
       />
-      <div className="aboutMobileBanner" aria-hidden="true" />
+      <div
+        className="aboutMobileBanner"
+        aria-hidden="true"
+        style={{
+          width: "100%",
+          height: "auto",
+          aspectRatio: "auto",
+          margin: 0,
+          padding: 0,
+          overflow: "visible",
+          background: "#ffffff",
+          lineHeight: 0,
+          opacity: 1,
+          filter: "none",
+          transform: "none",
+        }}
+      >
+        <Image
+          src="/about-hero-bg.png"
+          alt=""
+          width={1672}
+          height={941}
+          priority
+          unoptimized
+          sizes="(max-width: 767px) 100vw, 1px"
+          style={{
+            position: "static",
+            display: "block",
+            width: "100%",
+            maxWidth: "100%",
+            height: "auto",
+            minHeight: 0,
+            maxHeight: "none",
+            margin: 0,
+            padding: 0,
+            objectFit: "contain",
+            objectPosition: "center",
+            transform: "none",
+          }}
+        />
+      </div>
       <div className="aboutHeroOverlay" aria-hidden="true" />
 
       <div className="aboutHeroInner">
@@ -160,7 +205,7 @@ export default function AboutHeroSection() {
               <span>Call Now</span>
             </a>
 
-               <Link
+               <a
   href="/services"
   className="aboutHeroCta aboutServicesCta"
 >
@@ -169,7 +214,7 @@ export default function AboutHeroSection() {
   <span className="aboutCtaArrow" aria-hidden="true">
     →
   </span>
-</Link>
+</a>
           </div>
         </div>
       </div>
@@ -585,154 +630,670 @@ export default function AboutHeroSection() {
           }
         }
 
-@media (max-width: 767px) {
-  .aboutHero {
-    display: block;
-    min-height: auto;
-    overflow: hidden;
-    background: linear-gradient(180deg, #ffffff 0%, #fffafa 55%, #fff3f4 100%);
-  }
+        @media (max-width: 767px) {
+          .aboutHero {
+            display: block;
+            width: 100%;
+            min-height: auto;
+            overflow: hidden;
+            background:
+              radial-gradient(
+                circle at 108% 62%,
+                rgba(245, 27, 40, 0.055),
+                transparent 32%
+              ),
+              linear-gradient(
+                180deg,
+                #ffffff 0%,
+                #fffdfd 54%,
+                #fff7f8 100%
+              );
+          }
 
-  .aboutHeroBackground,
-  .aboutHeroOverlay {
-    display: none;
-  }
+          .aboutHeroBackground,
+          .aboutHeroOverlay {
+            display: none;
+          }
 
-  .aboutMobileBanner {
-    display: block;
-    width: 100%;
-    aspect-ratio: 7 / 4;
-    margin: 0;
-    background-color: #ffffff;
-    background-image: url("/about-hero-bg.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-  }
+          .aboutMobileBanner {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #ffffff;
+            line-height: 0;
+          }
 
-  .aboutHeroInner {
-    display: block;
-    width: 100%;
-    min-height: auto;
-    margin: 0;
-    padding: 0;
-  }
+          .aboutMobileBannerImage {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            object-fit: contain;
+            object-position: center;
+          }
 
-  .aboutHeroContent {
-    width: 100%;
-    margin: 0;
-    padding: 28px 20px 42px;
-    background: linear-gradient(180deg, #ffffff 0%, #fff9fa 58%, #fff1f3 100%);
-    transform: none;
-  }
+          .aboutHeroInner {
+            display: block;
+            width: 100%;
+            min-height: auto;
+            margin: 0;
+            padding: 0;
+          }
 
-  .aboutHeroTitle {
-    position: static;
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: visible;
-    font-size: clamp(1.8rem, 8vw, 2.45rem);
-    line-height: 1.04;
-  }
+          .aboutHeroContent {
+            position: relative;
+            width: 100%;
+            margin: 0;
+            padding: 29px 22px 40px;
+            background:
+              radial-gradient(
+                circle at 108% 35%,
+                rgba(245, 27, 40, 0.055),
+                transparent 31%
+              ),
+              linear-gradient(
+                180deg,
+                rgba(255, 255, 255, 0.99),
+                rgba(255, 248, 249, 0.99)
+              );
+            transform: none;
+          }
 
-  .aboutTitleLine {
-    display: block;
-    width: 100%;
-    white-space: nowrap;
-    overflow: visible;
-  }
+          .aboutHeroContent::before {
+            display: block;
+            margin: 0 0 17px;
+            color: #ef1725;
+            content: "ABOUT CITY COOLIES";
+            font-size: 0.68rem;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: 0.22em;
+          }
 
-  .aboutTitleScript {
-    margin-top: 8px;
-  }
+          .aboutHeroTitle {
+            position: static;
+            top: auto;
+            left: auto;
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 0;
+            overflow: visible;
+            color: #111824;
+            font-size: clamp(2rem, 8.5vw, 2.4rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.055em;
+          }
 
-  .aboutHeroDescription {
-    width: 100%;
-    margin: 26px 0 0;
-    font-size: 0.92rem;
-    line-height: 1.65;
-  }
+          .aboutTitleLine {
+            display: block;
+            width: 100%;
+            overflow: visible;
+            white-space: nowrap;
+          }
 
-  .aboutDescriptionLine {
-    display: inline;
-  }
+          .aboutTitleRed {
+            color: #f51b28;
+          }
 
-  .aboutDescriptionLine::after {
-    content: " ";
-  }
+          .aboutTitleScript {
+            position: relative;
+            display: block;
+            width: fit-content;
+            margin-top: 10px;
+            color: #111824;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 0.87em;
+            font-style: italic;
+            font-weight: 500;
+            line-height: 1;
+            letter-spacing: -0.055em;
+          }
 
-  .aboutTrustRow {
-    position: static;
-    grid-template-columns: repeat(2, minmax(0, 125px));
-    justify-content: center;
-    row-gap: 22px;
-    width: 100%;
-    margin-top: 25px;
-    transform: none;
-  }
+          .aboutTitleScript::after {
+            display: none;
+          }
 
-  .aboutTrustItem {
-    padding-inline: 10px;
-  }
+          .aboutHeroDescription {
+            display: block;
+            width: 100%;
+            margin: 25px 0 0;
+            color: #536071;
+            font-size: 0.92rem;
+            font-weight: 500;
+            line-height: 1.63;
+            text-align: left;
+          }
 
-  .aboutTrustDivider {
-    display: none;
-  }
+          .aboutDescriptionLine {
+            display: inline;
+          }
 
-  .aboutHeroActions {
-    position: static;
-    display: flex;
-    width: 100%;
-    align-items: stretch;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 28px;
-    transform: none;
-  }
+          .aboutDescriptionLine::after {
+            content: " ";
+          }
 
-  .aboutHeroCta {
-    width: 100%;
-    min-width: 0;
-    height: 54px;
-  }
-}
+          .aboutVideoLine,
+          .aboutReveal {
+            opacity: 1;
+            filter: none;
+            transform: none;
+            clip-path: none;
+            animation: none;
+            transition: none;
+          }
 
-@media (max-width: 420px) {
-  .aboutHeroContent {
-    padding-inline: 18px;
-  }
+          .aboutHeroVisible .aboutVideoLine,
+          .aboutHeroVisible .aboutReveal {
+            opacity: 1;
+            filter: none;
+            transform: none;
+            clip-path: none;
+            animation: none;
+          }
 
-  .aboutHeroTitle {
-    font-size: clamp(1.62rem, 7.5vw, 2rem);
-  }
+          .aboutTrustRow {
+            position: static;
+            left: auto;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            width: 100%;
+            margin: 25px 0 0;
+            column-gap: 18px;
+            row-gap: 0;
+            transform: none;
+          }
 
-  .aboutTrustRow {
-    grid-template-columns: repeat(2, minmax(0, 112px));
-  }
+          .aboutTrustItem {
+            position: relative;
+            display: grid;
+            min-width: 0;
+            min-height: 88px;
+            grid-template-columns: 50px minmax(0, 1fr);
+            align-items: center;
+            justify-content: initial;
+            gap: 10px;
+            padding: 12px 1px;
+            border-bottom: 1px solid rgba(245, 27, 40, 0.16);
+          }
 
-  .aboutTrustTitle {
-    font-size: 0.67rem;
-  }
-}
+          .aboutTrustItem:nth-child(3),
+          .aboutTrustItem:nth-child(4) {
+            border-bottom: 0;
+          }
 
-@media (prefers-reduced-motion: reduce) {
-  .aboutHeroBackground,
-  .aboutReveal,
-  .aboutVideoLine,
-  .aboutTrustIcon,
-  .aboutHeroCta,
-  .aboutCtaArrow {
-    opacity: 1;
-    filter: none;
-    transform: none;
-    clip-path: none;
-    animation: none;
-    transition: none;
-  }
-}
+          .aboutTrustItem:nth-child(odd)::after {
+            position: absolute;
+            top: 16px;
+            right: -10px;
+            width: 1px;
+            height: calc(100% - 32px);
+            background: rgba(245, 27, 40, 0.17);
+            content: "";
+          }
+
+          .aboutTrustIcon {
+            display: grid;
+            width: 50px;
+            height: 50px;
+            place-items: center;
+            border: 0;
+            border-radius: 50%;
+            background: #fff0f2;
+            box-shadow: none;
+            color: #f51b28;
+            backdrop-filter: none;
+          }
+
+          .aboutTrustItem:hover .aboutTrustIcon {
+            border-color: transparent;
+            box-shadow: none;
+            transform: none;
+          }
+
+          .aboutTrustIcon :global(svg) {
+            width: 26px;
+            height: 26px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.9;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+          }
+
+          .aboutTrustTitle {
+            max-width: 92px;
+            color: #121a28;
+            font-size: 0.77rem;
+            font-weight: 800;
+            line-height: 1.22;
+            text-align: left;
+          }
+
+          .aboutTrustDivider {
+            display: none;
+          }
+
+          .aboutHeroActions {
+            position: static;
+            left: auto;
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+            flex-direction: row;
+            gap: 11px;
+            margin: 25px 0 0;
+            transform: none;
+          }
+
+          .aboutHeroCta {
+            box-sizing: border-box;
+            display: inline-flex;
+            width: auto;
+            min-width: 0;
+            height: 54px;
+            flex: 1 1 0;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 0 9px;
+            border-radius: 15px;
+            font-size: 0.79rem;
+            font-weight: 800;
+            line-height: 1;
+            text-decoration: none;
+            white-space: nowrap;
+          }
+
+          .aboutHeroCta :global(svg) {
+            width: 20px;
+            height: 20px;
+            flex: none;
+          }
+
+          .aboutCallCta {
+            border: 1px solid #f51b28;
+            background: linear-gradient(135deg, #ff2634, #eb0011);
+            box-shadow: 0 13px 27px rgba(245, 27, 40, 0.24);
+            color: #ffffff;
+          }
+
+          .aboutServicesCta {
+            border: 1.5px solid #f51b28;
+            background: #ffffff;
+            box-shadow: none;
+            color: #171f2a;
+            backdrop-filter: none;
+          }
+
+          .aboutCtaArrow {
+            display: inline-flex;
+            color: #f51b28;
+            font-size: 1.1rem;
+          }
+        }
+
+        @media (max-width: 390px) {
+          .aboutHeroContent {
+            padding: 26px 17px 36px;
+          }
+
+          .aboutHeroContent::before {
+            margin-bottom: 15px;
+            font-size: 0.61rem;
+          }
+
+          .aboutHeroTitle {
+            font-size: clamp(1.78rem, 8.2vw, 2rem);
+          }
+
+          .aboutHeroDescription {
+            margin-top: 23px;
+            font-size: 0.86rem;
+          }
+
+          .aboutTrustRow {
+            column-gap: 14px;
+          }
+
+          .aboutTrustItem {
+            grid-template-columns: 45px minmax(0, 1fr);
+            gap: 8px;
+          }
+
+          .aboutTrustIcon {
+            width: 45px;
+            height: 45px;
+          }
+
+          .aboutTrustIcon :global(svg) {
+            width: 23px;
+            height: 23px;
+          }
+
+          .aboutTrustTitle {
+            font-size: 0.68rem;
+          }
+
+          .aboutHeroCta {
+            height: 51px;
+            padding-inline: 7px;
+            font-size: 0.72rem;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .aboutHeroBackground,
+          .aboutReveal,
+          .aboutVideoLine,
+          .aboutTrustIcon,
+          .aboutHeroCta,
+          .aboutCtaArrow {
+            opacity: 1;
+            filter: none;
+            transform: none;
+            clip-path: none;
+            animation: none;
+            transition: none;
+          }
+        }
+
         
+
+        
+
+        
+
+        
+
+        /* FINAL MOBILE BUTTONS AND REVEAL START */
+        @media (max-width: 767px) {
+          :global(html) {
+            scroll-behavior: smooth;
+          }
+
+          .aboutHero {
+            scroll-behavior: smooth;
+          }
+
+          .aboutHeroActions {
+            position: static;
+            left: auto;
+            display: grid;
+            width: 100%;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            align-items: stretch;
+            gap: 11px;
+            margin: 26px 0 0;
+            transform: none;
+          }
+
+          .aboutHeroCta {
+            box-sizing: border-box;
+            display: inline-flex;
+            width: 100%;
+            min-width: 0;
+            height: 54px;
+            flex: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 0;
+            padding: 0 10px;
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 0.78rem;
+            font-weight: 800;
+            line-height: 1;
+            text-align: center;
+            text-decoration: none;
+            white-space: nowrap;
+            cursor: pointer;
+          }
+
+          .aboutHeroCta:hover {
+            transform: none;
+          }
+
+          .aboutHeroCta :global(svg) {
+            display: block;
+            width: 20px;
+            height: 20px;
+            flex: none;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+          }
+
+          .aboutCallCta {
+            border: 1.5px solid #f51b28;
+            background: linear-gradient(135deg, #ff2634, #eb0011);
+            box-shadow: 0 13px 28px rgba(245, 27, 40, 0.24);
+            color: #ffffff;
+          }
+
+          .aboutServicesCta {
+            border: 1.5px solid #f51b28;
+            background: #ffffff;
+            box-shadow: 0 10px 24px rgba(245, 27, 40, 0.1);
+            color: #171f2a;
+          }
+
+          .aboutCtaArrow {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #f51b28;
+            font-size: 1.1rem;
+            line-height: 1;
+          }
+
+          .aboutMobileBanner,
+          .aboutHeroContent::before,
+          .aboutHeroTitle .aboutVideoLine,
+          .aboutHeroDescription .aboutVideoLine,
+          .aboutTrustItem,
+          .aboutHeroActions {
+            opacity: 0;
+            filter: blur(7px);
+            transform: translate3d(0, 26px,0) scale(0.975);
+            will-change: opacity, filter, transform;
+          }
+
+          .aboutTrustRow {
+            opacity: 1;
+            filter: none;
+            transform: none;
+            animation: none;
+          }
+
+          .aboutHeroVisible .aboutMobileBanner {
+            animation: aboutMobileCinematicReveal 0.72s
+              cubic-bezier(0.22, 1, 36, 1) 0.04s both;
+          }
+
+          .aboutHeroVisible .aboutHeroContent::before {
+            animation: aboutMobileCinematicReveal 0.68s
+              cubic-bezier(0.22, 1, 0.36, 1) 0.18s both;
+          }
+
+          .aboutHeroVisible
+            .aboutHeroTitle
+            .aboutVideoLine:nth-child(1) {
+            animation: aboutMobileCinematicReveal 0.72s
+              cubic-bezier(0.22, 1, 0.36, 1) 0.29s both;
+          }
+
+          .aboutHeroVisible
+            .aboutHeroTitle
+            .aboutVideoLine:nth-child(2) {
+            animation: aboutMobileCinematicReveal 0.72s
+              cubic-bezier(0.22, 1, 0.36, 1) 0.4s both;
+          }
+
+          .aboutHeroVisible
+            .aboutHeroTitle
+            .aboutVideoLine:nth-child(3) {
+            animation: aboutMobileCinematicReveal 0.72s
+              cubic-bezier(0.22, 1, 0.36, 1) 0.51s both;
+          }
+
+          .aboutHeroVisible
+            .aboutHeroDescription
+            .aboutVideoLine:nth-child(1) {
+            animation: aboutMobileCinematicReveal 0.68s
+              cubic-bezier(0.22, 1, 0.36, 1) 0.62s both;
+          }
+
+          .aboutHeroVisible
+            .aboutHeroDescription
+            .aboutVideoLine:nth-child(2) {
+            animation: aboutMobileCinematicReveal 0.68s
+              cubic-bezier(0.22, 1, 0.36, 1) 0.7s both;
+          }
+
+          .aboutHeroVisible
+            .aboutHeroDescription
+            .aboutVideoLine:nth-child(3) {
+            animation: aboutMobileCinematicReveal 0.68s
+              cubic-bezier(0.22, 1, 0.36, 1) 0.78s both;
+          }
+
+          .aboutHeroVisible
+            .aboutHeroDescription
+            .aboutVideoLine:nth-child(4) {
+            animation: aboutMobileCinematicReveal 0.68s
+              cubic-bezier(0.22, 1, 0.36, 1) 0.86s both;
+          }
+
+          .aboutHeroVisible .aboutTrustItem:nth-child(1) {
+            animation: aboutMobileCinematicReveal 0.68s
+              cubic-bezier(0.22, 1, 0.36, 1) 0.96s both;
+          }
+
+          .aboutHeroVisible .aboutTrustItem:nth-child(2) {
+            animation: aboutMobileCinematicReveal 0.68s
+              cubic-bezier(0.22, 1, 0.36, 1) 1.04s both;
+          }
+
+          .aboutHeroVisible .aboutTrustItem:nth-child(3) {
+            animation: aboutMobileCinematicReveal 0.68s
+              cubic-bezier(0.22, 1, 0.36, 1) 1.12s both;
+          }
+
+          .aboutHeroVisible .aboutTrustItem:nth-child(4) {
+            animation: aboutMobileCinematicReveal 0.68s
+              cubic-bezier(0.22, 1, 0.36, 1) 1.2s both;
+          }
+
+          .aboutHeroVisible .aboutHeroActions {
+            animation: aboutMobileCinematicReveal 0.72s
+              cubic-bezier(0.22, 1, 0.36, 1) 1.3s both;
+          }
+        }
+
+        @media (max-width: 390px) {
+          .aboutHeroActions {
+            gap: 9px;
+          }
+
+          .aboutHeroCta {
+            height: 51px;
+            gap: 6px;
+            padding-inline: 7px;
+            border-radius: 14px;
+            font-size: 0.7rem;
+          }
+
+          .aboutHeroCta :global(svg) {
+            width: 18px;
+            height: 18px;
+          }
+
+          .aboutCtaArrow {
+            font-size: 1rem;
+          }
+        }
+
+        @keyframes aboutMobileCinematicReveal {
+          0% {
+            opacity: 0;
+            filter: blur(7px);
+            transform: translate3d(0, 26px, 0) scale(0.975);
+          }
+
+          55% {
+            opacity: 0.78;
+            filter: blur(2px);
+          }
+
+          100% {
+            opacity: 1;
+            filter: blur(0);
+            transform: translate3d(0, 0, 0) scale(1);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .aboutMobileBanner,
+          .aboutHeroContent::before,
+          .aboutHeroTitle .aboutVideoLine,
+                   .aboutHeroDescription .aboutVideoLine,
+          .aboutTrustItem,
+          .aboutHeroActions {
+            opacity: 1;
+            filter: none;
+            transform: none;
+            animation: none;
+            transition: none;
+          }
+        }
+        /* FINAL MOBILE BUTTONS AND REVEAL END */
+
+        /* BANNER RESPONSIVE LOCK START */
+        @media (max-width: 767px) {
+          .aboutHeroBackground,
+          .aboutHeroOverlay {
+            display: none !important;
+          }
+
+          .aboutMobileBanner {
+            position: static !important;
+            display: block !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
+            min-height: 0 !important;
+            max-height: none !important;
+            aspect-ratio: auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
+            background: #ffffff !important;
+            background-image: none !important;
+            opacity: 1 !important;
+            filter: none !important;
+            transform: none !important;
+            animation: none !important;
+            transition: none !important;
+          }
+
+          .aboutHeroVisible .aboutMobileBanner {
+            opacity: 1 !important;
+            filter: none !important;
+            transform: none !important;
+            animation: none !important;
+            transition: none !important;
+          }
+        }
+        /* BANNER RESPONSIVE LOCK END */
       `}</style>
     </section>
   );

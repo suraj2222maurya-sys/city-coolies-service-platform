@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import {
@@ -154,29 +154,62 @@ export default function WorkProcessSection() {
       return;
     }
 
-    const revealElements = section.querySelectorAll<HTMLElement>("[data-process-reveal]");
+    const revealElements =
+      section.querySelectorAll<HTMLElement>("[data-process-reveal]");
+
+    let hasRevealed = false;
+    let previousScrollY = window.scrollY;
+
+    const displaySection = (withAnimation: boolean) => {
+      if (hasRevealed) {
+        return;
+      }
+
+      hasRevealed = true;
+
+      if (!withAnimation) {
+        section.classList.add("process-reveal-instant");
+      }
+
+      revealElements.forEach((element) => {
+        element.classList.add("is-visible");
+      });
+    };
+
+    if (typeof IntersectionObserver === "undefined") {
+      displaySection(false);
+      return;
+    }
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const element = entry.target as HTMLElement;
+      ([entry]) => {
+        const currentScrollY = window.scrollY;
+        const scrollingDown =
+          currentScrollY >= previousScrollY;
+        const enteringFromTop =
+          entry.boundingClientRect.top >= 0;
 
-          if (entry.isIntersecting) {
-            element.classList.add("is-visible");
-          } else {
-            element.classList.remove("is-visible");
-          }
-        });
+        previousScrollY = currentScrollY;
+
+        if (!entry.isIntersecting || hasRevealed) {
+          return;
+        }
+
+        displaySection(scrollingDown && enteringFromTop);
+        observer.disconnect();
       },
       {
-        threshold: 0.16,
-        rootMargin: "0px 0px -8% 0px",
+        root: null,
+        threshold: 0.08,
+        rootMargin: "48px 0px -7% 0px",
       },
     );
 
-    revealElements.forEach((element) => observer.observe(element));
+    observer.observe(section);
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -240,9 +273,6 @@ export default function WorkProcessSection() {
         </div>
 
         <div className="relative mt-10">
-          <div aria-hidden="true" className="process-flow-line absolute left-[8.33%] right-[8.33%] top-[58px] hidden h-[3px] overflow-hidden rounded-full bg-red-100 lg:block">
-            <span className="process-flow-fill block h-full w-full rounded-full bg-gradient-to-r from-red-400 via-red-600 to-red-400" />
-          </div>
 
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {processSteps.map((step, index) => (
@@ -312,9 +342,9 @@ export default function WorkProcessSection() {
           transform: translate3d(0, 44px, 0);
           filter: blur(7px);
           transition:
-            opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
-            transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
-            filter 900ms cubic-bezier(0.16, 1, 0.3, 1);
+            opacity 720ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 720ms cubic-bezier(0.22, 1, 0.36, 1),
+            filter 720ms cubic-bezier(0.22, 1, 0.36, 1);
           transition-delay: var(--delay, 0ms);
           will-change: opacity, transform, filter;
         }
@@ -329,15 +359,6 @@ export default function WorkProcessSection() {
           filter: blur(0);
         }
 
-        .process-flow-fill {
-          transform: scaleX(0);
-          transform-origin: left center;
-          animation: none;
-        }
-
-        .work-process-section:has(.process-card.is-visible) .process-flow-fill {
-          animation: processFlow 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
 
         .process-icon-wrap::after {
           content: "";
@@ -348,17 +369,12 @@ export default function WorkProcessSection() {
           pointer-events: none;
         }
 
-        @keyframes processFlow {
-          from {
-            transform: scaleX(0);
-            opacity: 0.25;
-          }
-          to {
-            transform: scaleX(1);
-            opacity: 1;
-          }
-        }
 
+
+        .process-reveal-instant .process-reveal {
+          transition: none;
+          transition-delay: 0ms;
+        }
         @media (prefers-reduced-motion: reduce) {
           .process-reveal,
           .process-card {
@@ -368,10 +384,6 @@ export default function WorkProcessSection() {
             transition: none;
           }
 
-          .process-flow-fill {
-            transform: scaleX(1);
-            animation: none;
-          }
         }
       `}</style>
     </section>

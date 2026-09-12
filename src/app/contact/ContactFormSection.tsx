@@ -121,7 +121,7 @@ export default function ContactFormSection() {
             </div>
           </article>
 
-          <article className="cc-contact-mini-card cc-step cc-delay-3">
+          <article className="cc-contact-mini-card cc-step cc-delay-3 cc-contact-trusted-support">
             <span className="cc-contact-mini-icon">
               <SupportIcon />
             </span>
@@ -146,7 +146,7 @@ export default function ContactFormSection() {
             />
           </div>
 
-          <article className="cc-contact-mini-card cc-step cc-delay-5">
+          <article className="cc-contact-mini-card cc-step cc-delay-5 cc-contact-all-services">
             <span className="cc-contact-mini-icon">
               <ServicesIcon />
             </span>
@@ -188,6 +188,330 @@ export default function ContactFormSection() {
         </div>
 
       </div>
+
+      {/* CC_CONTACT_QUICK_CONTENT_SIZE_START */}
+      <style>{`
+        .cc-contact-features-frame
+        + *,
+        .cc-contact-form-section
+        .cc-contact-quick {
+          box-sizing: border-box;
+        }
+
+        /*
+         * Increase only the content inside
+         * the red Quick Response box.
+         */
+        .cc-contact-form-section
+        .cc-contact-quick {
+          display: flex !important;
+          align-items: flex-start !important;
+
+          gap:
+            clamp(
+              15px,
+              1.2vw,
+              20px
+            ) !important;
+
+          padding:
+            clamp(
+              25px,
+              2.1vw,
+              38px
+            ) !important;
+        }
+
+        .cc-contact-form-section
+        .cc-contact-quick-icon {
+          display: grid !important;
+
+          width:
+            clamp(
+              42px,
+              3.2vw,
+              50px
+            ) !important;
+
+          height:
+            clamp(
+              42px,
+              3.2vw,
+              50px
+            ) !important;
+
+          flex:
+            0
+            0
+            clamp(
+              42px,
+              3.2vw,
+              50px
+            ) !important;
+
+          place-items:
+            center !important;
+        }
+
+        .cc-contact-form-section
+        .cc-contact-quick-icon svg {
+          width:
+            clamp(
+              26px,
+              1.8vw,
+              31px
+            ) !important;
+
+          height:
+            clamp(
+              26px,
+              1.8vw,
+              31px
+            ) !important;
+        }
+
+        .cc-contact-form-section
+        .cc-contact-quick > div {
+          display: flex !important;
+
+          min-width: 0 !important;
+
+          flex-direction:
+            column !important;
+
+          gap:
+            9px !important;
+        }
+
+        .cc-contact-form-section
+        .cc-contact-quick strong {
+          font-size:
+            clamp(
+              14px,
+              1.08vw,
+              17px
+            ) !important;
+
+          font-weight:
+            850 !important;
+
+          line-height:
+            1.2 !important;
+
+          letter-spacing:
+            -0.015em !important;
+        }
+
+        .cc-contact-form-section
+        .cc-contact-quick p {
+          margin: 0 !important;
+
+          font-size:
+            clamp(
+              10.5px,
+              0.75vw,
+              12px
+            ) !important;
+
+          font-weight:
+            600 !important;
+
+          line-height:
+            1.55 !important;
+        }
+
+        /*
+         * Maintain balanced sizing on phones.
+         */
+        @media (max-width: 700px) {
+          .cc-contact-form-section
+          .cc-contact-quick {
+            gap:
+              12px !important;
+
+            padding:
+              18px
+              15px !important;
+          }
+
+          .cc-contact-form-section
+          .cc-contact-quick-icon {
+            width:
+              36px !important;
+
+            height:
+              36px !important;
+
+            flex:
+              0
+              0
+              36px !important;
+          }
+
+          .cc-contact-form-section
+          .cc-contact-quick-icon svg {
+            width:
+              23px !important;
+
+            height:
+              23px !important;
+          }
+
+          .cc-contact-form-section
+          .cc-contact-quick > div {
+            gap:
+              6px !important;
+          }
+
+          .cc-contact-form-section
+          .cc-contact-quick strong {
+            font-size:
+              12px !important;
+          }
+
+          .cc-contact-form-section
+          .cc-contact-quick p {
+            font-size:
+              9px !important;
+
+            line-height:
+              1.5 !important;
+          }
+        }
+      `}</style>
+      {/* CC_CONTACT_QUICK_CONTENT_SIZE_END */}
+
+      {/* CC_TRUSTED_SUPPORT_TEXT_SIZE_START */}
+      <style>{`
+        /*
+         * Increase only the Trusted Support text.
+         * The box and icon remain unchanged.
+         */
+        .cc-contact-form-section
+        .cc-contact-trusted-support strong {
+          font-size:
+            clamp(
+              14px,
+              1.05vw,
+              17px
+            ) !important;
+
+          font-weight:
+            850 !important;
+
+          line-height:
+            1.25 !important;
+
+          letter-spacing:
+            -0.015em !important;
+        }
+
+        .cc-contact-form-section
+        .cc-contact-trusted-support p {
+          margin-top:
+            8px !important;
+
+          font-size:
+            clamp(
+              10.5px,
+              0.76vw,
+              12px
+            ) !important;
+
+          font-weight:
+            550 !important;
+
+          line-height:
+            1.55 !important;
+        }
+
+        @media (max-width: 700px) {
+          .cc-contact-form-section
+          .cc-contact-trusted-support strong {
+            font-size:
+              13px !important;
+          }
+
+          .cc-contact-form-section
+          .cc-contact-trusted-support p {
+            margin-top:
+              7px !important;
+
+            font-size:
+              9.5px !important;
+
+            line-height:
+              1.5 !important;
+          }
+        }
+      `}</style>
+      {/* CC_TRUSTED_SUPPORT_TEXT_SIZE_END */}
+
+      {/* CC_ALL_SERVICES_TEXT_SIZE_START */}
+      <style>{`
+        /*
+         * Increase only the All Services text.
+         * The box and icon remain unchanged.
+         */
+        .cc-contact-form-section
+        .cc-contact-all-services strong {
+          font-size:
+            clamp(
+              14px,
+              1.05vw,
+              17px
+            ) !important;
+
+          font-weight:
+            850 !important;
+
+          line-height:
+            1.25 !important;
+
+          letter-spacing:
+            -0.015em !important;
+        }
+
+        .cc-contact-form-section
+        .cc-contact-all-services p {
+          margin-top:
+            8px !important;
+
+          font-size:
+            clamp(
+              10.5px,
+              0.76vw,
+              12px
+            ) !important;
+
+          font-weight:
+            550 !important;
+
+          line-height:
+            1.55 !important;
+        }
+
+        @media (max-width: 700px) {
+          .cc-contact-form-section
+          .cc-contact-all-services strong {
+            font-size:
+              13px !important;
+          }
+
+          .cc-contact-form-section
+          .cc-contact-all-services p {
+            margin-top:
+              7px !important;
+
+            font-size:
+              9.5px !important;
+
+            line-height:
+              1.5 !important;
+          }
+        }
+      `}</style>
+      {/* CC_ALL_SERVICES_TEXT_SIZE_END */}
     </section>
   );
 }

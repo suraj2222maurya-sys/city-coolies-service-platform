@@ -186,34 +186,26 @@ export default function CareersHeroSection() {
         );
     };
 
-    const replayAnimation = () => {
-      hero.classList.remove(
-        "cc-careers-is-visible",
-      );
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          hero.classList.add(
-            "cc-careers-is-visible",
-          );
-        });
-      });
-    };
+    let hasRevealed = false;
 
     const observer =
       new IntersectionObserver(
         ([entry]) => {
-          if (!entry) {
+          if (
+            !entry ||
+            !entry.isIntersecting ||
+            hasRevealed
+          ) {
             return;
           }
 
-          if (entry.isIntersecting) {
-            replayAnimation();
-          } else {
-            hero.classList.remove(
-              "cc-careers-is-visible",
-            );
-          }
+          hasRevealed = true;
+
+          hero.classList.add(
+            "cc-careers-is-visible",
+          );
+
+          observer.disconnect();
         },
         {
           threshold: 0.17,
@@ -2984,6 +2976,74 @@ export default function CareersHeroSection() {
               );
           }
         }
+
+        /*
+         * CC_CAREERS_RESPONSIVE_BANNER_START
+         * Responsive phone and tablet banner.
+         */
+        @media (max-width: 820px) {
+          .cc-careers-cinematic__scene {
+            inset: 0;
+            transform: none !important;
+            will-change: auto;
+          }
+
+          .cc-careers-cinematic__scene img {
+            object-fit: contain !important;
+            object-position: center top !important;
+            transform: none !important;
+            animation: none !important;
+            filter: none !important;
+          }
+
+          .cc-careers-cinematic:not(.cc-careers-is-visible)
+          .cc-careers-cinematic__scene img,
+          .cc-careers-is-visible
+          .cc-careers-cinematic__scene img {
+            opacity: 1;
+            transform: none !important;
+            animation: none !important;
+            filter: none !important;
+          }
+        }
+        /* CC_CAREERS_RESPONSIVE_BANNER_END */
+
+        /*
+         * CC_CAREERS_CLEAR_BACKGROUND_START
+         * Keep the original banner clear with a very light readable overlay.
+         */
+        .cc-careers-cinematic__scene img,
+        .cc-careers-cinematic:not(.cc-careers-is-visible)
+        .cc-careers-cinematic__scene img,
+        .cc-careers-is-visible
+        .cc-careers-cinematic__scene img {
+          opacity: 1 !important;
+          filter: none !important;
+        }
+
+        .cc-careers-cinematic__overlay {
+          background:
+            linear-gradient(
+              90deg,
+              rgba(255, 250, 251, 0.10) 0%,
+              rgba(255, 250, 251, 0.06) 32%,
+              rgba(255, 255, 255, 0.02) 62%,
+              transparent 100%
+            ) !important;
+        }
+
+        @media (max-width: 820px) {
+          .cc-careers-cinematic__overlay {
+            background:
+              linear-gradient(
+                180deg,
+                rgba(255, 250, 251, 0.05) 0%,
+                rgba(255, 250, 251, 0.08) 55%,
+                rgba(255, 247, 249, 0.14) 100%
+              ) !important;
+          }
+        }
+        /* CC_CAREERS_CLEAR_BACKGROUND_END */
       `}</style>
     </section>
   );

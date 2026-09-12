@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import {
@@ -6,7 +6,6 @@ import {
   useRef,
   useState,
   type CSSProperties,
-  type ReactNode,
 } from "react";
 
 type IconProps = {
@@ -157,7 +156,11 @@ const faqSchema = {
 
 export default function FaqSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const animationCompletedRef = useRef(false);
+  const [revealMode, setRevealMode] = useState<
+    "hidden" | "animated" | "instant"
+  >("hidden");
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -166,36 +169,67 @@ export default function FaqSection() {
       return;
     }
 
-    const elements =
-      section.querySelectorAll<HTMLElement>("[data-faq-reveal]");
+    let previousScrollY = window.scrollY;
+
+    const revealSection = (withAnimation: boolean) => {
+      if (animationCompletedRef.current) {
+        return;
+      }
+
+      animationCompletedRef.current = true;
+      setRevealMode(withAnimation ? "animated" : "instant");
+    };
+
+    if (typeof IntersectionObserver === "undefined") {
+      const fallbackTimer = setTimeout(() => {
+        revealSection(false);
+      }, 0);
+
+      return () => {
+        clearTimeout(fallbackTimer);
+      };
+    }
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const element = entry.target as HTMLElement;
+      ([entry]) => {
+        const currentScrollY = window.scrollY;
+        const scrollingDown =
+          currentScrollY >= previousScrollY;
+        const enteringFromTop =
+          entry.boundingClientRect.top >= 0;
 
-          if (entry.isIntersecting) {
-            element.classList.add("is-visible");
-          } else {
-            element.classList.remove("is-visible");
-          }
-        });
+        previousScrollY = currentScrollY;
+
+        if (
+          !entry.isIntersecting ||
+          animationCompletedRef.current
+        ) {
+          return;
+        }
+
+        revealSection(scrollingDown && enteringFromTop);
+        observer.disconnect();
       },
       {
-        threshold: 0.14,
-        rootMargin: "0px 0px -8% 0px",
+        root: null,
+        threshold: 0.06,
+        rootMargin: "56px 0px -6% 0px",
       },
     );
 
-    elements.forEach((element) => observer.observe(element));
+    observer.observe(section);
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="faq-section relative isolate overflow-hidden bg-white py-16 sm:py-20 lg:py-24"
+      className={`faq-section relative isolate overflow-hidden bg-white py-16 sm:py-20 lg:py-24 ${
+        revealMode !== "hidden" ? "is-faq-visible" : ""
+      } ${revealMode === "instant" ? "faq-reveal-instant" : ""}`}
       aria-labelledby="faq-heading"
     >
       <script
@@ -380,14 +414,14 @@ export default function FaqSection() {
           transform: translate3d(0, 42px, 0);
           filter: blur(7px);
           transition:
-            opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
-            transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
-            filter 900ms cubic-bezier(0.16, 1, 0.3, 1);
+            opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+            transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+            filter 700ms cubic-bezier(0.22, 1, 0.36, 1);
           transition-delay: var(--delay, 0ms);
           will-change: opacity, transform, filter;
         }
 
-        .faq-reveal.is-visible {
+        .faq-section.is-faq-visible .faq-reveal {
           opacity: 1;
           transform: translate3d(0, 0, 0);
           filter: blur(0);
@@ -407,6 +441,11 @@ export default function FaqSection() {
           opacity: 1;
         }
 
+
+        .faq-reveal-instant .faq-reveal {
+          transition: none;
+          transition-delay: 0ms;
+        }
         @media (prefers-reduced-motion: reduce) {
           .faq-reveal {
             opacity: 1;
