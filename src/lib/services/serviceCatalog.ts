@@ -31,7 +31,7 @@ export const CUSTOM_CLEANING_SERVICES: Record<
   "restroom-cleaning": {
     id: "restroom-cleaning",
     name: "Restroom Cleaning",
-    unitPrice: 1000,
+    unitPrice: 999,
     allowsQuantity: true,
   },
   "window-grill-glass-cleaning": {
@@ -255,16 +255,16 @@ const SERVICE_PACKAGES: Record<string, ServicePackage> = {
     "occupied-kitchen-deep-cleaning": {
     id: "occupied-kitchen-deep-cleaning",
     name: "Occupied Kitchen Deep Cleaning",
-    originalPrice: 1599,
-    offerPrice: 1099,
+    originalPrice: 3000,
+    offerPrice: 3000,
     advancePercentage: 50,
   },
 
   "empty-kitchen-cleaning": {
     id: "empty-kitchen-cleaning",
     name: "Empty Kitchen Cleaning",
-    originalPrice: 1299,
-    offerPrice: 899,
+    originalPrice: 2500,
+    offerPrice: 2500,
     advancePercentage: 50,
   },
 
@@ -279,9 +279,9 @@ const SERVICE_PACKAGES: Record<string, ServicePackage> = {
   "commercial-kitchen-cleaning": {
     id: "commercial-kitchen-cleaning",
     name: "Commercial Kitchen Cleaning",
-    originalPrice: 6499,
-    offerPrice: 4999,
-    advancePercentage: 50,
+    originalPrice: 500,
+    offerPrice: 500,
+    advancePercentage: 100,
   },
     "intense-bathroom-cleaning-1": {
     id: "intense-bathroom-cleaning-1",
