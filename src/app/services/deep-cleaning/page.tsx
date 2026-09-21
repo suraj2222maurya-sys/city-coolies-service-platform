@@ -229,8 +229,8 @@ const occupiedKitchenPackage: KitchenPackage = {
   rating: 4.8,
   reviewCount: 892,
   duration: "3–4 hrs",
-  originalPrice: 1599,
-  offerPrice: 1099,
+  originalPrice: 3000,
+  offerPrice: 3000,
   includes: [
     "Cabinets & Counters Cleaning",
     "Sink & Tiles Deep Cleaning",
@@ -248,8 +248,8 @@ const kitchenNeedPackages: readonly KitchenPackage[] = [
     rating: 4.8,
     reviewCount: 742,
     duration: "4–5 hrs",
-    originalPrice: 1299,
-    offerPrice: 899,
+    originalPrice: 2500,
+    offerPrice: 2500,
     includes: [
       "Inside Cabinets & Drawers",
       "Wall, Tile & Floor Cleaning",
@@ -277,13 +277,13 @@ const kitchenNeedPackages: readonly KitchenPackage[] = [
     id: "commercial-kitchen-cleaning",
     name: "Commercial Kitchen Cleaning",
     image: "/commercial-kitchen-cleaning.webp",
-    description:
-      "Professional hygiene cleaning for restaurants, cafes and cloud kitchens.",
+   description:
+      "Rs. 500 site survey charge. Final cleaning price will be confirmed after site inspection.",
     rating: 4.9,
     reviewCount: 328,
-    duration: "5–7 hrs",
-    originalPrice: 6499,
-    offerPrice: 4999,
+    duration: "Site Survey",
+    originalPrice: 500,
+    offerPrice: 500,
     includes: [
       "Grease & Oil Removal",
       "Exhaust & Duct Cleaning",
@@ -2868,9 +2868,7 @@ function FullHomePackagesSection() {
   );
 }
 function KitchenCleaningSection() {
-  const occupiedDiscount =
-    occupiedKitchenPackage.originalPrice -
-    occupiedKitchenPackage.offerPrice;
+  
 
   return (
     <section
@@ -2986,12 +2984,7 @@ function KitchenCleaningSection() {
 
             <div className="cc-kitchen__featured-booking">
               <div className="cc-kitchen__featured-price">
-                <del>
-                  ₹
-                  {occupiedKitchenPackage.originalPrice.toLocaleString(
-                    "en-IN",
-                  )}
-                </del>
+                
 
                 <strong>
                   ₹
@@ -3000,9 +2993,7 @@ function KitchenCleaningSection() {
                   )}
                 </strong>
 
-                <span>
-                  Save ₹{occupiedDiscount.toLocaleString("en-IN")}
-                </span>
+      
               </div>
 
               <ServiceBookingModal
@@ -3054,12 +3045,14 @@ function KitchenCleaningSection() {
 
                     <div className="cc-kitchen__need-action">
                       <div>
-                        <del>
-                          ₹
-                          {servicePackage.originalPrice.toLocaleString(
-                            "en-IN",
-                          )}
-                        </del>
+                       {servicePackage.originalPrice !== servicePackage.offerPrice && (
+  <del>
+    ₹
+    {servicePackage.originalPrice.toLocaleString(
+      "en-IN",
+    )}
+  </del>
+)}
 
                         <strong>
                           ₹
@@ -3141,8 +3134,8 @@ function KitchenCleaningSection() {
             </span>
 
             <span className="cc-kitchen__assurance-copy">
-              <strong>Free inspection</strong>
-              <small>for commercial kitchens</small>
+             <strong>Rs. 500 Site Survey</strong>
+             <small>Final quote after inspection</small>
             </span>
           </div>
 
