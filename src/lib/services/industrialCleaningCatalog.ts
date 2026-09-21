@@ -162,7 +162,7 @@ minimumLabel: "Enter required area",
       ],
     },
   ] as const;
-
+export const INDUSTRIAL_SITE_SURVEY_FEE = 500;
 export function calculateIndustrialCleaningEstimate(
   service: IndustrialCleaningService,
   quantity: number,
@@ -288,5 +288,41 @@ export function calculateIndustrialCleaningPlan(
     services,
     total,
     advanceAmount: Math.round(total * 0.5),
+  };
+}
+export function calculateIndustrialSiteSurvey(
+  input: unknown,
+): IndustrialCleaningPlan | null {
+  if (!Array.isArray(input) || input.length !== 1) {
+    return null;
+  }
+
+  const rawItem = input[0] as { id?: unknown } | undefined;
+
+  if (!rawItem || typeof rawItem.id !== "string") {
+    return null;
+  }
+
+  const service = INDUSTRIAL_CLEANING_SERVICES.find(
+    (availableService) =>
+      availableService.id === rawItem.id,
+  );
+
+  if (!service) {
+    return null;
+  }
+
+  return {
+    services: [
+      {
+        id: service.id,
+        name: `${service.name} - Site Survey`,
+        quantity: 1,
+        unitPrice: INDUSTRIAL_SITE_SURVEY_FEE,
+        lineTotal: INDUSTRIAL_SITE_SURVEY_FEE,
+      },
+    ],
+    total: INDUSTRIAL_SITE_SURVEY_FEE,
+    advanceAmount: INDUSTRIAL_SITE_SURVEY_FEE,
   };
 }
