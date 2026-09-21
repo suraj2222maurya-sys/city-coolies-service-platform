@@ -135,7 +135,12 @@ export const CUSTOM_BATHROOM_CLEANING_SERVICES: Record<
     unitPrice: 299,
     allowsQuantity: false,
   },
-
+"bathroom-urinal-cleaning": {
+  id: "bathroom-urinal-cleaning",
+  name: "Urinals Cleaning",
+  unitPrice: 599,
+  allowsQuantity: false,
+},
   "bathroom-floor-tile-cleaning": {
     id: "bathroom-floor-tile-cleaning",
     name: "Floor & Tile Cleaning",
