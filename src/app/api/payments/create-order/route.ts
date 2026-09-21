@@ -16,7 +16,7 @@ import {
 
 import { calculateCobwebCleaningPlan } from "@/lib/services/cobwebCleaningCatalog";
 import { calculateCommercialCleaningPlan } from "@/lib/services/commercialCleaningCatalog";
-import { calculateIndustrialCleaningPlan } from "@/lib/services/industrialCleaningCatalog";
+import { calculateIndustrialSiteSurvey } from "@/lib/services/industrialCleaningCatalog";
 import { calculateOfficeCleaningPlan } from "@/lib/services/officeCleaningCatalog";
 import { calculateVillaCleaningPlan } from "@/lib/services/villaCleaningCatalog";
 import { calculateUpholsteryCleaningPlan } from "@/lib/services/upholsteryCleaningCatalog";
@@ -135,8 +135,8 @@ isWaterTankCleaningPlan ||
     ? calculateCobwebCleaningPlan(body.customServices)
         : isCommercialCleaningPlan
           ? calculateCommercialCleaningPlan(body.customServices)
-        : isIndustrialCleaningPlan
-          ? calculateIndustrialCleaningPlan(body.customServices)
+       : isIndustrialCleaningPlan
+  ? calculateIndustrialSiteSurvey(body.customServices)
           : isCustomBathroomCleaning
             ? calculateCustomBathroomCleaningPlan(body.customServices)
             : isCustomKitchenCleaning
@@ -162,8 +162,8 @@ isWaterTankCleaningPlan ||
       ? "Please enter a valid cobweb cleaning quantity."
           : isCommercialCleaningPlan
             ? "Please enter a valid commercial cleaning area."
-          : isIndustrialCleaningPlan
-            ? "Please enter a valid industrial service quantity."
+         : isIndustrialCleaningPlan
+  ? "Please select a valid industrial cleaning service for site survey."
             : isCustomBathroomCleaning
               ? "Please select at least one valid bathroom-cleaning service."
               : isCustomKitchenCleaning
@@ -197,8 +197,8 @@ isWaterTankCleaningPlan ||
     ? "Cobweb Cleaning Plan"
         : isCommercialCleaningPlan
           ? "Commercial Cleaning Plan"
-        : isIndustrialCleaningPlan
-          ? "Industrial Cleaning Plan"
+       : isIndustrialCleaningPlan
+  ? "Industrial Cleaning - Site Survey"
           : isCustomBathroomCleaning
             ? "Custom Bathroom Cleaning Plan"
             : isCustomKitchenCleaning
@@ -411,9 +411,11 @@ isWaterTankCleaningPlan ||
             ? "full_site_visit_payment"
             : packageId === "new-home-plumbing-site-visit"
               ? "full_site_visit_payment"
-            : packageId === "full-house-electrical-site-survey"
-              ? "full_site_survey_payment"
-              : "50_percent_advance",
+           : packageId === "full-house-electrical-site-survey"
+  ? "full_site_survey_payment"
+  : isIndustrialCleaningPlan
+    ? "full_site_survey_payment"
+    : "50_percent_advance",
         customPlanType,
         customServiceIds,
       },
