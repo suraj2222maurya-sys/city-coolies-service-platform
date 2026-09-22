@@ -1,25 +1,16 @@
 ﻿"use client";
 
 import Image from "next/image";
-import { useState } from "react";
 
 import ServiceBookingModal from "@/components/booking/ServiceBookingModal";
 
 import {
   COMMERCIAL_CLEANING_SERVICES,
-  calculateCommercialCleaningEstimate,
+  COMMERCIAL_SITE_SURVEY_FEE,
   type CommercialCleaningService,
 } from "@/lib/services/commercialCleaningCatalog";
 
-const FEATURED_SERVICE_ID = "office-corporate-deep-cleaning";
-
-function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 0,
-  }).format(amount);
-}
+const FEATURED_SERVICE_ID = "office-corporate-deep-cleaning"
 
 function CheckIcon() {
   return (
@@ -91,24 +82,16 @@ function ServiceImage({
     />
   );
 }
-
 function CommercialBookingControl({
   service,
-  quantity,
   featured = false,
-  onQuantityChange,
 }: {
   service: CommercialCleaningService;
-  quantity: string;
   featured?: boolean;
-  onQuantityChange: (value: string) => void;
 }) {
-  const numericQuantity = Number(quantity);
-
-  const estimate = calculateCommercialCleaningEstimate(
-    service,
-    numericQuantity,
-  );
+  const siteSurveyLabel = `₹${COMMERCIAL_SITE_SURVEY_FEE.toLocaleString(
+    "en-IN",
+  )}`;
 
   return (
     <div
@@ -118,69 +101,33 @@ function CommercialBookingControl({
           : "cc-commercial__booking-control"
       }
     >
-      <label className="cc-commercial__quantity">
-        <span>Enter required area</span>
-
-        <div>
-          <input
-            type="text"
-            inputMode="numeric"
-            value={quantity}
-            placeholder="Enter sq. ft."
-            aria-label={`Enter square feet for ${service.name}`}
-            onChange={(event) =>
-              onQuantityChange(
-                event.target.value.replace(/\D/g, "").slice(0, 9),
-              )
-            }
-          />
-
-          <small>sq. ft.</small>
-        </div>
-      </label>
-
       <div className="cc-commercial__calculation">
-        <span>Estimated total</span>
+        <span>Site survey charge</span>
 
-        <strong>
-          {estimate === null
-            ? `₹${service.rate} / sq. ft.`
-            : formatCurrency(estimate)}
-        </strong>
+        <strong>{siteSurveyLabel}</strong>
 
-        <small>{service.pricingNote}</small>
+        <small>
+          Cleaning starts from ₹5 / sq. ft. Final price confirmed after inspection.
+        </small>
       </div>
 
-      {estimate === null ? (
-        <button
-          className="cc-commercial__disabled-button"
-          type="button"
-          disabled
-        >
-          {featured ? "Enter area to book" : "Add"}
-        </button>
-      ) : (
-        <ServiceBookingModal
-          packageId="commercial-cleaning-plan"
-          serviceName={`${service.name} - ${numericQuantity.toLocaleString(
-            "en-IN",
-          )} sq. ft.`}
-          originalPrice={estimate}
-          offerPrice={estimate}
-          triggerLabel={
-            featured ? "Add & Book Inspection" : "Add"
-          }
-          customServices={[
-            {
-              id: service.id,
-              name: service.name,
-              quantity: numericQuantity,
-              unitPrice: service.rate,
-              lineTotal: estimate,
-            },
-          ]}
-        />
-      )}
+      <ServiceBookingModal
+        packageId="commercial-cleaning-plan"
+        serviceName={`${service.name} - Site Survey`}
+        originalPrice={COMMERCIAL_SITE_SURVEY_FEE}
+        offerPrice={COMMERCIAL_SITE_SURVEY_FEE}
+        triggerLabel={featured ? "Book ₹500 Site Survey" : "Book Survey"}
+        fullPayment
+        customServices={[
+          {
+            id: service.id,
+            name: service.name,
+            quantity: 1,
+            unitPrice: COMMERCIAL_SITE_SURVEY_FEE,
+            lineTotal: COMMERCIAL_SITE_SURVEY_FEE,
+          },
+        ]}
+      />
     </div>
   );
 }
@@ -196,19 +143,7 @@ export default function CommercialCleaningSection() {
       (service) => service.id !== FEATURED_SERVICE_ID,
     );
 
-  const [quantities, setQuantities] = useState<
-    Record<string, string>
-  >({});
-
-  function updateQuantity(
-    serviceId: string,
-    value: string,
-  ) {
-    setQuantities((currentQuantities) => ({
-      ...currentQuantities,
-      [serviceId]: value,
-    }));
-  }
+ 
 
   return (
     <section
@@ -229,10 +164,10 @@ export default function CommercialCleaningSection() {
               Premium care for every business space.
             </h2>
 
-            <p className="cc-commercial__subtitle">
-              Choose your commercial space, enter the required
-              area and receive an instant transparent estimate.
-            </p>
+           <p className="cc-commercial__subtitle">
+  Choose your commercial space and book a ₹500 site survey.
+  Cleaning starts from ₹5 / sq. ft., with final pricing confirmed after inspection.
+</p>
           </div>
 
           <div className="cc-commercial__trust">
@@ -279,7 +214,7 @@ export default function CommercialCleaningSection() {
                   )
                 </span>
 
-                <span>Free inspection</span>
+              <span>₹500 site survey</span>
 
                 <span>{featuredService.duration}</span>
 
@@ -295,19 +230,10 @@ export default function CommercialCleaningSection() {
                 ))}
               </ul>
 
-              <CommercialBookingControl
-                service={featuredService}
-                quantity={
-                  quantities[featuredService.id] ?? ""
-                }
-                featured
-                onQuantityChange={(value) =>
-                  updateQuantity(
-                    featuredService.id,
-                    value,
-                  )
-                }
-              />
+             <CommercialBookingControl
+  service={featuredService}
+  featured
+/>
             </div>
           </article>
 
@@ -334,23 +260,14 @@ export default function CommercialCleaningSection() {
                         ★ {service.rating}
                       </span>
 
-                      <span>
-                        ₹{service.rate} / sq. ft.
-                      </span>
+                    <span>
+  Starts from ₹5 / sq. ft.
+</span>
                     </div>
 
-                    <CommercialBookingControl
-                      service={service}
-                      quantity={
-                        quantities[service.id] ?? ""
-                      }
-                      onQuantityChange={(value) =>
-                        updateQuantity(
-                          service.id,
-                          value,
-                        )
-                      }
-                    />
+                  <CommercialBookingControl
+  service={service}
+/>
                   </div>
                 </article>
               ))}
@@ -364,14 +281,14 @@ export default function CommercialCleaningSection() {
         >
           <span>
             <ShieldIcon />
-            <strong>Free site inspection</strong>
+           <strong>₹500 Site Survey</strong>
           </span>
 
           <span>
             <WalletIcon />
-            <strong>
-              50% Online Advance or Secure Online Payment
-            </strong>
+           <strong>
+  Full ₹500 Online Payment
+</strong>
           </span>
 
           <span>
