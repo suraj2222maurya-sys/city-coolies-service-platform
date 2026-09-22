@@ -133,7 +133,7 @@ export const COMMERCIAL_CLEANING_SERVICES: readonly CommercialCleaningService[] 
       pricingNote: "Final quote confirmed after inspection",
     },
   ] as const;
-
+export const COMMERCIAL_SITE_SURVEY_FEE = 500;
 export type CommercialCleaningPlanService = {
   id: string;
   name: string;
@@ -242,5 +242,40 @@ export function calculateCommercialCleaningPlan(
     services,
     total,
     advanceAmount: Math.round(total * 0.5),
+  };
+}
+export function calculateCommercialSiteSurvey(
+  input: unknown,
+): CommercialCleaningPlan | null {
+  if (!Array.isArray(input) || input.length !== 1) {
+    return null;
+  }
+
+  const rawItem = input[0] as { id?: unknown } | undefined;
+
+  if (!rawItem || typeof rawItem.id !== "string") {
+    return null;
+  }
+
+  const service = COMMERCIAL_CLEANING_SERVICES.find(
+    (availableService) => availableService.id === rawItem.id,
+  );
+
+  if (!service) {
+    return null;
+  }
+
+  return {
+    services: [
+      {
+        id: service.id,
+        name: `${service.name} - Site Survey`,
+        quantity: 1,
+        unitPrice: COMMERCIAL_SITE_SURVEY_FEE,
+        lineTotal: COMMERCIAL_SITE_SURVEY_FEE,
+      },
+    ],
+    total: COMMERCIAL_SITE_SURVEY_FEE,
+    advanceAmount: COMMERCIAL_SITE_SURVEY_FEE,
   };
 }
