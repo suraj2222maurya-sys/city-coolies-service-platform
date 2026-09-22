@@ -1,29 +1,17 @@
 ﻿"use client";
 
 import Image from "next/image";
-import { useState } from "react";
+
 
 import ServiceBookingModal from "@/components/booking/ServiceBookingModal";
 
 import {
   INDUSTRIAL_CLEANING_SERVICES,
-  getIndustrialPricingUnitLabel,
+  INDUSTRIAL_SITE_SURVEY_FEE,
   type IndustrialCleaningService,
 } from "@/lib/services/industrialCleaningCatalog";
 
 const FEATURED_SERVICE_ID = "factory-plant-deep-cleaning";
-
-function formatIndianCurrency(amount: number): string {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 0,
-  }).format(amount);
-}
-
-function getPricingBadge(service: IndustrialCleaningService): string {
-  return service.pricingUnit === "square-foot" ? "Area based" : "Per unit";
-}
 
 function ServiceImage({
   service,
@@ -141,36 +129,9 @@ export default function IndustrialCleaningSection() {
     (service) => service.id !== featuredService.id,
   );
 
-  const [facilityArea, setFacilityArea] = useState("");
-const [serviceQuantities, setServiceQuantities] = useState<
-  Record<string, string>
->({});
-
-const selectedServiceCount = Object.values(serviceQuantities).filter(
-  (quantity) => Number(quantity) > 0,
-).length;
-const numericFacilityArea = Number(facilityArea);
-
-const featuredEstimate =
-  numericFacilityArea > 0
-    ? numericFacilityArea * featuredService.rate
-    : null;
-
- function handleServiceQuantityChange(
-  serviceId: string,
-  value: string,
-) {
-  const sanitizedValue = value.replace(/\D/g, "").slice(0, 9);
-
-  setServiceQuantities((currentQuantities) => ({
-    ...currentQuantities,
-    [serviceId]: sanitizedValue,
-  }));
-}
-
-  function handleFacilityAreaChange(value: string) {
-    setFacilityArea(value.replace(/\D/g, "").slice(0, 9));
-  }
+ const surveyFeeLabel = `Rs. ${INDUSTRIAL_SITE_SURVEY_FEE.toLocaleString(
+  "en-IN",
+)}`;
 
   return (
     <section className="cc-industrial" aria-labelledby="industrial-title">
@@ -182,32 +143,28 @@ const featuredEstimate =
               Powerful cleaning for demanding spaces.
             </h2>
             <p className="cc-industrial__subtitle">
-              Choose a ready service, enter your area and see an instant estimate.
+            Choose your industrial cleaning requirement and book a Rs. 500 site survey. Final cleaning price is confirmed after inspection.
             </p>
 
             <div className="cc-industrial__benefits" aria-label="Service benefits">
               <span><ShieldIcon />Verified industrial crew</span>
               <span><EquipmentIcon />Professional equipment</span>
-              <span><RupeeIcon />Transparent pricing</span>
+            <span><RupeeIcon />Final quote after inspection</span>
             </div>
           </div>
 
-          <div className="cc-industrial__cart" aria-live="polite">
-            <BagIcon />
-            <strong>{selectedServiceCount}</strong>
-<span>
-  {selectedServiceCount === 1
-    ? "service ready"
-    : "services ready"}
-</span>
-          </div>
+<div className="cc-industrial__cart" aria-live="polite">
+  <BagIcon />
+  <strong>{surveyFeeLabel}</strong>
+  <span>site survey</span>
+</div>
         </header>
 
         <div className="cc-industrial__marketplace">
           <article className="cc-industrial__featured">
             <div className="cc-industrial__featured-media">
               <ServiceImage service={featuredService} priority />
-              <span className="cc-industrial__most-booked">â˜… Most Booked</span>
+             <span className="cc-industrial__most-booked">★ Most Booked</span>
             </div>
 
             <div className="cc-industrial__featured-content">
@@ -215,9 +172,9 @@ const featuredEstimate =
 
               <div className="cc-industrial__meta">
                 <span className="cc-industrial__rating">
-                  <b>â˜…</b> {featuredService.rating} ({featuredService.reviewCount.toLocaleString("en-IN")})
+                 <b>★</b> {featuredService.rating} ({featuredService.reviewCount.toLocaleString("en-IN")})
                 </span>
-                <span><ShieldIcon />Free site inspection</span>
+               <span><ShieldIcon />Rs. 500 site survey</span>
                 <span><ClockIcon />{featuredService.duration}</span>
                 <span><CrewIcon />4+ professionals</span>
               </div>
@@ -228,189 +185,102 @@ const featuredEstimate =
                 ))}
               </div>
 
-              <div className="cc-industrial__estimate-box">
-                <label className="cc-industrial__area-field">
-                  <strong>Enter facility area</strong>
-                  <span>
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      value={facilityArea}
-                      onChange={(event) => handleFacilityAreaChange(event.target.value)}
-                      aria-describedby="industrial-area-help"
-                    />
-                    <small>{getIndustrialPricingUnitLabel(featuredService.pricingUnit)}</small>
-                  </span>
-                  <em id="industrial-area-help">
-                    Starts at â‚¹{featuredService.rate} / {getIndustrialPricingUnitLabel(featuredService.pricingUnit)}
-                  </em>
-                </label>
+             <div className="cc-industrial__estimate-box">
+  <div className="cc-industrial__estimate-total">
+    <span>Site survey charge</span>
+    <strong>{surveyFeeLabel}</strong>
+    <small>
+      Final cleaning price will be confirmed after site inspection.
+    </small>
+  </div>
 
-                <div className="cc-industrial__estimate-total">
-                  <span>Estimated total</span>
-                  <strong>
-                    {featuredEstimate === null
-                      ? "Enter facility area"
-                      : formatIndianCurrency(featuredEstimate)}
-                  </strong>
-                  <small>{featuredService.pricingNote}</small>
-                </div>
-
-                {featuredEstimate === null ? (
-                  <button
-                    className="cc-industrial__primary-button"
-                    type="button"
-                    disabled
-                  >
-                    Enter facility area
-                  </button>
-                ) : (
-                  <div className="cc-industrial__booking">
-                    <ServiceBookingModal
-                      packageId="industrial-cleaning-plan"
-                      serviceName={`${featuredService.name} - ${numericFacilityArea.toLocaleString("en-IN")} sq. ft.`}
-                      originalPrice={featuredEstimate}
-                      offerPrice={featuredEstimate}
-                      triggerLabel="Add & Book Inspection"
-                      customServices={[
-                        {
-                          id: featuredService.id,
-                          name: featuredService.name,
-                          quantity: numericFacilityArea,
-                          unitPrice: featuredService.rate,
-                          lineTotal: featuredEstimate,
-                        },
-                      ]}
-                    />
-                  </div>
-                )}
-              </div>
+  <div className="cc-industrial__booking">
+    <ServiceBookingModal
+      packageId="industrial-cleaning-plan"
+      serviceName={`${featuredService.name} - Site Survey`}
+      originalPrice={INDUSTRIAL_SITE_SURVEY_FEE}
+      offerPrice={INDUSTRIAL_SITE_SURVEY_FEE}
+      triggerLabel="Book Rs. 500 Site Survey"
+      fullPayment
+      customServices={[
+        {
+          id: featuredService.id,
+          name: featuredService.name,
+          quantity: 1,
+          unitPrice: INDUSTRIAL_SITE_SURVEY_FEE,
+          lineTotal: INDUSTRIAL_SITE_SURVEY_FEE,
+        },
+      ]}
+    />
+  </div>
+</div>
+                     
             </div>
           </article>
 
           <div className="cc-industrial__services-column">
             <h3 className="cc-industrial__choice-title">Choose by need</h3>
+<div className="cc-industrial__service-grid">
+{secondaryServices.map((service) => (
+  <article
+    className="cc-industrial__service-card"
+    key={service.id}
+  >
+    <div className="cc-industrial__service-media">
+      <ServiceImage service={service} />
+    </div>
 
-            <div className="cc-industrial__service-grid">
-              {secondaryServices.map((service) => {
-  const quantityValue = serviceQuantities[service.id] ?? "";
-  const numericQuantity = Number(quantityValue);
-  const pricingUnitLabel = getIndustrialPricingUnitLabel(
-    service.pricingUnit,
-  );
+    <div className="cc-industrial__service-content">
+      <h4>{service.name}</h4>
 
-  const serviceEstimate =
-    numericQuantity > 0
-      ? numericQuantity * service.rate
-      : null;
+      <p>{service.description}</p>
 
-  const quantityLabel =
-    service.pricingUnit === "square-foot"
-      ? "Enter sq. ft."
-      : service.pricingUnit === "machine"
-        ? "Enter machines"
-        : "Enter units";
+      <span className="cc-industrial__pricing-badge">
+        Site Survey
+      </span>
 
-  return (
-    <article
-      className="cc-industrial__service-card"
-      key={service.id}
-    >
-      <div className="cc-industrial__service-media">
-        <ServiceImage service={service} />
-      </div>
+      <div className="cc-industrial__service-footer">
+        <div>
+          <strong>{surveyFeeLabel}</strong>
+          <small>Final quote after inspection</small>
+        </div>
 
-      <div className="cc-industrial__service-content">
-        <h4>{service.name}</h4>
-
-        <p>{service.description}</p>
-
-        <span className="cc-industrial__pricing-badge">
-          {getPricingBadge(service)}
-        </span>
-
-        <div className="cc-industrial__service-footer">
-          <div>
-            <strong>
-              â‚¹{service.rate} / {pricingUnitLabel}
-            </strong>
-
-            <small>
-              {serviceEstimate === null
-                ? quantityLabel
-                : `Estimated total: ${formatIndianCurrency(
-                    serviceEstimate,
-                  )}`}
-            </small>
-          </div>
-
-          <div className="cc-industrial__service-controls">
-            <label
-              className="cc-industrial__quantity-field"
-              aria-label={quantityLabel}
-            >
-              <input
-                type="text"
-                inputMode="numeric"
-                value={quantityValue}
-                placeholder="0"
-                onChange={(event) =>
-                  handleServiceQuantityChange(
-                    service.id,
-                    event.target.value,
-                  )
-                }
-              />
-
-              <span>{pricingUnitLabel}</span>
-            </label>
-
-            {serviceEstimate === null ? (
-              <button
-                className="cc-industrial__add-button"
-                type="button"
-                disabled
-              >
-                Add
-              </button>
-            ) : (
-              <ServiceBookingModal
-                packageId="industrial-cleaning-plan"
-                serviceName={`${service.name} - ${numericQuantity.toLocaleString(
-                  "en-IN",
-                )} ${pricingUnitLabel}`}
-                originalPrice={serviceEstimate}
-                offerPrice={serviceEstimate}
-                triggerLabel="Add"
-                customServices={[
-                  {
-                    id: service.id,
-                    name: service.name,
-                    quantity: numericQuantity,
-                    unitPrice: service.rate,
-                    lineTotal: serviceEstimate,
-                  },
-                ]}
-              />
-            )}
-          </div>
+        <div className="cc-industrial__service-controls">
+          <ServiceBookingModal
+            packageId="industrial-cleaning-plan"
+            serviceName={`${service.name} - Site Survey`}
+            originalPrice={INDUSTRIAL_SITE_SURVEY_FEE}
+            offerPrice={INDUSTRIAL_SITE_SURVEY_FEE}
+            triggerLabel="Book Survey"
+            fullPayment
+            customServices={[
+              {
+                id: service.id,
+                name: service.name,
+                quantity: 1,
+                unitPrice: INDUSTRIAL_SITE_SURVEY_FEE,
+                lineTotal: INDUSTRIAL_SITE_SURVEY_FEE,
+              },
+            ]}
+          />
         </div>
       </div>
-    </article>
-  );
-})}
+    </div>
+  </article>
+))}
+
             </div>
           </div>
         </div>
 
         <p className="cc-industrial__estimate-note">
-          â“˜ Estimate only â€¢ Final price confirmed after inspection.
+Rs. 500 site survey charge • Final cleaning price confirmed after site inspection.
         </p>
 
        
         <div className="cc-industrial__assurance" aria-label="Booking assurances">
-          <span><ShieldIcon />Free site inspection</span>
-          <span><WalletIcon />50% online advance & Secure Online Payment</span>
+            <span><ShieldIcon />Rs. 500 Site Survey</span>
+            <span><WalletIcon />Full Rs. 500 Online Payment</span>
           <span><WhatsAppIcon />Easy WhatsApp confirmation</span>
         </div>
       </div>
