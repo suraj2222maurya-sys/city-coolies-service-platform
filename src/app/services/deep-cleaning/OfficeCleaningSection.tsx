@@ -22,6 +22,7 @@ function currency(value: number): string {
 
 function OfficeServiceCard({ service, featured = false }: { service: OfficeCleaningService; featured?: boolean }) {
   const [areaText, setAreaText] = useState("");
+  const isCarpetShampooing = service.id === "office-carpet-chair-cleaning";
   const area = Number(areaText);
   const validArea = Number.isSafeInteger(area) && area >= service.minimumQuantity;
   const total = calculateOfficeCleaningEstimate(service, area) ?? 0;
@@ -59,7 +60,7 @@ function OfficeServiceCard({ service, featured = false }: { service: OfficeClean
 
         <div className="cc-office-card__calculator">
           <label htmlFor={`office-area-${service.id}`}>
-            <strong>Enter office area</strong>
+            <strong>{isCarpetShampooing ? "Enter carpet area" : "Enter office area"}</strong>
             <span className="cc-office-card__input-wrap">
               <input
                 id={`office-area-${service.id}`}
@@ -73,13 +74,26 @@ function OfficeServiceCard({ service, featured = false }: { service: OfficeClean
               />
               <span>sq. ft.</span>
             </span>
-            <small>{`Rate: ${currency(service.rate)} / sq. ft.`}</small>
+            <small>
+              {isCarpetShampooing
+                ? "Rate: ₹5 / sq. ft."
+                : `Rate: ${currency(service.rate)} / sq. ft.`}
+            </small>
           </label>
 
           <div className="cc-office-card__total">
             <span>Estimated total</span>
             <strong>{validArea ? currency(total) : "—"}</strong>
-            <small>50% advance or Secure Online Payment</small><small>Estimated price. Final price may change after site inspection depending on the actual condition and cleaning requirements.</small>
+            <small>
+              {isCarpetShampooing
+                ? "Carpet Shampooing: ₹5 / sq. ft."
+                : "50% advance or Secure Online Payment"}
+            </small>
+            <small>
+              {isCarpetShampooing
+                ? "Total is calculated from the carpet area entered above."
+                : "Estimated price. Final price may change after site inspection depending on the actual condition and cleaning requirements."}
+            </small>
           </div>
         </div>
 
