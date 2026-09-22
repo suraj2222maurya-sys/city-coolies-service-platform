@@ -1,4 +1,4 @@
-
+"use client";
 
 import Image from "next/image";
 
@@ -11,7 +11,6 @@ import {
 } from "@/lib/services/cobwebCleaningCatalog";
 
 const FEATURED_SERVICE_ID = "full-room-cobweb-cleaning";
-
 
 function CheckIcon() {
   return (
