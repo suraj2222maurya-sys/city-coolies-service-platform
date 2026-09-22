@@ -160,7 +160,7 @@ function TankServiceCard({
         <div className="cc-tank-card__estimate">
           <span>
             <small>Rate per litre</small>
-            <strong>₹0.15</strong>
+            <strong>₹0.15 / litre</strong>
           </span>
 
           <span>
