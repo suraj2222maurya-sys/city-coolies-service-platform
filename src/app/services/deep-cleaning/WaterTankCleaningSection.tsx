@@ -1,4 +1,6 @@
-"use client";
+from pathlib import Path
+
+code = r'''"use client";
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
@@ -123,13 +125,7 @@ function TankServiceCard({
         <div className="cc-tank-card__rate">
           <span>Cleaning rate</span>
 
-          <strong>
-            ₹
-            {WATER_TANK_RATE_PER_LITRE.toFixed(
-              2,
-            )}{" "}
-            / litre
-          </strong>
+          <strong>₹0.15 / litre</strong>
         </div>
 
         <div className="cc-tank-card__controls">
@@ -147,8 +143,7 @@ function TankServiceCard({
                   value={item.id}
                   key={item.id}
                 >
-                  {item.label} — {money(item.rate)} /
-                  tank
+                  {item.label}
                 </option>
               ))}
             </select>
@@ -178,52 +173,35 @@ function TankServiceCard({
         <div className="cc-tank-card__estimate">
           <span>
             <small>Rate per litre</small>
-
             <strong>
-              ₹
-              {WATER_TANK_RATE_PER_LITRE.toFixed(
-                2,
-              )}
-            </strong>
-          </span>
-
-          <span>
-            <small>Rate per tank</small>
-
-            <strong>
-              {capacity
-                ? money(capacity.rate)
-                : "—"}
+              ₹{WATER_TANK_RATE_PER_LITRE.toFixed(2)}
             </strong>
           </span>
 
           <span>
             <small>Total capacity</small>
-
             <strong>
               {totalLitres > 0
                 ? `${totalLitres.toLocaleString(
                     "en-IN",
-                  )} L`
+                  )} litres`
                 : "—"}
             </strong>
           </span>
 
           <span>
             <small>Estimated total</small>
-
             <strong>
-              {total > 0
-                ? money(total)
-                : "—"}
+              {total > 0 ? money(total) : "—"}
             </strong>
           </span>
         </div>
 
         <p className="cc-tank-card__inspection">
           <strong>Pricing:</strong>{" "}
-          Water tank cleaning is calculated at
-          ₹0.15 per litre based on the selected
+          The cleaning charge is ₹0.15 per litre
+          for every water tank cleaning service.
+          The total is calculated from the selected
           tank capacity and number of tanks.
         </p>
 
@@ -270,17 +248,15 @@ export default function WaterTankCleaningSection() {
 
           <span>
             Water tank cleaning at ₹0.15 per
-            litre. Select the tank capacity and
-            number of tanks to see the estimated
-            total instantly.
+            litre for every service. Select the
+            tank capacity and number of tanks to
+            see the estimated total instantly.
           </span>
         </header>
 
         <div className="cc-water-tank__trust">
           <span>✓ ₹0.15 per litre</span>
-
           <span>✓ Trained professionals</span>
-
           <span>✓ Professional equipment</span>
         </div>
 
@@ -298,24 +274,21 @@ export default function WaterTankCleaningSection() {
         <div className="cc-water-tank__assurance">
           <div>
             <strong>₹0.15 per litre</strong>
-
             <small>
-              Same transparent rate for every
-              water tank cleaning service
+              Same rate for every tank cleaning
+              service
             </small>
           </div>
 
           <div>
-            <strong>Instant estimate</strong>
-
+            <strong>Transparent estimate</strong>
             <small>
-              Capacity and quantity based pricing
+              Based only on litres and tank quantity
             </small>
           </div>
 
           <div>
             <strong>WhatsApp confirmation</strong>
-
             <small>
               Instant booking updates and support
             </small>
@@ -587,7 +560,7 @@ export default function WaterTankCleaningSection() {
         .cc-tank-card__estimate {
           display: grid;
           grid-template-columns: repeat(
-            2,
+            3,
             minmax(0, 1fr)
           );
           gap: 10px;
@@ -722,6 +695,10 @@ export default function WaterTankCleaningSection() {
             grid-template-columns: 1fr;
           }
 
+          .cc-tank-card__estimate {
+            grid-template-columns: 1fr;
+          }
+
           .cc-water-tank__assurance {
             grid-template-columns: 1fr;
           }
@@ -733,13 +710,23 @@ export default function WaterTankCleaningSection() {
             border-top: 1px solid #eedde0;
           }
         }
-
-        @media (max-width: 420px) {
-          .cc-tank-card__estimate {
-            grid-template-columns: 1fr;
-          }
-        }
       `}</style>
     </section>
   );
 }
+'''
+
+path = Path("/mnt/data/WaterTankCleaningSection.FINAL_CORRECT.tsx")
+path.write_text(code, encoding="utf-8")
+
+checks = {
+    "client": code.startswith('"use client";'),
+    "rate_015": "₹0.15 / litre" in code,
+    "no_option_per_tank_price": "{item.label} —" not in code,
+    "no_rate_per_tank_label": "Rate per tank" not in code,
+    "no_free_site_inspection": "Free site inspection" not in code and "free site" not in code.lower(),
+    "all_services_same_constant": "WATER_TANK_RATE_PER_LITRE" in code,
+    "css_complete": "<style jsx global>{`" in code and code.strip().endswith("}"),
+}
+print(checks)
+print(path)
