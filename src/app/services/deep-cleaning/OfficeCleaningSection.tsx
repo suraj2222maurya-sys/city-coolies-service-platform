@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import { useState } from "react";
@@ -45,7 +45,7 @@ function OfficeServiceCard({ service, featured = false }: { service: OfficeClean
       <div className="cc-office-card__body">
         <div className="cc-office-card__heading">
           <div>
-            <p className="cc-office-card__rating">â˜… {service.rating} <span>({service.reviewCount.toLocaleString("en-IN")})</span></p>
+            <p className="cc-office-card__rating">★ {service.rating} <span>({service.reviewCount.toLocaleString("en-IN")})</span></p>
             <h3>{service.name}</h3>
           </div>
           <span className="cc-office-card__duration">{service.duration}</span>
@@ -78,7 +78,7 @@ function OfficeServiceCard({ service, featured = false }: { service: OfficeClean
 
           <div className="cc-office-card__total">
             <span>Estimated total</span>
-            <strong>{validArea ? currency(total) : "â€”"}</strong>
+            <strong>{validArea ? currency(total) : "—"}</strong>
             <small>50% advance or Secure Online Payment</small><small>Estimated price. Final price may change after site inspection depending on the actual condition and cleaning requirements.</small>
           </div>
         </div>
@@ -116,9 +116,9 @@ export default function OfficeCleaningSection() {
             <span>Choose a service, enter your exact office area and get an instant transparent estimate.</span>
           </div>
           <div className="cc-office__trust">
-            <span>âœ“ Verified professionals</span>
-            <span>âœ“ Free site inspection</span>
-            <span>âœ“ No hidden charges</span>
+            <span>✓ Verified professionals</span>
+            <span>✓ Free site inspection</span>
+            <span>✓ No hidden charges</span>
           </div>
         </header>
 
@@ -196,11 +196,10 @@ const OFFICE_STYLES = `
   .cc-office__subheading h3 { margin:0; color:#171923; font-size:clamp(1.45rem,2.2vw,2rem); }
   .cc-office__grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
   .cc-office__assurance { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:22px; padding:12px; border:1px solid rgba(242,31,47,.16); border-radius:18px; background:linear-gradient(135deg,#fff7f8,#ffecef); box-shadow:0 12px 32px rgba(56,25,31,.06); }
-  .cc-office__assurance > span { position:relative; display:grid; min-height:82px; grid-template-columns:46px minmax(0,1fr); grid-template-rows:auto auto; column-gap:13px; align-content:center; padding:15px 17px; border:1px solid rgba(242,31,47,.12); border-radius:13px; background:rgba(255,255,255,.94); text-align:left; box-shadow:0 7px 18px rgba(53,29,34,.045); } .cc-office__assurance > span::before { display:grid; width:42px; height:42px; grid-row:1 / 3; place-items:center; align-self:center; border:1px solid rgba(242,31,47,.14); border-radius:50%; color:#f21f2f; background:#ffecef; content:"âœ“"; font-size:1rem; font-weight:900; } .cc-office__assurance > span:nth-child(2)::before { content:"â‚¹"; } .cc-office__assurance > span:nth-child(3)::before { content:"â†—"; }
+  .cc-office__assurance > span { position:relative; display:grid; min-height:82px; grid-template-columns:46px minmax(0,1fr); grid-template-rows:auto auto; column-gap:13px; align-content:center; padding:15px 17px; border:1px solid rgba(242,31,47,.12); border-radius:13px; background:rgba(255,255,255,.94); text-align:left; box-shadow:0 7px 18px rgba(53,29,34,.045); } .cc-office__assurance > span::before { display:grid; width:42px; height:42px; grid-row:1 / 3; place-items:center; align-self:center; border:1px solid rgba(242,31,47,.14); border-radius:50%; color:#f21f2f; background:#ffecef; content:"✓"; font-size:1rem; font-weight:900; } .cc-office__assurance > span:nth-child(2)::before { content:"₹"; } .cc-office__assurance > span:nth-child(3)::before { content:"↗"; }
   .cc-office__assurance > span:not(:last-child) { border-right:1px solid rgba(242,31,47,.12); }
   .cc-office__assurance strong { align-self:end; color:#20242d; font-size:.78rem; font-weight:850; line-height:1.3; }
   .cc-office__assurance small { align-self:start; margin-top:3px; color:#687180; font-size:.64rem; line-height:1.4; }
   @media (max-width:1050px) { .cc-office__header{align-items:flex-start;flex-direction:column}.cc-office__trust{justify-content:flex-start}.cc-office__grid{grid-template-columns:1fr}.cc-office-card--featured{grid-template-columns:1fr}.cc-office-card--featured .cc-office-card__image{min-height:360px} }
   @media (max-width:700px) { .cc-office{padding:18px 0 48px}.cc-office__container{width:min(100% - 24px,680px)}.cc-office__header{padding:19px;border-radius:18px}.cc-office-card,.cc-office-card--featured{grid-template-columns:1fr}.cc-office-card__image,.cc-office-card--featured .cc-office-card__image{min-height:230px}.cc-office-card__body{padding:16px}.cc-office-card__calculator{grid-template-columns:1fr}.cc-office__assurance{grid-template-columns:1fr}.cc-office__assurance > span:not(:last-child){border-right:0;border-bottom:1px solid rgba(35,40,50,.1)} }
 `;
-
