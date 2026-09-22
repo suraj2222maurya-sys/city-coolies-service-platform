@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 
@@ -10,7 +10,7 @@ import {
   type CommercialCleaningService,
 } from "@/lib/services/commercialCleaningCatalog";
 
-const FEATURED_SERVICE_ID = "office-corporate-deep-cleaning"
+const FEATURED_SERVICE_ID = "office-corporate-deep-cleaning";
 
 function CheckIcon() {
   return (
@@ -82,6 +82,7 @@ function ServiceImage({
     />
   );
 }
+
 function CommercialBookingControl({
   service,
   featured = false,
@@ -103,9 +104,7 @@ function CommercialBookingControl({
     >
       <div className="cc-commercial__calculation">
         <span>Site survey charge</span>
-
         <strong>{siteSurveyLabel}</strong>
-
         <small>
           Cleaning starts from ₹5 / sq. ft. Final price confirmed after inspection.
         </small>
@@ -133,17 +132,13 @@ function CommercialBookingControl({
 }
 
 export default function CommercialCleaningSection() {
-  const featuredService =
-    COMMERCIAL_CLEANING_SERVICES.find(
-      (service) => service.id === FEATURED_SERVICE_ID,
-    )!;
+  const featuredService = COMMERCIAL_CLEANING_SERVICES.find(
+    (service) => service.id === FEATURED_SERVICE_ID,
+  )!;
 
-  const secondaryServices =
-    COMMERCIAL_CLEANING_SERVICES.filter(
-      (service) => service.id !== FEATURED_SERVICE_ID,
-    );
-
- 
+  const secondaryServices = COMMERCIAL_CLEANING_SERVICES.filter(
+    (service) => service.id !== FEATURED_SERVICE_ID,
+  );
 
   return (
     <section
@@ -153,9 +148,7 @@ export default function CommercialCleaningSection() {
       <div className="cc-commercial__container">
         <header className="cc-commercial__header">
           <div>
-            <p className="cc-commercial__eyebrow">
-              Commercial Cleaning
-            </p>
+            <p className="cc-commercial__eyebrow">Commercial Cleaning</p>
 
             <h2
               id="commercial-cleaning-title"
@@ -164,10 +157,10 @@ export default function CommercialCleaningSection() {
               Premium care for every business space.
             </h2>
 
-           <p className="cc-commercial__subtitle">
-  Choose your commercial space and book a ₹500 site survey.
-  Cleaning starts from ₹5 / sq. ft., with final pricing confirmed after inspection.
-</p>
+            <p className="cc-commercial__subtitle">
+              Choose your commercial space and book a ₹500 site survey. Cleaning
+              starts from ₹5 / sq. ft., with final pricing confirmed after inspection.
+            </p>
           </div>
 
           <div className="cc-commercial__trust">
@@ -186,38 +179,22 @@ export default function CommercialCleaningSection() {
         <div className="cc-commercial__marketplace">
           <article className="cc-commercial__featured">
             <div className="cc-commercial__featured-media">
-              <ServiceImage
-                service={featuredService}
-                priority
-              />
+              <ServiceImage service={featuredService} priority />
 
-              <span className="cc-commercial__popular">
-                ★ Most Booked
-              </span>
+              <span className="cc-commercial__popular">★ Most Booked</span>
             </div>
 
             <div className="cc-commercial__featured-content">
               <h3>{featuredService.name}</h3>
-
               <p>{featuredService.description}</p>
 
               <div className="cc-commercial__meta">
+                <span>★ {featuredService.rating}</span>
                 <span>
-                  ★ {featuredService.rating}
+                  ({featuredService.reviewCount.toLocaleString("en-IN")})
                 </span>
-
-                <span>
-                  (
-                  {featuredService.reviewCount.toLocaleString(
-                    "en-IN",
-                  )}
-                  )
-                </span>
-
-              <span>₹500 site survey</span>
-
+                <span>₹500 site survey</span>
                 <span>{featuredService.duration}</span>
-
                 <span>4+ professionals</span>
               </div>
 
@@ -230,10 +207,7 @@ export default function CommercialCleaningSection() {
                 ))}
               </ul>
 
-             <CommercialBookingControl
-  service={featuredService}
-  featured
-/>
+              <CommercialBookingControl service={featuredService} featured />
             </div>
           </article>
 
@@ -252,22 +226,14 @@ export default function CommercialCleaningSection() {
 
                   <div className="cc-commercial__service-content">
                     <h4>{service.name}</h4>
-
                     <p>{service.description}</p>
 
                     <div className="cc-commercial__card-meta">
-                      <span>
-                        ★ {service.rating}
-                      </span>
-
-                    <span>
-  Starts from ₹5 / sq. ft.
-</span>
+                      <span>★ {service.rating}</span>
+                      <span>Starts from ₹5 / sq. ft.</span>
                     </div>
 
-                  <CommercialBookingControl
-  service={service}
-/>
+                    <CommercialBookingControl service={service} />
                   </div>
                 </article>
               ))}
@@ -281,14 +247,12 @@ export default function CommercialCleaningSection() {
         >
           <span>
             <ShieldIcon />
-           <strong>₹500 Site Survey</strong>
+            <strong>₹500 Site Survey</strong>
           </span>
 
           <span>
             <WalletIcon />
-           <strong>
-  Full ₹500 Online Payment
-</strong>
+            <strong>Full ₹500 Online Payment</strong>
           </span>
 
           <span>
