@@ -1,4 +1,4 @@
-﻿export type CommercialCleaningService = {
+export type CommercialCleaningService = {
   id: string;
   name: string;
   image: string;
@@ -134,6 +134,8 @@ export const COMMERCIAL_CLEANING_SERVICES: readonly CommercialCleaningService[] 
     },
   ] as const;
 
+export const COMMERCIAL_SITE_SURVEY_FEE = 500;
+
 export type CommercialCleaningPlanService = {
   id: string;
   name: string;
@@ -152,95 +154,53 @@ export function calculateCommercialCleaningEstimate(
   service: CommercialCleaningService,
   squareFeet: number,
 ): number | null {
-  if (
-    !Number.isSafeInteger(squareFeet) ||
-    squareFeet <= 0
-  ) {
+  if (!Number.isSafeInteger(squareFeet) || squareFeet <= 0) {
     return null;
   }
 
   const total = service.rate * squareFeet;
 
-  return Number.isSafeInteger(total) && total > 0
-    ? total
-    : null;
+  return Number.isSafeInteger(total) && total > 0 ? total : null;
 }
 
 export function calculateCommercialCleaningPlan(
   input: unknown,
 ): CommercialCleaningPlan | null {
-  if (
-    !Array.isArray(input) ||
-    input.length === 0 ||
-    input.length > COMMERCIAL_CLEANING_SERVICES.length
-  ) {
+  return calculateCommercialSiteSurvey(input);
+}
+
+export function calculateCommercialSiteSurvey(
+  input: unknown,
+): CommercialCleaningPlan | null {
+  if (!Array.isArray(input) || input.length !== 1) {
     return null;
   }
 
-  const selectedServiceIds = new Set<string>();
-  const services: CommercialCleaningPlanService[] = [];
+  const rawItem = input[0] as { id?: unknown } | undefined;
 
-  for (const inputItem of input) {
-    if (!inputItem || typeof inputItem !== "object") {
-      return null;
-    }
-
-    const rawItem = inputItem as {
-      id?: unknown;
-      quantity?: unknown;
-    };
-
-    if (
-      typeof rawItem.id !== "string" ||
-      typeof rawItem.quantity !== "number" ||
-      !Number.isSafeInteger(rawItem.quantity) ||
-      rawItem.quantity <= 0
-    ) {
-      return null;
-    }
-
-    const service = COMMERCIAL_CLEANING_SERVICES.find(
-      (availableService) =>
-        availableService.id === rawItem.id,
-    );
-
-    if (!service || selectedServiceIds.has(service.id)) {
-      return null;
-    }
-
-    const lineTotal = calculateCommercialCleaningEstimate(
-      service,
-      rawItem.quantity,
-    );
-
-    if (lineTotal === null) {
-      return null;
-    }
-
-    selectedServiceIds.add(service.id);
-
-    services.push({
-      id: service.id,
-      name: service.name,
-      quantity: rawItem.quantity,
-      unitPrice: service.rate,
-      lineTotal,
-    });
+  if (!rawItem || typeof rawItem.id !== "string") {
+    return null;
   }
 
-  const total = services.reduce(
-    (currentTotal, service) =>
-      currentTotal + service.lineTotal,
-    0,
+  const service = COMMERCIAL_CLEANING_SERVICES.find(
+    (availableService) => availableService.id === rawItem.id,
   );
 
-  if (!Number.isSafeInteger(total) || total <= 0) {
+  if (!service) {
     return null;
   }
 
   return {
-    services,
-    total,
-    advanceAmount: Math.round(total * 0.5),
+    services: [
+      {
+        id: service.id,
+        name: `${service.name} - Site Survey`,
+        quantity: 1,
+        unitPrice: COMMERCIAL_SITE_SURVEY_FEE,
+        lineTotal: COMMERCIAL_SITE_SURVEY_FEE,
+      },
+    ],
+    total: COMMERCIAL_SITE_SURVEY_FEE,
+    advanceAmount: COMMERCIAL_SITE_SURVEY_FEE,
   };
 }

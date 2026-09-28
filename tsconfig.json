@@ -1,54 +1,56 @@
 {
-  "compilerOptions": {
-    "target": "ES2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    }
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts"
-  ],
-  "exclude": [
-    "node_modules",
-    ".codex-backups/**/*",
-    "_pest-control-backup-20260901-054657/**/*",
-    "_pest-support-final-backup-20260902-085757/**/*",
-    "_pest-support-final-backup-20260902-220557/**/*",
-    "_pest-support-final-backup-20260902-221229/**/*",
-    "_pest-support-final-backup-20260902-222918/**/*",
-    "_pest-cart-backup-20260901-061534/**/*",
-    "_pest-cart-fix-20260901-062426/**/*",
-    "_pest-cart-ui-backup/**/*",
-    "city-coolies-backups/**/*",
-    "src/app/services/*.backup-*",
-    "src/app/services/*.backup-*/**"
-  ]
+    "compilerOptions":  {
+                            "target":  "ES2017",
+                            "lib":  [
+                                        "dom",
+                                        "dom.iterable",
+                                        "esnext"
+                                    ],
+                            "allowJs":  true,
+                            "skipLibCheck":  true,
+                            "strict":  true,
+                            "noEmit":  true,
+                            "esModuleInterop":  true,
+                            "module":  "esnext",
+                            "moduleResolution":  "bundler",
+                            "resolveJsonModule":  true,
+                            "isolatedModules":  true,
+                            "jsx":  "react-jsx",
+                            "incremental":  true,
+                            "plugins":  [
+                                            {
+                                                "name":  "next"
+                                            }
+                                        ],
+                            "paths":  {
+                                          "@/*":  [
+                                                      "./src/*"
+                                                  ]
+                                      }
+                        },
+    "include":  [
+                    "next-env.d.ts",
+                    "**/*.ts",
+                    "**/*.tsx",
+                    ".next/types/**/*.ts",
+                    ".next/dev/types/**/*.ts",
+                    "**/*.mts"
+                ],
+    "exclude":  [
+                    "node_modules",
+                    ".codex-backups/**/*",
+                    "_pest-control-backup-20260901-054657/**/*",
+                    "_pest-support-final-backup-20260902-085757/**/*",
+                    "_pest-support-final-backup-20260902-220557/**/*",
+                    "_pest-support-final-backup-20260902-221229/**/*",
+                    "_pest-support-final-backup-20260902-222918/**/*",
+                    "_pest-cart-backup-20260901-061534/**/*",
+                    "_pest-cart-fix-20260901-062426/**/*",
+                    "_pest-cart-ui-backup/**/*",
+                    "city-coolies-backups/**/*",
+                    "src/app/services/*.backup-*",
+                    "src/app/services/*.backup-*/**",
+                    "**/*backup*/**",
+                    "**/*.backup-*"
+                ]
 }

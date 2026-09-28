@@ -71,7 +71,7 @@ const CUSTOM_CLEANING_SERVICES: readonly CustomCleaningService[] = [
   {
     id: "restroom-cleaning",
     name: "Restroom Cleaning",
-    price: 1000,
+    price: 999,
     unitLabel: "per restroom",
     selectionType: "quantity",
   },
@@ -178,6 +178,13 @@ const CUSTOM_BATHROOM_CLEANING_SERVICES: readonly CustomCleaningService[] =
       unitLabel: "fixed service",
       selectionType: "toggle",
     },
+    {
+  id: "bathroom-urinal-cleaning",
+  name: "Urinals Cleaning",
+  price: 599,
+  unitLabel: "fixed service",
+  selectionType: "toggle",
+},
     {
       id: "bathroom-floor-tile-cleaning",
       name: "Floor & Tile Cleaning",
