@@ -1,0 +1,1145 @@
+.section {
+  width: 100%;
+  margin-top: 34px;
+  padding-top: 30px;
+  border-top: 1px solid #f0dfe1;
+  scroll-margin-top: 150px;
+}
+
+.sectionTitle {
+  margin: 0 0 26px;
+  color: #171717;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+
+.promoBanner {
+  position: relative;
+  min-height: 235px;
+  overflow: hidden;
+
+  border: 1px solid #f4c7cb;
+  border-radius: 12px;
+
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(255, 247, 248, 0.99) 0%,
+      rgba(255, 247, 248, 0.95) 34%,
+      rgba(255, 247, 248, 0.68) 52%,
+      rgba(255, 247, 248, 0.12) 78%,
+      rgba(255, 247, 248, 0) 100%
+    ),
+    url("/deep-cleaning/sunlit_living_room_cleaning_service.png");
+
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.promoContent {
+  display: flex;
+  min-height: 235px;
+  width: 55%;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px;
+}
+
+.badge {
+  width: fit-content;
+  margin-bottom: 18px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #ef1b23;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.promoHeading {
+  margin: 0;
+  color: #181818;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.promoDescription {
+  max-width: 340px;
+  margin: 12px 0 0;
+  color: #555555;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.serviceHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 22px;
+  padding: 22px 0 6px;
+}
+
+.serviceInformation {
+  min-width: 0;
+}
+
+.serviceTitle {
+  margin: 0;
+  color: #181818;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.serviceMeta {
+  margin: 7px 0 0;
+  color: #666666;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.detailsButton {
+  margin-top: 10px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ef1b23;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.addButton {
+  min-width: 86px;
+  min-height: 42px;
+  flex: 0 0 auto;
+  padding: 8px 20px;
+
+  border: 1px solid #ef1b23;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #ef1b23;
+
+  font: inherit;
+  font-size: 15px;
+  font-weight: 650;
+
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background: #ef1b23;
+  color: #ffffff;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background:
+    rgba(22, 22, 22, 0.46);
+
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  display: flex;
+  width: min(620px, 100%);
+  max-height: min(760px, 88vh);
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border: 1px solid #eeeeee;
+  border-radius: 18px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 24px 70px
+    rgba(0, 0, 0, 0.2);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+
+  padding: 24px 26px 18px;
+
+  border-bottom:
+    1px solid #eeeeee;
+}
+
+.modalHeader h2 {
+  margin: 0;
+
+  color: #151515;
+
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.modalHeader p {
+  margin: 6px 0 0;
+
+  color: #666666;
+
+  font-size: 13px;
+}
+
+.closeButton {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+
+  flex: 0 0 40px;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid #e8e8e8;
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: #171717;
+
+  font-size: 25px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.modalSummary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  padding: 13px 26px;
+
+  background: #fff8f8;
+
+  border-bottom:
+    1px solid #f4e3e4;
+}
+
+.modalSummary span {
+  color: #777777;
+  font-size: 12px;
+}
+
+.modalSummary strong {
+  color: #171717;
+  font-size: 19px;
+}
+
+.modalBody {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+
+  padding: 18px 22px;
+}
+
+.serviceList {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.optionRow {
+  display: flex;
+  min-height: 67px;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  padding: 11px 13px;
+
+  border: 1px solid #e9e9e9;
+  border-radius: 11px;
+
+  background: #ffffff;
+}
+
+.optionRowSelected {
+  border-color: #ef9ca1;
+  background: #fff8f8;
+}
+
+.optionCopy {
+  min-width: 0;
+}
+
+.optionCopy h3 {
+  margin: 0;
+
+  color: #202020;
+
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.optionCopy p {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 5px;
+
+  margin: 5px 0 0;
+
+  line-height: 1.2;
+}
+
+.optionCopy strong {
+  color: #171717;
+  font-size: 13px;
+}
+
+.optionCopy span {
+  color: #808080;
+  font-size: 11px;
+}
+
+.stepper {
+  display: grid;
+
+  grid-template-columns:
+    31px 31px 31px;
+
+  flex: 0 0 auto;
+
+  align-items: center;
+  justify-items: center;
+
+  border: 1px solid #efb9bc;
+  border-radius: 9px;
+
+  overflow: hidden;
+}
+
+.stepper button {
+  width: 31px;
+  height: 31px;
+
+  padding: 0;
+  border: 0;
+
+  background: #ffffff;
+  color: #ef1b23;
+
+  font-size: 18px;
+
+  cursor: pointer;
+}
+
+.stepper button:disabled {
+  color: #c5c5c5;
+  cursor: default;
+}
+
+.stepper span {
+  width: 31px;
+
+  text-align: center;
+
+  color: #202020;
+
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.optionAddButton {
+  min-width: 66px;
+  height: 33px;
+
+  padding: 0 12px;
+
+  border: 1px solid #ef1b23;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #ef1b23;
+
+  font: inherit;
+  font-size: 12px;
+  font-weight: 650;
+
+  cursor: pointer;
+}
+
+.optionAddButtonSelected {
+  background: #ef1b23;
+  color: #ffffff;
+}
+
+.modalFooter {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 18px;
+
+  padding: 16px 22px;
+
+  border-top:
+    1px solid #eeeeee;
+
+  background: #ffffff;
+}
+
+.footerTotal {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.footerTotal span {
+  color: #777777;
+  font-size: 11px;
+}
+
+.footerTotal strong {
+  color: #171717;
+  font-size: 19px;
+}
+
+.cartButton {
+  min-width: 145px;
+  height: 43px;
+
+  padding: 0 20px;
+
+  border: 1px solid #ef1b23;
+  border-radius: 9px;
+
+  background: #ef1b23;
+  color: #ffffff;
+
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.cartButton:disabled {
+  border-color: #dddddd;
+  background: #eeeeee;
+  color: #999999;
+  cursor: not-allowed;
+}
+
+.addButton:focus-visible,
+.detailsButton:focus-visible,
+.closeButton:focus-visible,
+.optionAddButton:focus-visible,
+.stepper button:focus-visible,
+.cartButton:focus-visible {
+  outline: 2px solid
+    rgba(239, 27, 35, 0.45);
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .section {
+    margin-top: 25px;
+    padding-top: 22px;
+    scroll-margin-top: 140px;
+  }
+
+  .sectionTitle {
+    margin-bottom: 18px;
+    font-size: 27px;
+  }
+
+  .promoBanner {
+    min-height: 190px;
+  }
+
+  .promoContent {
+    min-height: 190px;
+    width: 67%;
+    padding: 22px 16px;
+  }
+
+  .badge {
+    margin-bottom: 12px;
+    padding: 6px 10px;
+    font-size: 10px;
+  }
+
+  .promoHeading {
+    font-size: 18px;
+  }
+
+  .promoDescription {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+
+  .serviceHeader {
+    padding-top: 17px;
+  }
+
+  .serviceTitle {
+    font-size: 16px;
+  }
+
+  .serviceMeta {
+    font-size: 12px;
+  }
+
+  .addButton {
+    min-width: 72px;
+    min-height: 39px;
+    padding: 7px 15px;
+    font-size: 14px;
+  }
+
+  .backdrop {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal {
+    width: 100%;
+    max-height: 88vh;
+
+    border-radius:
+      18px 18px 0 0;
+  }
+
+  .modalHeader {
+    padding:
+      18px 16px 14px;
+  }
+
+  .modalHeader h2 {
+    font-size: 21px;
+  }
+
+  .closeButton {
+    width: 37px;
+    height: 37px;
+    flex-basis: 37px;
+  }
+
+  .modalSummary {
+    padding: 11px 16px;
+  }
+
+  .modalBody {
+    padding: 14px 12px;
+  }
+
+  .optionRow {
+    min-height: 64px;
+    padding: 10px;
+  }
+
+  .optionCopy h3 {
+    font-size: 12px;
+  }
+
+  .modalFooter {
+    padding:
+      13px 12px
+      calc(
+        13px +
+        env(safe-area-inset-bottom)
+      );
+  }
+
+  .cartButton {
+    min-width: 128px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .addButton,
+  .optionRow {
+    transition: none;
+  }
+}
+
+/* CITY_COOLIES_CUSTOMIZE_MODAL_REFERENCE_START */
+
+/*
+  Customize Cleaning popup.
+
+  Desktop size follows the Full Apartment
+  requirements popup reference.
+
+  Header, summary and footer stay fixed.
+  Only the middle services area scrolls.
+*/
+
+@media (min-width: 621px) {
+
+  .backdrop {
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    padding:
+      24px
+      20px !important;
+  }
+
+  .modal {
+    position: relative !important;
+
+    display: flex !important;
+
+    width: 472px !important;
+    max-width: 472px !important;
+
+    height: 635px !important;
+    max-height: min(
+      635px,
+      calc(100dvh - 48px)
+    ) !important;
+
+    min-height: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    flex-direction: column !important;
+
+    overflow: hidden !important;
+
+    border-radius: 18px !important;
+  }
+
+  /*
+    Fixed top header.
+  */
+  .modalHeader {
+    flex:
+      0
+      0
+      auto !important;
+
+    padding:
+      22px
+      28px
+      18px !important;
+  }
+
+  .modalHeader h2 {
+    font-size: 28px !important;
+    line-height: 1.15 !important;
+  }
+
+  .modalHeader p {
+    margin-top: 7px !important;
+
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+  }
+
+  /*
+    Fixed selection summary.
+  */
+  .modalSummary {
+    flex:
+      0
+      0
+      auto !important;
+
+    min-height: 62px !important;
+
+    padding:
+      14px
+      28px !important;
+  }
+
+  /*
+    ONLY this middle area scrolls.
+  */
+  .modalBody {
+    box-sizing: border-box !important;
+
+    flex:
+      1
+      1
+      auto !important;
+
+    min-height: 0 !important;
+
+    padding:
+      16px
+      18px !important;
+
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+
+    overscroll-behavior:
+      contain !important;
+
+    scrollbar-width:
+      thin;
+
+    scrollbar-color:
+      #c6c6c6
+      transparent;
+
+    -webkit-overflow-scrolling:
+      touch;
+  }
+
+  .modalBody::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .modalBody::-webkit-scrollbar-track {
+    background:
+      transparent;
+  }
+
+  .modalBody::-webkit-scrollbar-thumb {
+    border-radius:
+      999px;
+
+    background:
+      #c6c6c6;
+  }
+
+  .serviceList {
+    width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /*
+    Slightly more compact service rows,
+    matching the smaller popup width.
+  */
+  .optionRow {
+    box-sizing: border-box !important;
+
+    width: 100% !important;
+
+    min-height: 68px !important;
+
+    padding:
+      11px
+      14px !important;
+  }
+
+  .optionCopy {
+    min-width: 0 !important;
+  }
+
+  .optionCopy h3 {
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+  }
+
+  .optionCopy p {
+    margin-top: 5px !important;
+  }
+
+  /*
+    Keep quantity control compact.
+  */
+  .stepper {
+    flex:
+      0
+      0
+      auto !important;
+
+    min-width: 104px !important;
+  }
+
+  /*
+    Fixed bottom footer.
+  */
+  .modalFooter {
+    flex:
+      0
+      0
+      auto !important;
+
+    min-height: 74px !important;
+
+    padding:
+      11px
+      18px !important;
+
+    background:
+      #ffffff !important;
+  }
+
+  .cartButton {
+    min-width: 150px !important;
+  }
+}
+
+
+/* ========================================================
+   PHONE
+   ======================================================== */
+
+@media (max-width: 620px) {
+
+  .backdrop {
+    align-items:
+      flex-end !important;
+
+    padding:
+      0 !important;
+  }
+
+  .modal {
+    display:
+      flex !important;
+
+    width:
+      100% !important;
+
+    max-width:
+      100% !important;
+
+    height:
+      min(88dvh, 700px) !important;
+
+    max-height:
+      88dvh !important;
+
+    min-height:
+      0 !important;
+
+    flex-direction:
+      column !important;
+
+    overflow:
+      hidden !important;
+
+    border-radius:
+      18px
+      18px
+      0
+      0 !important;
+  }
+
+  .modalHeader,
+  .modalSummary,
+  .modalFooter {
+    flex:
+      0
+      0
+      auto !important;
+  }
+
+  .modalHeader {
+    padding:
+      18px
+      16px
+      14px !important;
+  }
+
+  .modalHeader h2 {
+    font-size:
+      21px !important;
+  }
+
+  .modalSummary {
+    padding:
+      11px
+      16px !important;
+  }
+
+  .modalBody {
+    flex:
+      1
+      1
+      auto !important;
+
+    min-height:
+      0 !important;
+
+    padding:
+      14px
+      12px !important;
+
+    overflow-x:
+      hidden !important;
+
+    overflow-y:
+      auto !important;
+
+    overscroll-behavior:
+      contain !important;
+
+    -webkit-overflow-scrolling:
+      touch;
+  }
+
+  .optionRow {
+    min-height:
+      64px !important;
+
+    padding:
+      10px !important;
+  }
+
+  .modalFooter {
+    padding:
+      13px
+      12px
+      calc(
+        13px +
+        env(safe-area-inset-bottom)
+      ) !important;
+  }
+}
+
+/* CITY_COOLIES_CUSTOMIZE_MODAL_REFERENCE_END */
+
+/* CITY_COOLIES_CUSTOMIZE_RATING_V3_START */
+
+/* Main service rating */
+
+.ccRatingInline {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+  vertical-align: middle;
+  color: #555555;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.ccRatingStar {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #ef1b23;
+  color: #ffffff;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.ccRatingScore {
+  font-weight: 500;
+}
+
+.ccRatingReviews {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Place the existing View details button beside the rating */
+
+.ccRatingInline + .detailsButton {
+  display: inline-flex !important;
+  align-items: center;
+  margin: 10px 0 0 10px !important;
+  padding: 0 !important;
+  vertical-align: middle;
+  line-height: 1.4;
+}
+
+/* Popup rating section */
+
+.ccOverallRating {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 26px;
+  padding: 24px 2px 16px;
+  border-top: 1px solid #f0dfe2;
+  background: #ffffff;
+}
+
+.ccRatingHeading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ccGoldStar {
+  color: #f4b400;
+  font-size: 29px;
+  line-height: 1;
+}
+
+.ccRatingHeading strong {
+  color: #222222;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ccReviewCount {
+  margin: 12px 0 24px;
+  color: #777777;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.ccRatingBars {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.ccRatingBarRow {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 42px;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.ccStarLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: #555555;
+  font-size: 15px;
+}
+
+.ccStarLabel span {
+  color: #f4b400;
+}
+
+.ccRatingTrack {
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #dddddd;
+}
+
+.ccRatingFill {
+  height: 100%;
+  border-radius: inherit;
+  background: #ef1b23;
+}
+
+.ccPercentage {
+  color: #777777;
+  font-size: 14px;
+  text-align: right;
+}
+
+@media (max-width: 620px) {
+  .ccRatingInline {
+    gap: 4px;
+    font-size: 12px;
+  }
+
+  .ccRatingInline + .detailsButton {
+    margin-left: 7px !important;
+  }
+
+  .ccOverallRating {
+    padding: 20px 2px 12px;
+  }
+
+  .ccRatingHeading strong {
+    font-size: 31px;
+  }
+
+  .ccRatingBarRow {
+    grid-template-columns: 34px minmax(0, 1fr) 38px;
+    gap: 8px;
+  }
+
+  .ccStarLabel,
+  .ccPercentage {
+    font-size: 13px;
+  }
+}
+
+/* CITY_COOLIES_CUSTOMIZE_RATING_V3_END */
+
+/* CITY_COOLIES_CUSTOMIZE_BANNER_IMAGE_START */
+
+/*
+  Customize Cleaning banner.
+
+  Display the supplied image directly.
+  Keep its actual aspect ratio on all screen sizes.
+  Never crop or stretch the image.
+*/
+
+.section .promoBanner {
+    box-sizing: border-box !important;
+
+    display: block !important;
+
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+
+    aspect-ratio: 1983 / 793 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    overflow: hidden !important;
+
+    background-color: #fff7f8 !important;
+
+    background-image:
+        url("/deep-cleaning/customize-cleaning-banner.png") !important;
+
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+}
+
+/*
+  Remove all promotional content from the banner.
+  Do not affect the service title, rating or buttons below it.
+*/
+
+.section .promoBanner > .promoContent {
+    display: none !important;
+}
+
+.section .promoBanner::before,
+.section .promoBanner::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* CITY_COOLIES_CUSTOMIZE_BANNER_IMAGE_END */

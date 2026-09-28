@@ -1,0 +1,438 @@
+﻿.sidebar {
+  display: flex;
+
+  width: 100%;
+
+  flex-direction: column;
+
+  gap: 26px;
+}
+
+.promiseCard,
+.cartCard {
+  width: 100%;
+
+  padding: 26px;
+
+  border: 1px solid #f0d7da;
+  border-radius: 13px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 4px 18px rgba(239, 27, 35, 0.025);
+}
+
+.promiseCard h2,
+.cartHeader h2 {
+  margin: 0;
+
+  color: #171717;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.promiseCard ul {
+  display: flex;
+
+  margin: 19px 0 0;
+  padding: 0;
+
+  flex-direction: column;
+
+  gap: 14px;
+
+  list-style: none;
+}
+
+.promiseCard li {
+  display: flex;
+
+  gap: 11px;
+
+  align-items: center;
+
+  color: #353535;
+
+  font-size: 14px;
+}
+
+.promiseCard li::before {
+  color: #ef1b23;
+
+  content: "âœ“";
+
+  font-weight: 800;
+}
+
+.emptyCart {
+  min-height: 120px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  color: #777777;
+
+  text-align: center;
+}
+
+.cartIcon {
+  font-size: 34px;
+
+  filter: grayscale(1);
+
+  opacity: 0.65;
+}
+
+.emptyCart p {
+  margin: 0;
+
+  font-size: 14px;
+}
+
+.cartHeader {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  padding-bottom: 16px;
+
+  border-bottom: 1px solid #f1e2e4;
+}
+
+.cartHeader span {
+  min-width: 27px;
+  height: 27px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 7px;
+
+  border-radius: 999px;
+
+  background: #ef1b23;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cartItems {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.cartItem {
+  display: flex;
+
+  padding: 16px 0;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  border-bottom: 1px solid #f1e2e4;
+}
+
+.cartItemContent {
+  min-width: 0;
+
+  flex: 1;
+}
+
+.cartItem h3 {
+  margin: 0;
+
+  color: #222222;
+
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.cartItem p {
+  margin: 6px 0;
+
+  color: #6a6a6a;
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.cartItem strong {
+  color: #171717;
+
+  font-size: 13px;
+}
+
+.removeButton {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid #f0c9cc;
+  border-radius: 50%;
+
+  background: #fff7f8;
+
+  color: #ef1b23;
+
+  font-size: 19px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  background: #ef1b23;
+
+  color: #ffffff;
+}
+
+.cartTotal {
+  display: flex;
+
+  padding-top: 17px;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+}
+
+.cartTotal span {
+  color: #555555;
+
+  font-size: 13px;
+}
+
+.cartTotal strong {
+  color: #171717;
+
+  font-size: 17px;
+}
+
+.bookingNote {
+  margin: 12px 0 0;
+
+  color: #858585;
+
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+@media (max-width: 1020px) {
+  .promiseCard,
+  .cartCard {
+    padding: 21px;
+  }
+}
+
+/* Keep each selected service price beside its name. */
+.cartItemHeading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+}
+.cartItemHeading h3 {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.cartItemHeading strong {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  line-height: 1.35;
+}
+
+.addMoreServices {
+  display: flex;
+  width: 100%;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 18px;
+  padding: 9px 14px;
+  border: 1px solid #ef1b23;
+  border-radius: 10px;
+  background: #fff;
+  color: #ef1b23;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: center;
+  text-decoration: none;
+}
+.addMoreServices:hover,
+.addMoreServices:focus-visible {
+  background: #ef1b23;
+  color: #fff;
+}
+.addMoreServices:focus-visible {
+  outline: 2px solid #ef1b23;
+  outline-offset: 2px;
+}
+
+/* Keep the total and action visible while selected services scroll. */
+.cartCard {
+  display: flex;
+  flex-direction: column;
+  max-height: clamp(380px, calc(100dvh - 360px), 640px);
+  overflow: hidden;
+}
+.cartHeader,
+.cartTotal,
+.addMoreServices,
+.bookingNote {
+  flex: 0 0 auto;
+}
+.cartItems {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+@media (max-width: 980px) {
+  .cartCard {
+    max-height: min(640px, 75dvh);
+  }
+}
+
+/* Give four compact selected-service rows room before scrolling. */
+.cartCard:has(.cartItems) {
+  height: min(640px, calc(100dvh - 190px));
+  max-height: none;
+}
+.cartItems .cartItem {
+  padding: 10px 0;
+}
+.cartItems .cartItem p {
+  display: -webkit-box;
+  margin: 4px 0 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+@media (max-width: 980px) {
+  .cartCard:has(.cartItems) {
+    height: min(640px, 85dvh);
+  }
+}
+
+/* Keep list scrolling without showing the scrollbar. */
+.cartItems {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.cartItems::-webkit-scrollbar {
+  display: none;
+}
+
+/* CITY_COOLIES_MOBILE_CART_SCROLL_LAYOUT */
+@media (max-width: 600px) {
+  .cartCard:has(.cartItems) {
+    height: min(700px, 90dvh);
+    max-height: none;
+  }
+
+  .cartItems .cartItem {
+    padding: 8px 0;
+  }
+
+  .cartItems .cartItem p {
+    -webkit-line-clamp: 1;
+  }
+}
+
+/* CITY_COOLIES_MOBILE_SCROLL_CHAIN_FIX */
+@media (max-width: 980px) {
+  .cartItems {
+    overscroll-behavior-y: auto;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* CITY_COOLIES_MOBILE_SELECTED_CART_LAYOUT */
+@media (max-width: 600px) {
+  .cartCard:has(.cartItems) {
+    height: auto;
+    max-height: none;
+  }
+
+  .cartItems {
+    flex: 0 1 auto;
+    overflow: visible;
+  }
+
+  .cartCard:has(.cartItem:nth-child(5)) {
+    height: min(700px, 90dvh);
+  }
+
+  .cartCard:has(.cartItem:nth-child(5)) .cartItems {
+    min-height: 0;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overscroll-behavior-y: auto;
+  }
+}
+/* CITY_COOLIES_MOBILE_FOUR_ROW_CART_START */
+@media (max-width: 600px) {
+  .cartCard:has(.cartItems) {
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .cartItems {
+    flex: 0 1 auto !important;
+    max-height: 272px;
+    overflow-y: auto !important;
+    overscroll-behavior-y: auto;
+    touch-action: pan-y;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cartItems::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cartItems .cartItem {
+    box-sizing: border-box;
+    height: 68px;
+    min-height: 68px;
+    flex: 0 0 68px;
+    overflow: hidden;
+    padding: 8px 0;
+  }
+
+  .cartItems .cartItem p {
+    -webkit-line-clamp: 1;
+  }
+}
+/* CITY_COOLIES_MOBILE_FOUR_ROW_CART_END */

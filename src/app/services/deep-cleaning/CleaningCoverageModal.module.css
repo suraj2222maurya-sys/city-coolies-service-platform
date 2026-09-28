@@ -1,0 +1,301 @@
+﻿.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 56px 20px 24px;
+
+  background: rgba(0, 0, 0, 0.88);
+}
+
+.modal {
+  position: relative;
+
+  width: min(560px, calc(100vw - 32px));
+  max-height: min(650px, calc(100dvh - 82px));
+
+  overflow: visible;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.34);
+}
+
+.closeButton {
+  position: absolute;
+
+  top: -49px;
+  right: 14px;
+
+  z-index: 4;
+
+  display: inline-flex;
+
+  width: 38px;
+  height: 38px;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid #e6e6e6;
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  color: #171717;
+
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.closeButton:hover {
+  border-color: #ef1b23;
+
+  background: #fff7f8;
+
+  color: #ef1b23;
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid #ef1b23;
+  outline-offset: 3px;
+}
+
+.scrollArea {
+  width: 100%;
+  max-height: min(650px, calc(100dvh - 82px));
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  overscroll-behavior: contain;
+
+  scrollbar-width: none;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrollArea::-webkit-scrollbar {
+  display: none;
+
+  width: 0;
+  height: 0;
+}
+
+.header {
+  padding:
+    38px
+    25px
+    23px;
+}
+
+.title {
+  margin: 0;
+
+  color: #171717;
+
+  font-size: 29px;
+  font-weight: 700;
+  line-height: 1.2;
+
+  letter-spacing: -0.025em;
+}
+
+.subtitle {
+  margin:
+    11px
+    0
+    0;
+
+  color: #666666;
+
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.tableWrapper {
+  padding:
+    12px
+    25px
+    24px;
+}
+
+.coverageTable {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  table-layout: fixed;
+
+  color: #191919;
+}
+
+.coverageTable th,
+.coverageTable td {
+  padding: 0;
+
+  vertical-align: middle;
+}
+
+.coverageTable thead tr {
+  height: 88px;
+
+  border-bottom: 2px solid #e2e2e2;
+}
+
+.coverageTable thead th:first-child {
+  width: 28%;
+}
+
+.coverageTable thead th:not(:first-child) {
+  width: 24%;
+
+  text-align: center;
+}
+
+.coverageTable thead span,
+.coverageTable thead strong {
+  display: block;
+}
+
+.coverageTable thead span {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.12;
+}
+
+.coverageTable thead strong {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.12;
+}
+
+.coverageTable tbody tr {
+  height: 81px;
+
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.coverageTable tbody tr:last-child {
+  border-bottom: 0;
+}
+
+.coverageTable tbody th {
+  text-align: left;
+
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.coverageTable tbody td {
+  text-align: center;
+
+  font-size: 17px;
+  font-weight: 500;
+}
+
+@media (max-width: 620px) {
+  .overlay {
+    padding:
+      58px
+      12px
+      18px;
+  }
+
+  .modal {
+    width: 100%;
+    max-height: calc(100dvh - 78px);
+
+    border-radius: 14px;
+  }
+
+  .scrollArea {
+    max-height: calc(100dvh - 78px);
+
+    border-radius: 14px;
+  }
+
+  .closeButton {
+    top: -45px;
+    right: 8px;
+
+    width: 36px;
+    height: 36px;
+
+    font-size: 25px;
+  }
+
+  .header {
+    padding:
+      28px
+      18px
+      18px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+  }
+
+  .tableWrapper {
+    padding:
+      8px
+      14px
+      20px;
+
+    overflow-x: auto;
+  }
+
+  .coverageTable {
+    min-width: 500px;
+  }
+
+  .coverageTable thead span,
+  .coverageTable thead strong,
+  .coverageTable tbody th,
+  .coverageTable tbody td {
+    font-size: 14px;
+  }
+
+  .coverageTable tbody tr {
+    height: 70px;
+  }
+}
+
+
+/* CITY_COOLIES_COVERAGE_BACKDROP_FIX_START */
+
+/*
+  The main requirements modal already provides the page backdrop.
+  Do not add a second dark layer here.
+*/
+.overlay {
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+/* CITY_COOLIES_COVERAGE_BACKDROP_FIX_END */
+

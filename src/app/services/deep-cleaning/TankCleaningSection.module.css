@@ -1,0 +1,1932 @@
+.section {
+  box-sizing: border-box;
+  width: 100%;
+  background: #ffffff;
+  color: #171717;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/*
+ * Match the visual content width used by Full Home:
+ * approximately 695px service column + right sidebar.
+ */
+.container {
+  box-sizing: border-box;
+  width: min(1100px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 0 0 64px;
+}
+
+/* ======================================================
+   TOP SERVICE SELECTOR
+   No Furnished / Unfurnished controls in this category.
+   ====================================================== */
+
+.serviceSelector {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+}
+
+.selectorItem {
+  display: flex;
+  width: 88px;
+  min-width: 88px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #171717;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  font: inherit;
+}
+
+.selectorImage {
+  display: block;
+  width: 72px;
+  height: 72px;
+  flex: 0 0 72px;
+  border: 0;
+  border-radius: 0;
+  background: #fff1f3;
+}
+
+.selectorLabel {
+  width: 88px;
+  color: #111111;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.selectorItem:hover .selectorLabel,
+.selectorItem:focus-visible .selectorLabel {
+  color: #ef1b23;
+}
+
+.selectorItem:focus-visible {
+  outline: 2px solid #ef1b23;
+  outline-offset: 5px;
+}
+
+.selectorDivider {
+  width: 100%;
+  height: 1px;
+  margin: 26px 0 28px;
+  background: transparent;
+}
+
+/* ======================================================
+   MAIN + RIGHT SIDEBAR
+   ====================================================== */
+
+.contentLayout {
+  display: grid;
+  width: 100%;
+  grid-template-columns:
+    minmax(0, 696px)
+    minmax(300px, 372px);
+  gap: 32px;
+  align-items: start;
+}
+
+.mainColumn {
+  min-width: 0;
+}
+
+.sidebarColumn {
+  position: sticky;
+  top: 170px;
+  min-width: 0;
+}
+
+.serviceGroup {
+  width: 100%;
+  scroll-margin-top: 155px;
+  padding: 0 0 34px;
+}
+
+.serviceGroup + .serviceGroup {
+  padding-top: 34px;
+  border-top: 1px solid #f0dfe2;
+}
+
+.serviceGroup > h2 {
+  margin: 0 0 30px;
+  color: #111111;
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.16;
+  letter-spacing: -0.035em;
+}
+
+.serviceList {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ======================================================
+   SERVICE BLOCK - SAME VISUAL STRUCTURE AS FULL HOME
+   ====================================================== */
+
+.serviceCard {
+  width: 100%;
+  margin: 0;
+  padding: 0 0 18px;
+  border: 0;
+  border-bottom: 1px solid rgba(40, 40, 40, 0.11);
+  border-radius: 0;
+  background: transparent;
+}
+
+/*
+ * Actual service images will be added later.
+ * This keeps the same banner footprint as Full Home.
+ */
+.bannerPlaceholder {
+  box-sizing: border-box;
+  width: 100%;
+  aspect-ratio: 2.36 / 1;
+  overflow: hidden;
+  border: 1px solid #f3ccd2;
+  border-radius: 12px;
+  background: #fff1f3;
+}
+
+.serviceDetails {
+  width: 100%;
+  padding: 17px 0 0;
+}
+
+.serviceMainRow {
+  display: flex;
+  width: 100%;
+  gap: 18px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.serviceInformation {
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.serviceTitle {
+  margin: 0;
+  color: #171717;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.34;
+}
+
+.ratingRow {
+  display: flex;
+  margin-top: 8px;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 5px;
+  color: #555555;
+  font-size: 13px;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.ratingIcon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  flex: 0 0 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #ef1b23;
+  color: #ffffff;
+  font-size: 10px;
+  line-height: 1;
+}
+
+.reviewText {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+.detailsButton {
+  flex: 0 0 auto;
+  margin: 0 0 0 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ef1b23;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.priceRow {
+  display: flex;
+  margin-top: 9px;
+  align-items: center;
+  gap: 7px;
+  color: #171717;
+  font-size: 13px;
+  line-height: 1.3;
+}
+
+.priceRow strong {
+  font-weight: 700;
+}
+
+.addButton {
+  display: inline-flex;
+  min-width: 102px;
+  min-height: 50px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border: 1.5px solid #ef1b23;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #ef1b23;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.addButton:hover,
+.addButton:focus-visible {
+  background: #fff4f5;
+}
+
+/* ======================================================
+   POPUP
+   Sized to match the Full Home / Villa modal footprint.
+   ====================================================== */
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  box-sizing: border-box;
+  padding: 16px;
+  align-items: center;
+  justify-content: center;
+  background: rgba(14, 14, 14, 0.72);
+}
+
+.modal {
+  display: flex;
+  width: min(558px, calc(100vw - 32px));
+  height: min(640px, calc(100dvh - 32px));
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid #f1d7db;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+  flex-direction: column;
+}
+
+.modalHeader {
+  display: flex;
+  box-sizing: border-box;
+  min-height: 150px;
+  flex: 0 0 auto;
+  gap: 18px;
+  padding: 34px 32px 27px;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid #eeeeee;
+  background: #ffffff;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  color: #161616;
+  font-size: 28px;
+  font-weight: 750;
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+}
+
+.modalHeader p {
+  max-width: 410px;
+  margin: 10px 0 0;
+  color: #626262;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.closeButton {
+  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  flex: 0 0 48px;
+  align-items: center;
+  justify-content: center;
+  margin: -18px -18px 0 0;
+  border: 1px solid #eeeeee;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #171717;
+  cursor: pointer;
+  font-size: 29px;
+  font-weight: 400;
+  line-height: 1;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.05);
+}
+
+.modalBody {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 28px 32px 34px;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modalBody::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* ======================================================
+   POPUP PRICING
+   ====================================================== */
+
+.modalSection {
+  width: 100%;
+}
+
+.modalSection + .modalSection,
+.ratingSection {
+  margin-top: 30px;
+  padding-top: 28px;
+  border-top: 1px solid #e9eaec;
+}
+
+.modalSection h3 {
+  margin: 0 0 19px;
+  color: #5c6678;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.pricingGrid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.priceCard {
+  display: flex;
+  box-sizing: border-box;
+  min-height: 168px;
+  padding: 16px 13px;
+  border: 1px solid #dfe2e7;
+  border-radius: 10px;
+  background: #ffffff;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.optionLabel {
+  color: #303746;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.42;
+}
+
+.priceCard strong {
+  margin-top: 20px;
+  color: #525d6f;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.priceCard button {
+  display: inline-flex;
+  min-width: 85px;
+  min-height: 42px;
+  margin-top: auto;
+  padding: 0 18px;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #ef1b23;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #ef1b23;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.priceCard button:hover,
+.priceCard button:focus-visible {
+  background: #ef1b23;
+  color: #ffffff;
+}
+
+/* ======================================================
+   PROCESS / INCLUDED
+   ====================================================== */
+
+.processList {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.processList li {
+  display: grid;
+  grid-template-columns: 29px minmax(0, 1fr);
+  gap: 3px;
+}
+
+.processNumber {
+  color: #7b8495;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.processList strong {
+  color: #606a7c;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.processList p {
+  margin: 4px 0 0;
+  color: #7b8598;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.simpleList {
+  display: flex;
+  margin: 0;
+  padding: 0 0 0 21px;
+  color: #697387;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.simpleList li {
+  padding-left: 5px;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+/* ======================================================
+   RATING
+   ====================================================== */
+
+.ratingSection {
+  padding-bottom: 8px;
+}
+
+.ratingSummary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.goldStar {
+  color: #f6b900;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.ratingSummary strong {
+  color: #586171;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ratingReviewCount {
+  margin: 10px 0 24px;
+  color: #7e8797;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.ratingBars {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.ratingBarRow {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 34px minmax(0, 1fr) 43px;
+  gap: 10px;
+  align-items: center;
+}
+
+.ratingLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: #596273;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.ratingLabel span {
+  color: #f6b900;
+}
+
+.ratingTrack {
+  display: block;
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #d4d4d4;
+}
+
+.ratingFill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #ef1b23;
+}
+
+.ratingPercent {
+  color: #7c8595;
+  font-size: 13px;
+  text-align: right;
+}
+
+/* ======================================================
+   TABLET
+   ====================================================== */
+
+@media (max-width: 1050px) {
+  .container {
+    width: min(920px, calc(100% - 32px));
+  }
+
+  .contentLayout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      300px;
+    gap: 24px;
+  }
+
+  .serviceSelector {
+    gap: 16px;
+  }
+}
+
+/* ======================================================
+   PHONE
+   ====================================================== */
+
+@media (max-width: 760px) {
+  .container {
+    width: 100%;
+    padding: 14px 12px 42px;
+  }
+
+  .serviceSelector {
+    width: 100%;
+    gap: 11px;
+    padding: 2px 0 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .serviceSelector::-webkit-scrollbar {
+    display: none;
+  }
+
+  .selectorItem {
+    width: 76px;
+    min-width: 76px;
+    flex: 0 0 76px;
+    scroll-snap-align: start;
+  }
+
+  .selectorImage {
+    width: 62px;
+    height: 62px;
+    flex-basis: 62px;
+  }
+
+  .selectorLabel {
+    width: 76px;
+    font-size: 10.5px;
+    line-height: 1.14;
+  }
+
+  .selectorDivider {
+    margin: 10px 0 20px;
+  }
+
+  .contentLayout {
+    display: block;
+  }
+
+  .sidebarColumn {
+    position: static;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .serviceGroup {
+    padding-bottom: 26px;
+    scroll-margin-top: 150px;
+  }
+
+  .serviceGroup + .serviceGroup {
+    padding-top: 27px;
+  }
+
+  .serviceGroup > h2 {
+    margin-bottom: 17px;
+    font-size: 29px;
+  }
+
+  .serviceList {
+    gap: 24px;
+  }
+
+  .serviceCard {
+    padding-bottom: 15px;
+  }
+
+  .bannerPlaceholder {
+    width: 100%;
+    aspect-ratio: 16 / 8.2;
+    border-radius: 11px;
+  }
+
+  .serviceDetails {
+    padding-top: 13px;
+  }
+
+  .serviceMainRow {
+    gap: 8px;
+  }
+
+  .serviceTitle {
+    font-size: 16px;
+  }
+
+  .ratingRow {
+    gap: 4px;
+    margin-top: 7px;
+    font-size: 11.5px;
+  }
+
+  .ratingIcon {
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    flex-basis: 18px;
+    font-size: 9px;
+  }
+
+  .reviewText,
+  .detailsButton {
+    white-space: nowrap;
+  }
+
+  .detailsButton {
+    margin-left: 2px;
+    font-size: 11.5px;
+  }
+
+  .priceRow {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+
+  .addButton {
+    min-width: 74px;
+    min-height: 44px;
+    padding: 0 10px;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+
+  /*
+   * Same popup concept on phone,
+   * automatically fitted to the available screen.
+   */
+  .modalOverlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .modal {
+    width: 100%;
+    height: min(640px, 92dvh);
+    max-height: 92dvh;
+    border-width: 1px 0 0;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .modalHeader {
+    min-height: 125px;
+    padding: 22px 18px 18px;
+  }
+
+  .modalHeader h2 {
+    font-size: 23px;
+  }
+
+  .modalHeader p {
+    margin-top: 7px;
+    font-size: 12px;
+  }
+
+  .closeButton {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    flex-basis: 42px;
+    margin: -8px -7px 0 0;
+    font-size: 25px;
+  }
+
+  .modalBody {
+    padding: 20px 15px 28px;
+  }
+
+  .pricingGrid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .priceCard {
+    min-height: 142px;
+    padding: 12px;
+  }
+
+  .optionLabel {
+    font-size: 13px;
+  }
+
+  .priceCard strong {
+    margin-top: 15px;
+    font-size: 15px;
+  }
+
+  .priceCard button {
+    min-width: 76px;
+    min-height: 39px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+
+  .modalSection h3 {
+    font-size: 17px;
+  }
+
+  .processList {
+    gap: 15px;
+  }
+
+  .processList strong {
+    font-size: 14px;
+  }
+
+  .processList p {
+    font-size: 12px;
+  }
+
+  .simpleList li {
+    font-size: 13px;
+  }
+
+  .ratingSummary strong {
+    font-size: 31px;
+  }
+
+  .goldStar {
+    font-size: 25px;
+  }
+
+  .ratingBarRow {
+    grid-template-columns:
+      31px
+      minmax(0, 1fr)
+      38px;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  .serviceTitle {
+    font-size: 15px;
+  }
+
+  .ratingRow {
+    gap: 3px;
+    font-size: 10.5px;
+  }
+
+  .detailsButton {
+    font-size: 10.5px;
+  }
+
+  .addButton {
+    min-width: 66px;
+    padding: 0 7px;
+  }
+}
+
+/* CITY_COOLIES_LIVING_EXACT_FULLHOME_MATCH_START */
+
+/*
+ * Desktop:
+ * Keep the same centered position,
+ * but use the compact Full Home column dimensions.
+ *
+ * Main service column: 590px
+ * Gap:                 28px
+ * Right sidebar:       310px
+ *
+ * Total visual width:  928px
+ */
+@media (min-width: 981px) {
+  .container {
+    box-sizing: border-box !important;
+
+    width: 928px !important;
+    max-width: calc(100% - 32px) !important;
+
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .contentLayout {
+    display: grid !important;
+
+    width: 100% !important;
+
+    grid-template-columns:
+      minmax(0, 590px)
+      minmax(270px, 310px) !important;
+
+    column-gap: 28px !important;
+    row-gap: 0 !important;
+
+    align-items: start !important;
+  }
+
+  .mainColumn {
+    box-sizing: border-box !important;
+
+    width: 590px !important;
+    max-width: 590px !important;
+    min-width: 0 !important;
+  }
+
+  .sidebarColumn {
+    box-sizing: border-box !important;
+
+    width: 310px !important;
+    max-width: 310px !important;
+    min-width: 270px !important;
+  }
+}
+
+/*
+ * Match Full Home service-banner proportions.
+ * Images will be added later.
+ */
+.bannerPlaceholder {
+  box-sizing: border-box !important;
+
+  width: 100% !important;
+
+  height: 250px !important;
+  min-height: 250px !important;
+  max-height: 250px !important;
+
+  aspect-ratio: auto !important;
+
+  overflow: hidden !important;
+
+  border: 1px solid #f3ccd2 !important;
+  border-radius: 12px !important;
+
+  background: #fff7f8 !important;
+}
+
+/*
+ * Match Full Home Add button exactly.
+ */
+.addButton {
+  box-sizing: border-box !important;
+
+  width: auto !important;
+  min-width: 86px !important;
+
+  height: 42px !important;
+  min-height: 42px !important;
+
+  padding: 8px 20px !important;
+
+  border: 1px solid #ef1b23 !important;
+  border-radius: 9px !important;
+
+  background: #ffffff !important;
+  color: #ef1b23 !important;
+
+  font-size: 15px !important;
+  font-weight: 650 !important;
+  line-height: 1 !important;
+}
+
+/*
+ * Match the compact Full Home desktop popup.
+ */
+.modal {
+  box-sizing: border-box !important;
+
+  width: 560px !important;
+  max-width: calc(100vw - 32px) !important;
+
+  height: 650px !important;
+  max-height: calc(100dvh - 70px) !important;
+
+  min-height: 0 !important;
+
+  overflow: hidden !important;
+
+  border-radius: 16px !important;
+}
+
+/*
+ * Only popup content scrolls.
+ * The visible scrollbar remains hidden.
+ */
+.modalBody {
+  min-height: 0 !important;
+
+  flex: 1 1 auto !important;
+
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+
+  overscroll-behavior: contain !important;
+
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.modalBody::-webkit-scrollbar {
+  display: none !important;
+
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/*
+ * Phone:
+ * Match the Full Home mobile banner and Add button.
+ */
+@media (max-width: 760px) {
+  .bannerPlaceholder {
+    width: 100% !important;
+
+    height: 190px !important;
+    min-height: 190px !important;
+    max-height: 190px !important;
+
+    aspect-ratio: auto !important;
+  }
+
+  .addButton {
+    width: auto !important;
+    min-width: 72px !important;
+
+    height: 39px !important;
+    min-height: 39px !important;
+
+    padding: 7px 15px !important;
+
+    border-radius: 9px !important;
+
+    font-size: 14px !important;
+  }
+}
+
+/*
+ * Small phone popup:
+ * Fit automatically to the complete device screen.
+ */
+@media (max-width: 620px) {
+  .modalOverlay {
+    box-sizing: border-box !important;
+
+    padding: 0 !important;
+
+    align-items: stretch !important;
+    justify-content: stretch !important;
+  }
+
+  .modal {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+
+    border-radius: 0 !important;
+  }
+}
+
+/* CITY_COOLIES_LIVING_EXACT_FULLHOME_MATCH_END */
+
+/* CITY_COOLIES_LIVING_RIGHT_DIVIDER_HOVER_START */
+
+/*
+ * Match Full Home desktop vertical divider.
+ * The line continues with the complete service column.
+ */
+@media (min-width: 1021px) {
+  .mainColumn {
+    box-sizing: border-box !important;
+
+    border-left: 0 !important;
+
+    border-right:
+      1px solid #f4d9de !important;
+
+    padding-bottom:
+      80px !important;
+  }
+}
+
+/*
+ * Match Full Home Add button hover exactly.
+ */
+.addButton:hover {
+  background:
+    #ef1b23 !important;
+
+  color:
+    #ffffff !important;
+}
+
+/*
+ * Keyboard users receive the same visual state.
+ */
+.addButton:focus-visible {
+  background:
+    #ef1b23 !important;
+
+  color:
+    #ffffff !important;
+
+  outline:
+    2px solid rgba(239, 27, 35, 0.35);
+
+  outline-offset:
+    2px;
+}
+
+/*
+ * No vertical divider when the layout stacks
+ * on tablet or phone.
+ */
+@media (max-width: 1020px) {
+  .mainColumn {
+    border-right:
+      0 !important;
+
+    padding-bottom:
+      0 !important;
+  }
+}
+
+/* CITY_COOLIES_LIVING_RIGHT_DIVIDER_HOVER_END */
+
+/* CITY_COOLIES_LIVING_COMPACT_GAPS_START */
+
+/*
+ * Keep Living & Bedroom service sections compact.
+ *
+ * This reduces only vertical spacing.
+ * No widths, banners, buttons or sidebar are changed.
+ */
+
+/* Fabric sofa -> Leather sofa */
+.serviceList {
+  gap: 18px !important;
+}
+
+/* Space after the final service in each section */
+.serviceGroup {
+  padding-bottom: 12px !important;
+}
+
+/* Leather sofa -> Mattress, Mattress -> Carpet, etc. */
+.serviceGroup + .serviceGroup {
+  padding-top: 16px !important;
+}
+
+/*
+ * Phone version stays compact without making
+ * the service cards feel crowded.
+ */
+@media (max-width: 760px) {
+  .serviceList {
+    gap: 16px !important;
+  }
+
+  .serviceGroup {
+    padding-bottom: 10px !important;
+  }
+
+  .serviceGroup + .serviceGroup {
+    padding-top: 14px !important;
+  }
+}
+
+/* CITY_COOLIES_LIVING_COMPACT_GAPS_END */
+
+/* CITY_COOLIES_LIVING_HEADING_MATCH_START */
+
+/*
+ * Match Living & Bedroom section headings
+ * with the Full Home section-heading scale.
+ */
+.serviceGroup > h2 {
+  margin-bottom: 28px !important;
+
+  font-size: 32px !important;
+  font-weight: 700 !important;
+  line-height: 1.18 !important;
+
+  letter-spacing: -0.025em !important;
+}
+
+@media (max-width: 760px) {
+  .serviceGroup > h2 {
+    margin-bottom: 22px !important;
+
+    font-size: 24px !important;
+    line-height: 1.18 !important;
+  }
+}
+
+/* CITY_COOLIES_LIVING_HEADING_MATCH_END */
+
+/* CITY_COOLIES_LIVING_SELECTOR_IMAGES_START */
+
+/*
+ * Living & Bedroom service selector images.
+ * Direct image.
+ * No card background.
+ * No border.
+ * No shadow.
+ * No zoom.
+ * No crop.
+ */
+.selectorImage {
+  background-color: transparent !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: contain !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+
+  padding: 0 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* Sofa Cleaning */
+.selectorItem:nth-child(1) .selectorImage {
+  background-image: none !important;
+}
+
+/* Mattress Cleaning */
+.selectorItem:nth-child(2) .selectorImage {
+  background-image: none !important;
+}
+
+/* Carpet Cleaning */
+.selectorItem:nth-child(3) .selectorImage {
+  background-image: none !important;
+}
+
+/* Curtain Cleaning */
+.selectorItem:nth-child(4) .selectorImage {
+  background-image: none !important;
+}
+
+/* Dining Table Cleaning */
+.selectorItem:nth-child(5) .selectorImage {
+  background-image: none !important;
+}
+
+@media (max-width: 1020px) {
+  .selectorImage {
+    background-size: contain !important;
+    background-position: center center !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .selectorImage {
+    background-size: contain !important;
+    background-position: center center !important;
+  }
+}
+
+/* CITY_COOLIES_LIVING_SELECTOR_IMAGES_END */
+
+/* CITY_COOLIES_FABRIC_SOFA_MAIN_BANNER_START */
+
+/*
+ * Fabric Sofa Cleaning banner.
+ * Image is shown directly on the page.
+ * No card, no visible background, no border.
+ * Complete image remains visible.
+ */
+.bannerPlaceholder[data-service-id="fabric-sofa-cleaning"] {
+  background-image: none !important;
+
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: contain !important;
+
+  background-color: transparent !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+
+  padding: 0 !important;
+
+  overflow: visible !important;
+}
+
+/* CITY_COOLIES_FABRIC_SOFA_MAIN_BANNER_END */
+
+/* CITY_COOLIES_SOFA_DIVIDER_GAP_FIX_START */
+
+/*
+ * Remove the empty space between the service image
+ * and the right-side vertical divider.
+ */
+@media (min-width: 1021px) {
+  .mainColumn {
+    padding-right: 0 !important;
+  }
+
+  .bannerPlaceholder[data-service-id="fabric-sofa-cleaning"] {
+    display: block !important;
+
+    width: 100% !important;
+    max-width: none !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    aspect-ratio: 1916 / 821 !important;
+
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+
+    padding: 0 !important;
+
+    background-image: none !important;
+
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: contain !important;
+
+    background-color: transparent !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+/*
+ * Phone and tablet:
+ * preserve full image without crop.
+ */
+@media (max-width: 1020px) {
+  .bannerPlaceholder[data-service-id="fabric-sofa-cleaning"] {
+    display: block !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+
+    aspect-ratio: 1916 / 821 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    background-size: contain !important;
+    background-position: center center !important;
+
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+/* CITY_COOLIES_SOFA_DIVIDER_GAP_FIX_END */
+
+
+/* CITY_COOLIES_LIVING_SHARED_POPUP_FINAL */
+.modal {
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: min(480px, calc(100vw - 32px)) !important;
+  min-width: 0 !important;
+  max-width: calc(100vw - 32px) !important;
+  height: min(660px, calc(100dvh - 48px)) !important;
+  min-height: 0 !important;
+  max-height: calc(100dvh - 48px) !important;
+  overflow: hidden !important;
+  border-radius: 16px !important;
+}
+
+.modalHeader {
+  box-sizing: border-box !important;
+  flex: 0 0 auto !important;
+  min-height: 0 !important;
+  padding: 20px 22px 18px !important;
+}
+
+.modalHeader h2 {
+  font-size: 26px !important;
+  line-height: 1.2 !important;
+}
+
+.modalBody {
+  box-sizing: border-box !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 16px 22px 20px !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+}
+
+.pricingGrid {
+  display: grid !important;
+  width: 100% !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+}
+
+.priceCard {
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 90px !important;
+  max-height: none !important;
+  padding: 9px !important;
+}
+
+.priceCard strong {
+  margin-top: 3px !important;
+  color: #171717 !important;
+}
+
+.priceCard button {
+  min-width: 66px !important;
+  min-height: 30px !important;
+  height: 30px !important;
+  margin-top: auto !important;
+  padding: 0 9px !important;
+  font-size: 12px !important;
+}
+
+.priceCard:has(button[aria-pressed="true"]) {
+  border-color: #ef1b23 !important;
+  background: #fff8f9 !important;
+}
+
+.priceCard button[aria-pressed="true"] {
+  background: #ef1b23 !important;
+  color: #ffffff !important;
+}
+
+.selectionFooter {
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 22px;
+  border-top: 1px solid #eeeeee;
+  background: #ffffff;
+}
+
+.selectionSummary {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.selectionCaption {
+  color: #737373;
+  font-size: 12px;
+}
+
+.selectionValue {
+  overflow: hidden;
+  color: #171717;
+  font-size: 14px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.continueButton {
+  flex: 0 0 auto;
+  min-width: 118px;
+  min-height: 42px;
+  padding: 8px 14px;
+  border: 1px solid #ef1b23;
+  border-radius: 10px;
+  background: #ef1b23;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.continueButton:disabled {
+  border-color: #e3e3e3;
+  background: #f2f3f5;
+  color: #999999;
+  cursor: not-allowed;
+}
+
+@media (max-width: 620px) {
+  .modal {
+    width: calc(100vw - 20px) !important;
+    max-width: calc(100vw - 20px) !important;
+    height: calc(100dvh - 20px) !important;
+    max-height: calc(100dvh - 20px) !important;
+    border-radius: 16px !important;
+  }
+
+  .modalHeader {
+    padding: 18px 16px 16px !important;
+  }
+
+  .modalHeader h2 {
+    font-size: 23px !important;
+  }
+
+  .modalBody {
+    padding: 16px 14px !important;
+  }
+
+  .pricingGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .priceCard {
+    min-height: 90px !important;
+    padding: 9px !important;
+  }
+
+  .selectionFooter {
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .continueButton {
+    min-width: 108px;
+    min-height: 40px;
+  }
+}
+/* CITY_COOLIES_LIVING_SHARED_POPUP_FINAL_END */
+/* CITY_COOLIES_LEATHER_SOFA_BANNER_START */
+/* Show the complete Leather sofa image directly in its page banner. */
+.bannerPlaceholder[data-service-id="leather-sofa-cleaning"] {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: 1916 / 821 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: contain !important;
+}
+/* CITY_COOLIES_LEATHER_SOFA_BANNER_END */
+/* CITY_COOLIES_MATTRESS_BANNER_START */
+/* Show the complete mattress-cleaning image directly in its service banner. */
+.bannerPlaceholder[data-service-id="mattress-cleaning"] {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: 1916 / 821 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: contain !important;
+}
+/* CITY_COOLIES_MATTRESS_BANNER_END */
+/* CITY_COOLIES_CARPET_BANNER_START */
+/* Display the full carpet-cleaning image directly in its page banner. */
+.bannerPlaceholder[data-service-id="carpet-cleaning"] {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: 1916 / 821 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: contain !important;
+}
+/* CITY_COOLIES_CARPET_BANNER_END */
+/* CITY_COOLIES_CURTAIN_BANNER_START */
+/* Display the complete curtain-cleaning image directly in its page banner. */
+.bannerPlaceholder[data-service-id="curtain-cleaning"] {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: 1916 / 821 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: contain !important;
+}
+/* CITY_COOLIES_CURTAIN_BANNER_END */
+
+/* CITY_COOLIES_DINING_TABLE_BANNER_START */
+.bannerPlaceholder[data-service-id="dining-table-cleaning"] {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: 1671 / 941 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: contain !important;
+}
+/* CITY_COOLIES_DINING_TABLE_BANNER_END */
+
+
+/* Kitchen-only adjustments. Service images will be added later. */
+.bannerPlaceholder {
+  background-image: none !important;
+  background-color: #fff8f9;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.quantityControl {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 104px;
+  height: 46px;
+  border: 1px solid #ef1b23;
+  border-radius: 10px;
+  color: #171717;
+  background: #fff;
+  font-size: 16px;
+}
+
+.quantityControl button {
+  width: 34px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: #ef1b23;
+  cursor: pointer;
+  font: inherit;
+  font-size: 21px;
+}
+
+.quantityControl button:focus-visible {
+  outline: 2px solid #ef1b23;
+  outline-offset: 2px;
+}
+
+@media (max-width: 760px) {
+  .quantityControl {
+    min-width: 88px;
+    height: 42px;
+  }
+  .quantityControl button {
+    width: 29px;
+    height: 40px;
+  }
+}
+
+/* KITCHEN_SELECTOR_NO_LIVING_IMAGES_START */
+.section .selectorItem .selectorImage {
+  background-image: none !important;
+}
+/* KITCHEN_SELECTOR_NO_LIVING_IMAGES_END */
+
+/* KITCHEN_PAGE_BANNERS_START */
+.bannerPlaceholder[data-service-id] {
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: 1926 / 816 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: contain !important;
+}
+
+.bannerPlaceholder[data-service-id="complete-kitchen-cleaning"] {
+  background-image: none !important;
+}
+
+.bannerPlaceholder[data-service-id="microwave-cleaning"] {
+  background-image: none !important;
+}
+
+.bannerPlaceholder[data-service-id="gas-stove-cleaning"] {
+  background-image: none !important;
+}
+
+.bannerPlaceholder[data-service-id="chimney-cleaning"] {
+  background-image: none !important;
+}
+/* KITCHEN_PAGE_BANNERS_END */
+
+/* KITCHEN_SELECTOR_IMAGES_START */
+.section .serviceSelector .selectorItem .selectorImage {
+  display: block !important;
+  background-color: transparent !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: contain !important;
+}
+
+.section .serviceSelector .selectorItem:nth-child(1) .selectorImage {
+  background-image: none !important;
+}
+
+.section .serviceSelector .selectorItem:nth-child(2) .selectorImage {
+  background-image: none !important;
+}
+
+.section .serviceSelector .selectorItem:nth-child(3) .selectorImage {
+  background-image: none !important;
+}
+
+.section .serviceSelector .selectorItem:nth-child(4) .selectorImage {
+  background-image: none !important;
+}
+/* KITCHEN_SELECTOR_IMAGES_END */
+
+/* KITCHEN_SELECTOR_LARGE_IMAGES_START */
+.section .serviceSelector .selectorItem .selectorImage {
+  background-size: cover !important;
+  background-position: center center !important;
+  overflow: hidden !important;
+}
+/* KITCHEN_SELECTOR_LARGE_IMAGES_END */
+
+/* COMMERCIAL_KITCHEN_IMAGE_START */
+.bannerPlaceholder[data-service-id="commercial-kitchen-cleaning"] {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1926 / 817 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: contain !important;
+}
+
+.section .serviceSelector .selectorItem:nth-child(5) .selectorImage {
+  background-image: none !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: cover !important;
+}
+/* COMMERCIAL_KITCHEN_IMAGE_END */
+
+/* Bathroom images can be added later without cropping on narrow screens. */
+.section .bannerPlaceholder[data-service-id] {
+  background-image: none !important;
+  background-color: #fff4f5 !important;
+  background-size: contain !important;
+  aspect-ratio: 1926 / 816 !important;
+}
+.section .serviceSelector .selectorItem:nth-child(n) .selectorImage {
+  background-image: none !important;
+  background-color: #fff4f5 !important;
+  background-size: contain !important;
+}
+/* Tank banner spaces: images can be added later without mobile cropping. */
+.section .bannerPlaceholder[data-service-id] {
+  background-image: none !important;
+  background-color: #fff4f5 !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  aspect-ratio: 1926 / 816 !important;
+}
+
+.section .serviceSelector .selectorItem:nth-child(n) .selectorImage {
+  background-image: none !important;
+  background-color: #fff4f5 !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+}
+
+/* CITY_COOLIES_TANK_IMAGES_START */
+/* Small images above the service list: fill each square. */
+.section .serviceSelector .selectorItem:nth-child(n) .selectorImage {
+  display: block !important;
+  width: 100px !important;
+  height: 100px !important;
+  min-width: 100px !important;
+  min-height: 100px !important;
+  flex: 0 0 100px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: cover !important;
+}
+
+.section .serviceSelector .selectorItem:nth-child(1) .selectorImage {
+  background-image: url("/deep-cleaning/overhead_water_tank_cleaning.png") !important;
+}
+
+.section .serviceSelector .selectorItem:nth-child(2) .selectorImage {
+  background-image: url("/deep-cleaning/underground_sump_cleaning.png") !important;
+}
+
+.section .serviceSelector .selectorItem:nth-child(3) .selectorImage {
+  background-image: url("/deep-cleaning/overhead_concrete_water_tank_cleaning.png") !important;
+}
+
+/* Full images in the direct-page service sections. */
+.section .bannerPlaceholder[data-service-id] {
+  box-sizing: border-box !important;
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: 1940 / 811 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background-color: transparent !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: contain !important;
+}
+
+.section .bannerPlaceholder[data-service-id="overhead-water-tank-cleaning"] {
+  background-image: url("/deep-cleaning/overhead_water_tank_cleaning.png") !important;
+}
+
+.section .bannerPlaceholder[data-service-id="underground-sump-cleaning"] {
+  background-image: url("/deep-cleaning/underground_sump_cleaning.png") !important;
+}
+
+.section .bannerPlaceholder[data-service-id="overhead-concrete-water-tank-cleaning"] {
+  background-image: url("/deep-cleaning/overhead_concrete_water_tank_cleaning.png") !important;
+}
+
+/* CITY_COOLIES_TANK_IMAGES_END */

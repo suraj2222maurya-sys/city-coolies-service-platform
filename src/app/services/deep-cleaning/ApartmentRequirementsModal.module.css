@@ -1,0 +1,2773 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 42px 20px 24px;
+
+  background: rgba(15, 15, 15, 0.78);
+  backdrop-filter: blur(1px);
+}
+
+.modalShell {
+  position: relative;
+
+  width: min(560px, calc(100vw - 32px));
+  height: min(720px, calc(100dvh - 82px));
+
+  overflow: hidden;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 28px 80px rgba(0, 0, 0, 0.3);
+}
+
+.closeButton {
+  position: absolute;
+  top: -20px;
+  right: 15px;
+  z-index: 10;
+
+  width: 40px;
+  height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid #eeeeee;
+  border-radius: 50%;
+
+  background: #ffffff;
+  color: #181818;
+
+  font-size: 27px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 18px rgba(0, 0, 0, 0.14);
+}
+
+.scrollArea {
+  width: 100%;
+  height: 100%;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  overscroll-behavior: contain;
+
+  scrollbar-width: none;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrollArea::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.modalHeader {
+  padding: 36px 28px 29px;
+
+  border-bottom: 1px solid #ececec;
+}
+
+.serviceTitle {
+  max-width: 470px;
+
+  margin: 0;
+
+  color: #161616;
+
+  font-size: 27px;
+  font-weight: 600;
+  line-height: 1.25;
+
+  letter-spacing: -0.01em;
+}
+
+.serviceMeta {
+  display: flex;
+
+  margin: 11px 0 0;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #555555;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.section {
+  padding: 27px 28px;
+
+  border-bottom: 6px solid #fff5f6;
+}
+
+.mainHeading,
+.sectionHeading {
+  margin: 0;
+
+  color: #171717;
+
+  letter-spacing: -0.02em;
+}
+
+.mainHeading {
+  margin-bottom: 27px;
+
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.sectionHeading {
+  margin-bottom: 22px;
+
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.requirementBlock {
+  padding-bottom: 18px;
+}
+
+.blockHeading {
+  margin: 0 0 16px;
+
+  color: #222222;
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.sizeSliderShell {
+  position: relative;
+
+  width: 100%;
+}
+
+.sizeScroller {
+  display: grid;
+
+  grid-auto-flow: column;
+  grid-auto-columns: 128px;
+
+  gap: 9px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  padding:
+    1px
+    30px
+    10px;
+
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
+
+  scrollbar-width: none;
+}
+
+.sizeScroller::-webkit-scrollbar {
+  display: none;
+}
+
+.sizeOption {
+  scroll-snap-align: start;
+
+  display: flex;
+
+  min-height: 76px;
+
+  padding: 13px 12px;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  border: 1px solid #dddddd;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #171717;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.sizeOption:hover {
+  border-color: #ef8b90;
+}
+
+.sizeOption:active {
+  transform: scale(0.985);
+}
+
+.sizeOption span {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sizeOption strong {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.sizeOptionSelected {
+  border-color: #ef1b23;
+
+  background: #fff5f6;
+
+  box-shadow:
+    0 0 0 1px rgba(239, 27, 35, 0.08);
+}
+
+.sliderArrow {
+  position: absolute;
+
+  top: 50%;
+  z-index: 4;
+
+  width: 34px;
+  height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateY(-62%);
+
+  padding: 0;
+
+  border: 1px solid #dddddd;
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  color: #222222;
+
+  font-size: 18px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.sliderArrow:hover {
+  border-color: #ef1b23;
+  color: #ef1b23;
+}
+
+.sliderArrowLeft {
+  left: -3px;
+}
+
+.sliderArrowRight {
+  right: -3px;
+}
+
+.coverageLink {
+  display: inline-block;
+
+  margin-top: 10px;
+
+  color: #d71920;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  text-decoration: underline;
+
+  text-underline-offset: 3px;
+}
+
+.accordion {
+  margin-top: 5px;
+
+  border-top: 1px solid #ececec;
+}
+
+.accordionItem {
+  border-bottom: 1px solid #ececec;
+}
+
+.accordionButton {
+  width: 100%;
+  min-height: 70px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 18px;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #222222;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.chevron {
+  color: #747474;
+
+  font-size: 18px;
+
+  transition: transform 160ms ease;
+}
+
+.chevronExpanded {
+  transform: rotate(180deg);
+}
+
+.accordionContent {
+  padding: 0 0 18px;
+
+  color: #606060;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.accordionContent p {
+  margin: 0;
+}
+
+
+
+
+
+
+
+.coverageGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.coverageCard {
+  overflow: hidden;
+
+  border: 1px solid #f1e3e5;
+  border-radius: 12px;
+
+  background: #fffafa;
+}
+
+.imagePlaceholder {
+  position: relative;
+
+  height: 112px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff2f4,
+      #f7e6e9
+    );
+}
+
+.imagePlaceholder span {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 34px;
+  height: 34px;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(45deg);
+
+  border: 3px solid rgba(239, 27, 35, 0.25);
+}
+
+.coverageCard p {
+  min-height: 58px;
+
+  margin: 0;
+
+  padding: 11px 10px;
+
+  color: #3d3d3d;
+
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.excludedList {
+  display: flex;
+
+  margin: 0;
+  padding: 0;
+
+  flex-direction: column;
+
+  gap: 18px;
+
+  list-style: none;
+}
+
+.excludedList li {
+  display: flex;
+
+  gap: 14px;
+
+  color: #555555;
+
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.crossIcon {
+  color: #ef1b23;
+
+  font-size: 23px;
+  line-height: 1;
+}
+
+.beforeAfterGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.beforeAfterPlaceholder {
+  position: relative;
+
+  aspect-ratio: 1 / 1;
+
+  overflow: hidden;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #eadedd 0 50%,
+      #fff6f7 50% 100%
+    );
+}
+
+.beforeAfterLabels {
+  position: absolute;
+
+  top: 10px;
+  left: 50%;
+
+  display: flex;
+
+  transform: translateX(-50%);
+
+  overflow: hidden;
+
+  border: 1px solid #ffffff;
+  border-radius: 6px;
+
+  color: #ffffff;
+
+  font-size: 11px;
+}
+
+.beforeAfterLabels span {
+  padding: 4px 7px;
+
+  background: rgba(25, 25, 25, 0.35);
+}
+
+.splitLine {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+  left: 50%;
+
+  width: 1px;
+
+  background: #ffffff;
+}
+
+.equipmentGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px 13px;
+}
+
+.equipmentItem {
+  text-align: center;
+}
+
+.equipmentPlaceholder {
+  height: 100px;
+
+  border-radius: 12px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(239, 27, 35, 0.15) 0 24%,
+      transparent 25%
+    ),
+    linear-gradient(
+      145deg,
+      #fff8f9,
+      #f8eeee
+    );
+}
+
+.equipmentItem p {
+  margin: 9px 0 0;
+
+  color: #505050;
+
+  font-size: 12.5px;
+}
+
+.needsGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+.needCard {
+  min-height: 116px;
+
+  padding: 15px;
+
+  border-radius: 12px;
+
+  background: #fff6f7;
+}
+
+.needIcon {
+  width: 31px;
+  height: 31px;
+
+  display: inline-flex;
+
+  margin-bottom: 14px;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #ef1b23;
+  border-radius: 8px;
+
+  color: #ef1b23;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.needCard strong {
+  display: block;
+
+  color: #262626;
+
+  font-size: 13px;
+}
+
+.cleanerSection {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    150px;
+
+  gap: 16px;
+
+  align-items: end;
+}
+
+.cleanerList {
+  display: flex;
+
+  margin: 0;
+  padding: 0;
+
+  flex-direction: column;
+
+  gap: 12px;
+
+  color: #555555;
+
+  font-size: 14px;
+
+  list-style: none;
+}
+
+.cleanerList li::before {
+  margin-right: 8px;
+
+  color: #ef1b23;
+
+  content: "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“";
+
+  font-weight: 800;
+}
+
+.cleanerPlaceholder {
+  height: 180px;
+
+  border-radius: 70px 70px 14px 14px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fff2f4,
+      #f5dfe2
+    );
+}
+
+.protectionBox {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+}
+
+.protectionTitle {
+  margin: 0 0 8px;
+
+  color: #161616;
+
+  font-size: 22px;
+}
+
+.protectionBox p {
+  margin: 0;
+
+  color: #555555;
+
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.shield {
+  width: 68px;
+  height: 76px;
+
+  display: inline-flex;
+
+  flex: 0 0 68px;
+
+  align-items: center;
+  justify-content: center;
+
+  clip-path:
+    polygon(
+      50% 0,
+      92% 17%,
+      92% 56%,
+      79% 77%,
+      50% 100%,
+      21% 77%,
+      8% 56%,
+      8% 17%
+    );
+
+  background: #ef1b23;
+
+  color: #ffffff;
+
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.ratingTitle {
+  margin: 0;
+
+  color: #161616;
+
+  font-size: 34px;
+}
+
+.ratingCaption {
+  margin: 3px 0 22px;
+
+  color: #666666;
+
+  font-size: 13px;
+}
+
+.ratingBars {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 17px;
+}
+
+.ratingBarRow {
+  display: grid;
+
+  grid-template-columns:
+    38px
+    minmax(0, 1fr);
+
+  gap: 14px;
+
+  align-items: center;
+
+  font-size: 12px;
+}
+
+.ratingTrack {
+  height: 4px;
+
+  overflow: hidden;
+
+  background: #ececec;
+}
+
+.ratingTrack span {
+  display: block;
+
+  height: 100%;
+
+  background: #ef1b23;
+}
+
+.modalFooter {
+  position: sticky;
+
+  bottom: 0;
+  z-index: 8;
+
+  min-height: 78px;
+
+  display: flex;
+
+  padding: 12px 28px;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  border-top: 1px solid #ececec;
+
+  background: rgba(255, 255, 255, 0.98);
+
+  backdrop-filter: blur(8px);
+}
+
+.footerSelection {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.footerLabel {
+  color: #777777;
+
+  font-size: 11px;
+}
+
+.footerSelection strong {
+  color: #202020;
+
+  font-size: 13px;
+}
+
+.footerActions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.cancelButton,
+.continueButton {
+  min-height: 44px;
+
+  padding: 9px 18px;
+
+  border-radius: 9px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.cancelButton {
+  border: 1px solid #e3e3e3;
+
+  background: #ffffff;
+
+  color: #555555;
+}
+
+.cancelButton:hover {
+  border-color: #ef1b23;
+  color: #ef1b23;
+}
+
+.continueButton {
+  min-width: 118px;
+
+  border: 1px solid #ef1b23;
+
+  background: #ef1b23;
+
+  color: #ffffff;
+}
+
+.continueButton:hover {
+  background: #d9161d;
+}
+
+@media (max-width: 620px) {
+  .overlay {
+    padding: 0;
+
+    align-items: stretch;
+  }
+
+  .modalShell {
+    width: 100%;
+    height: 100dvh;
+
+    border-radius: 0;
+  }
+
+  .closeButton {
+    top: 14px;
+    right: 14px;
+  }
+
+  .modalHeader {
+    padding:
+      65px
+      18px
+      22px;
+  }
+
+  .serviceTitle {
+    padding-right: 44px;
+
+    font-size: 23px;
+  }
+
+  .section {
+    padding:
+      23px
+      18px;
+  }
+
+  .mainHeading {
+    font-size: 23px;
+  }
+
+  .sectionHeading {
+    font-size: 21px;
+  }
+
+  .sizeScroller {
+    grid-auto-columns: 122px;
+
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .sliderArrow {
+    width: 31px;
+    height: 31px;
+
+    font-size: 16px;
+  }
+
+  .coverageGrid,
+  .equipmentGrid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .needsGrid {
+    gap: 7px;
+  }
+
+  .needCard {
+    padding: 10px;
+  }
+
+  .cleanerSection {
+    grid-template-columns:
+      minmax(0, 1fr)
+      110px;
+  }
+
+  .modalFooter {
+    padding:
+      10px
+      18px;
+  }
+
+  .cancelButton,
+  .continueButton {
+    padding:
+      8px
+      13px;
+  }
+}
+
+
+/* CITY_COOLIES_MODAL_CLOSE_FINAL_START */
+
+/*
+  The close button sits slightly outside the modal.
+  Modal shell must not clip it.
+*/
+.modalShell {
+  overflow: visible;
+}
+
+/*
+  Scroll clipping stays inside the content container,
+  so the modal content remains clean and rounded.
+*/
+.scrollArea {
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  border-radius: 16px;
+  background: #ffffff;
+
+  scrollbar-width: none;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrollArea::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/*
+  Main close control.
+*/
+.closeButton {
+  position: absolute;
+
+  top: -20px;
+  right: 15px;
+
+  z-index: 50;
+
+  display: inline-flex;
+
+  width: 40px;
+  height: 40px;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid #e5e5e5;
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  color: #171717;
+
+  font-size: 27px;
+  font-weight: 400;
+  line-height: 1;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 18px rgba(0, 0, 0, 0.16);
+}
+
+.closeButton:hover {
+  border-color: #ef1b23;
+
+  background: #fff7f8;
+
+  color: #ef1b23;
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid #ef1b23;
+  outline-offset: 3px;
+}
+
+@media (max-width: 620px) {
+  .scrollArea {
+    border-radius: 0;
+  }
+
+  .closeButton {
+    top: 14px;
+    right: 14px;
+
+    width: 38px;
+    height: 38px;
+
+    font-size: 25px;
+  }
+}
+
+/* CITY_COOLIES_MODAL_CLOSE_FINAL_END */
+
+
+/* CITY_COOLIES_MODAL_SIZE_FINAL_START */
+
+/*
+  Desktop modal dimensions aligned to the compact
+  service-selection popup reference.
+*/
+.modalShell {
+  width: 560px !important;
+  max-width: calc(100vw - 32px) !important;
+
+  height: 650px !important;
+  max-height: calc(100dvh - 70px) !important;
+
+  border-radius: 16px;
+}
+
+/*
+  Keep internal spacing proportional after reducing
+  the complete popup width.
+*/
+.modalHeader {
+  padding: 30px 24px 26px;
+}
+
+.section {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.mainHeading {
+  margin-bottom: 24px;
+}
+
+.requirementBlock {
+  padding-bottom: 16px;
+}
+
+.sizeScroller {
+  grid-auto-columns: 122px;
+
+  gap: 8px;
+
+  padding-left: 27px;
+  padding-right: 27px;
+}
+
+.sizeOption {
+  min-height: 74px;
+
+  padding: 12px 11px;
+}
+
+.modalFooter {
+  min-height: 70px;
+
+  padding: 10px 24px;
+}
+
+/*
+  Desktop close button stays outside the top-right corner.
+*/
+.closeButton {
+  top: -18px;
+  right: 14px;
+
+  width: 38px;
+  height: 38px;
+
+  font-size: 25px;
+}
+
+/*
+  Mobile remains full-screen responsive.
+*/
+@media (max-width: 620px) {
+  .modalShell {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+
+    border-radius: 0;
+  }
+
+  .modalHeader {
+    padding:
+      64px
+      18px
+      22px;
+  }
+
+  .section {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .modalFooter {
+    min-height: 70px;
+
+    padding:
+      10px
+      18px;
+  }
+
+  .closeButton {
+    top: 14px;
+    right: 14px;
+  }
+}
+
+/* CITY_COOLIES_MODAL_SIZE_FINAL_END */
+
+
+/* CITY_COOLIES_EXACT_MODAL_DIMENSIONS_START */
+
+/*
+  Desktop popup only.
+  Sized from the supplied reference screenshot.
+*/
+@media (min-width: 621px) {
+  .modalShell {
+    width: 472px !important;
+    max-width: 472px !important;
+
+    height: 635px !important;
+    max-height: 635px !important;
+  }
+}
+
+/*
+  Phone layout remains unchanged.
+*/
+@media (max-width: 620px) {
+  .modalShell {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+  }
+}
+
+/* CITY_COOLIES_EXACT_MODAL_DIMENSIONS_END */
+
+
+/* CITY_COOLIES_MODAL_POSITION_BALANCED_START */
+
+@media (min-width: 621px) {
+  .overlay {
+    align-items: center !important;
+
+    padding:
+      24px
+      20px !important;
+  }
+
+  .modalShell {
+    position: relative;
+
+    top: 34px;
+
+    margin: 0;
+
+    max-height: calc(100dvh - 92px) !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .overlay {
+    align-items: stretch !important;
+    padding: 0 !important;
+  }
+
+  .modalShell {
+    top: 0;
+  }
+}
+
+/* CITY_COOLIES_MODAL_POSITION_BALANCED_END */
+
+
+/* CITY_COOLIES_MANUAL_SELECTION_START */
+
+.continueButton:disabled {
+  border-color: #e5e5e5;
+  background: #eeeeee;
+  color: #9b9b9b;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.continueButton:disabled:hover {
+  border-color: #e5e5e5;
+  background: #eeeeee;
+  color: #9b9b9b;
+}
+
+/* CITY_COOLIES_MANUAL_SELECTION_END */
+
+
+/* CITY_COOLIES_SELECTOR_REFERENCE_START */
+
+@media (min-width: 621px) {
+
+  /*
+    Only the first requirements section is adjusted.
+    Other modal sections remain untouched.
+  */
+  .modalHeader + .section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .mainHeading {
+    margin-bottom: 30px;
+  }
+
+  .blockHeading {
+    margin-bottom: 17px;
+
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  /*
+    Cards start directly from the content edge,
+    matching the supplied reference layout.
+  */
+  .sizeScroller {
+    grid-auto-columns: 154px !important;
+
+    gap: 10px !important;
+
+    padding:
+      1px
+      0
+      10px !important;
+
+    scroll-padding-inline: 0;
+  }
+
+  .sizeOption {
+    min-height: 88px;
+
+    padding:
+      14px
+      14px;
+
+    border-radius: 9px;
+  }
+
+  .sizeOption span {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .sizeOption strong {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  /*
+    Arrows float on the outside edge instead of
+    consuming card width.
+  */
+  .sliderArrow {
+    top: 50%;
+
+    width: 36px;
+    height: 36px;
+
+    transform: translateY(-58%);
+
+    border-color: #dedede;
+
+    background: #ffffff;
+
+    color: #202020;
+
+    font-size: 19px;
+
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .sliderArrowLeft {
+    left: -17px !important;
+  }
+
+  .sliderArrowRight {
+    right: -17px !important;
+  }
+
+  .coverageLink {
+    margin-top: 12px;
+
+    font-size: 13px;
+    font-weight: 600;
+  }
+}
+
+/* CITY_COOLIES_SELECTOR_REFERENCE_END */
+
+
+/* CITY_COOLIES_CUPBOARD_ACCORDION_START */
+
+/*
+  Draw a real chevron with CSS.
+  The existing text glyph is hidden.
+*/
+.chevron {
+  display: inline-block;
+
+  width: 8px;
+  height: 8px;
+
+  flex: 0 0 8px;
+
+  margin-right: 3px;
+
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+
+  color: #5e5e5e;
+
+  font-size: 0;
+  line-height: 0;
+
+  transform: rotate(45deg);
+
+  transition:
+    transform 160ms ease,
+    color 160ms ease;
+}
+
+.chevronExpanded {
+  transform: rotate(225deg);
+}
+
+/*
+  Before home size selection this specific accordion
+  behaves like the reference: grey and disabled.
+*/
+.accordionButton:disabled {
+  color: #b6b6b6;
+
+  cursor: not-allowed;
+}
+
+.accordionButton:disabled .chevron {
+  color: #d7d7d7;
+}
+
+/*
+  Cupboard cleaning options.
+*/
+.cupboardOptions {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 10px;
+
+  padding:
+    2px
+    0
+    18px;
+}
+
+.cupboardOption {
+  display: flex;
+
+  min-height: 78px;
+
+  padding: 13px 14px;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  border: 1px solid #dedede;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #202020;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.cupboardOption:hover {
+  border-color: #ef8d92;
+}
+
+.cupboardOption span {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.cupboardOption strong {
+  color: #171717;
+
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.cupboardOptionSelected {
+  border-color: #ef1b23;
+
+  background: #fff5f6;
+
+  box-shadow:
+    0 0 0 1px rgba(239, 27, 35, 0.08);
+}
+
+@media (max-width: 620px) {
+  .cupboardOptions {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+  }
+
+  .cupboardOption {
+    min-height: 74px;
+
+    padding: 11px;
+  }
+
+  .cupboardOption span {
+    font-size: 12px;
+  }
+}
+
+/* CITY_COOLIES_CUPBOARD_ACCORDION_END */
+
+
+/* CITY_COOLIES_CUPBOARD_SAFE_START */
+
+/*
+  The row always remains visible.
+*/
+.accordionButton {
+  opacity: 1;
+  visibility: visible;
+}
+
+/*
+  Before a BHK is selected.
+*/
+.accordionButton:disabled {
+  opacity: 1;
+  color: #b5b5b5;
+  background: transparent;
+  cursor: not-allowed;
+}
+
+/*
+  After a BHK is selected.
+*/
+.accordionButton:not(:disabled) {
+  opacity: 1;
+  color: #202020;
+  cursor: pointer;
+}
+
+/*
+  Proper CSS chevron.
+  Existing v/ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¾ text is visually suppressed.
+*/
+.chevron {
+  display: inline-block;
+
+  width: 8px;
+  height: 8px;
+
+  flex: 0 0 8px;
+
+  margin-right: 4px;
+
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+
+  color: #555555;
+
+  font-size: 0 !important;
+  line-height: 0;
+
+  transform: rotate(45deg);
+
+  transition:
+    transform 160ms ease,
+    color 160ms ease;
+}
+
+.accordionButton:disabled .chevron {
+  color: #d5d5d5;
+}
+
+.accordionButton:not(:disabled) .chevron {
+  color: #555555;
+}
+
+.accordionButton:not(:disabled):hover .chevron {
+  color: #ef1b23;
+}
+
+.chevronExpanded {
+  transform: rotate(225deg);
+}
+
+/* CITY_COOLIES_CUPBOARD_SAFE_END */
+
+/* CITY_COOLIES_FURNISHED_POPUP_FEATURES_CSS_START */
+
+.furnishedIntroFeatures {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  margin: 0 0 26px;
+  padding: 0;
+
+  list-style: none;
+}
+
+.furnishedIntroFeatures li {
+  position: relative;
+
+  margin: 0;
+  padding-left: 24px;
+
+  color: #252525;
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+
+  letter-spacing: -0.005em;
+}
+
+.furnishedIntroFeatures li::before {
+  position: absolute;
+
+  top: 1px;
+  left: 0;
+
+  display: inline-flex;
+
+  width: 16px;
+  height: 16px;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #ef1b23;
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+
+  content: "ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¦ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¦ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“";
+}
+
+@media (max-width: 620px) {
+  .furnishedIntroFeatures {
+    gap: 7px;
+
+    margin-bottom: 22px;
+  }
+
+  .furnishedIntroFeatures li {
+    padding-left: 22px;
+
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.45;
+  }
+
+  .furnishedIntroFeatures li::before {
+    width: 15px;
+    height: 15px;
+
+    font-size: 14px;
+  }
+}
+
+/* CITY_COOLIES_FURNISHED_POPUP_FEATURES_CSS_END */
+
+/* CITY_COOLIES_EXTRA_AREA_OPTIONS_START */
+
+.extraAreaOptions {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 9px;
+}
+
+.extraAreaOption {
+  display: flex;
+
+  min-height: 54px;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  padding: 11px 12px;
+
+  border: 1px solid #dedede;
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  color: #242424;
+
+  font: inherit;
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.extraAreaOption span {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.extraAreaOption strong {
+  flex: 0 0 auto;
+
+  color: #d71920;
+
+  font-size: 12.5px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.extraAreaOption:hover {
+  border-color: #ef8b90;
+}
+
+.extraAreaOptionSelected {
+  border-color: #ef1b23;
+
+  background: #fff6f7;
+
+  box-shadow:
+    0 0 0 1px rgba(239, 27, 35, 0.08);
+}
+
+.extraAreaHint {
+  margin: 10px 0 0 !important;
+
+  color: #777777 !important;
+
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  line-height: 1.4 !important;
+}
+
+@media (max-width: 620px) {
+  .extraAreaOptions {
+    grid-template-columns: 1fr;
+
+    gap: 8px;
+  }
+
+  .extraAreaOption {
+    min-height: 50px;
+
+    padding: 10px 11px;
+  }
+
+  .extraAreaOption span {
+    font-size: 12.5px;
+  }
+
+  .extraAreaOption strong {
+    font-size: 12px;
+  }
+}
+
+/* CITY_COOLIES_EXTRA_AREA_OPTIONS_END */
+
+
+
+
+/* CC_COVERAGE_REAL_IMAGES_V1 */
+
+.coverageImageItem {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.coverageImageFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #fff7f8;
+}
+
+.coverageRealImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.coverageImagePending {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      145deg,
+      #fff9fa 0%,
+      #fdecef 100%
+    );
+}
+
+.coverageImageTitle {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  padding: 10px 10px 24px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.98) 0%,
+      rgba(255, 255, 255, 0.90) 58%,
+      rgba(255, 255, 255, 0) 100%
+    );
+
+  color: #181818;
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .coverageImageFrame {
+    border-radius: 12px;
+  }
+
+  .coverageImageTitle {
+    padding: 8px 8px 20px;
+    font-size: 11.5px;
+  }
+}
+
+/* CC_COVERAGE_CLEAR_IMAGE_FIX_V1 */
+
+.coverageImageTitle {
+  background: transparent !important;
+  color: #ffffff !important;
+
+  padding:
+    10px 10px 20px !important;
+
+  font-size: 13px !important;
+  font-weight: 750 !important;
+  line-height: 1.22 !important;
+
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.95),
+    0 2px 6px rgba(0, 0, 0, 0.75),
+    0 0 10px rgba(0, 0, 0, 0.45) !important;
+}
+
+.coverageRealImage {
+  opacity: 1 !important;
+  filter: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+@media (max-width: 640px) {
+  .coverageImageTitle {
+    padding:
+      8px 8px 16px !important;
+
+    font-size: 11.5px !important;
+  }
+}
+
+
+/* CC_COVERAGE_IMAGE_ZOOM_FIX_START */
+
+.coverageImageCard,
+.coverageCoverageCard,
+.coverageGridItem {
+  overflow: hidden !important;
+}
+
+.coverageImageMedia,
+.coverageImageFrame,
+.coverageImageThumb {
+  position: relative !important;
+  overflow: hidden !important;
+  background: #fff6f7 !important;
+  border-radius: 14px !important;
+}
+
+.coverageRealImage,
+.coverageImage,
+.coverageImageMedia img,
+.coverageImageFrame img,
+.coverageImageThumb img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  scale: 1 !important;
+  padding: 10px !important;
+  background: transparent !important;
+}
+
+.coverageImageTitle {
+  z-index: 2 !important;
+}
+
+/* CC_COVERAGE_IMAGE_ZOOM_FIX_END */
+
+
+/* CC_COVERAGE_IMAGE_ZOOM_FIX_START */
+
+.coverageImageCard,
+.coverageCoverageCard,
+.coverageGridItem {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  gap: 10px !important;
+  padding: 12px !important;
+  border-radius: 18px !important;
+  background: #fff6f7 !important;
+  border: 1px solid #f3d7dc !important;
+  overflow: hidden !important;
+  min-height: 220px !important;
+}
+
+.coverageImageTitle {
+  position: static !important;
+  order: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #151515 !important;
+  font-size: 18px !important;
+  line-height: 1.2 !important;
+  font-weight: 700 !important;
+  text-shadow: none !important;
+  background: transparent !important;
+  z-index: auto !important;
+}
+
+.coverageImageMedia,
+.coverageImageFrame,
+.coverageImageThumb {
+  order: 2 !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 150px !important;
+  height: 150px !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+  padding: 0 !important;
+}
+
+.coverageRealImage,
+.coverageImage,
+.coverageImageMedia img,
+.coverageImageFrame img,
+.coverageImageThumb img {
+  width: 100% !important;
+  height: 150px !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  scale: 1 !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  display: block !important;
+  background: transparent !important;
+}
+
+@media (min-width: 768px) {
+  .coverageImageMedia,
+  .coverageImageFrame,
+  .coverageImageThumb,
+  .coverageRealImage,
+  .coverageImage,
+  .coverageImageMedia img,
+  .coverageImageFrame img,
+  .coverageImageThumb img {
+    height: 170px !important;
+    min-height: 170px !important;
+  }
+}
+
+/* CC_COVERAGE_IMAGE_ZOOM_FIX_END */
+
+
+/* CC_COVERAGE_FINAL_IMAGE_SIZE_START */
+
+.coverageImageItem {
+  min-width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.coverageImageFrame {
+  position: relative !important;
+
+  width: 100% !important;
+  height: 205px !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  overflow: hidden !important;
+
+  border: 0 !important;
+  border-radius: 12px !important;
+
+  background: #fff6f7 !important;
+}
+
+.coverageRealImage,
+.coverageImageFrame img {
+  position: absolute !important;
+
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  object-fit: cover !important;
+  object-position: center !important;
+
+  transform: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+.coverageImageTitle {
+  position: absolute !important;
+
+  z-index: 5 !important;
+
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+
+  display: block !important;
+
+  margin: 0 !important;
+  padding: 9px 9px 20px !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.55) 0%,
+      rgba(0, 0, 0, 0.18) 62%,
+      rgba(0, 0, 0, 0) 100%
+    ) !important;
+
+  color: #ffffff !important;
+
+  font-size: 13px !important;
+  font-weight: 750 !important;
+  line-height: 1.18 !important;
+
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.7) !important;
+
+  pointer-events: none !important;
+}
+
+.coverageImagePending {
+  position: absolute !important;
+  inset: 0 !important;
+  background: #fff6f7 !important;
+}
+
+@media (max-width: 640px) {
+  .coverageImageFrame {
+    height: 185px !important;
+  }
+
+  .coverageImageTitle {
+    padding: 8px 8px 18px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* CC_COVERAGE_FINAL_IMAGE_SIZE_END */
+
+
+/* CC_BHK_GRID_LAYOUT_START */
+
+/*
+  Home-size layout:
+  Row 1: 1 BHK, 2 BHK, 3 BHK
+  Row 2: 4 BHK, 5 BHK
+
+  Existing selection functionality remains unchanged.
+*/
+
+.sizeSliderShell {
+  width: 100% !important;
+}
+
+.sizeScroller {
+  display: grid !important;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr)) !important;
+
+  grid-auto-flow: row !important;
+  grid-auto-columns: unset !important;
+
+  gap: 10px !important;
+
+  width: 100% !important;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  overflow: visible !important;
+
+  scroll-snap-type: none !important;
+}
+
+.sizeOption {
+  width: 100% !important;
+  min-width: 0 !important;
+  min-height: 92px !important;
+
+  padding: 14px 13px !important;
+
+  scroll-snap-align: unset !important;
+}
+
+/*
+  Horizontal slider arrows are no longer needed
+  because all BHK options are visible in the grid.
+*/
+.sliderArrow {
+  display: none !important;
+}
+
+/*
+  Phone layout:
+  Keep cards readable without horizontal scrolling.
+*/
+@media (max-width: 520px) {
+  .sizeScroller {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+
+    gap: 8px !important;
+  }
+
+  .sizeOption {
+    min-height: 84px !important;
+
+    padding:
+      12px
+      11px !important;
+  }
+}
+
+/* CC_BHK_GRID_LAYOUT_END */
+
+
+
+
+/* CITY_COOLIES_SERVICE_HIGHLIGHTS_START */
+
+.serviceHighlights {
+  display: grid;
+  gap: 10px;
+
+  margin: 22px 20px 4px;
+  padding: 0;
+}
+
+.serviceHighlights p {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  margin: 0;
+  padding: 0;
+
+  color: #171717;
+
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.serviceHighlights p > span {
+  flex: 0 0 auto;
+
+  margin-top: 1px;
+
+  color: #ef1b23;
+
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+@media (max-width: 620px) {
+  .serviceHighlights {
+    gap: 8px;
+
+    margin:
+      18px
+      18px
+      2px;
+  }
+
+  .serviceHighlights p {
+    gap: 8px;
+
+    font-size: 13.5px;
+    line-height: 1.35;
+  }
+
+  .serviceHighlights p > span {
+    font-size: 18px;
+  }
+}
+
+/* CITY_COOLIES_SERVICE_HIGHLIGHTS_END */
+
+
+/* CITY_COOLIES_COVERAGE_V4_START */
+
+/*
+  CITY COOLIES - FINAL COVERAGE IMAGE SYSTEM
+
+  Frontend only.
+
+  Rules:
+  - source image stays square
+  - no crop
+  - no zoom
+  - no portrait stretching
+  - no rounded card
+  - no black/grey gradient
+  - direct page appearance
+  - service name remains top-left
+*/
+
+/* ===== GRID ===== */
+
+.coverageGrid {
+  display: grid !important;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr)) !important;
+
+  grid-auto-rows: auto !important;
+
+  gap: 14px !important;
+
+  align-items: start !important;
+}
+
+/* ===== ITEM ===== */
+
+.coverageGrid > .coverageCard {
+  position: relative !important;
+
+  display: block !important;
+
+  width: 100% !important;
+
+  height: auto !important;
+  min-height: 0 !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  background: transparent !important;
+  background-image: none !important;
+
+  box-shadow: none !important;
+
+  transform: none !important;
+}
+
+.coverageGrid > .coverageCard::before,
+.coverageGrid > .coverageCard::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* ===== IMAGE AREA ===== */
+
+.coverageGrid
+> .coverageCard
+> .imagePlaceholder {
+  position: relative !important;
+
+  display: block !important;
+
+  box-sizing: border-box !important;
+
+  width: 100% !important;
+
+  height: auto !important;
+  min-height: 0 !important;
+
+  aspect-ratio: 1 / 1 !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  overflow: hidden !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  background:
+    transparent !important;
+
+  box-shadow: none !important;
+
+  filter: none !important;
+  transform: none !important;
+}
+
+.coverageGrid
+> .coverageCard
+> .imagePlaceholder::before,
+.coverageGrid
+> .coverageCard
+> .imagePlaceholder::after {
+  display: none !important;
+  content: none !important;
+}
+
+.coverageGrid
+> .coverageCard
+> .imagePlaceholder
+> span {
+  display: none !important;
+}
+
+/* ===== MACHINE FLOOR SCRUBBING ===== */
+
+.coverageGrid
+> .coverageCard:first-child
+> .imagePlaceholder {
+  aspect-ratio: 1 / 1 !important;
+
+  background-image:
+    url("/deep-cleaning/modern_lobby.png") !important;
+
+  background-repeat:
+    no-repeat !important;
+
+  background-position:
+    center center !important;
+
+  /*
+    This keeps the COMPLETE 1254 x 1254
+    original image visible.
+  */
+  background-size:
+    contain !important;
+
+  background-color:
+    #fff7f8 !important;
+
+  border:
+    0 !important;
+
+  border-radius:
+    0 !important;
+
+  box-shadow:
+    none !important;
+}
+
+/* ===== FUTURE SERVICE IMAGES ===== */
+
+.coverageGrid
+> .coverageCard
+> .imagePlaceholder
+> img,
+.coverageGrid
+> .coverageCard
+> img {
+  display: block !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  max-width: 100% !important;
+  max-height: 100% !important;
+
+  margin: 0 auto !important;
+  padding: 0 !important;
+
+  object-fit:
+    contain !important;
+
+  object-position:
+    center center !important;
+
+  border:
+    0 !important;
+
+  border-radius:
+    0 !important;
+
+  background:
+    transparent !important;
+
+  box-shadow:
+    none !important;
+
+  filter:
+    none !important;
+
+  transform:
+    none !important;
+}
+
+/* ===== ITEMS WITHOUT IMAGE YET ===== */
+
+.coverageGrid
+> .coverageCard:not(:first-child)
+> .imagePlaceholder {
+  background:
+    #fff7f8 !important;
+
+  border:
+    0 !important;
+
+  border-radius:
+    0 !important;
+
+  box-shadow:
+    none !important;
+}
+
+/* ===== SERVICE NAME - KEEP TOP LEFT ===== */
+
+.coverageGrid
+> .coverageCard
+> p {
+  position: absolute !important;
+
+  top: 9px !important;
+  left: 9px !important;
+  right: 8px !important;
+  bottom: auto !important;
+
+  z-index: 10 !important;
+
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  border: 0 !important;
+
+  background:
+    transparent !important;
+
+  font-size:
+    12px !important;
+
+  font-weight:
+    700 !important;
+
+  line-height:
+    1.18 !important;
+
+  text-align:
+    left !important;
+
+  transform:
+    none !important;
+}
+
+/* Machine floor scrubbing text */
+
+.coverageGrid
+> .coverageCard:first-child
+> p {
+  color:
+    #ffffff !important;
+
+  text-shadow:
+    0 1px 2px rgba(239, 27, 35, 0.95),
+    0 0 3px rgba(239, 27, 35, 0.7) !important;
+}
+
+/* Other names until images are added */
+
+.coverageGrid
+> .coverageCard:not(:first-child)
+> p {
+  color:
+    #ef1b23 !important;
+
+  text-shadow:
+    none !important;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 620px) {
+
+  .coverageGrid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+
+    gap:
+      12px !important;
+  }
+
+  .coverageGrid
+  > .coverageCard
+  > .imagePlaceholder {
+    width:
+      100% !important;
+
+    height:
+      auto !important;
+
+    aspect-ratio:
+      1 / 1 !important;
+  }
+
+  .coverageGrid
+  > .coverageCard
+  > p {
+    top:
+      7px !important;
+
+    left:
+      7px !important;
+
+    right:
+      6px !important;
+
+    font-size:
+      11px !important;
+  }
+}
+
+/* CITY_COOLIES_COVERAGE_V4_END */
+
+
+/* CITY_COOLIES_COVERAGE_BASE_FINAL_START */
+
+/*
+  WHAT'S COVERED
+  Clean City Coolies frontend base.
+
+  Images will be added later one by one.
+*/
+
+.coverageCleanGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  column-gap: 28px;
+  row-gap: 22px;
+
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  align-items: start;
+}
+
+.coverageCleanItem {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  border-radius: 0;
+
+  background: transparent;
+
+  box-shadow: none;
+
+  overflow: visible;
+}
+
+.coverageCleanName {
+  display: block;
+
+  margin: 0;
+  padding: 0;
+
+  color: #ef1b23;
+
+  background: transparent;
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+
+  text-align: left;
+
+  text-shadow: none;
+}
+
+@media (max-width: 620px) {
+
+  .coverageCleanGrid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    column-gap: 18px;
+    row-gap: 18px;
+  }
+
+  .coverageCleanName {
+    font-size: 12px;
+  }
+}
+
+/* CITY_COOLIES_COVERAGE_BASE_FINAL_END */
+
+
+/* CITY_COOLIES_COVERAGE_IMAGE_SECTION_START */
+
+/*
+  Clean direct-page image layout.
+  No card.
+  No border.
+  No rounded box.
+  No shadow.
+  No dark background.
+*/
+
+.coverageVisualGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 18px;
+  row-gap: 22px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  align-items: start;
+}
+
+.coverageVisualItem {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.coverageVisualImageWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.coverageVisualImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  filter: none;
+  transform: none;
+}
+
+.coverageVisualName {
+  margin: 0;
+  padding: 0;
+  color: #ef1b23;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  text-align: left;
+  text-shadow: none;
+}
+
+@media (max-width: 900px) {
+  .coverageVisualGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 16px;
+    row-gap: 20px;
+  }
+}
+
+@media (max-width: 620px) {
+  .coverageVisualGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 12px;
+    row-gap: 16px;
+  }
+
+  .coverageVisualName {
+    font-size: 12px;
+  }
+}
+
+/* CITY_COOLIES_COVERAGE_IMAGE_SECTION_END */

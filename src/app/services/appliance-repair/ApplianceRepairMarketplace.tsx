@@ -1,380 +1,269 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import type { ComponentType } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import FullHomeRightSidebar from "../deep-cleaning/FullHomeRightSidebar";
 import {
-  FiBox,
-  FiCalendar,
-  FiCheckCircle,
-  FiChevronRight,
-  FiClock,
-  FiDroplet,
-  FiGrid,
-  FiHome,
-  FiMinus,
-  FiMonitor,
-  FiPlus,
-  FiSearch,
-  FiShield,
-  FiShoppingCart,
-  FiSliders,
-  FiTrash2,
-  FiUserCheck,
-  FiWind,
-} from "react-icons/fi";
-import ServiceBookingModal from "@/components/booking/ServiceBookingModal";
-import {
-  APPLIANCE_CATEGORIES,
-  APPLIANCE_SERVICES,
-  type ApplianceCategory,
-  type ApplianceService,
-} from "@/lib/services/applianceRepairCatalog";
+  getDeepCleaningCartServerSnapshot,
+  getDeepCleaningCartSnapshot,
+  parseDeepCleaningCartSnapshot,
+  subscribeDeepCleaningCart,
+  upsertDeepCleaningCartItem,
+} from "../deep-cleaning/deepCleaningCart";
 import styles from "./ApplianceRepairMarketplace.module.css";
 
-type Cart = Record<string, number>;
-
-const CATEGORY_ICONS: Record<string, ComponentType<{ "aria-hidden"?: boolean }>> = {
-  all: FiGrid,
-  general: FiBox,
-  ac: FiWind,
-  refrigerator: FiBox,
-  "washing-machine": FiClock,
-  microwave: FiMonitor,
-  "water-purifier": FiDroplet,
-  geyser: FiDroplet,
-  kitchen: FiHome,
-  television: FiMonitor,
-  commercial: FiHome,
+type Job = { id: string; title: string; price: number };
+type Service = {
+  id: string;
+  title: string;
+  rating: number;
+  reviews: number;
+  description: string;
+  jobs: readonly Job[];
+  process: readonly string[];
 };
 
-const GROUP_ORDER = APPLIANCE_CATEGORIES.filter((category) => category.id !== "all");
-const AVAILABLE_IMAGE_PATHS = new Set<string>(["/ac-deep-cleaning.webp", "/ac-gas-refilling.webp", "/ac-inspection-visit.webp", "/ac-installation.webp", "/ac-pcb-repair.webp", "/ac-split-general-service.webp", "/ac-uninstallation.webp", "/ac-water-leakage-repair.webp", "/ac-window-service.webp", "/appliance-inspection-diagnosis.webp", "/appliance-installation-reinstallation.webp", "/appliance-major-repair-labour.webp", "/appliance-minor-repair-labour.webp", "/commercial-deep-freezer-service.webp", "/commercial-display-chiller-repair.webp", "/commercial-ice-machine-service.webp", "/commercial-refrigerator-service.webp", "/commercial-water-cooler-service.webp", "/fridge-compressor-replacement-labour.webp", "/fridge-cooling-issue-repair.webp", "/fridge-door-gasket-replacement-labour.webp", "/fridge-double-door-service.webp", "/fridge-gas-filling.webp", "/fridge-inspection-visit.webp", "/fridge-side-by-side-service.webp", "/fridge-single-door-service.webp", "/geyser-general-service.webp", "/geyser-heating-element-replacement.webp", "/geyser-installation.webp", "/geyser-thermostat-replacement.webp", "/geyser-water-leakage-repair.webp", "/kitchen-chimney-cleaning.webp", "/kitchen-chimney-repair.webp", "/kitchen-exhaust-fan-repair.webp", "/kitchen-gas-stove-service.webp", "/kitchen-hob-cooktop-service.webp", "/microwave-control-panel-repair.webp", "/microwave-door-lock-switch-repair.webp", "/microwave-general-service.webp", "/microwave-inspection.webp", "/microwave-magnetron-replacement-labour.webp", "/ro-commercial-service.webp", "/ro-filter-replacement-labour.webp", "/ro-general-service.webp", "/ro-inspection.webp", "/ro-installation.webp", "/ro-uninstallation.webp", "/tv-display-backlight-repair-labour.webp", "/tv-inspection.webp", "/tv-led-repair.webp", "/tv-smart-software-update.webp", "/tv-wall-mount-installation.webp", "/washing-machine-drum-cleaning.webp", "/washing-machine-front-load-service.webp", "/washing-machine-inspection-visit.webp", "/washing-machine-installation.webp", "/washing-machine-motor-pcb-repair-labour.webp", "/washing-machine-semi-automatic-service.webp", "/washing-machine-top-load-service.webp", "/washing-machine-uninstallation.webp", "/washing-machine-water-leakage-repair.webp"]);
+const services: readonly Service[] = [
+  {
+    id: "washing-machine", title: "Washing Machine Repair & Installation", rating: 4.20, reviews: 682,
+    description: "Inspect a top load or front load washing machine for draining, spinning, leaks, noise or installation needs.",
+    jobs: [
+      { id: "checkup", title: "Repair diagnosis / check-up", price: 299 },
+      { id: "installation", title: "Washing machine installation", price: 499 },
+      { id: "drain", title: "Drain / inlet connection service", price: 349 },
+    ],
+    process: ["Confirm appliance type, model and reported fault", "Inspect power, water inlet, drain and accessible components", "Share the diagnosis and quote any parts or extra labour before repair", "Complete approved service and check a test cycle"],
+  },
+  {
+    id: "fridge-cooler", title: "Fridge & Cooler Repair", rating: 4.20, reviews: 614,
+    description: "Check cooling, power, noise and water leakage issues in a refrigerator or air cooler.",
+    jobs: [
+      { id: "fridge-check", title: "Refrigerator check-up", price: 299 },
+      { id: "cooler-check", title: "Air cooler check-up", price: 249 },
+      { id: "cooler-install", title: "Air cooler setup / fitting", price: 349 },
+    ],
+    process: ["Record symptoms and identify the appliance model", "Inspect cooling, airflow, electrical and accessible water connections", "Explain the fault and obtain approval for parts or specialist work", "Complete approved work and verify cooling or airflow"],
+  },
+  {
+    id: "geyser", title: "Geyser Installation & Repair", rating: 4.20, reviews: 541,
+    description: "Fit a compatible geyser or inspect problems with heating, supply, leakage and controls.",
+    jobs: [
+      { id: "checkup", title: "Geyser repair diagnosis", price: 299 },
+      { id: "installation", title: "Geyser installation", price: 599 },
+      { id: "uninstall", title: "Geyser uninstallation", price: 349 },
+    ],
+    process: ["Check model, mounting, water connections and power supply", "Inspect the reported issue or confirm installation compatibility", "Quote additional parts or mounting work before proceeding", "Complete approved work and test safe operation and leaks"],
+  },
+  {
+    id: "tv", title: "TV Fitting & Repair", rating: 4.20, reviews: 489,
+    description: "TV wall fitting and inspection of display, power, sound or input issues.",
+    jobs: [
+      { id: "wall-fit", title: "TV wall fitting", price: 499 },
+      { id: "checkup", title: "TV repair diagnosis", price: 299 },
+      { id: "setup", title: "TV setup and connections", price: 349 },
+    ],
+    process: ["Check TV size, wall material, bracket and power position", "Inspect symptoms or confirm safe mounting location", "Agree any required bracket, anchors or replacement parts", "Fit or repair as approved, then verify stability and picture or sound"],
+  },
+  {
+    id: "chimney", title: "Kitchen Chimney Service & Repair", rating: 4.20, reviews: 573,
+    description: "Check a kitchen chimney for low suction, motor noise, controls or fitting issues.",
+    jobs: [
+      { id: "checkup", title: "Chimney repair diagnosis", price: 299 },
+      { id: "installation", title: "Chimney installation assessment", price: 399 },
+      { id: "basic-service", title: "Accessible filter and function service", price: 449 },
+    ],
+    process: ["Check model, ducting, suction and filter condition", "Inspect safe access, motor and controls", "Quote any parts, deep cleaning or duct work before starting", "Complete approved service and test operation"],
+  },
+  {
+    id: "gas-stove-pipe", title: "Gas Stove & Gas Pipe Service", rating: 4.20, reviews: 526,
+    description: "Inspect gas stove burners, ignition and approved flexible gas hose connections.",
+    jobs: [
+      { id: "stove-check", title: "Gas stove diagnosis", price: 299 },
+      { id: "burner-service", title: "Burner / ignition service", price: 399 },
+      { id: "hose-check", title: "Gas hose connection assessment", price: 299 },
+    ],
+    process: ["Check the stove, hose type and accessible connections", "Identify the fault and confirm suitable approved parts", "Explain the quote before any replacement or repair", "Complete authorized work and check operation and leaks"],
+  },
+  {
+    id: "exhaust-fan", title: "Exhaust Fan Repair & Fitting", rating: 4.20, reviews: 438,
+    description: "Diagnose or fit a bathroom or kitchen exhaust fan at a suitable existing opening.",
+    jobs: [
+      { id: "checkup", title: "Exhaust fan repair diagnosis", price: 249 },
+      { id: "installation", title: "Exhaust fan fitting", price: 399 },
+      { id: "clean-service", title: "Fan cleaning and service", price: 299 },
+    ],
+    process: ["Inspect fan size, mounting opening and electrical point", "Assess noise, blade, motor or airflow issue", "Confirm additional wiring, parts and labour before work", "Complete approved repair or fitting and test airflow"],
+  },
+];
 
-function money(value: number) {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 0,
-  }).format(value);
-}
-
-function TypeText({ text, start = 0, step = 24 }: { text: string; start?: number; step?: number }) {
-  return (
-    <span className={styles.typeText} aria-label={text}>
-      {[...text].map((character, index) => (
-        <span
-          key={`${character}-${index}`}
-          className={styles.typeChar}
-          aria-hidden="true"
-          style={{ "--char-delay": `${start + index * step}ms` } as React.CSSProperties}
-        >
-          {character === " " ? "\u00a0" : character}
-        </span>
-      ))}
-    </span>
-  );
-}
-
-function ServiceImage({ service }: { service: ApplianceService }) {
-  const [failed, setFailed] = useState(false);
-  const PlaceholderIcon = CATEGORY_ICONS[service.category] ?? FiBox;
-
-  if (failed || !AVAILABLE_IMAGE_PATHS.has(service.image)) {
-    return (
-      <div className={styles.imagePlaceholder} aria-label={`${service.name} image coming soon`}>
-        <PlaceholderIcon aria-hidden />
-      </div>
-    );
-  }
-
-  return (
-    <Image
-      src={service.image}
-      alt={`${service.name} by City Coolies`}
-      fill
-      sizes="(max-width: 640px) 50vw, (max-width: 1180px) 33vw, 220px"
-      className={styles.cardImage}
-      onError={() => setFailed(true)}
-    />
-  );
-}
+const money = (amount: number) => `₹${amount.toLocaleString("en-IN")}`;
+const serviceImages: Record<string, string> = {
+  "washing-machine": "washing_machine_repair_installation_service_banner.png",
+  "fridge-cooler": "fridge_cooler_repair_service_banner.png",
+  "geyser": "geyser_installation_repair_service_banner.png",
+  "tv": "tv_fitting_repair_service_banner.png",
+  "chimney": "kitchen_chimney_repair_service_banner.png",
+  "gas-stove-pipe": "gas_stove_gas_pipe_service_banner.png",
+  "exhaust-fan": "exhaust_fan_repair_fitting_service_banner.png",
+};
+const cartId = (id: string) => `appliance:${id}`;
 
 export default function ApplianceRepairMarketplace() {
-  const [category, setCategory] = useState<ApplianceCategory>("all");
-  const [query, setQuery] = useState("");
-  const [popularOnly, setPopularOnly] = useState(false);
-  const [sort, setSort] = useState<"featured" | "low" | "high">("featured");
-  const [cart, setCart] = useState<Cart>({});
+  const [active, setActive] = useState<Service | null>(null);
+  const [quantities, setQuantities] = useState<Record<string, number>>({});
+  const [selectorScrolled, setSelectorScrolled] = useState(false);
+  const snapshot = useSyncExternalStore(subscribeDeepCleaningCart, getDeepCleaningCartSnapshot, getDeepCleaningCartServerSnapshot);
+  const cartItems = useMemo(() => parseDeepCleaningCartSnapshot(snapshot), [snapshot]);
+  const total = active?.jobs.reduce((sum, job) => sum + job.price * (quantities[job.id] || 0), 0) ?? 0;
 
   useEffect(() => {
-    const heroElements = document.querySelectorAll<HTMLElement>("[data-appliance-hero-reveal]");
-    const heroFrame = requestAnimationFrame(() => {
-      heroElements.forEach((element) => element.classList.add(styles.visible));
-    });
-    let frame = 0;
-    let destroyed = false;
-    let lenis: { raf: (time: number) => void; destroy: () => void } | null = null;
-    import("lenis").then(({ default: Lenis }) => {
-      if (destroyed) return;
-      lenis = new Lenis({ duration: 1.05, smoothWheel: true });
-      const animate = (time: number) => {
-        lenis?.raf(time);
-        frame = requestAnimationFrame(animate);
-      };
-      frame = requestAnimationFrame(animate);
-    });
+    if (!active) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const close = (event: KeyboardEvent) => { if (event.key === "Escape") setActive(null); };
+    window.addEventListener("keydown", close);
+    return () => { document.body.style.overflow = previous; window.removeEventListener("keydown", close); };
+  }, [active]);
 
-    return () => {
-      destroyed = true;
-      cancelAnimationFrame(heroFrame);
-      cancelAnimationFrame(frame);
-      lenis?.destroy();
-    };
-  }, []);
-
-  useEffect(() => {
-    const elements = document.querySelectorAll<HTMLElement>(
-      "[data-appliance-hero-reveal], [data-appliance-reveal]",
-    );
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          entry.target.classList.toggle(styles.visible, entry.isIntersecting);
-        });
-      },
-      { threshold: 0.08, rootMargin: "40px 0px -5% 0px" },
-    );
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, [category, popularOnly, query]);
-
-  const filtered = useMemo(() => {
-    const needle = query.trim().toLowerCase();
-    const services = APPLIANCE_SERVICES.filter((service) => {
-      const categoryMatch = category === "all" || service.category === category;
-      const queryMatch = !needle || service.name.toLowerCase().includes(needle);
-      return categoryMatch && queryMatch && (!popularOnly || service.popular);
-    });
-    if (sort === "low") return [...services].sort((a, b) => a.price - b.price);
-    if (sort === "high") return [...services].sort((a, b) => b.price - a.price);
-    return services;
-  }, [category, popularOnly, query, sort]);
-
-  const cartItems = useMemo(
-    () =>
-      APPLIANCE_SERVICES.filter((service) => (cart[service.id] ?? 0) > 0).map(
-        (service) => ({ ...service, quantity: cart[service.id] }),
-      ),
-    [cart],
-  );
-  const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-  function changeQuantity(id: string, delta: number) {
-    setCart((current) => {
-      const next = Math.max(0, Math.min(25, (current[id] ?? 0) + delta));
-      if (next === 0) {
-        const copy = { ...current };
-        delete copy[id];
-        return copy;
+  function openDetails(service: Service) {
+    const existing = cartItems.find((item) => item.id === cartId(service.id));
+    const saved: Record<string, number> = {};
+    if (existing) {
+      for (const job of service.jobs) {
+        const savedJob = existing.optionLabel.split(", ").find((label) => label.startsWith(`${job.title} x `));
+        if (savedJob) saved[job.id] = Number(savedJob.slice(`${job.title} x `.length)) || 0;
       }
-      return { ...current, [id]: next };
-    });
+    }
+    setQuantities(saved);
+    setActive(service);
   }
 
-  function jumpToServices(next: ApplianceCategory) {
-    setCategory(next);
-    setQuery("");
-    setPopularOnly(false);
-    requestAnimationFrame(() => {
-      document.getElementById("appliance-services")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+  function adjust(id: string, change: number) {
+    setQuantities((current) => ({ ...current, [id]: Math.max(0, (current[id] || 0) + change) }));
+  }
+
+  function continueBooking(service: Service) {
+    if (total <= 0) return;
+    const selected = service.jobs.filter((job) => (quantities[job.id] || 0) > 0);
+    const item = {
+      id: cartId(service.id), serviceTitle: service.title,
+      optionLabel: selected.map((job) => `${job.title} x ${quantities[job.id]}`).join(", "),
+      price: total, priceLabel: money(total),
+      duration: "Indicative service charges; spare parts and additional work quoted after diagnosis",
+    };
+    upsertDeepCleaningCartItem(item);
+    window.dispatchEvent(new Event("citycoolies:deep-cleaning-cart-added"));
+    setActive(null);
   }
 
   return (
-    <main className={styles.page}>
-      <section className={styles.hero} aria-labelledby="appliance-title">
-        <div className={styles.heroImage} aria-hidden="true" />
-        <div className={styles.heroContent}>
-          <nav className={`${styles.reveal} ${styles.delayOne}`} data-appliance-hero-reveal aria-label="Breadcrumb">
-            <Link href="/">Home</Link><FiChevronRight aria-hidden />
-            <Link href="/services">Services</Link><FiChevronRight aria-hidden />
-            <span>Appliance Repair</span>
-          </nav>
-          <p className={`${styles.eyebrow} ${styles.reveal} ${styles.delayTwo}`} data-appliance-hero-reveal>
-            <TypeText text="Professional Appliance Services" start={80} step={20} />
-          </p>
-          <h1 id="appliance-title" className={`${styles.heroTitle} ${styles.reveal} ${styles.delayThree}`} data-appliance-hero-reveal>
-            <TypeText text="Appliance Repair," start={180} step={34} /><br />
-            <em><TypeText text="made effortless." start={700} step={36} /></em>
-          </h1>
-          <p className={`${styles.heroCopy} ${styles.reveal} ${styles.delayFour}`} data-appliance-hero-reveal>
-            <TypeText text="Expert care for every appliance." start={1160} step={18} /><br />
-            <TypeText text="Clear pricing. Trusted technicians." start={1570} step={18} />
-          </p>
-          <div className={`${styles.heroTrust} ${styles.reveal} ${styles.delayFive}`} data-appliance-hero-reveal>
-            <span><FiShield aria-hidden />Verified Technicians</span>
-            <span><FiCheckCircle aria-hidden />Upfront Service Rates</span>
-            <span><FiCalendar aria-hidden />Easy Reschedule</span>
-            <span><FiUserCheck aria-hidden />Service Warranty</span>
-          </div>
-        </div>
-        <form className={`${styles.heroSearch} ${styles.delayFive}`} data-appliance-hero-reveal onSubmit={(event) => { event.preventDefault(); document.getElementById("appliance-services")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>
-          <FiSearch aria-hidden />
-          <input value={query} onChange={(event) => { setQuery(event.target.value); setCategory("all"); setPopularOnly(false); }} placeholder="Search appliance services..." />
-          <button type="submit" aria-label="Search">
-            <FiSearch aria-hidden />
-          </button>
-        </form>
-      </section>
-
-      <section id="appliance-services" className={styles.marketplace}>
-        <aside className={`${styles.categoryRail} ${styles.reveal}`} data-appliance-reveal>
-          <h2>Appliance Services</h2>
-          <div className={styles.categoryList}>
-            {APPLIANCE_CATEGORIES.map((item) => {
-              const Icon = CATEGORY_ICONS[item.id];
-              return (
-                <button key={item.id} type="button" className={category === item.id ? styles.categoryActive : ""} onClick={() => jumpToServices(item.id)}>
-                  <Icon aria-hidden /><span>{item.label}</span>
-                </button>
-              );
-            })}
-          </div>
-          <div className={styles.trustedPainters}>
-            <FiShield aria-hidden />
-            <span><strong>Trusted Technicians</strong><small>Background verified & experienced</small></span>
-          </div>
-        </aside>
-
-        <div className={styles.catalogArea}>
-          <div className={`${styles.catalogToolbar} ${styles.reveal}`} data-appliance-reveal>
-            <div className={styles.quickFilters}>
-              <button className={category === "all" && !popularOnly && !query ? styles.filterActive : ""} type="button" onClick={() => jumpToServices("all")}>All</button>
-              <button className={popularOnly ? styles.filterActive : ""} type="button" onClick={() => { setCategory("all"); setQuery(""); setPopularOnly(true); }}>Popular</button>
-              {APPLIANCE_CATEGORIES.filter((item) => ["ac", "refrigerator", "washing-machine", "television", "water-purifier"].includes(item.id)).map((item) => (
-                <button key={item.id} className={category === item.id ? styles.filterActive : ""} type="button" onClick={() => jumpToServices(item.id)}>{item.label}</button>
-              ))}
-              <label className={styles.moreFilter}>
-                <select
-                  aria-label="More appliance categories"
-                  value={["geyser", "kitchen", "commercial", "microwave", "general"].includes(category) ? category : ""}
-                  onChange={(event) => {
-                    if (event.target.value) jumpToServices(event.target.value as ApplianceCategory);
-                  }}
-                >
-                  <option value="">More</option>
-                  <option value="general">General Services</option>
-                  <option value="microwave">Microwave</option>
-                  <option value="geyser">Geyser</option>
-                  <option value="kitchen">Kitchen Appliances</option>
-                  <option value="commercial">Commercial</option>
-                </select>
-              </label>
+    <section id="city-coolies-appliance" className={styles.section}>
+      <div className={styles.container}>
+        <div className={styles.columns}>
+          <main className={styles.main}>
+            <h1 className={styles.eyebrow}>Appliance Repair</h1>
+            <div className={styles.selectorViewport}>
+              <button type="button" className={styles.selectorPrevious} style={{ display: selectorScrolled ? undefined : "none" }}
+                aria-label="Show previous appliance services"
+                onClick={() => document.getElementById("appliance-service-selector")?.scrollBy({ left: -320, behavior: "smooth" })}>
+                <span aria-hidden="true">←</span>
+              </button>
+              <nav id="appliance-service-selector" className={styles.selector} aria-label="Select an appliance service"
+                onScroll={(event) => setSelectorScrolled(event.currentTarget.scrollLeft > 4)}>
+                {services.map((service) => (
+                  <button key={service.id} type="button" className={styles.selectorItem}
+                    onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}>
+                    <span className={styles.thumbnail} aria-hidden="true" style={{ overflow: "hidden" }}>
+                      <img src={`/appliance-repair/${serviceImages[service.id]}`} alt="" width={100} height={100}
+                        style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                    </span>
+                    <span className={styles.selectorLabel}>{service.title}</span>
+                  </button>
+                ))}
+              </nav>
+              <button type="button" className={styles.selectorNext} aria-label="Show more appliance services"
+                onClick={() => document.getElementById("appliance-service-selector")?.scrollBy({ left: 320, behavior: "smooth" })}>
+                <span aria-hidden="true">→</span>
+              </button>
             </div>
-            <label className={styles.sortControl}><FiSliders aria-hidden />
-              <select value={sort} onChange={(event) => setSort(event.target.value as typeof sort)}>
-                <option value="featured">Sort by</option>
-                <option value="low">Price: Low to High</option>
-                <option value="high">Price: High to Low</option>
-              </select>
-            </label>
-          </div>
-
-          {query || category !== "all" || popularOnly ? (
-            <ServiceGrid title="Matching Services" services={filtered} cart={cart} changeQuantity={changeQuantity} />
-          ) : (
-            GROUP_ORDER.map((group) => {
-              const services = APPLIANCE_SERVICES.filter((service) => service.category === group.id);
-              return <ServiceGrid key={group.id} title={group.label} services={services} cart={cart} changeQuantity={changeQuantity} />;
-            })
-          )}
-        </div>
-
-        <aside className={`${styles.bookingPanel} ${styles.reveal}`} data-appliance-reveal>
-          <header><div><span>Your Booking</span>{itemCount > 0 && <b>{itemCount}</b>}</div>{itemCount > 0 && <button type="button" onClick={() => setCart({})}>Clear All</button>}</header>
-          <div className={styles.bookingItems}>
-            {cartItems.length === 0 ? (
-              <div className={styles.emptyCart}><FiShoppingCart aria-hidden /><strong>Choose an appliance service</strong><span>Your selected work will appear here.</span></div>
-            ) : cartItems.map((item) => (
-              <article key={item.id} className={styles.bookingItem}>
-                <div className={styles.bookingThumb}><ServiceImage service={item} /></div>
-                <div><strong>{item.name}</strong><small>{money(item.price)} / {item.unit}</small>
-                  <Quantity value={item.quantity} onMinus={() => changeQuantity(item.id, -1)} onPlus={() => changeQuantity(item.id, 1)} />
+            {services.map((service) => (
+              <section className={styles.serviceGroup} id={service.id} key={service.id}>
+                <h2>{service.title}</h2>
+                <div className={styles.banner} aria-hidden="true">
+                  <img src={`/appliance-repair/${serviceImages[service.id]}`} alt="" width={1942} height={809}
+                    style={{ display: "block", width: "100%", height: "100%", objectFit: "contain" }} />
                 </div>
-                <div className={styles.itemEnd}><button type="button" aria-label={`Remove ${item.name}`} onClick={() => setCart((current) => { const next = { ...current }; delete next[item.id]; return next; })}><FiTrash2 aria-hidden /></button><b>{money(item.price * item.quantity)}</b></div>
-              </article>
+                <div className={styles.serviceRow}>
+                  <div>
+                    <h3>{service.title}</h3>
+                    <div className={styles.rating}>
+                      <span className={styles.star} aria-hidden="true">★</span>
+                      <span>{service.rating.toFixed(2)}</span>
+                      <span>({service.reviews} reviews)</span>
+                      <button type="button" onClick={() => openDetails(service)}>View details</button>
+                    </div>
+                    <strong>Starts at {money(Math.min(...service.jobs.map((job) => job.price)))}</strong>
+                  </div>
+                  <button type="button" className={styles.addButton} onClick={() => openDetails(service)}>Add</button>
+                </div>
+              </section>
             ))}
-          </div>
-          <div className={styles.bookingSummary}>
-            <div><span>Subtotal</span><strong>{money(total)}</strong></div>
-            <p>No GST added. Listed service rates apply.</p>
-            {total > 0 ? (
-              <div className={styles.bookingTrigger}>
-                <ServiceBookingModal
-                  packageId="appliance-repair-plan"
-                  serviceName="Appliance Repair Plan"
-                  originalPrice={total}
-                  offerPrice={total}
-                  triggerLabel="Continue to Booking  →"
-                  customServices={cartItems.map((item) => ({ id: item.id, name: item.name, quantity: item.quantity, unitPrice: item.price, lineTotal: item.price * item.quantity }))}
-                />
+          </main>
+          <aside className={styles.sidebar}><FullHomeRightSidebar /></aside>
+        </div>
+      </div>
+      {active && (
+        <div className={styles.backdrop} onMouseDown={(event) => { if (event.target === event.currentTarget) setActive(null); }}>
+          <section className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="appliance-modal-title">
+            <header className={styles.modalHeader}>
+              <div><h2 id="appliance-modal-title">{active.title}</h2><p>Choose the jobs you need</p></div>
+              <button type="button" className={styles.closeButton} aria-label="Close details" onClick={() => setActive(null)}>×</button>
+            </header>
+            <div className={styles.modalBody}>
+              <section aria-label="Choose appliance jobs">
+                <h3>Choose your requirements</h3>
+                <div className={styles.options}>
+                  {active.jobs.map((job) => {
+                    const count = quantities[job.id] || 0;
+                    return (
+                      <div className={styles.option} key={job.id}>
+                        <strong>{job.title}</strong><span>{money(job.price)} per job</span>
+                        {count ? (
+                          <div className={styles.quantity}>
+                            <button type="button" aria-label={`Remove one ${job.title}`} onClick={() => adjust(job.id, -1)}>-</button>
+                            <span>{count}</span>
+                            <button type="button" aria-label={`Add one ${job.title}`} onClick={() => adjust(job.id, 1)}>+</button>
+                          </div>
+                        ) : (
+                          <button type="button" className={styles.optionAdd} onClick={() => adjust(job.id, 1)}>Add</button>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </section>
+              <p className={styles.notice}>Displayed service charges are indicative. The technician checks the appliance first. Spare parts, gas or refrigerant work, wall brackets and additional labour are quoted separately for approval before work.</p>
+              <p>{active.description}</p>
+              <div className={styles.infoBox}><h3>Work process</h3>
+                <ol>{active.process.map((step) => <li key={step}>{step}</li>)}</ol>
               </div>
-            ) : <button className={styles.disabledBooking} type="button" disabled>Continue to Booking →</button>}
-            <ul><li><FiShield />Secure booking</li><li><FiCheckCircle />No hidden charges</li><li><FiCalendar />Easy reschedule</li><li><FiClock />On-time service</li></ul>
-          </div>
-        </aside>
-      </section>
-
-      <section className={`${styles.bookingJourney} ${styles.reveal}`} data-appliance-reveal aria-label="Booking process">
-        {[
-          [FiShoppingCart, "Select Service", "Choose the appliance work you need"],
-          [FiCalendar, "Choose Schedule", "Pick a convenient date and time"],
-          [FiCheckCircle, "Confirm Booking", "Review and confirm your booking"],
-          [FiUserCheck, "Technician Visit", "Expert arrives and starts the work"],
-          [FiShield, "Service Complete", "Quality service with satisfaction"],
-        ].map(([Icon, title, copy], index) => {
-          const StepIcon = Icon as ComponentType<{ "aria-hidden"?: boolean }>;
-          return <article key={String(title)} style={{ "--step-delay": `${index * 100}ms` } as React.CSSProperties}><span><StepIcon aria-hidden /></span><div><strong>{String(title)}</strong><small>{String(copy)}</small></div>{index < 4 && <FiChevronRight className={styles.stepArrow} aria-hidden />}</article>;
-        })}
-      </section>
-
-      {itemCount > 0 && (
-        <div className={styles.mobileCartBar}>
-          <span><b>{itemCount} {itemCount === 1 ? "item" : "items"}</b><strong>{money(total)}</strong></span>
-          <div className={styles.mobileTrigger}>
-            <ServiceBookingModal packageId="appliance-repair-plan" serviceName="Appliance Repair Plan" originalPrice={total} offerPrice={total} triggerLabel="Continue to Booking →" customServices={cartItems.map((item) => ({ id: item.id, name: item.name, quantity: item.quantity, unitPrice: item.price, lineTotal: item.price * item.quantity }))} />
-          </div>
+              <div className={styles.reviews}>
+                <strong><span className={styles.star}>★</span> {active.rating.toFixed(2)}</strong>
+                <span>{active.reviews} reviews</span>
+                {[5, 4, 3, 2, 1].map((score, index) => (
+                  <div className={styles.ratingLine} key={score}>
+                    <span>{score} ★</span><div><i style={{ width: `${[48, 29, 13, 7, 3][index]}%` }} /></div>
+                    <span>{[48, 29, 13, 7, 3][index]}%</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <footer className={styles.modalFooter}>
+              <div><small>Selected jobs total</small><strong>{money(total)}</strong></div>
+              <button type="button" disabled={total === 0} onClick={() => continueBooking(active)}>Continue</button>
+            </footer>
+          </section>
         </div>
       )}
-    </main>
-  );
-}
-
-function ServiceGrid({ title, services, cart, changeQuantity }: { title: string; services: readonly ApplianceService[]; cart: Cart; changeQuantity: (id: string, delta: number) => void }) {
-  if (services.length === 0) return <div className={styles.noResults}>No matching services found.</div>;
-  return (
-    <section className={`${styles.serviceGroup} ${styles.reveal}`} data-appliance-reveal>
-      <h2>{title}</h2>
-      <div className={styles.serviceGrid}>
-        {services.map((service, index) => {
-          const quantity = cart[service.id] ?? 0;
-          return (
-            <article key={service.id} className={styles.serviceCard} style={{ "--card-delay": `${Math.min(index, 11) * 55}ms` } as React.CSSProperties}>
-              <div className={styles.cardMedia}><ServiceImage service={service} />{service.popular && <span>Popular</span>}</div>
-              <div className={styles.cardBody}><h3>{service.name}</h3><p><strong>{money(service.price)}</strong><span>/ {service.unit}</span></p>
-                {quantity === 0 ? <button type="button" className={styles.addButton} onClick={() => changeQuantity(service.id, 1)}><FiShoppingCart aria-hidden />Add</button> : <Quantity value={quantity} onMinus={() => changeQuantity(service.id, -1)} onPlus={() => changeQuantity(service.id, 1)} />}
-              </div>
-            </article>
-          );
-        })}
-      </div>
     </section>
   );
-}
-
-function Quantity({ value, onMinus, onPlus }: { value: number; onMinus: () => void; onPlus: () => void }) {
-  return <div className={styles.quantity}><button type="button" onClick={onMinus} aria-label="Decrease quantity"><FiMinus aria-hidden /></button><span>{value}</span><button type="button" onClick={onPlus} aria-label="Increase quantity"><FiPlus aria-hidden /></button></div>;
 }

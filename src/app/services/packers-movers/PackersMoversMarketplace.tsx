@@ -1,202 +1,270 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useMemo, useState, type CSSProperties } from "react";
-
+import { useEffect, useState } from "react";
+import FullHomeRightSidebar from "../deep-cleaning/FullHomeRightSidebar";
 import {
-  calculatePackersMoversEstimate,
-  getPackersMoversDistanceRule,
-  PACKERS_MOVERS_CATEGORIES,
-  PACKERS_MOVERS_SERVICES,
-  type AccessType,
-  type InventoryTier,
-  type PackingTier,
-  type PackersMoversCategory,
-} from "@/lib/services/packersMoversCatalog";
-
-import { PackersMoversBookingModal } from "@/components/booking/ServiceBookingModal";
-
+  upsertDeepCleaningCartItem,
+} from "../deep-cleaning/deepCleaningCart";
 import styles from "./PackersMoversMarketplace.module.css";
 
-function Icon({ name }: { name: string }) {
-  const common = { width: 22, height: 22, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
-  if (name === "home") return <svg {...common}><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10M9 20v-6h6v6"/></svg>;
-  if (name === "route") return <svg {...common}><circle cx="5" cy="18" r="2"/><circle cx="19" cy="6" r="2"/><path d="M7 18h3a3 3 0 0 0 3-3v-2a3 3 0 0 1 3-3h1"/></svg>;
-  if (name === "building") return <svg {...common}><path d="M4 21V4h10v17M14 9h6v12M7 8h3M7 12h3M7 16h3M17 13h1M17 17h1M2 21h20"/></svg>;
-  if (name === "bike") return <svg {...common}><circle cx="5" cy="17" r="3"/><circle cx="19" cy="17" r="3"/><path d="m5 17 4-8h4l2 4M8 11h7M13 7h3"/></svg>;
-  if (name === "box" || name === "package") return <svg {...common}><path d="m12 3 8 4-8 4-8-4 8-4Z"/><path d="m4 7 8 4 8-4v10l-8 4-8-4V7Z"/><path d="M12 11v10"/></svg>;
-  if (name === "pin") return <svg {...common}><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>;
-  if (name === "calendar") return <svg {...common}><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>;
-  if (name === "lock") return <svg {...common}><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg>;
-  if (name === "target") return <svg {...common}><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v2M22 12h-2M12 22v-2M2 12h2"/></svg>;
-  if (name === "clipboard") return <svg {...common}><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2M9 9h6M9 13h6M9 17h4"/></svg>;
-  if (name === "shield") return <svg {...common}><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>;
-  if (name === "grid") return <svg {...common}><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>;
-  return <svg {...common}><path d="M3 12h18M12 3v18"/></svg>;
-}
+type Option = { id: string; title: string; base: number };
+type Service = {
+  id: string;
+  title: string;
+  description: string;
+  options: readonly Option[];
+  distanceRate: number;
+  includes: readonly string[];
+  process: readonly string[];
+};
+
+const services: readonly Service[] = [
+  {
+    id: "local-home-shifting", title: "Local Home Shifting", distanceRate: 20,
+    description: "Move household goods within your city with packing, transport and unloading options.",
+    options: [
+      { id: "studio", title: "1 RK / Studio", base: 2499 },
+      { id: "1bhk", title: "1 BHK", base: 3499 },
+      { id: "2bhk", title: "2 BHK", base: 4500 },
+      { id: "3bhk", title: "3 BHK", base: 6999 },
+    ],
+    includes: ["Inventory and access assessment", "Suitable vehicle planning", "Loading, transit and unloading scope", "Packing and fragile handling choices"],
+    process: ["List large and fragile items and select move size", "Confirm pickup, drop, vehicle access and estimated distance", "Agree inventory, packing level and final quote", "Pack and label approved goods, load, transport, unload and check delivery"],
+  },
+  {
+    id: "intercity-relocation", title: "Intercity Relocation", distanceRate: 15,
+    description: "Plan a household move to another city with inventory assessment and a route based quote.",
+    options: [
+      { id: "small", title: "Small Move", base: 4999 },
+      { id: "1bhk", title: "1 BHK", base: 7499 },
+      { id: "2bhk", title: "2 BHK", base: 10999 },
+      { id: "3bhk", title: "3 BHK", base: 14999 },
+    ],
+    includes: ["Route and inventory review", "Packing requirements", "Transport and delivery scheduling", "Final quote after inventory verification"],
+    process: ["Document the inventory and destination", "Review access, distance, packing and loading needs", "Confirm transport arrangement and final quote", "Pack, record, transport and hand over the items at the destination"],
+  },
+  {
+    id: "office-commercial-moving", title: "Office & Commercial Moving", distanceRate: 24,
+    description: "Coordinate an office, shop or small commercial relocation with an inventory and access plan.",
+    options: [
+      { id: "small-office", title: "Small Office", base: 5999 },
+      { id: "office", title: "Office Move", base: 9999 },
+      { id: "shop", title: "Shop / Retail", base: 6999 },
+    ],
+    includes: ["Workstation and inventory planning", "Sensitive equipment packing scope", "Access and loading schedule", "Delivery placement and verification"],
+    process: ["List furniture, documents and equipment", "Check pickup and drop access and operating hours", "Agree handling, packing, transport and final quote", "Label, move and place goods as approved"],
+  },
+  {
+    id: "bike-vehicle-moving", title: "Bike & Vehicle Transport", distanceRate: 12,
+    description: "Arrange transport for a two wheeler or vehicle after reviewing route and handling requirements.",
+    options: [
+      { id: "scooter", title: "Scooter / Bike", base: 2499 },
+      { id: "large-bike", title: "Large Motorcycle", base: 3499 },
+      { id: "car", title: "Car Transport Assessment", base: 8999 },
+    ],
+    includes: ["Vehicle condition record", "Loading and protection assessment", "Route planning", "Delivery handover check"],
+    process: ["Record vehicle type and visible condition", "Confirm pickup, transport method and destination", "Agree protection, documents and final quote", "Secure for transit and verify condition at delivery"],
+  },
+  {
+    id: "packing-unpacking", title: "Packing & Unpacking", distanceRate: 0,
+    description: "Choose packing, unpacking or fragile item protection without a full transport booking.",
+    options: [
+      { id: "packing", title: "Packing Only", base: 1999 },
+      { id: "unpacking", title: "Unpacking Only", base: 1499 },
+      { id: "fragile", title: "Fragile Items Packing", base: 2499 },
+    ],
+    includes: ["Packing material estimate", "Room wise labels", "Fragile item protection", "Optional unpacking and placement"],
+    process: ["Assess inventory and handling needs", "Confirm materials and final packing quote", "Protect and label items by room", "Unpack and place items when selected"],
+  },
+  {
+    id: "loading-unloading", title: "Loading & Unloading", distanceRate: 0,
+    description: "Get moving labour for lifting, loading, unloading and arranging eligible goods.",
+    options: [
+      { id: "loading", title: "Loading Only", base: 1999 },
+      { id: "unloading", title: "Unloading Only", base: 1999 },
+      { id: "both", title: "Loading & Unloading", base: 3499 },
+    ],
+    includes: ["Crew and item count assessment", "Access and floor check", "Safe carrying plan", "Placement at drop location"],
+    process: ["Record item dimensions and handling requirements", "Check loading space, stairs and access", "Confirm labour requirement and final quote", "Carry, load or unload and verify item placement"],
+  },
+];
+
+const money = (amount: number) => `₹${amount.toLocaleString("en-IN")}`;
+const serviceImages: Record<string, string> = {
+  "local-home-shifting": "local_home_shifting_service_banner.png",
+  "intercity-relocation": "intercity_relocation_service_banner.png",
+  "office-commercial-moving": "office_commercial_moving_service_banner.png",
+  "bike-vehicle-moving": "bike_vehicle_transport_service_banner.png",
+  "packing-unpacking": "packing_unpacking_service_banner.png",
+  "loading-unloading": "loading_unloading_service_banner.png",
+};
+const cartId = (id: string) => `moving:${id}`;
+
 export default function PackersMoversMarketplace() {
-  const [category, setCategory] = useState<PackersMoversCategory>("all");
-  const [serviceId, setServiceId] = useState("");
-  const [distanceKm, setDistanceKm] = useState(5);
-  const [inventoryTier, setInventoryTier] = useState<InventoryTier>("standard");
-  const [packingTier, setPackingTier] = useState<PackingTier>("basic");
-  const [accessType, setAccessType] = useState<AccessType>("lift");
-  const [customizeOpen, setCustomizeOpen] = useState(false);
+  const [active, setActive] = useState<Service | null>(null);
+  const [choice, setChoice] = useState("");
+  const [pickup, setPickup] = useState("");
+  const [drop, setDrop] = useState("");
+  const [distance, setDistance] = useState(5);
+  const [stairs, setStairs] = useState(false);
+  const [packing, setPacking] = useState(false);
+  const [selectorScrolled, setSelectorScrolled] = useState(false);
+  const selectedOption = active?.options.find((option) => option.id === choice);
+  const estimate = active && selectedOption
+    ? selectedOption.base + Math.max(0, distance - 5) * active.distanceRate + (stairs ? 399 : 0) + (packing ? 699 : 0)
+    : 0;
 
   useEffect(() => {
-    const nodes = document.querySelectorAll<HTMLElement>("[data-reveal]");
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.setAttribute("data-visible", "true");
-      });
-    }, { threshold: 0.08, rootMargin: "0px 0px -35px" });
-    nodes.forEach((node) => observer.observe(node));
-    return () => observer.disconnect();
-  }, []);
+    if (!active) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const close = (event: KeyboardEvent) => { if (event.key === "Escape") setActive(null); };
+    window.addEventListener("keydown", close);
+    return () => { document.body.style.overflow = previous; window.removeEventListener("keydown", close); };
+  }, [active]);
 
-  const filtered = useMemo(() => category === "all" ? PACKERS_MOVERS_SERVICES : PACKERS_MOVERS_SERVICES.filter((service) => service.category === category), [category]);
-  const estimate = useMemo(() => calculatePackersMoversEstimate({ serviceId, distanceKm, inventoryTier, packingTier, accessType }), [serviceId, distanceKm, inventoryTier, packingTier, accessType]);
-const distanceOptions = [5, 10, 15, 20, 25, 30, 40, 50, 75, 100, 150, 200, 300, 500, 750, 1000, 1500, 2000, 2500, 3000];
-
-  function selectService(id: string) {
-    setServiceId(id);
-    setDistanceKm(5);
-    setInventoryTier("standard");
-    setPackingTier("basic");
-    setAccessType("lift");
-    window.setTimeout(() => document.getElementById("move-estimate")?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 40);
+  function openDetails(service: Service) {
+    setChoice("");
+    setPickup("");
+    setDrop("");
+    setDistance(5);
+    setStairs(false);
+    setPacking(false);
+    setActive(service);
   }
 
+  function addQuote(service: Service) {
+    if (!selectedOption) return;
+    upsertDeepCleaningCartItem({
+      id: cartId(service.id), serviceTitle: service.title,
+      optionLabel: `${selectedOption.title} · ${pickup || "Pickup to confirm"} → ${drop || "Drop to confirm"} · estimated ${money(estimate)}`,
+      price: 0,
+      priceLabel: "Free quote request",
+      duration: `Estimate ${money(estimate)} for ${distance} km; final rate after inventory, route and access confirmation. No online moving payment collected.`,
+    });
+    window.dispatchEvent(new Event("citycoolies:deep-cleaning-cart-added"));
+    setActive(null);
+  }
 
   return (
-    <main className={styles.page}>
-      <section className={styles.hero} aria-label="City Coolies Packers and Movers">
-        <Image src="/city-coolies-packers-movers-hero-v2.webp" alt="City Coolies professional packers and movers" fill priority sizes="100vw" className={styles.heroImage} />
-        <div className={styles.heroShade} />
-        <div className={styles.heroContent}>
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb"><a href="/">Home</a><span>›</span><a href="/services">Services</a><span>›</span><strong>Packers &amp; Movers</strong></nav>
-          <div className={styles.brandLockup}><Image src="/city-coolies-packers-movers-icon.png" alt="City Coolies Packers and Movers" width={47} height={80} className={styles.brandIcon}/><strong>CITY<br/>COOLIES<small>PACKERS & MOVERS</small></strong></div>
-          <h1><span>Moving made simple.</span></h1>
-          <p className={styles.heroText}>Transparent pricing. Verified professionals.</p>
-          <div className={styles.trustRow}>
-            <span><Icon name="shield" /> Verified Crew</span>
-            <span><Icon name="box" /> Digital Inventory</span>
-            <span><Icon name="package" /> Sealed Quote</span>
-            <span><Icon name="shield" /> Damage Protection</span>
-          </div>
+    <section id="city-coolies-moving" className={styles.section}>
+      <div className={styles.container}>
+        <div className={styles.columns}>
+          <main className={styles.main}>
+            <h1 className={styles.eyebrow}>Packers &amp; Movers</h1>
+            <div className={styles.selectorViewport}>
+              <button type="button" className={styles.selectorPrevious} style={{ display: selectorScrolled ? undefined : "none" }}
+                aria-label="Show previous moving services"
+                onClick={() => document.getElementById("moving-service-selector")?.scrollBy({ left: -320, behavior: "smooth" })}>
+                <span aria-hidden="true">←</span>
+              </button>
+              <nav id="moving-service-selector" className={styles.selector} aria-label="Select a moving service"
+                onScroll={(event) => setSelectorScrolled(event.currentTarget.scrollLeft > 4)}>
+                {services.map((service) => (
+                  <button key={service.id} type="button" className={styles.selectorItem}
+                    onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}>
+                    <span className={styles.thumbnail} aria-hidden="true" style={{ overflow: "hidden" }}>
+                      <img src={`/packers-movers/${serviceImages[service.id]}`} alt="" width={100} height={100}
+                        style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+                    </span>
+                    <span className={styles.selectorLabel}>{service.title}</span>
+                  </button>
+                ))}
+              </nav>
+              <button type="button" className={styles.selectorNext} aria-label="Show more moving services"
+                onClick={() => document.getElementById("moving-service-selector")?.scrollBy({ left: 320, behavior: "smooth" })}>
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+            {services.map((service) => (
+              <section className={styles.serviceGroup} id={service.id} key={service.id}>
+                <h2>{service.title}</h2>
+                <div className={styles.banner} aria-hidden="true">
+                  <img src={`/packers-movers/${serviceImages[service.id]}`} alt="" width={1942} height={809}
+                    style={{ display: "block", width: "100%", height: "100%", objectFit: "contain" }} />
+                </div>
+                <div className={styles.serviceRow}>
+                  <div>
+                    <h3>{service.title}</h3>
+                    <div className={styles.rating}>
+                      <span className={styles.star} aria-hidden="true">★</span>
+                      <span>4.20</span>
+                      <span>(628 reviews)</span>
+                      <button type="button" onClick={() => openDetails(service)}>View details</button>
+                    </div>
+                    <strong>Estimated from {money(Math.min(...service.options.map((option) => option.base)))}</strong>
+                  </div>
+                  <button type="button" className={styles.addButton} onClick={() => openDetails(service)}>Add</button>
+                </div>
+              </section>
+            ))}
+          </main>
+          <aside className={styles.sidebar}><FullHomeRightSidebar /></aside>
         </div>
-      </section>
-
-      <section className={styles.marketGrid} data-reveal>
-        <aside className={styles.categories}>
-          <h2>Move Categories</h2>
-          {PACKERS_MOVERS_CATEGORIES.map((item) => <button key={item.id} type="button" className={category === item.id ? styles.activeCategory : ""} onClick={() => setCategory(item.id)}><Icon name={item.icon}/><span>{item.label}</span></button>)}
-        </aside>
-
-        <div className={styles.catalog}>
-          <div className={styles.catalogHead}><div><p>PROFESSIONAL MOVING SOLUTIONS</p><h2>{PACKERS_MOVERS_CATEGORIES.find((item) => item.id === category)?.label}</h2></div><span>Verified crew · Transparent rates</span></div>
-          <div className={styles.cards}>
-            {filtered.map((service, index) => <article key={service.id} className={`${styles.card} ${serviceId === service.id ? styles.selectedCard : ""}`} data-reveal style={{ "--delay": `${Math.min(index, 11) * 38}ms` } as CSSProperties}>
-              <div className={styles.cardMedia}><Image src={service.image} alt={service.name} fill priority={index < 4} sizes="(max-width: 700px) 100vw, 280px" />{service.popular && <span>Popular</span>}{serviceId === service.id && <b>✓</b>}</div>
-              <div className={styles.cardBody}><h3>{service.name}</h3><p className={styles.starting}>{getPackersMoversDistanceRule(service).distanceApplicable ? "Fixed base price · first 5 km" : "Fixed base price"}</p><div className={styles.price}>₹{service.basePrice.toLocaleString("en-IN")} <small>/ {service.unit}</small></div><ul>{service.details.map((detail) => <li key={detail}>{detail}</li>)}</ul><button type="button" onClick={() => serviceId === service.id ? setServiceId("") : selectService(service.id)}>{serviceId === service.id ? "Remove Service" : "Add Service"}</button></div>
-            </article>)}
-          </div>
+      </div>
+      {active && (
+        <div className={styles.backdrop} onMouseDown={(event) => { if (event.target === event.currentTarget) setActive(null); }}>
+          <section className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="moving-modal-title">
+            <header className={styles.modalHeader}>
+              <div><h2 id="moving-modal-title">{active.title}</h2><p>Free quote request · no booking fee</p></div>
+              <button type="button" className={styles.closeButton} aria-label="Close details" onClick={() => setActive(null)}>×</button>
+            </header>
+            <div className={styles.modalBody}>
+              <section aria-label="Choose your move">
+                <h3>Choose your move</h3>
+                <div className={styles.moveOptions}>
+                  {active.options.map((option) => (
+                    <button key={option.id} type="button" aria-pressed={choice === option.id}
+                      className={`${styles.moveOption} ${choice === option.id ? styles.moveOptionSelected : ""}`}
+                      onClick={() => setChoice(option.id)}>
+                      <strong>{option.title}</strong><span>Estimate from {money(option.base)}</span>
+                    </button>
+                  ))}
+                </div>
+                <div className={styles.moveFields}>
+                  <label>Pickup area<input value={pickup} onChange={(event) => setPickup(event.target.value)} placeholder="Area and city" /></label>
+                  <label>Drop area<input value={drop} onChange={(event) => setDrop(event.target.value)} placeholder="Area and city" /></label>
+                  {active.distanceRate > 0 && (
+                    <label>Estimated distance (km)<input type="number" min="1" max="5000" value={distance}
+                      onChange={(event) => {
+                        const value = Number(event.target.value);
+                        setDistance(Number.isFinite(value) && value > 0 ? Math.min(5000, Math.floor(value)) : 1);
+                      }} /></label>
+                  )}
+                </div>
+                <label className={styles.moveCheckbox}><input type="checkbox" checked={packing}
+                  onChange={(event) => setPacking(event.target.checked)} /> Add packing estimate (+₹699)</label>
+                <label className={styles.moveCheckbox}><input type="checkbox" checked={stairs}
+                  onChange={(event) => setStairs(event.target.checked)} /> Stairs / no lift estimate (+₹399)</label>
+              </section>
+              <p className={styles.notice}>The displayed amount is an estimate, not a final payable price. Goods volume, exact route, floors, vehicle needs and packing materials must be confirmed before the final quote.</p>
+              {selectedOption && <div className={styles.moveBreakdown}><span>Indicative moving estimate</span><strong>{money(estimate)}</strong></div>}
+              <p>{active.description}</p>
+              <div className={styles.infoBox}><h3>What the service covers</h3>
+                <ul>{active.includes.map((item) => <li key={item}>{item}</li>)}</ul>
+              </div>
+              <div className={styles.infoBox}><h3>Work process</h3>
+                <ol>{active.process.map((step) => <li key={step}>{step}</li>)}</ol>
+              </div>
+              <div className={styles.reviews}>
+                <strong><span className={styles.star}>★</span> 4.20</strong>
+                <span>628 reviews</span>
+                {[5, 4, 3, 2, 1].map((score, index) => (
+                  <div className={styles.ratingLine} key={score}>
+                    <span>{score} ★</span>
+                    <div><i style={{ width: `${[48, 29, 13, 7, 3][index]}%` }} /></div>
+                    <span>{[48, 29, 13, 7, 3][index]}%</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <footer className={styles.modalFooter}>
+              <div><small>Request a quote</small><strong>₹0 booking fee</strong></div>
+              <button type="button" disabled={!selectedOption} onClick={() => addQuote(active)}>Continue</button>
+            </footer>
+          </section>
         </div>
-
-        <aside className={styles.summary} id="move-estimate">
-          <h2>Your Move Estimate</h2>
-          {!estimate && <div className={styles.emptyEstimate}><Icon name="box"/><strong>Choose a moving service</strong><span>Select any service card to calculate and confirm your move.</span></div>}
-          {estimate && <>
-            <div className={styles.summaryService}><Image src={estimate.service.image} alt="" width={92} height={66}/><div><strong>{estimate.service.name}</strong><span>{estimate.distanceApplicable ? `${estimate.distanceKm} km` : "No distance charge"} · {inventoryTier} inventory</span></div></div>
-            <div className={styles.inventoryList}><div><strong>Selected details</strong><button type="button" onClick={() => setCustomizeOpen(true)}>Customize</button></div><ul><li>{inventoryTier} inventory</li><li>{packingTier} packing</li><li>{accessType.replaceAll("-", " ")}</li>{estimate.distanceApplicable && <li>{estimate.distanceKm} km distance</li>}</ul></div>
-            <h3>Price Breakdown</h3>
-            <dl><div><dt>{estimate.distanceApplicable ? `Base service (first ${estimate.includedKm} km)` : "Base service"}</dt><dd>₹{estimate.baseCharge.toLocaleString("en-IN")}</dd></div>{estimate.distanceApplicable && <div><dt>Extra distance ({Math.max(0, estimate.distanceKm - estimate.includedKm)} km × ₹{estimate.extraKmRate})</dt><dd>₹{estimate.distanceCharge.toLocaleString("en-IN")}</dd></div>}<div><dt>Packing charges</dt><dd>₹{estimate.packingCharge.toLocaleString("en-IN")}</dd></div><div><dt>Floor / lift charges</dt><dd>₹{estimate.floorCharge.toLocaleString("en-IN")}</dd></div><div className={styles.free}><dt>Booking charge</dt><dd>FREE</dd></div></dl>
-            <div className={styles.total}><span>Estimated Total</span><strong>₹{estimate.total.toLocaleString("en-IN")}</strong></div>
-            <p className={styles.quoteNote}>No booking fee. Final sealed quote is confirmed after inventory details are verified.</p>
-            <button className={styles.customizeButton} type="button" onClick={() => setCustomizeOpen(true)}>Customize Move</button>
-            <PackersMoversBookingModal
-              serviceId={estimate.service.id}
-              serviceName={estimate.service.name}
-              estimatedTotal={estimate.total}
-              distanceKm={distanceKm}
-              inventoryTier={inventoryTier}
-              packingTier={packingTier}
-              accessType={accessType}
-              triggerLabel="Book Now"
-              triggerClassName={styles.bookButton}
-            />
-          </>}
-          <div className={styles.secureStrip} aria-label="City Coolies booking protections"><span><i><Icon name="lock"/></i><b>Digital Inventory<br/>Locked</b></span><span><i><Icon name="target"/></i><b>OTP Verified<br/>Crew</b></span><span><i><Icon name="clipboard"/></i><b>Sealed<br/>Quote</b></span><span><i><Icon name="shield"/></i><b>No Crew<br/>Cash Payment</b></span></div>
-        </aside>
-      </section>
-
-      <section
-        className={styles.steps}
-        data-reveal
-        aria-label="How City Coolies Packers and Movers works"
-      >
-        <article className={styles.stepItem}>
-          <span className={styles.stepIcon}>
-            <Icon name="clipboard" />
-          </span>
-          <span className={styles.stepNumber}>1</span>
-          <span className={styles.stepCopy}>
-            <strong>Select Inventory</strong>
-            <small>Add your items & details</small>
-          </span>
-          <span className={styles.stepArrow} aria-hidden="true">›</span>
-        </article>
-
-        <article className={styles.stepItem}>
-          <span className={styles.stepIcon}>
-            <Icon name="target" />
-          </span>
-          <span className={styles.stepNumber}>2</span>
-          <span className={styles.stepCopy}>
-            <strong>Get Estimate</strong>
-            <small>Transparent pricing</small>
-          </span>
-          <span className={styles.stepArrow} aria-hidden="true">›</span>
-        </article>
-
-        <article className={styles.stepItem}>
-          <span className={styles.stepIcon}>
-            <Icon name="lock" />
-          </span>
-          <span className={styles.stepNumber}>3</span>
-          <span className={styles.stepCopy}>
-            <strong>Secure Payment</strong>
-            <small>Pay 50% advance online</small>
-          </span>
-          <span className={styles.stepArrow} aria-hidden="true">›</span>
-        </article>
-
-        <article className={styles.stepItem}>
-          <span className={styles.stepIcon}>
-            <Icon name="route" />
-          </span>
-          <span className={styles.stepNumber}>4</span>
-          <span className={styles.stepCopy}>
-            <strong>Move Tracking</strong>
-            <small>Receive move updates</small>
-          </span>
-          <span className={styles.stepArrow} aria-hidden="true">›</span>
-        </article>
-
-        <article className={styles.stepItem}>
-          <span className={styles.stepIcon}>
-            <Icon name="shield" />
-          </span>
-          <span className={styles.stepNumber}>5</span>
-          <span className={styles.stepCopy}>
-            <strong>Safe Delivery</strong>
-            <small>Damage-protected move</small>
-          </span>
-        </article>
-      </section>
-
-      {customizeOpen && estimate && <div className={styles.modalBackdrop} role="presentation" onMouseDown={(e) => { if (e.currentTarget === e.target) setCustomizeOpen(false); }}><section className={styles.modal} role="dialog" aria-modal="true" aria-label="Customize move"><button className={styles.modalClose} type="button" onClick={() => setCustomizeOpen(false)}>×</button><p className={styles.modalEyebrow}>CUSTOMIZE YOUR MOVE</p><h2>{estimate.service.name}</h2><div className={styles.customizeGrid}>{estimate.distanceApplicable && <label>Transport distance<select value={distanceKm} onChange={(e) => setDistanceKm(Number(e.target.value))}>{distanceOptions.map((km) => <option key={km} value={km}>{km} km {km === 5 ? "(included)" : ""}</option>)}</select><small>Extra ₹{estimate.extraKmRate}/km after first 5 km</small></label>}<label>Inventory size<select value={inventoryTier} onChange={(e) => setInventoryTier(e.target.value as InventoryTier)}><option value="light">Light inventory</option><option value="standard">Standard inventory</option><option value="heavy">Heavy inventory</option></select></label><label>Packing protection<select value={packingTier} onChange={(e) => setPackingTier(e.target.value as PackingTier)}><option value="basic">Basic protection</option><option value="standard">Standard packing</option><option value="premium">Premium fragile packing</option></select></label><label>Floor & lift<select value={accessType} onChange={(e) => setAccessType(e.target.value as AccessType)}><option value="lift">Lift available / ground floor</option><option value="stairs-1">1st floor, no lift</option><option value="stairs-2">2nd floor, no lift</option><option value="stairs-3">3rd floor, no lift</option><option value="stairs-4plus">4th+ floor, no lift</option></select></label></div><div className={styles.customizeTotal}><span>Updated estimate</span><strong>₹{estimate.total.toLocaleString("en-IN")}</strong></div><button className={styles.saveCustomization} type="button" onClick={() => setCustomizeOpen(false)}>Save Customization</button></section></div>}
-
-    </main>
+      )}
+    </section>
   );
 }

@@ -386,3 +386,56 @@ html {
     animation: none;
   }
 }
+
+/* CITY_COOLIES_POPUP_SCROLLBAR_HIDE_START */
+
+/*
+  Hide visible scrollbars inside City Coolies popup dialogs.
+
+  Scrolling itself remains fully functional:
+  - mouse wheel
+  - touchpad
+  - keyboard
+  - touch / swipe
+
+  Firefox / modern browsers.
+*/
+[role="dialog"],
+[role="dialog"] *,
+[aria-modal="true"],
+[aria-modal="true"] * {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/*
+  Chrome / Edge / Safari.
+*/
+[role="dialog"]::-webkit-scrollbar,
+[role="dialog"] *::-webkit-scrollbar,
+[aria-modal="true"]::-webkit-scrollbar,
+[aria-modal="true"] *::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+
+  display: none !important;
+
+  background: transparent !important;
+}
+
+[role="dialog"]::-webkit-scrollbar-track,
+[role="dialog"] *::-webkit-scrollbar-track,
+[aria-modal="true"]::-webkit-scrollbar-track,
+[aria-modal="true"] *::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+[role="dialog"]::-webkit-scrollbar-thumb,
+[role="dialog"] *::-webkit-scrollbar-thumb,
+[aria-modal="true"]::-webkit-scrollbar-thumb,
+[aria-modal="true"] *::-webkit-scrollbar-thumb {
+  background: transparent !important;
+  border: 0 !important;
+}
+
+/* CITY_COOLIES_POPUP_SCROLLBAR_HIDE_END */

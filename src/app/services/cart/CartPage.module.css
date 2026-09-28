@@ -1,0 +1,14 @@
+.page { min-height: 60vh; background: #fff; color: #171717; }
+.container { width: min(928px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 80px; }
+.container h1 { margin: 0 0 22px; font-size: 30px; }
+.card, .empty { padding: 24px; border: 1px solid #f0d7da; border-radius: 14px; background: #fff; }
+.empty p { margin: 0 0 18px; }
+.item { display: grid; grid-template-columns: minmax(0, 1fr) auto 32px; align-items: center; gap: 18px; padding: 16px 0; border-bottom: 1px solid #f0dfe2; }
+.item h2 { margin: 0 0 5px; font-size: 17px; }
+.item p { margin: 0; color: #69717d; font-size: 13px; }
+.item strong { white-space: nowrap; }
+.item button { width: 32px; height: 32px; border: 1px solid #f0c9cc; border-radius: 50%; background: #fff7f8; color: #ef1b23; font-size: 21px; cursor: pointer; }
+.total { display: flex; justify-content: space-between; gap: 12px; padding: 22px 0; font-size: 18px; }
+.action { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; padding: 9px 18px; border: 1px solid #ef1b23; border-radius: 10px; color: #ef1b23; font-weight: 700; text-decoration: none; }
+.action:hover { background: #ef1b23; color: #fff; }
+@media (max-width:600px) { .container { padding-top: 20px; } .container h1 { font-size: 25px; } .card, .empty { padding: 15px; } .item { gap: 8px; } .item h2 { font-size: 15px; } .item p { font-size: 12px; } .item strong { font-size: 13px; } }

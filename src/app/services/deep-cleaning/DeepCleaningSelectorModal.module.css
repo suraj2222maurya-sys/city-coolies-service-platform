@@ -1,0 +1,469 @@
+﻿.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  width: 100vw;
+  height: 100dvh;
+
+  padding: 56px 20px 28px;
+
+  background: rgba(0, 0, 0, 0.79);
+}
+
+.dialogPositioner {
+  position: relative;
+
+  width: min(
+    100%,
+    560px
+  );
+
+  max-height: calc(100dvh - 84px);
+}
+
+.modal {
+  box-sizing: border-box;
+
+  width: 100%;
+  max-height: calc(100dvh - 84px);
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  padding:
+    31px
+    18px
+    34px;
+
+  border-radius: 16px;
+
+  background: #ffffff;
+  color: #171717;
+
+  box-shadow:
+    0 24px 70px
+    rgba(0, 0, 0, 0.28);
+}
+
+.closeButton {
+  position: absolute;
+
+  top: -48px;
+  right: 16px;
+
+  z-index: 2;
+
+  display: flex;
+
+  width: 38px;
+  height: 38px;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: #171717;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 2px 10px
+    rgba(0, 0, 0, 0.12);
+}
+
+.closeButton svg {
+  display: block;
+
+  width: 22px;
+  height: 22px;
+
+  fill: none;
+  stroke: currentColor;
+
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid #ef1b23;
+  outline-offset: 3px;
+}
+
+.title {
+  margin: 0;
+
+  color: #171717;
+
+  font-family:
+    var(--font-geist-sans),
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+
+  letter-spacing: -0.03em;
+}
+
+.groupTitle {
+  margin:
+    32px
+    0
+    18px;
+
+  color: #171717;
+
+  font-family:
+    var(--font-geist-sans),
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(0, 1fr)
+    );
+
+  column-gap: 12px;
+  row-gap: 28px;
+}
+
+.serviceCard {
+  display: flex;
+
+  min-width: 0;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #171717;
+
+  text-align: center;
+  text-decoration: none;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.imageArea {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  height: 76px;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.serviceIcon {
+  display: block;
+  width: 72px;
+  height: 72px;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.serviceName {
+  display: block;
+
+  width: 100%;
+
+  color: #171717;
+
+  font-family:
+    var(--font-geist-sans),
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+
+  overflow-wrap: break-word;
+}
+
+.serviceCard:focus-visible {
+  outline: 2px solid #ef1b23;
+  outline-offset: 5px;
+
+  border-radius: 8px;
+}
+
+
+
+.serviceIcon {
+  display: block;
+  width: 72px;
+  height: 72px;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (hover: hover) {
+  
+
+.serviceIcon {
+  display: block;
+  width: 72px;
+  height: 72px;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+  .serviceCard:hover .serviceName {
+    color: #ef1b23;
+  }
+}
+
+/* TABLET */
+@media (max-width: 767px) {
+  .dialogPositioner {
+    width: min(
+      100%,
+      540px
+    );
+  }
+
+  .grid {
+    grid-template-columns:
+      repeat(
+        3,
+        minmax(0, 1fr)
+      );
+  }
+}
+
+/* PHONE */
+@media (max-width: 520px) {
+  .overlay {
+    align-items: center;
+
+    padding:
+      58px
+      12px
+      16px;
+  }
+
+  .dialogPositioner {
+    width: 100%;
+
+    max-height:
+      calc(100dvh - 74px);
+  }
+
+  .modal {
+    max-height:
+      calc(100dvh - 74px);
+
+    padding:
+      26px
+      14px
+      28px;
+
+    border-radius: 14px;
+  }
+
+  .closeButton {
+    top: -45px;
+    right: 8px;
+
+    width: 36px;
+    height: 36px;
+  }
+
+  .title {
+    font-size: 26px;
+  }
+
+  .groupTitle {
+    margin:
+      26px
+      0
+      16px;
+
+    font-size: 18px;
+  }
+
+  .grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+
+    column-gap: 10px;
+    row-gap: 22px;
+  }
+
+  .imageArea {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  height: 76px;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.serviceIcon {
+  display: block;
+  width: 72px;
+  height: 72px;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+  .serviceName {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .imageArea {
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  height: 76px;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.serviceIcon {
+  display: block;
+  width: 72px;
+  height: 72px;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+}
+
+/* CITY_COOLIES_DEEP_CLEANING_ICON_PHONE */
+@media (max-width: 520px) {
+  .serviceIcon {
+    width: 62px;
+    height: 62px;
+  }
+}
+
+
+/* CITY_COOLIES_PHONE_MODAL_COMPACT_START */
+
+@media (max-width: 520px) {
+  .overlay {
+    padding: 64px 26px 24px;
+  }
+
+  .dialogPositioner {
+    width: min(330px, calc(100vw - 52px));
+    max-height: 74dvh;
+  }
+
+  .modal {
+    width: 100%;
+    max-height: 74dvh;
+
+    padding:
+      22px
+      16px
+      24px;
+
+    border-radius: 14px;
+  }
+
+  .closeButton {
+    top: -42px;
+    right: 6px;
+
+    width: 34px;
+    height: 34px;
+  }
+
+  .closeButton svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .title {
+    font-size: 24px;
+    line-height: 1.15;
+  }
+
+  .groupTitle {
+    margin:
+      22px
+      0
+      14px;
+
+    font-size: 17px;
+  }
+
+  .grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    column-gap: 12px;
+    row-gap: 18px;
+  }
+
+  .imageArea {
+    height: 58px;
+  }
+
+  .serviceIcon {
+    width: 54px;
+    height: 54px;
+  }
+
+  .serviceName {
+    font-size: 11.5px;
+    line-height: 1.3;
+  }
+}
+
+/* CITY_COOLIES_PHONE_MODAL_COMPACT_END */
+

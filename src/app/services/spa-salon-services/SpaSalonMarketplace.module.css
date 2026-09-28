@@ -1,0 +1,200 @@
+.section { box-sizing: border-box; min-height: 60vh; width: 100%; background: #fff; color: #171717; }
+.container { box-sizing: border-box; width: min(928px, calc(100% - 32px)); margin: 0 auto; padding: 12px 0 64px; }
+.selectorTitle { margin: 0 0 8px; color: #ef1b23; font-size: 14px; font-weight: 700; line-height: 1.3; }
+.selector { display: flex; gap: 10px; width: 100%; margin-top: -8px; padding: 0 0 15px; border-bottom: 1px solid #f0dfe2; }
+.category { display: flex; width: 100px; flex: 0 0 100px; align-items: center; flex-direction: column; gap: 5px; padding: 0 0 5px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: #171717; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.category img { display: block; width: 100px; height: 100px; object-fit: contain; }
+.category span { display: block; margin-top: -8px; text-align: center; }
+.category:hover, .category:focus-visible, .active { color: #ef1b23; }
+.active { border-bottom-color: #ef1b23; }
+.category:focus-visible, .serviceSelectorItem:focus-visible, .addButton:focus-visible { outline: 2px solid #ef1b23; outline-offset: 3px; }
+.columns { display: grid; grid-template-columns: minmax(0, 590px) minmax(0, 310px); gap: 28px; align-items: start; }
+.main { min-width: 0; border-right: 1px solid #f4d9de; padding-bottom: 60px; }
+.sidebar { min-width: 0; position: sticky; top: 170px; padding-top: 18px; }
+.content { padding: 16px 0 24px; }
+.content > h2 { margin: 0 0 16px; font-size: 18px; line-height: 1.3; }
+.serviceSelector { display: flex; gap: 5px; width: 100%; overflow-x: auto; padding: 0 0 12px; scrollbar-width: thin; }
+.serviceSelectorItem { display: flex; width: 100px; flex: 0 0 100px; align-items: center; flex-direction: column; gap: 7px; padding: 0; border: 0; background: transparent; color: #171717; font: inherit; font-size: 13px; line-height: 1.16; text-align: center; cursor: pointer; }
+.serviceSelectorItem:hover { color: #ef1b23; }
+.thumbnail { display: block; width: 100px; height: 100px; background: #fff4f5; }
+.serviceGroup { width: 100%; padding: 16px 0 25px; border-bottom: 1px solid #f0dfe2; scroll-margin-top: 145px; }
+.serviceGroup + .serviceGroup { padding-top: 25px; }
+.serviceGroup h3 { margin: 0 0 12px; font-size: 28px; line-height: 1.2; }
+.banner { width: 100%; aspect-ratio: 1940 / 811; background: #fff4f5 center / contain no-repeat; }
+.salonImage { background-image: url("/spa-salon/salon_for_women_service_banner.png"); background-position: center; background-size: contain; background-repeat: no-repeat; }
+.serviceRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0 0; }
+.serviceRow h4 { margin: 0 0 6px; font-size: 19px; line-height: 1.25; }
+.serviceRow strong { display: inline-block; margin-top: 11px; }
+.rating { display: flex; align-items: center; flex-wrap: wrap; column-gap: 5px; row-gap: 3px; color: #555f6c; font-size: 13px; line-height: 1.25; }
+.star { display: inline-flex; width: 16px; height: 16px; flex: 0 0 16px; align-items: center; justify-content: center; border-radius: 50%; background: #ef1b23; color: #fff; font-size: 11px; line-height: 1; }
+.reviewCount { border-bottom: 1px dotted #69717d; white-space: nowrap; }
+.rating button { padding: 0 0 0 5px; border: 0; background: transparent; color: #e71922; font: inherit; font-weight: 600; cursor: pointer; }
+.addButton { min-width: 85px; min-height: 42px; flex: 0 0 auto; padding: 8px 16px; border: 1px solid #ef1b23; border-radius: 10px; background: #fff; color: #ef1b23; font-size: 16px; font-weight: 700; cursor: pointer; }
+.addButton:hover { background: #ef1b23; color: #fff; }
+.backdrop { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 16px; background: #0009; }
+.modal { display: flex; width: min(472px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); min-height: 180px; flex-direction: column; overflow: hidden; border-radius: 18px; background: #fff; box-shadow: 0 20px 70px #0004; }
+.modalHeader { display: flex; align-items: start; justify-content: space-between; gap: 12px; padding: 18px 22px; border-bottom: 1px solid #e6e8ef; }
+.modalHeader h2 { margin: 0; font-size: 25px; line-height: 1.2; }
+.modalHeader button { border: 0; background: transparent; color: #171717; font-size: 29px; line-height: 1; cursor: pointer; }
+.modalBody { min-height: 100px; }
+@media (max-width: 980px) { .container { width: min(100% - 28px, 810px); } .columns { grid-template-columns: minmax(0, 1fr); } .main { border-right: 0; padding-bottom: 12px; } .sidebar { position: static; padding-top: 0; } }
+@media (max-width: 600px) { .container { width: calc(100% - 24px); padding-top: 10px; } .serviceGroup h3 { font-size: 24px; } .serviceRow h4 { font-size: 17px; } .rating, .rating button { font-size: 12px; } }
+.serviceSelectorItem .salonImage { background-image: url("/spa-salon/salon_for_women_thumbnail_v2.png"); background-size: cover; background-position: center; }
+
+/* Original Spa for Women photo: preserve the entire image on every screen. */
+.banner.spaImage,
+.serviceSelectorItem .thumbnail.spaImage {
+  background-image: url("/spa-salon/spa_for_women_original_massage.jpg") !important;
+  background-position: center !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+}
+/* ORIGINAL_SPA_IMAGE_START */
+.spaImage {
+  background-image: url("/spa-salon/spa_for_women_original_massage.jpg") !important;
+  background-position: center !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+}
+/* ORIGINAL_SPA_IMAGE_END */
+/* SPA_BANNER_FIT_START */
+.banner.spaImage {
+  background-size: cover !important;
+  background-position: center !important;
+}
+.serviceSelectorItem .thumbnail.spaImage {
+  background-size: cover !important;
+  background-position: center !important;
+}
+/* SPA_BANNER_FIT_END */
+/* SALON_FACIAL_START */
+.salonImage {
+  background-image: url("/spa-salon/salon_for_women_facial_banner.png") !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+.serviceSelectorItem .salonImage {
+  background-image: url("/spa-salon/salon_for_women_facial_banner.png") !important;
+  background-size: cover !important;
+  background-position: 72% center !important;
+}
+/* SALON_FACIAL_END */
+/* FACIAL_OPTIONS_START */
+.modalBody { min-height: 0; overflow-y: auto; padding: 20px 30px; }
+.facialPrompt { margin: 0 0 4px; color: #566173; font-size: 16px; }
+.facialGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; row-gap: 20px; }
+.facialOption { min-width: 0; }
+.facialImage { width: 100%; aspect-ratio: 1; border-radius: 11px; background-color: #fff4f5; background-position: center; background-size: contain; background-repeat: no-repeat; }
+.facialOptionDetails { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 7px; padding-top: 7px; color: #171717; font-size: 13px; }
+.facialOptionDetails strong { min-width: 0; line-height: 1.25; }
+.facialOptionDetails span { font-weight: 700; white-space: nowrap; }
+.facialAdd { min-width: 61px; padding: 7px 10px; border: 1px solid #ef1b23; border-radius: 10px; background: #fff; color: #ef1b23; font: inherit; font-weight: 700; cursor: pointer; }
+.facialAdd[aria-pressed="true"] { background: #fff4f5; }
+.facialFooter { display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 30px; border-top: 1px solid #e6e8ef; }
+.facialFooter div { display: flex; flex-direction: column; gap: 3px; }
+.facialFooter span { color: #66707e; }
+.facialFooter strong { color: #171717; font-size: 19px; }
+.facialFooter button { min-width: 140px; padding: 13px; border: 0; border-radius: 12px; background: #ef1b23; color: #fff; font-size: 16px; font-weight: 700; cursor: pointer; }
+.facialFooter button:disabled { background: #e6e8ec; color: #8c929d; cursor: not-allowed; }
+@media (max-width: 600px) { .modalBody { padding: 15px 16px; } .facialGrid { gap: 14px 10px; } .facialOptionDetails { grid-template-columns: minmax(0, 1fr) auto; } .facialOptionDetails strong { grid-column: 1 / -1; } .facialFooter { padding: 12px 16px; } }
+/* FACIAL_OPTIONS_END */
+/* SPA_DETAILS_START */
+.spaIntro { margin: 0 0 12px; color: #566173; }
+.spaInfo { margin-top: 22px; color: #4e5968; font-size: 14px; line-height: 1.5; }
+.spaInfo h3 { margin: 16px 0 6px; color: #171717; font-size: 16px; }
+.spaInfo p { margin: 0 0 10px; }
+.spaInfo ol { margin: 0; padding-left: 20px; }
+.spaInfo li { margin: 5px 0; }
+.spaRating { margin-top: 20px; padding-top: 14px; border-top: 1px solid #e6e8ef; }
+.spaRatingHeading { display: flex; align-items: center; gap: 9px; margin-bottom: 12px; }
+.spaRatingHeading strong { color: #4e5968; font-size: 22px; }
+.spaRatingStar { color: #ef1b23; font-size: 22px; }
+.spaRatingLine { display: grid; grid-template-columns: 36px minmax(0, 1fr) 38px; align-items: center; gap: 9px; margin: 8px 0; }
+.spaRatingLine > div { height: 6px; background: #ddd; }
+.spaRatingLine i { display: block; height: 100%; background: #ef1b23; }
+.spaRatingLine > span:last-child { text-align: right; }
+/* SPA_DETAILS_END */
+/* STRESS_RELIEF_START */
+.stressGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 22px; }
+.stressOption { min-width: 0; }
+.stressImage { width: 100%; aspect-ratio: 1; border-radius: 11px; background: #fff4f5 url('/spa-salon/stress_relief_spa.png') center / contain no-repeat; }
+.stressDetails { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 7px; padding-top: 7px; color: #171717; font-size: 13px; }
+.stressDetails strong { min-width: 0; grid-column: 1 / -1; }
+.stressDetails span { font-weight: 700; white-space: nowrap; }
+.stressDetails button { min-width: 60px; padding: 7px 10px; border: 1px solid #ef1b23; border-radius: 9px; background: #fff; color: #ef1b23; font: inherit; font-weight: 700; cursor: pointer; }
+.stressDetails button[aria-pressed='true'] { background: #fff4f5; }
+@media (max-width: 600px) { .stressGrid { gap: 10px; } }
+/* STRESS_RELIEF_END */
+/* SPA_FACIAL_LAYOUT_MATCH */
+.stressGrid { margin-bottom: 0; }
+.stressDetails {
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 7px;
+}
+.stressDetails strong {
+  grid-column: auto;
+  line-height: 1.25;
+}
+@media (max-width: 600px) {
+  .stressDetails { grid-template-columns: minmax(0, 1fr) auto; }
+  .stressDetails strong { grid-column: 1 / -1; }
+}
+/* SPA_PAIN_OPTIONS_START */
+.stressGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; margin-bottom: 22px; }
+.stressOption { min-width: 0; border: 0; background: transparent; }
+.stressImage { display: block; width: 100%; aspect-ratio: 1; border-radius: 0; background-color: #fff4f5; background-position: center; background-size: contain; background-repeat: no-repeat; }
+.stressDetails { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 5px; padding-top: 7px; color: #171717; font-size: 13px; }
+.stressDetails strong { grid-column: 1 / -1; min-height: 2.4em; line-height: 1.2; overflow-wrap: anywhere; }
+.stressDetails span { font-weight: 700; white-space: nowrap; }
+.stressDetails button { min-width: 60px; padding: 7px 10px; border: 1px solid #ef1b23; border-radius: 9px; background: #fff; color: #ef1b23; font: inherit; font-weight: 700; cursor: pointer; }
+.stressDetails button[aria-pressed='true'] { background: #fff4f5; }
+@media (max-width: 600px) { .stressGrid { gap: 14px 10px; } .stressDetails { font-size: 12px; } }
+/* SPA_PAIN_OPTIONS_END */
+/* HAIR_STUDIO_OPTIONS_START */
+.hairPrompt { margin: 0 0 12px; color: #566173; font-size: 16px; }
+.hairGrid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px 12px; margin-bottom: 20px; }
+.hairOption { min-width: 0; background: transparent; border: 0; }
+.hairImage { display: block; width: 100%; aspect-ratio: 1672 / 941; background-color: #fff4f5; background-position: center; background-size: contain; background-repeat: no-repeat; }
+.hairDetails { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 6px; padding-top: 8px; color: #171717; font-size: 13px; }
+.hairDetails strong { grid-column: 1 / -1; min-width: 0; line-height: 1.25; }
+.hairDetails span { font-weight: 700; white-space: nowrap; }
+.hairAdd { min-width: 62px; padding: 7px 10px; border: 1px solid #ef1b23; border-radius: 10px; background: #fff; color: #ef1b23; font: inherit; font-weight: 700; cursor: pointer; }
+.hairAdd[aria-pressed="true"] { background: #fff4f5; }
+@media (max-width:600px) { .hairGrid { gap: 14px 9px; } .hairDetails { font-size: 12px; } }
+/* HAIR_STUDIO_OPTIONS_END */
+/* WAXING_OPTIONS_START */
+.waxingPrompt { margin: 0 0 12px; color: #566173; font-size: 16px; }
+.waxingGrid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 18px 12px; margin-bottom: 20px; }
+.waxingOption { min-width: 0; border: 0; background: transparent; }
+.waxingImage { display: block; width: 100%; aspect-ratio: 1; background-color: #fff4f5; background-position: center; background-size: contain; background-repeat: no-repeat; }
+.waxingDetails { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 6px; padding-top: 8px; color: #171717; font-size: 13px; }
+.waxingDetails strong { grid-column: 1 / -1; min-width: 0; line-height: 1.25; }
+.waxingDetails span { font-weight: 700; white-space: nowrap; }
+.waxingAdd { min-width: 62px; padding: 7px 10px; border: 1px solid #ef1b23; border-radius: 10px; background: #fff; color: #ef1b23; font: inherit; font-weight: 700; cursor: pointer; }
+.waxingAdd[aria-pressed="true"] { background: #fff4f5; }
+@media (max-width:600px) { .waxingGrid { gap: 14px 9px; } .waxingDetails { font-size: 12px; } }
+/* WAXING_OPTIONS_END */
+/* WAXING_LARGE_IMAGES_START */
+.waxingGrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; margin-bottom: 20px; }
+.waxingOption { min-width: 0; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.waxingImage { display: block; width: 100%; height: auto; border: 0; border-radius: 0; background-color: transparent; background-position: center; background-size: contain; background-repeat: no-repeat; }
+.waxingDetails { padding-top: 9px; }
+@media (max-width: 600px) { .waxingGrid { grid-template-columns: minmax(0, 1fr); gap: 20px; } }
+/* WAXING_LARGE_IMAGES_END */
+/* MEN_HAIRCUT_START */
+.menHairThumbnail { display: block; width: 100px; height: 100px; flex: 0 0 100px; background: #fff4f5 url("/spa-salon/men_haircut_service_banner.png") center / contain no-repeat; }
+.menHairBanner { display: block; width: 100%; aspect-ratio: 1939 / 811; background: #fff4f5 url("/spa-salon/men_haircut_service_banner.png") center / contain no-repeat; }
+.menHairInfo { margin-bottom: 16px; color: #526071; font-size: 15px; line-height: 1.5; }
+.menHairInfo h3 { margin: 0 0 8px; color: #171717; font-size: 18px; }
+.menHairInfo p { margin: 0; }
+.menHairInfo ol { margin: 0; padding-left: 22px; }
+.menHairInfo li { margin: 5px 0; }
+.menHairReviews { padding: 15px 0 5px; border-top: 1px solid #e6e8ef; color: #566173; }
+.menHairReviewHeader { display: flex; align-items: center; gap: 11px; margin-bottom: 12px; }
+.menHairReviewHeader strong { font-size: 23px; }
+.menHairReviewHeader strong span { color: #ef1b23; }
+.menHairRatingLine { display: grid; grid-template-columns: 50px minmax(0,1fr) 38px; gap: 10px; align-items: center; margin: 10px 0; }
+.menHairRatingLine > div { height: 6px; background: #dedede; }
+.menHairRatingLine i { display: block; height: 100%; background: #ef1b23; }
+@media (max-width:600px) { .menHairInfo { font-size: 14px; } }
+/* MEN_HAIRCUT_END */

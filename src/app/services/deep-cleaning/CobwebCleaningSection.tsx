@@ -1,984 +1,412 @@
-﻿"use client";
+"use client";
 
-import Image from "next/image";
-import { useState } from "react";
-
-import ServiceBookingModal from "@/components/booking/ServiceBookingModal";
-
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
+import FullHomeRightSidebar from "./FullHomeRightSidebar";
 import {
-  COBWEB_CLEANING_SERVICES,
-  calculateCobwebCleaningEstimate,
-  getCobwebPricingUnitLabel,
-  type CobwebCleaningService,
-} from "@/lib/services/cobwebCleaningCatalog";
+  getDeepCleaningCartServerSnapshot,
+  getDeepCleaningCartSnapshot,
+  parseDeepCleaningCartSnapshot,
+  removeDeepCleaningCartItem,
+  subscribeDeepCleaningCart,
+  upsertDeepCleaningCartItem,
+} from "./deepCleaningCart";
+import styles from "./CobwebCleaningSection.module.css";
 
-const FEATURED_SERVICE_ID = "full-room-cobweb-cleaning";
+type Option = { id: string; label: string; price: number };
+type Step = { title: string; description: string };
+type Service = {
+  id: string;
+  title: string;
+  rating: number;
+  reviews: number;
+  options: readonly Option[];
+  pricingTitle?: string;
+  process: readonly Step[];
+  included?: readonly string[];
+  excluded?: readonly string[];
+  perfectFor?: readonly string[];
+  distribution: readonly number[];
+  directAdd?: boolean;
+};
 
-function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 0,
-  }).format(amount);
+const services: readonly Service[] = [
+  {
+    id: "home-cobweb-cleaning",
+    title: "Home Cobweb Cleaning",
+    rating: 4.4,
+    reviews: 810,
+    directAdd: true,
+    options: [{ id: "site-survey", label: "Site survey", price: 500 }],
+    process: [
+      { title: "Book the site survey", description: "Book a home cobweb cleaning assessment for \u20B9500." },
+      { title: "Inspect accessible areas", description: "Check ceiling corners, wall edges, balconies and reachable fixtures." },
+      { title: "Confirm the final rate", description: "The work scope and final cleaning rate are confirmed after the survey." },
+      { title: "Schedule cleaning", description: "Arrange the approved cleaning and review access needs." },
+    ],
+    included: [
+      "On-site assessment of reachable cobweb areas",
+      "Review of ceilings, corners and accessible exterior edges",
+      "Cleaning scope and final rate discussion after the survey",
+    ],
+    excluded: [
+      "The site survey charge does not include cleaning",
+      "Repairs, pest control and inaccessible high-area work",
+    ],
+    distribution: [60, 27, 8, 3, 2],
+  },
+  {
+    id: "industrial-cobweb-cleaning",
+    title: "Industrial Cobweb Cleaning",
+    rating: 4.4,
+    reviews: 740,
+    directAdd: true,
+    options: [{ id: "site-survey", label: "Site survey", price: 500 }],
+    process: [
+      { title: "Book the site survey", description: "Book an industrial cobweb cleaning assessment for \u20B9500." },
+      { title: "Review the facility", description: "Inspect accessible beams, corners, storage zones and working areas." },
+      { title: "Plan safe access", description: "Confirm height, equipment access and operating restrictions with the site team." },
+      { title: "Confirm the final rate", description: "Set the cleaning scope and final service rate after the survey." },
+    ],
+    included: [
+      "Industrial site and access assessment",
+      "Review of reachable cobweb accumulation areas",
+      "Cleaning scope and final rate discussion after the survey",
+    ],
+    excluded: [
+      "The site survey charge does not include cleaning",
+      "Machinery dismantling, electrical work and unapproved height work",
+    ],
+    distribution: [60, 27, 8, 3, 2],
+  },
+  {
+    id: "building-cobweb-cleaning",
+    title: "Building Cobweb Cleaning",
+    rating: 4.4,
+    reviews: 690,
+    directAdd: true,
+    options: [{ id: "site-survey", label: "Site survey", price: 500 }],
+    process: [
+      { title: "Book the site survey", description: "Book a building cobweb cleaning assessment for \u20B9500." },
+      { title: "Inspect common areas", description: "Check corridors, stairwells, entrances and accessible ceiling edges." },
+      { title: "Review access needs", description: "Identify height restrictions and areas requiring building permission." },
+      { title: "Confirm the final rate", description: "Confirm the cleaning scope and final rate after the survey." },
+    ],
+    included: [
+      "Building common-area assessment",
+      "Review of reachable corners and ceiling edges",
+      "Cleaning scope and final rate discussion after the survey",
+    ],
+    excluded: [
+      "The site survey charge does not include cleaning",
+      "Facade work, repairs and inaccessible areas unless separately agreed",
+    ],
+    distribution: [60, 27, 8, 3, 2],
+  },
+  {
+    id: "commercial-cobweb-cleaning",
+    title: "Commercial Cobweb Cleaning",
+    rating: 4.4,
+    reviews: 780,
+    directAdd: true,
+    options: [{ id: "site-survey", label: "Site survey", price: 500 }],
+    process: [
+      { title: "Book the site survey", description: "Book a commercial cobweb cleaning assessment for \u20B9500." },
+      { title: "Inspect the premises", description: "Review accessible ceiling corners, display edges, storage areas and common spaces." },
+      { title: "Agree on the work plan", description: "Confirm access, business hours and areas to be cleaned." },
+      { title: "Confirm the final rate", description: "Set the cleaning scope and final service rate after the survey." },
+    ],
+    included: [
+      "Commercial premises assessment",
+      "Review of accessible cobweb areas",
+      "Cleaning scope and final rate discussion after the survey",
+    ],
+    excluded: [
+      "The site survey charge does not include cleaning",
+      "Repairs, pest control and restricted areas without permission",
+    ],
+    distribution: [60, 27, 8, 3, 2],
+  },
+];
+const money = (value: number) => `\u20B9${value.toLocaleString("en-IN")}`;
+
+function scrollToService(id: string) {
+  const target = document.getElementById(id);
+  if (!target) return;
+  const top = target.getBoundingClientRect().top + window.scrollY - 155;
+  window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
 }
-
-function CheckIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="9" />
-      <path d="m8 12 2.6 2.6L16.5 9" />
-    </svg>
-  );
-}
-
-function ShieldIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 2.8 20 6v5.8c0 5-3.2 8.2-8 10.4-4.8-2.2-8-5.4-8-10.4V6l8-3.2Z" />
-      <path d="m8.7 12 2.1 2.1 4.7-5" />
-    </svg>
-  );
-}
-
-function DusterIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M6 20 17.5 8.5" />
-      <path d="M15 3c3.5 0 6 2.5 6 6-3.5 0-6-2.5-6-6Z" />
-      <path d="m4 18 2 2" />
-    </svg>
-  );
-}
-
-function WalletIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M4 6.5h14.5A1.5 1.5 0 0 1 20 8v11H5.5A2.5 2.5 0 0 1 3 16.5V7a3 3 0 0 1 3-3h11" />
-      <path d="M15 11h6v5h-6a2.5 2.5 0 0 1 0-5Z" />
-    </svg>
-  );
-}
-
-function WhatsAppIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M20 11.6a8 8 0 0 1-11.8 7L4 20l1.4-4A8 8 0 1 1 20 11.6Z" />
-      <path d="M9 8.5c.5 2.7 2 4.2 4.7 4.9" />
-    </svg>
-  );
-}
-
-function ServiceImage({
+function DetailModal({
   service,
-  priority = false,
+  onClose,
+  onAdd,
 }: {
-  service: CobwebCleaningService;
-  priority?: boolean;
+  service: Service;
+  onClose: () => void;
+  onAdd: (service: Service, option: Option) => void;
 }) {
-  return (
-    <Image
-      className="cc-cobweb__image"
-      src={service.image}
-      alt={`City Coolies ${service.name} service`}
-      fill
-      priority={priority}
-      sizes={
-        priority
-          ? "(max-width: 1100px) calc(100vw - 32px), 42vw"
-          : "(max-width: 760px) calc(100vw - 32px), 250px"
-      }
-    />
-  );
-}
+  const [selected, setSelected] = useState<Option | null>(null);
 
-function CobwebBookingControl({
-  service,
-  quantity,
-  featured = false,
-  onQuantityChange,
-}: {
-  service: CobwebCleaningService;
-  quantity: string;
-  featured?: boolean;
-  onQuantityChange: (value: string) => void;
-}) {
-  const numericQuantity = Number(quantity);
-  const unitLabel = getCobwebPricingUnitLabel(
-    service.pricingUnit,
-  );
+  useEffect(() => {
+    const priorOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const escape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", escape);
+    return () => {
+      document.body.style.overflow = priorOverflow;
+      document.removeEventListener("keydown", escape);
+    };
+  }, [onClose]);
 
-  const estimate = calculateCobwebCleaningEstimate(
-    service,
-    numericQuantity,
-  );
+  if (typeof document === "undefined") return null;
 
-  const inputLabel =
-    service.pricingUnit === "square-foot"
-      ? "Enter required area"
-      : `Enter number of ${unitLabel}s`;
-
-  return (
+  return createPortal(
     <div
-      className={
-        featured
-          ? "cc-cobweb__booking-control cc-cobweb__booking-control--featured"
-          : "cc-cobweb__booking-control"
-      }
+      className={styles.modalOverlay}
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
     >
-      <label className="cc-cobweb__quantity">
-        <span>{inputLabel}</span>
+      <section
+        className={styles.modal}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={`cobweb-modal-${service.id}`}
+      >
+        <header className={styles.modalHeader}>
+          <div>
+            <h2 id={`cobweb-modal-${service.id}`}>{service.title}</h2>
+            <p>
+              {service.directAdd
+                ? (service.directAdd ? `Site survey: ${money(500)}. Final cleaning rate is confirmed after the survey.` : `Starts at ${money(service.options[0].price)}`)
+                : "Choose the option that matches your cleaning requirement."}
+            </p>
+          </div>
+          <button type="button" className={styles.closeButton} aria-label="Close details" onClick={onClose}>{"\u00D7"}</button>
+        </header>
 
-        <div>
-          <input
-            type="text"
-            inputMode="numeric"
-            value={quantity}
-            placeholder={
-              service.pricingUnit === "square-foot"
-                ? "Enter sq. ft."
-                : "Enter quantity"
-            }
-            aria-label={`${inputLabel} for ${service.name}`}
-            onChange={(event) =>
-              onQuantityChange(
-                event.target.value.replace(/\D/g, "").slice(0, 9),
-              )
-            }
-          />
+        <div className={styles.modalBody}>
+          {!service.directAdd && (
+            <section className={styles.modalSection}>
+              <h3>{service.pricingTitle}</h3>
+              <div className={styles.pricingGrid}>
+                {service.options.map((option) => (
+                  <article key={option.id} className={styles.priceCard}>
+                    <span className={styles.optionLabel}>{option.label}</span>
+                    <strong>{money(option.price)}</strong>
+                    <button
+                      type="button"
+                      aria-pressed={selected?.id === option.id}
+                      onClick={() => setSelected((current) => current?.id === option.id ? null : option)}
+                    >
+                      Select
+                    </button>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
 
-          <small>{unitLabel}</small>
+          <section className={styles.modalSection}>
+            <h3>How it works?</h3>
+            <ol className={styles.processList}>
+              {service.process.map((step, index) => (
+                <li key={step.title}>
+                  <span className={styles.processNumber}>{index + 1}.</span>
+                  <div><strong>{step.title}</strong><p>{step.description}</p></div>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          {!!service.included?.length && (
+            <section className={styles.modalSection}>
+              <h3>Included</h3>
+              <ul className={styles.simpleList}>
+                {service.included.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </section>
+          )}
+
+          {!!service.excluded?.length && (
+            <section className={styles.modalSection}>
+              <h3>Not Included</h3>
+              <ul className={styles.simpleList}>
+                {service.excluded.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </section>
+          )}
+
+          {!!service.perfectFor?.length && (
+            <section className={styles.modalSection}>
+              <h3>Perfect For</h3>
+              <ul className={styles.simpleList}>
+                {service.perfectFor.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </section>
+          )}
+          <section className={styles.ratingSection} aria-label={`${service.title} customer rating`}>
+            <div className={styles.ratingSummary}>
+              <span className={styles.goldStar} aria-hidden="true">{"\u2605"}</span>
+              <strong>{service.rating.toFixed(1)}</strong>
+            </div>
+            {service.reviews > 0 && (<p className={styles.ratingReviewCount}>{service.reviews.toLocaleString("en-IN")} reviews</p>)}
+            <div className={styles.ratingBars}>
+              {service.distribution.map((percentage, index) => (
+                <div className={styles.ratingBarRow} key={5 - index}>
+                  <span className={styles.ratingLabel}>
+                    {5 - index}<span aria-hidden="true">{"\u2605"}</span>
+                  </span>
+                  <span className={styles.ratingTrack}>
+                    <span className={styles.ratingFill} style={{ width: `${percentage}%` }} />
+                  </span>
+                  <span className={styles.ratingPercent}>{percentage}%</span>
+                </div>
+              ))}
+            </div>
+          </section>
         </div>
-      </label>
 
-      <div className="cc-cobweb__calculation">
-        <span>Estimated total</span>
-
-        <strong>
-          {estimate === null
-            ? `₹${service.rate} / ${unitLabel}`
-            : formatCurrency(estimate)}
-        </strong>
-
-        <small>{service.pricingNote}</small>
-      </div>
-
-      {estimate === null ? (
-        <button
-          className="cc-cobweb__disabled-button"
-          type="button"
-          disabled
-        >
-          {featured ? "Enter quantity to book" : "Add"}
-        </button>
-      ) : (
-        <ServiceBookingModal
-          packageId="cobweb-cleaning-plan"
-          serviceName={`${service.name} - ${numericQuantity.toLocaleString(
-            "en-IN",
-          )} ${unitLabel}${
-            numericQuantity === 1 ||
-            service.pricingUnit === "square-foot"
-              ? ""
-              : "s"
-          }`}
-          originalPrice={estimate}
-          offerPrice={estimate}
-          triggerLabel={
-            featured ? "Add & Continue to Booking" : "Add"
-          }
-          customServices={[
-            {
-              id: service.id,
-              name: service.name,
-              quantity: numericQuantity,
-              unitPrice: service.rate,
-              lineTotal: estimate,
-            },
-          ]}
-        />
-      )}
-    </div>
+        {!service.directAdd && (
+          <footer className={styles.selectionFooter}>
+            <div className={styles.selectionSummary}>
+              <span className={styles.selectionCaption}>Total</span>
+              <strong className={styles.selectionValue}>{selected ? money(selected.price) : "Select an option"}</strong>
+            </div>
+            <button
+              type="button"
+              className={styles.continueButton}
+              disabled={!selected}
+              onClick={() => {
+                if (selected) onAdd(service, selected);
+              }}
+            >
+              Continue
+            </button>
+          </footer>
+        )}
+      </section>
+    </div>,
+    document.body,
   );
 }
 
 export default function CobwebCleaningSection() {
-  const featuredService =
-    COBWEB_CLEANING_SERVICES.find(
-      (service) => service.id === FEATURED_SERVICE_ID,
-    )!;
-
-  const secondaryServices =
-    COBWEB_CLEANING_SERVICES.filter(
-      (service) => service.id !== FEATURED_SERVICE_ID,
-    );
-
-  const [quantities, setQuantities] = useState<
-    Record<string, string>
-  >({});
-
-  function updateQuantity(
-    serviceId: string,
-    value: string,
-  ) {
-    setQuantities((currentQuantities) => ({
-      ...currentQuantities,
-      [serviceId]: value,
-    }));
+  const [activeService, setActiveService] = useState<Service | null>(null);
+  const snapshot = useSyncExternalStore(
+    subscribeDeepCleaningCart,
+    getDeepCleaningCartSnapshot,
+    getDeepCleaningCartServerSnapshot,
+  );
+  const cartItems = useMemo(() => parseDeepCleaningCartSnapshot(snapshot), [snapshot]);
+  function addOption(service: Service, option: Option) {
+    upsertDeepCleaningCartItem({
+      id: `cobweb:${service.id}:${option.id}`,
+      serviceTitle: service.title,
+      optionLabel: option.label,
+      price: option.price,
+      priceLabel: money(option.price),
+      duration: "Professional cleaning service",
+    });
+    setActiveService(null);
   }
 
   return (
-    <section
-      className="cc-cobweb"
-      aria-labelledby="cobweb-cleaning-title"
-    >
-      <div className="cc-cobweb__container">
-        <header className="cc-cobweb__header">
-          <div>
-            <p className="cc-cobweb__eyebrow">
-              Cobweb Cleaning
-            </p>
+    <>
+      <section
+        id="panel-cobweb-cleaning"
+        role="tabpanel"
+        className={styles.section}
+        aria-labelledby="cobweb-cleaning-heading"
+      >
+        <h1 id="cobweb-cleaning-heading" className={styles.srOnly}>
+          Cobweb Cleaning
+        </h1>
 
-            <h2
-              id="cobweb-cleaning-title"
-              className="cc-cobweb__title"
-            >
-              Clean ceilings. Fresh corners. Zero cobwebs.
-            </h2>
-
-            <p className="cc-cobweb__subtitle">
-              Choose the service you need, enter the required
-              quantity and get a transparent instant estimate.
-            </p>
-          </div>
-
-          <div className="cc-cobweb__trust">
-            <span>
-              <ShieldIcon />
-              Verified professionals
-            </span>
-
-            <span>
-              <DusterIcon />
-              Safe telescopic equipment
-            </span>
-          </div>
-        </header>
-
-        <div className="cc-cobweb__marketplace">
-          <article className="cc-cobweb__featured">
-            <div className="cc-cobweb__featured-media">
-              <ServiceImage
-                service={featuredService}
-                priority
-              />
-
-              <span className="cc-cobweb__popular">
-                ★ Most Booked
-              </span>
-            </div>
-
-            <div className="cc-cobweb__featured-content">
-              <h3>{featuredService.name}</h3>
-
-              <p>{featuredService.description}</p>
-
-              <div className="cc-cobweb__meta">
-                <span>★ {featuredService.rating}</span>
-
-                <span>
-                  (
-                  {featuredService.reviewCount.toLocaleString(
-                    "en-IN",
-                  )}
-                  )
-                </span>
-
-                <span>{featuredService.duration}</span>
-
-                <span>Professional equipment</span>
-              </div>
-
-              <ul className="cc-cobweb__includes">
-                {featuredService.includes.map((item) => (
-                  <li key={item}>
-                    <CheckIcon />
-                    {item}
-                  </li>
+        <div className={styles.container}>
+          <div className={styles.contentLayout}>
+            <main className={styles.mainColumn}>
+              <nav className={styles.serviceSelector} aria-label="Cobweb cleaning services">
+                {services.map((service) => (
+                  <button
+                    key={service.id}
+                    type="button"
+                    className={styles.selectorItem}
+                    onClick={() => scrollToService(`cobweb-${service.id}`)}
+                  >
+                    <span className={styles.selectorImage} aria-hidden="true" />
+                    <span className={styles.selectorLabel}>{service.title}</span>
+                  </button>
                 ))}
-              </ul>
+              </nav>
+              <div className={styles.selectorDivider} />
 
-              <CobwebBookingControl
-                service={featuredService}
-                quantity={
-                  quantities[featuredService.id] ?? ""
-                }
-                featured
-                onQuantityChange={(value) =>
-                  updateQuantity(
-                    featuredService.id,
-                    value,
-                  )
-                }
-              />
-            </div>
-          </article>
-
-          <div className="cc-cobweb__services">
-            <h3>Choose by cleaning need</h3>
-
-            <div className="cc-cobweb__service-grid">
-              {secondaryServices.map((service) => (
-                <article
-                  className="cc-cobweb__service-card"
+              {services.map((service) => (
+                <section
                   key={service.id}
+                  id={`cobweb-${service.id}`}
+                  className={styles.serviceGroup}
                 >
-                  <div className="cc-cobweb__service-media">
-                    <ServiceImage service={service} />
+                  <h2>{service.title}</h2>
+                  <div className={styles.serviceList}>
+                    <article className={styles.serviceCard}>
+                      <div className={styles.bannerPlaceholder} data-service-id={service.id} aria-hidden="true" />
+                      <div className={styles.serviceDetails}>
+                        <div className={styles.serviceMainRow}>
+                          <div className={styles.serviceInformation}>
+                            <h3 className={styles.serviceTitle}>{service.title}</h3>
+                            <div className={styles.ratingRow}>
+                              <span className={styles.ratingIcon} aria-hidden="true">{"\u2605"}</span>
+                              <span>{service.rating.toFixed(1)}</span>
+                              {service.reviews > 0 && (<span className={styles.reviewText}>({service.reviews.toLocaleString("en-IN")} reviews)</span>)}
+                              <button
+                                type="button"
+                                className={styles.detailsButton}
+                                onClick={() => setActiveService(service)}
+                              >
+                                View details
+                              </button>
+                            </div>
+                            <div className={styles.priceRow}>
+                              <strong>{service.directAdd ? `Site survey ${money(500)}` : `Starts at ${money(Math.min(...service.options.map((option) => option.price)))}`}</strong>
+                            </div>
+                          </div>
+
+                          {(
+                            <button
+                              type="button"
+                              className={styles.addButton}
+                              onClick={() => {
+                                if (service.directAdd) addOption(service, service.options[0]); else setActiveService(service);
+                              }}
+                            >
+                              Add
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </article>
                   </div>
-
-                  <div className="cc-cobweb__service-content">
-                    <h4>{service.name}</h4>
-
-                    <p>{service.description}</p>
-
-                    <div className="cc-cobweb__card-meta">
-                      <span>★ {service.rating}</span>
-
-                      <span>
-                        ₹{service.rate} /{" "}
-                        {getCobwebPricingUnitLabel(
-                          service.pricingUnit,
-                        )}
-                      </span>
-                    </div>
-
-                    <CobwebBookingControl
-                      service={service}
-                      quantity={
-                        quantities[service.id] ?? ""
-                      }
-                      onQuantityChange={(value) =>
-                        updateQuantity(
-                          service.id,
-                          value,
-                        )
-                      }
-                    />
-                  </div>
-                </article>
+                </section>
               ))}
-            </div>
+            </main>
+            <aside className={styles.sidebarColumn}>
+              <FullHomeRightSidebar />
+            </aside>
           </div>
         </div>
+      </section>
 
-        <div
-          className="cc-cobweb__assurance"
-          aria-label="Cobweb cleaning booking benefits"
-        >
-          <span>
-            <ShieldIcon />
-            <strong>Verified cleaning experts</strong>
-          </span>
-
-          <span>
-            <WalletIcon />
-            <strong>
-              50% Online Advance or Secure Online Payment
-            </strong>
-          </span>
-
-          <span>
-            <WhatsAppIcon />
-            <strong>Easy WhatsApp confirmation</strong>
-          </span>
-        </div>
-      </div>
-
-      <style>{COBWEB_CLEANING_STYLES}</style>
-    </section>
+      {activeService && (
+        <DetailModal
+          key={activeService.id}
+          service={activeService}
+          onClose={() => setActiveService(null)}
+          onAdd={addOption}
+        />
+      )}
+    </>
   );
 }
-
-const COBWEB_CLEANING_STYLES = `
-  .cc-cobweb {
-    display: none;
-    padding: 20px 0 60px;
-    color: #171922;
-    background:
-      radial-gradient(
-        circle at 100% 0%,
-        rgba(242, 31, 47, 0.075),
-        transparent 32%
-      ),
-      linear-gradient(
-        180deg,
-        #ffffff 0%,
-        #fff8fa 100%
-      );
-  }
-
-  #cc-category-cobweb:checked
-    ~ .cc-deep-hero
-    label[for="cc-category-cobweb"] {
-    border-color: #f21f2f;
-    color: #e81929;
-    background: #fff7f9;
-    box-shadow: 0 10px 27px rgba(239, 31, 48, 0.1);
-  }
-
-  #cc-category-cobweb:checked ~ .cc-full-home,
-  #cc-category-cobweb:checked ~ .cc-kitchen,
-  #cc-category-cobweb:checked ~ .cc-bathroom,
-  #cc-category-cobweb:checked ~ .cc-industrial,
-  #cc-category-cobweb:checked ~ .cc-commercial {
-    display: none;
-  }
-
-  #cc-category-cobweb:checked ~ .cc-cobweb {
-    display: block;
-  }
-
-  .cc-cobweb * {
-    box-sizing: border-box;
-  }
-
-  .cc-cobweb__container {
-    width: min(100% - 40px, 1680px);
-    margin-inline: auto;
-  }
-
-  .cc-cobweb__header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px;
-    padding: 23px 25px;
-    border: 1px solid rgba(242, 31, 47, 0.17);
-    border-radius: 18px;
-    background:
-      linear-gradient(
-        120deg,
-        rgba(255, 255, 255, 0.98),
-        rgba(255, 237, 241, 0.95)
-      );
-    box-shadow: 0 13px 36px rgba(66, 28, 35, 0.06);
-  }
-
-  .cc-cobweb__eyebrow {
-    margin: 0 0 7px;
-    color: #ed1b2b;
-    font-size: 0.75rem;
-    font-weight: 850;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .cc-cobweb__title {
-    max-width: 800px;
-    margin: 0;
-    color: #171922;
-    font-size: clamp(1.9rem, 3vw, 3rem);
-    font-weight: 820;
-    line-height: 1.05;
-    letter-spacing: -0.045em;
-  }
-
-  .cc-cobweb__subtitle {
-    max-width: 720px;
-    margin: 10px 0 0;
-    color: #626a78;
-    font-size: 0.9rem;
-    line-height: 1.6;
-  }
-
-  .cc-cobweb__trust {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 9px;
-  }
-
-  .cc-cobweb__trust span {
-    display: inline-flex;
-    min-height: 39px;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border: 1px solid rgba(242, 31, 47, 0.14);
-    border-radius: 9px;
-    color: #343943;
-    background: #ffffff;
-    font-size: 0.7rem;
-    font-weight: 750;
-  }
-
-  .cc-cobweb svg {
-    width: 19px;
-    height: 19px;
-    flex: 0 0 auto;
-    color: #f21f2f;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .cc-cobweb__marketplace {
-    display: grid;
-    grid-template-columns:
-      minmax(390px, 0.88fr)
-      minmax(0, 1.32fr);
-    align-items: start;
-    gap: 18px;
-    margin-top: 18px;
-  }
-
-  .cc-cobweb__featured {
-    min-width: 0;
-    overflow: hidden;
-    border: 1px solid rgba(242, 31, 47, 0.2);
-    border-radius: 18px;
-    background: #ffffff;
-    box-shadow: 0 15px 40px rgba(53, 27, 33, 0.075);
-  }
-
-  .cc-cobweb__featured-media {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    border-bottom: 1px solid rgba(242, 31, 47, 0.12);
-    background: #fff5f7;
-  }
-
-  .cc-cobweb__image {
-    object-fit: contain;
-    object-position: center;
-    transform: none !important;
-  }
-
-  .cc-cobweb__popular {
-    position: absolute;
-    z-index: 2;
-    top: 14px;
-    left: 14px;
-    padding: 7px 12px;
-    border-radius: 999px;
-    color: #ffffff;
-    background: #f21f2f;
-    box-shadow: 0 8px 20px rgba(242, 31, 47, 0.22);
-    font-size: 0.7rem;
-    font-weight: 850;
-    text-transform: uppercase;
-  }
-
-  .cc-cobweb__featured-content {
-    padding: 19px;
-  }
-
-  .cc-cobweb__featured-content h3 {
-    margin: 0;
-    color: #171922;
-    font-size: clamp(1.5rem, 2vw, 1.95rem);
-    font-weight: 850;
-    line-height: 1.1;
-    letter-spacing: -0.035em;
-  }
-
-  .cc-cobweb__featured-content > p {
-    margin: 8px 0 0;
-    color: #626a78;
-    font-size: 0.82rem;
-    line-height: 1.55;
-  }
-
-  .cc-cobweb__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px 12px;
-    margin-top: 11px;
-    color: #59616f;
-    font-size: 0.68rem;
-  }
-
-  .cc-cobweb__meta span:first-child {
-    color: #ed1b2b;
-    font-weight: 850;
-  }
-
-  .cc-cobweb__includes {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin: 13px 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .cc-cobweb__includes li {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 9px;
-    border: 1px solid rgba(242, 31, 47, 0.12);
-    border-radius: 7px;
-    color: #4a515e;
-    background: #fff5f7;
-    font-size: 0.64rem;
-    font-weight: 700;
-  }
-
-  .cc-cobweb__includes svg {
-    width: 15px;
-    height: 15px;
-  }
-
-  .cc-cobweb__services {
-    min-width: 0;
-  }
-
-  .cc-cobweb__services > h3 {
-    margin: 0 0 12px;
-    color: #171922;
-    font-size: 1rem;
-    font-weight: 850;
-  }
-
-  .cc-cobweb__service-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-
-  .cc-cobweb__service-card {
-    display: grid;
-    min-width: 0;
-    grid-template-columns: minmax(130px, 41%) minmax(0, 1fr);
-    overflow: hidden;
-    border: 1px solid rgba(45, 50, 60, 0.11);
-    border-radius: 14px;
-    background: #ffffff;
-    box-shadow: 0 9px 25px rgba(49, 29, 34, 0.05);
-    transition:
-      border-color 220ms ease,
-      box-shadow 220ms ease,
-      transform 220ms ease;
-  }
-
-  .cc-cobweb__service-card:hover {
-    border-color: rgba(242, 31, 47, 0.26);
-    box-shadow: 0 14px 32px rgba(72, 28, 37, 0.085);
-    transform: translateY(-2px);
-  }
-
-  .cc-cobweb__service-media {
-    position: relative;
-    min-height: 205px;
-    overflow: hidden;
-    border-right: 1px solid rgba(242, 31, 47, 0.09);
-    background: #fff6f8;
-  }
-
-  .cc-cobweb__service-content {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    padding: 12px;
-  }
-
-  .cc-cobweb__service-content h4 {
-    margin: 0;
-    color: #171922;
-    font-size: 0.87rem;
-    font-weight: 850;
-    line-height: 1.18;
-  }
-
-  .cc-cobweb__service-content > p {
-    display: -webkit-box;
-    margin: 6px 0 8px;
-    overflow: hidden;
-    color: #68717e;
-    font-size: 0.64rem;
-    line-height: 1.4;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-  }
-
-  .cc-cobweb__card-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 9px;
-  }
-
-  .cc-cobweb__card-meta span {
-    padding: 4px 7px;
-    border-radius: 6px;
-    color: #4d5561;
-    background: #fff1f3;
-    font-size: 0.58rem;
-    font-weight: 750;
-  }
-
-  .cc-cobweb__card-meta span:first-child {
-    color: #e71928;
-  }
-
-  .cc-cobweb__booking-control {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: end;
-    gap: 7px;
-    margin-top: auto;
-  }
-
-  .cc-cobweb__booking-control--featured {
-    grid-template-columns:
-      minmax(170px, 1fr)
-      minmax(160px, 0.8fr);
-    margin-top: 15px;
-    padding: 13px;
-    border: 1px solid rgba(242, 31, 47, 0.17);
-    border-radius: 12px;
-    background: #fff5f7;
-  }
-
-  .cc-cobweb__quantity {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .cc-cobweb__quantity > span,
-  .cc-cobweb__calculation > span {
-    color: #303641;
-    font-size: 0.61rem;
-    font-weight: 800;
-  }
-
-  .cc-cobweb__quantity > div {
-    display: flex;
-    min-width: 0;
-    height: 35px;
-    overflow: hidden;
-    border: 1px solid #d7dbe2;
-    border-radius: 7px;
-    background: #ffffff;
-  }
-
-  .cc-cobweb__quantity > div:focus-within {
-    border-color: #f21f2f;
-    box-shadow: 0 0 0 3px rgba(242, 31, 47, 0.09);
-  }
-
-  .cc-cobweb__quantity input {
-    width: 100%;
-    min-width: 0;
-    border: 0;
-    outline: 0;
-    padding: 8px;
-    color: #171922;
-    background: transparent;
-    font: inherit;
-    font-size: 0.67rem;
-    font-weight: 750;
-  }
-
-  .cc-cobweb__quantity small {
-    display: flex;
-    flex: 0 0 auto;
-    align-items: center;
-    padding: 0 7px;
-    border-left: 1px solid #e0e3e8;
-    color: #69717e;
-    background: #fafbfc;
-    font-size: 0.55rem;
-    white-space: nowrap;
-  }
-
-  .cc-cobweb__calculation {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    gap: 3px;
-  }
-
-  .cc-cobweb__calculation strong {
-    color: #171922;
-    font-size: 0.76rem;
-    line-height: 1.2;
-  }
-
-  .cc-cobweb__calculation small {
-    display: none;
-    color: #747c89;
-    font-size: 0.56rem;
-  }
-
-  .cc-cobweb__booking-control--featured
-    .cc-cobweb__calculation small {
-    display: block;
-  }
-
-  .cc-cobweb__booking-control
-    > .cc-booking-trigger,
-  .cc-cobweb__disabled-button {
-    min-height: 35px;
-    padding: 8px 12px;
-    border: 1px solid #f21f2f;
-    border-radius: 7px;
-    color: #ffffff;
-    background: #f21f2f;
-    font: inherit;
-    font-size: 0.66rem;
-    font-weight: 850;
-    white-space: nowrap;
-    cursor: pointer;
-  }
-
-  .cc-cobweb__booking-control
-    > .cc-booking-trigger:hover {
-    background: #d91827;
-  }
-
-  .cc-cobweb__disabled-button:disabled {
-    opacity: 0.48;
-    cursor: not-allowed;
-  }
-
-  .cc-cobweb__booking-control--featured
-    > .cc-booking-trigger,
-  .cc-cobweb__booking-control--featured
-    > .cc-cobweb__disabled-button {
-    grid-column: 1 / -1;
-    width: 100%;
-    min-height: 42px;
-    font-size: 0.75rem;
-  }
-
-  .cc-cobweb__assurance {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    margin-top: 17px;
-    overflow: hidden;
-    border: 1px solid rgba(242, 31, 47, 0.19);
-    border-radius: 14px;
-    background:
-      linear-gradient(
-        90deg,
-        #ffedf0 0%,
-        #fff9fa 50%,
-        #ffedf0 100%
-      );
-    box-shadow: 0 10px 28px rgba(76, 27, 35, 0.06);
-  }
-
-  .cc-cobweb__assurance span {
-    display: flex;
-    min-height: 72px;
-    align-items: center;
-    justify-content: center;
-    gap: 11px;
-    padding: 14px 18px;
-    color: #292d36;
-    font-size: 0.73rem;
-  }
-
-  .cc-cobweb__assurance span + span {
-    border-left: 1px solid rgba(242, 31, 47, 0.14);
-  }
-
-  .cc-cobweb__assurance svg {
-    width: 38px;
-    height: 38px;
-    padding: 9px;
-    border: 1px solid rgba(242, 31, 47, 0.14);
-    border-radius: 50%;
-    background: #ffffff;
-  }
-
-  @media (max-width: 1180px) {
-    .cc-cobweb__marketplace {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media (max-width: 820px) {
-    .cc-cobweb__header {
-      align-items: flex-start;
-      flex-direction: column;
-    }
-
-    .cc-cobweb__trust {
-      justify-content: flex-start;
-    }
-
-    .cc-cobweb__service-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media (max-width: 760px) {
-    .cc-cobweb {
-      padding: 14px 0 42px;
-    }
-
-    .cc-cobweb__container {
-      width: min(100% - 24px, 680px);
-    }
-
-    .cc-cobweb__header {
-      padding: 18px 16px;
-      border-radius: 15px;
-    }
-
-    .cc-cobweb__featured {
-      border-radius: 15px;
-    }
-
-    .cc-cobweb__service-card {
-      grid-template-columns: minmax(118px, 39%) minmax(0, 1fr);
-    }
-
-    .cc-cobweb__booking-control--featured {
-      grid-template-columns: 1fr;
-    }
-
-    .cc-cobweb__assurance {
-      grid-template-columns: 1fr;
-    }
-
-    .cc-cobweb__assurance span {
-      justify-content: flex-start;
-    }
-
-    .cc-cobweb__assurance span + span {
-      border-top: 1px solid rgba(242, 31, 47, 0.14);
-      border-left: 0;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .cc-cobweb__service-card {
-      grid-template-columns: 1fr;
-    }
-
-    .cc-cobweb__service-media {
-      min-height: 210px;
-      border-right: 0;
-      border-bottom: 1px solid rgba(242, 31, 47, 0.09);
-    }
-
-    .cc-cobweb__booking-control {
-      grid-template-columns: 1fr;
-    }
-
-    .cc-cobweb__booking-control
-      > .cc-booking-trigger,
-    .cc-cobweb__disabled-button {
-      width: 100%;
-    }
-  }
-`;
-

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import ServicesMarketplaceNavbar from "./ServicesMarketplaceNavbar";
 
 const navigationLinks = [
   { label: "Home", href: "/" },
@@ -103,6 +104,8 @@ export default function Navbar() {
     };
   }, [isMenuOpen]);
 
+  const isServicesRoute =
+    pathname === "/services" || pathname.startsWith("/services/");
   const isActiveLink = (href: string) => {
     if (href === "/") {
       return pathname === "/";
@@ -237,7 +240,17 @@ export default function Navbar() {
             })}
           </div>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          {isServicesRoute && (
+            <div className="hidden min-w-0 flex-1 xl:block [&>section]:border-0 [&>section]:shadow-none [&>section>div]:h-auto [&>section>div]:px-0">
+              <ServicesMarketplaceNavbar />
+            </div>
+          )}
+
+          <div
+            className={`hidden items-center gap-3 lg:flex ${
+              isServicesRoute ? "!hidden" : ""
+            }`}
+          >
             
             <Link
               href="/services"
@@ -328,6 +341,12 @@ export default function Navbar() {
         </div>
       </nav>
     
+      {isServicesRoute && (
+        <div className="xl:hidden">
+          <ServicesMarketplaceNavbar />
+        </div>
+      )}
+
       {/* CITY_COOLIES_MOBILE_TOPBAR */}
       <style jsx>{`
         @media (max-width: 1023px) {

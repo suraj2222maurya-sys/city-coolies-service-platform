@@ -1,0 +1,601 @@
+﻿.marketplace {
+  width: 100%;
+  background: #ffffff;
+}
+
+/*
+ * IMPORTANT:
+ * This file DOES NOT style ServicesIntro.
+ * This file DOES NOT style ServiceCategoryGrid.
+ * Their original files control their original design.
+ */
+.layout {
+  width: 100%;
+}
+
+.originalContent {
+  min-width: 0;
+}
+
+/*
+ * Direct image collage.
+ * No card styling.
+ * No border.
+ * No shadow.
+ * No background.
+ * No zoom.
+ * No crop.
+ */
+.gallery {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 0 16px 48px;
+}
+
+.imageSlot {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-width: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.image {
+  object-fit: contain;
+  object-position: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  filter: none;
+  transform: none !important;
+  transition: none;
+}
+
+/* PHONE */
+@media (max-width: 639px) {
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    padding: 10px 16px 48px;
+  }
+}
+
+/* TABLET */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 12px 24px 56px;
+  }
+}
+
+/* LAPTOP BEFORE FULL DESKTOP */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    padding: 16px 40px 60px;
+  }
+}
+
+/*
+ * DESKTOP
+ *
+ * Left side remains the existing City Coolies service section.
+ * Right side is only the new image area.
+ */
+@media (min-width: 1280px) {
+  .layout {
+    display: grid;
+    grid-template-columns:
+      minmax(610px, 1.14fr)
+      minmax(500px, 0.86fr);
+    align-items: start;
+    gap: 18px;
+
+    max-width: 1460px;
+    margin-inline: auto;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-self: start;
+
+    gap: 8px;
+    margin-top: 44px;
+    padding: 0 24px 64px 0;
+  }
+
+  .imageSlot {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* LARGE ENTERPRISE DESKTOP */
+@media (min-width: 1500px) {
+  .layout {
+    grid-template-columns:
+      minmax(650px, 1.16fr)
+      minmax(540px, 0.84fr);
+    gap: 26px;
+  }
+
+  .gallery {
+    gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image {
+    transform: none !important;
+    transition: none;
+  }
+}
+
+/* CITY_COOLIES_LEFT_CONTENT_POSITION_START */
+
+/*
+ * Position adjustment only.
+ * Moves the complete left Services area slightly right on desktop.
+ * Does not alter cards, images, navbar, typography or mobile layout.
+ */
+@media (min-width: 1280px) {
+  .originalContent {
+    box-sizing: border-box;
+    padding-left: 64px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .originalContent {
+    padding-left: 78px;
+  }
+}
+
+/* CITY_COOLIES_LEFT_CONTENT_POSITION_END */
+
+/* CITY_COOLIES_FINAL_LEFT_SHIFT_START */
+
+/* Move ONLY the complete left services area slightly right. */
+@media (min-width: 1280px) {
+  .originalContent {
+    transform: translateX(22px);
+  }
+}
+
+@media (min-width: 1500px) {
+  .originalContent {
+    transform: translateX(22px);
+  }
+}
+
+/* CITY_COOLIES_FINAL_LEFT_SHIFT_END */
+
+
+/* CITY_COOLIES_COLLAGE_SIZE_FIX_START */
+
+/*
+ * RIGHT-SIDE COLLAGE ONLY
+ *
+ * Original service images stay untouched.
+ * No crop.
+ * No zoom.
+ * No card.
+ * No shadow.
+ * No border.
+ *
+ * Portrait proportion makes the original images
+ * use the available width instead of sitting small
+ * inside square boxes.
+ */
+
+.gallery {
+  column-gap: 4px !important;
+  row-gap: 4px !important;
+}
+
+.imageSlot {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4 !important;
+  min-width: 0;
+  overflow: hidden;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.image {
+  object-fit: contain !important;
+  object-position: center !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  transform: none !important;
+  scale: none !important;
+  filter: none !important;
+  transition: none !important;
+}
+
+/* PHONE */
+@media (max-width: 639px) {
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 3px !important;
+    row-gap: 3px !important;
+  }
+
+  .imageSlot {
+    aspect-ratio: 3 / 4 !important;
+  }
+}
+
+/* TABLET */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    column-gap: 4px !important;
+    row-gap: 4px !important;
+  }
+}
+
+/* LAPTOP */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    column-gap: 5px !important;
+    row-gap: 5px !important;
+  }
+}
+
+/* DESKTOP */
+@media (min-width: 1280px) {
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+
+    column-gap: 5px !important;
+    row-gap: 5px !important;
+
+    padding-right: 8px !important;
+  }
+
+  .imageSlot {
+    aspect-ratio: 3 / 4 !important;
+  }
+}
+
+/* LARGE ENTERPRISE DESKTOP */
+@media (min-width: 1500px) {
+  .gallery {
+    column-gap: 6px !important;
+    row-gap: 6px !important;
+    padding-right: 0 !important;
+  }
+}
+
+/* CITY_COOLIES_COLLAGE_SIZE_FIX_END */
+
+
+/* CITY_COOLIES_IMAGE_QUALITY_FINAL_START */
+
+/*
+ * RIGHT COLLAGE ONLY.
+ *
+ * Original image bytes are used.
+ * Images are reduced in the browser, never artificially zoomed.
+ * No crop, stretch, border, background, shadow or card.
+ */
+
+.gallery {
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  width: 100%;
+  max-width: 500px;
+
+  column-gap: 6px !important;
+  row-gap: 6px !important;
+
+  align-content: start;
+  justify-self: end;
+
+  padding-right: 0 !important;
+}
+
+.imageSlot {
+  position: relative;
+
+  display: flex;
+  width: 100%;
+  min-width: 0;
+
+  align-items: flex-start;
+  justify-content: center;
+
+  aspect-ratio: auto !important;
+
+  overflow: visible !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.image {
+  position: static !important;
+
+  display: block;
+
+  width: 100% !important;
+  max-width: 100% !important;
+
+  height: auto !important;
+  max-height: none !important;
+
+  object-fit: contain !important;
+  object-position: center !important;
+
+  aspect-ratio: auto !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+
+  transform: none !important;
+  scale: 1 !important;
+  filter: none !important;
+
+  image-rendering: auto;
+
+  transition: none !important;
+}
+
+/* PHONE */
+@media (max-width: 639px) {
+  .gallery {
+    width: 100%;
+    max-width: 100%;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    column-gap: 4px !important;
+    row-gap: 4px !important;
+
+    padding-inline: 14px !important;
+  }
+}
+
+/* TABLET */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .gallery {
+    width: 100%;
+    max-width: 680px;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    column-gap: 6px !important;
+    row-gap: 6px !important;
+
+    margin-inline: auto;
+
+    padding-inline: 24px !important;
+  }
+}
+
+/* LAPTOP */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .gallery {
+    width: 100%;
+    max-width: 720px;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    column-gap: 6px !important;
+    row-gap: 6px !important;
+
+    margin-inline: auto;
+  }
+}
+
+/* DESKTOP */
+@media (min-width: 1280px) {
+  .gallery {
+    width: 500px !important;
+    max-width: 500px !important;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    column-gap: 6px !important;
+    row-gap: 6px !important;
+
+    justify-self: end;
+
+    margin-top: 44px;
+    padding: 0 !important;
+  }
+}
+
+/* LARGE DESKTOP */
+@media (min-width: 1500px) {
+  .gallery {
+    width: 510px !important;
+    max-width: 510px !important;
+
+    column-gap: 6px !important;
+    row-gap: 6px !important;
+  }
+}
+
+/* CITY_COOLIES_IMAGE_QUALITY_FINAL_END */
+
+
+/* CITY_COOLIES_RIGHT_COLLAGE_POSITION_START */
+
+/*
+ * Position only.
+ * Move complete right-side collage left.
+ * No image size, quality, left section or navbar changes.
+ */
+@media (min-width: 1280px) {
+  .gallery {
+    transform: translateX(-130px) !important;
+  }
+}
+
+/* CITY_COOLIES_RIGHT_COLLAGE_POSITION_END */
+
+
+/* CITY_COOLIES_TRUST_STATS_CSS_START */
+
+.trustStats {
+  display: flex;
+  align-items: center;
+  gap: 54px;
+  margin-top: 34px;
+  padding-left: 8px;
+}
+
+.trustItem {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 15px;
+}
+
+.trustIcon {
+  display: flex;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  align-items: center;
+  justify-content: center;
+  color: #171717;
+}
+
+.trustIcon svg {
+  display: block;
+  width: 38px;
+  height: 38px;
+}
+
+.trustText {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.trustValue {
+  color: #171717;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-size: 25px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.trustLabel {
+  color: #686868;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+
+/* PHONE */
+@media (max-width: 639px) {
+  .trustStats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 26px;
+    padding-inline: 2px;
+  }
+
+  .trustItem {
+    gap: 9px;
+  }
+
+  .trustIcon {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .trustIcon svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .trustValue {
+    font-size: 21px;
+  }
+
+  .trustLabel {
+    font-size: 11px;
+  }
+}
+
+/* TABLET */
+@media (min-width: 640px) and (max-width: 1279px) {
+  .trustStats {
+    gap: 42px;
+    margin-top: 30px;
+  }
+}
+
+/* CITY_COOLIES_TRUST_STATS_CSS_END */
+
+
+/* CITY_COOLIES_TRUST_STATS_POSITION_START */
+
+/* Move ONLY Rating + Customers slightly upward. */
+.trustStats {
+  margin-top: -28px !important;
+}
+
+@media (max-width: 639px) {
+  .trustStats {
+    margin-top: -18px !important;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1279px) {
+  .trustStats {
+    margin-top: -22px !important;
+  }
+}
+
+/* CITY_COOLIES_TRUST_STATS_POSITION_END */
+
+
+/* CITY_COOLIES_TRUST_STATS_RIGHT_START */
+
+/* Move ONLY Rating + Customers slightly right. */
+@media (min-width: 1280px) {
+  .trustStats {
+    transform: translateX(16px);
+  }
+}
+
+/* CITY_COOLIES_TRUST_STATS_RIGHT_END */
+

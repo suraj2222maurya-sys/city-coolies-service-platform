@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-
 import PackersMoversMarketplace from "./PackersMoversMarketplace";
 
 export const metadata: Metadata = {
-  title: "Packers & Movers in Chennai | City Coolies",
-  description: "Book verified packers and movers for local, intercity, office, vehicle and special-item relocation. Transparent estimate and secure online booking.",
-  alternates: { canonical: "/services/packers-movers" },
+  title: "Packers & Movers | City Coolies",
+  description: "Get a free moving quote for local home shifting, intercity relocation, office moving, vehicle transport, packing and loading in Chennai and beyond.",
 };
 
 export default function PackersMoversPage() {

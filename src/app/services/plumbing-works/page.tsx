@@ -1,24 +1,11 @@
 import type { Metadata } from "next";
-
-import PlumbingWorksCommerce from "./PlumbingWorksCommerce";
-import PlumbingHeroMotion from "./PlumbingHeroMotion";
-import PlumbingWorksHero from "./PlumbingWorksHero";
+import PlumbingWorksMarketplace from "./PlumbingWorksMarketplace";
 
 export const metadata: Metadata = {
-  title: "Professional Plumbing Services in Chennai | City Coolies",
-  description:
-    "Book verified plumbers for professional plumbing installation, repair and maintenance services with City Coolies.",
-  alternates: {
-    canonical: "/services/plumbing-works",
-  },
+  title: "Plumbing Works | City Coolies",
+  description: "Book plumbing services for homes, apartments, villas, schools and commercial properties. Choose pipe work and fitting services or arrange a site survey.",
 };
 
 export default function PlumbingWorksPage() {
-  return (
-    <div data-plumbing-works-page>
-      <PlumbingHeroMotion />
-      <PlumbingWorksHero />
-      <PlumbingWorksCommerce />
-    </div>
-  );
+  return <PlumbingWorksMarketplace />;
 }

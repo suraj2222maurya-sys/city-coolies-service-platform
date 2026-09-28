@@ -1,0 +1,48 @@
+.section {
+  background: #ffffff;
+  color: #171717;
+}
+
+.container {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding: 28px 16px 32px;
+}
+
+.title {
+  margin: 0;
+  max-width: 440px;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 36px 24px 36px;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 44px 40px 36px;
+  }
+
+  .title {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+.accent {
+  display: block;
+  color: #ef1b23;
+}
