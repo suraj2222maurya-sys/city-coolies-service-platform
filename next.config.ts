@@ -7,6 +7,7 @@ const backendApiUrl =
     .replace(/\/+$/, "");
 
 const nextConfig: NextConfig = {
+  images: { unoptimized: true },
   allowedDevOrigins: ["10.38.144.234"],
 
   turbopack: {
