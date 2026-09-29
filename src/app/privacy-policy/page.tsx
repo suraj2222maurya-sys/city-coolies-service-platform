@@ -149,13 +149,21 @@ const sections = [
 export default function PrivacyPolicyPage() {
   return (
     <main id="top" className="bg-white text-[#1d1e22]">
-      <header className="relative overflow-hidden bg-[#191a1e] text-white">
-        <div className="pointer-events-none absolute right-[-130px] top-[-190px] h-[390px] w-[390px] rounded-full border border-white/10" />
-        <div className="pointer-events-none absolute right-[-55px] top-[-115px] h-[240px] w-[240px] rounded-full border border-white/10" />
-        <div className="absolute inset-y-0 left-0 w-1 bg-[#ef1b23]" />
+      <header className="relative isolate overflow-hidden border-b border-[#f3d5da] bg-[#fff8f9] text-[#171717]">
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(110deg,#ffffff_0%,#fff8f9_55%,#ffe9ec_100%)]" aria-hidden="true" />
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 w-[43%] bg-[linear-gradient(145deg,#ff6269,#ef1b23_55%,#d9151f)] max-sm:opacity-[0.18]"
+          style={{
+            clipPath: "polygon(19% 0,100% 0,100% 100%,15% 100%,19% 84%,14% 68%,19% 50%,14% 32%,19% 14%)",
+          }}
+          aria-hidden="true"
+        />
+        <div className="pointer-events-none absolute right-[34%] top-[23%] hidden h-10 w-36 -rotate-12 rounded-xl border-[3px] border-[#c8131c] bg-[#f92933] shadow-lg md:block" aria-hidden="true" />
+        <div className="pointer-events-none absolute right-[38%] top-[35%] hidden h-17 w-[3px] -rotate-12 bg-[#6d747d] md:block" aria-hidden="true" />
+        <div className="pointer-events-none absolute right-[36%] top-[56%] hidden h-9 w-4 -rotate-12 rounded bg-[#30343a] md:block" aria-hidden="true" />
 
         <div className="relative mx-auto max-w-[1120px] px-5 pb-11 pt-11 sm:px-8 sm:pb-14 sm:pt-14">
-          <p className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.22em] text-[#ffb5bb]">
+          <p className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.22em] text-[#dd1721]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#ef1b23]" />
             City Coolies / Legal
           </p>
@@ -165,17 +173,17 @@ export default function PrivacyPolicyPage() {
               <h1 className="text-[42px] font-bold leading-[1.04] tracking-[-0.055em] sm:text-[58px]">
                 Privacy Policy<span className="text-[#ef1b23]">.</span>
               </h1>
-              <p className="mt-4 max-w-[660px] text-[15px] leading-7 text-[#c6c9d0] sm:text-base">
+              <p className="mt-4 max-w-[660px] text-[15px] leading-7 text-[#505965] sm:text-base">
                 How information is handled when you browse City Coolies,
                 request a service, apply for a role or explore vendor membership.
               </p>
             </div>
 
-            <div className="border-l border-white/20 pl-4 text-xs leading-6 text-[#c6c9d0]">
-              <span className="block uppercase tracking-[0.14em] text-[#ff9ca5]">
+            <div className="border-l border-[#ef1b23] pl-4 text-xs leading-6 text-[#505965]">
+              <span className="block uppercase tracking-[0.14em] text-[#df1721]">
                 Last updated
               </span>
-              <span className="mt-1 block text-sm font-semibold text-white">
+              <span className="mt-1 block text-sm font-semibold text-[#171717]">
                 {updated}
               </span>
             </div>
