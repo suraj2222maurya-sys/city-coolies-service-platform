@@ -222,15 +222,15 @@ export default function SpaSalonMarketplace() {
       <button type="button" className={styles.serviceSelectorItem}
         onClick={() => document.getElementById("men-haircut")?.scrollIntoView({ behavior: "smooth", block: "start" })}>
         <span className={styles.menHairThumbnail} aria-hidden="true" />
-        <span>Men's Haircut</span>
+        <span>Men&apos;s Haircut</span>
       </button>
     </nav>
     <section id="men-haircut" className={styles.serviceGroup}>
-      <h3>Men's Haircut</h3>
+      <h3>Men&apos;s Haircut</h3>
       <div className={styles.menHairBanner} role="img" aria-label="A barber cutting a man's hair" />
       <div className={styles.serviceRow}>
         <div>
-          <h4>Men's Haircut</h4>
+          <h4>Men&apos;s Haircut</h4>
           <div className={styles.rating}>
             <span className={styles.star} aria-hidden="true">{String.fromCodePoint(0x2605)}</span>
             <span>4.20</span><span className={styles.reviewCount}>(900 reviews)</span>
@@ -428,7 +428,7 @@ export default function SpaSalonMarketplace() {
         <div className={styles.backdrop} onMouseDown={(event) => { if (event.target === event.currentTarget) setShowMenDetails(false); }}>
           <section className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="men-haircut-dialog-title">
             <header className={styles.modalHeader}>
-              <h2 id="men-haircut-dialog-title">Men's Haircut</h2>
+              <h2 id="men-haircut-dialog-title">Men&apos;s Haircut</h2>
               <button type="button" aria-label="Close details" onClick={() => setShowMenDetails(false)}>{String.fromCodePoint(0x00D7)}</button>
             </header>
             <div className={styles.modalBody}>
