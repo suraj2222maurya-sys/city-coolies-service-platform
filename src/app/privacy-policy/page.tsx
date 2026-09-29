@@ -148,133 +148,154 @@ const sections = [
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="bg-white text-[#171717]">
-      <header className="relative overflow-hidden border-b border-[#f5dce0] bg-[radial-gradient(circle_at_85%_10%,#ffdce3_0%,transparent_34%),linear-gradient(135deg,#fff7f8_0%,#ffffff_60%)]">
-        <div className="mx-auto max-w-7xl px-5 pb-12 pt-14 sm:px-8 sm:pb-16 sm:pt-20 lg:px-10">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#f3cbd1] bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] text-[#dd1721] shadow-sm">
-            <span className="h-2 w-2 rounded-full bg-[#ef1b23]" />
-            Trust & transparency
-          </div>
+    <main id="top" className="bg-white text-[#1d1e22]">
+      <header className="relative overflow-hidden bg-[#191a1e] text-white">
+        <div className="pointer-events-none absolute right-[-130px] top-[-190px] h-[390px] w-[390px] rounded-full border border-white/10" />
+        <div className="pointer-events-none absolute right-[-55px] top-[-115px] h-[240px] w-[240px] rounded-full border border-white/10" />
+        <div className="absolute inset-y-0 left-0 w-1 bg-[#ef1b23]" />
 
-          <div className="mt-7 grid gap-8 lg:grid-cols-[minmax(0,1fr)_310px] lg:items-end">
+        <div className="relative mx-auto max-w-[1120px] px-5 pb-11 pt-11 sm:px-8 sm:pb-14 sm:pt-14">
+          <p className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.22em] text-[#ffb5bb]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#ef1b23]" />
+            City Coolies / Legal
+          </p>
+
+          <div className="mt-7 grid gap-6 md:grid-cols-[minmax(0,1fr)_215px] md:items-end">
             <div>
-              <h1 className="max-w-3xl text-4xl font-black tracking-[-0.05em] text-[#171717] sm:text-5xl lg:text-6xl">
-                Privacy <span className="text-[#ef1b23]">Policy</span>
+              <h1 className="text-[42px] font-bold leading-[1.04] tracking-[-0.055em] sm:text-[58px]">
+                Privacy Policy<span className="text-[#ef1b23]">.</span>
               </h1>
-              <p className="mt-5 max-w-2xl text-base leading-8 text-[#555c68] sm:text-lg">
-                A clear guide to the information you share with City Coolies,
-                how it supports our services, and the choices available to you.
-              </p>
-              <p className="mt-6 text-sm font-semibold text-[#68707c]">
-                Last updated: {updated}
+              <p className="mt-4 max-w-[660px] text-[15px] leading-7 text-[#c6c9d0] sm:text-base">
+                How information is handled when you browse City Coolies,
+                request a service, apply for a role or explore vendor membership.
               </p>
             </div>
 
-            <div className="rounded-3xl border border-[#f3d4d9] bg-white/90 p-6 shadow-[0_18px_50px_-35px_rgba(100,25,37,0.35)]">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#fff0f2] text-[#ef1b23]">
-                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 3 20 6v5.3c0 5.1-3.1 8-8 9.7-4.9-1.7-8-4.6-8-9.7V6l8-3Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
-                  <path d="m9 11.7 2 2 4.2-4.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-              <h2 className="mt-4 text-lg font-extrabold">Need help with your data?</h2>
-              <p className="mt-2 text-sm leading-6 text-[#656d78]">
-                Send us a privacy question or a request concerning information
-                you submitted through this website.
-              </p>
-              <a href="mailto:citycooliescrm@gmail.com?subject=Privacy%20Request"
-                className="mt-5 inline-flex min-h-11 items-center justify-center rounded-xl bg-[#ef1b23] px-5 text-sm font-bold text-white transition hover:bg-[#d71921] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef1b23]">
-                Email City Coolies <span className="ml-2" aria-hidden="true">↗</span>
-              </a>
+            <div className="border-l border-white/20 pl-4 text-xs leading-6 text-[#c6c9d0]">
+              <span className="block uppercase tracking-[0.14em] text-[#ff9ca5]">
+                Last updated
+              </span>
+              <span className="mt-1 block text-sm font-semibold text-white">
+                {updated}
+              </span>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="mx-auto grid max-w-7xl gap-9 px-5 py-12 sm:px-8 lg:grid-cols-[250px_minmax(0,1fr)] lg:gap-14 lg:px-10 lg:py-16">
-        <nav aria-label="Privacy policy sections" className="lg:sticky lg:top-40 lg:self-start">
-          <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.18em] text-[#ef1b23]">
-            On this page
-          </p>
-          <div className="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:overflow-visible">
+      <div className="mx-auto max-w-[1120px] px-5 pb-20 pt-9 sm:px-8 sm:pt-12">
+        <details className="mb-9 rounded-xl border border-[#eadfe1] bg-[#fffafa] px-4 py-3 lg:hidden">
+          <summary className="cursor-pointer text-sm font-semibold text-[#292b31]">
+            Jump to a section
+          </summary>
+          <nav aria-label="Mobile privacy policy sections" className="mt-4 grid gap-1 border-t border-[#eee3e5] pt-3">
             {sections.map((section) => (
               <a key={section.id} href={`#${section.id}`}
-                className="shrink-0 rounded-xl border border-[#f0e5e7] bg-white px-3 py-2.5 text-sm font-semibold text-[#515b68] transition hover:border-[#ef1b23] hover:bg-[#fff5f6] hover:text-[#df1721] focus-visible:outline-2 focus-visible:outline-[#ef1b23] lg:shrink">
-                <span className="mr-2 text-xs font-extrabold text-[#ef1b23]">{section.number}</span>
+                className="rounded-lg px-2 py-2 text-sm text-[#555b65] hover:bg-[#fff0f2] hover:text-[#e31b24]">
+                <span className="mr-3 text-xs font-bold text-[#ef1b23]">{section.number}</span>
                 {section.title}
               </a>
             ))}
-          </div>
-        </nav>
+            <a href="#contact" className="rounded-lg px-2 py-2 text-sm text-[#555b65] hover:bg-[#fff0f2] hover:text-[#e31b24]">
+              Contact us
+            </a>
+          </nav>
+        </details>
 
-        <div className="min-w-0 space-y-5">
-          <div className="rounded-3xl border border-[#f2d9dd] bg-[#fff7f8] p-6 sm:p-8">
-            <p className="text-xs font-black uppercase tracking-[0.16em] text-[#ef1b23]">At a glance</p>
-            <h2 className="mt-3 text-xl font-extrabold tracking-tight sm:text-2xl">
-              Your information has a purpose.
-            </h2>
-            <p className="mt-3 max-w-3xl text-sm leading-7 text-[#58616c] sm:text-base">
-              We use details you provide to respond to service enquiries, review
-              career applications and support vendor membership. Your selected
-              services can be kept in your browser while you browse the website.
-              The sections below explain these activities in more detail.
+        <div className="grid gap-12 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-16">
+          <nav aria-label="Privacy policy sections" className="hidden lg:sticky lg:top-40 lg:block lg:self-start">
+            <p className="mb-5 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#ef1b23]">
+              Contents
             </p>
-          </div>
+            <div className="border-l border-[#e7e0e2]">
+              {sections.map((section) => (
+                <a key={section.id} href={`#${section.id}`}
+                  className="group flex gap-3 border-l-2 border-transparent py-2.5 pl-4 text-[13px] leading-5 text-[#646a73] transition hover:border-[#ef1b23] hover:text-[#e31b24]">
+                  <span className="shrink-0 font-bold text-[#b9a1a6] group-hover:text-[#ef1b23]">
+                    {section.number}
+                  </span>
+                  <span>{section.title}</span>
+                </a>
+              ))}
+              <a href="#contact"
+                className="block border-l-2 border-transparent py-2.5 pl-4 text-[13px] font-semibold text-[#ef1b23] hover:border-[#ef1b23]">
+                Contact us ↗
+              </a>
+            </div>
+          </nav>
 
-          {sections.map((section) => (
-            <section key={section.id} id={section.id}
-              className="scroll-mt-40 rounded-3xl border border-[#eee5e7] bg-white p-6 shadow-[0_14px_40px_-36px_rgba(65,20,30,0.35)] sm:p-8">
-              <div className="flex items-start gap-4">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#fff0f2] text-sm font-black text-[#ef1b23]">
+          <article className="min-w-0">
+            <div className="border-b border-[#e8e3e4] pb-10">
+              <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#ef1b23]">
+                The essentials
+              </p>
+              <h2 className="mt-3 max-w-2xl text-2xl font-semibold leading-tight tracking-[-0.035em] sm:text-[32px]">
+                Clear information about your information.
+              </h2>
+              <p className="mt-4 max-w-[730px] text-[15px] leading-8 text-[#59616c]">
+                City Coolies uses information you provide to respond to service
+                enquiries, review applications and support vendor membership.
+                Selected services may be stored in your browser while you
+                navigate the website. The details are explained below.
+              </p>
+            </div>
+
+            {sections.map((section) => (
+              <section key={section.id} id={section.id}
+                className="scroll-mt-40 grid gap-4 border-b border-[#e8e3e4] py-10 sm:grid-cols-[42px_minmax(0,1fr)] sm:gap-5 sm:py-12">
+                <span className="pt-1 text-sm font-bold tabular-nums text-[#ef1b23]">
                   {section.number}
                 </span>
                 <div className="min-w-0">
-                  <h2 className="text-xl font-extrabold tracking-[-0.025em] sm:text-2xl">
+                  <h2 className="text-[22px] font-semibold leading-tight tracking-[-0.035em] sm:text-[27px]">
                     {section.title}
                   </h2>
-                  <p className="mt-3 text-sm leading-7 text-[#535d69] sm:text-base">
+                  <p className="mt-4 text-[15px] leading-8 text-[#525b66]">
                     {section.intro}
                   </p>
-                  <ul className="mt-5 space-y-3">
+                  <ul className="mt-5 space-y-3.5">
                     {section.points.map((point) => (
-                      <li key={point} className="flex items-start gap-3 text-sm leading-7 text-[#535d69] sm:text-base">
-                        <span className="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#ef1b23]" />
+                      <li key={point} className="flex gap-3 text-[14px] leading-7 text-[#5c6470] sm:text-[15px]">
+                        <span className="mt-[11px] h-[5px] w-[5px] shrink-0 rounded-full bg-[#ef1b23]" />
                         <span>{point}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
+              </section>
+            ))}
+
+            <section id="contact" className="scroll-mt-40 mt-12 border-t-2 border-[#ef1b23] bg-[#faf8f8] px-5 py-8 sm:px-8">
+              <div className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start">
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#ef1b23]">
+                    Privacy support
+                  </p>
+                  <h2 className="mt-3 text-2xl font-semibold tracking-[-0.035em]">
+                    Questions about your data?
+                  </h2>
+                  <p className="mt-3 max-w-[560px] text-sm leading-7 text-[#5b636d]">
+                    Tell us about the enquiry or application concerned. We may
+                    verify your identity before responding to a request about
+                    personal information.
+                  </p>
+                </div>
+                <a href="mailto:citycooliescrm@gmail.com?subject=Privacy%20Request"
+                  className="inline-flex min-h-11 items-center justify-center rounded-lg bg-[#ef1b23] px-5 text-sm font-semibold text-white transition hover:bg-[#cf1720] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef1b23]">
+                  Email privacy support ↗
+                </a>
+              </div>
+              <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2 border-t border-[#e8dcdf] pt-5 text-xs leading-6 text-[#686f79]">
+                <span>citycooliescrm@gmail.com</span>
+                <a href="tel:+918693986939" className="hover:text-[#ef1b23]">+91 86939 86939</a>
+                <span>City Coolies Pvt. Ltd. · Sholinganallur, Chennai</span>
               </div>
             </section>
-          ))}
 
-          <section id="contact" className="scroll-mt-40 overflow-hidden rounded-3xl bg-[#19191d] p-7 text-white sm:p-9">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#ff8d96]">
-              Contact us
-            </p>
-            <h2 className="mt-3 text-2xl font-extrabold tracking-tight sm:text-3xl">
-              Privacy questions or requests?
-            </h2>
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-[#d4d4d8] sm:text-base">
-              Please explain your request and provide enough detail for us to
-              identify the enquiry or application. We may need to verify your
-              identity before responding to a request about personal information.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a href="mailto:citycooliescrm@gmail.com?subject=Privacy%20Request"
-                className="inline-flex min-h-11 items-center rounded-xl bg-[#ef1b23] px-5 text-sm font-bold text-white transition hover:bg-[#d71921]">
-                citycooliescrm@gmail.com
-              </a>
-              <a href="tel:+918693986939"
-                className="inline-flex min-h-11 items-center rounded-xl border border-white/25 px-5 text-sm font-bold text-white transition hover:bg-white/10">
-                +91 86939 86939
-              </a>
-            </div>
-            <p className="mt-5 text-xs leading-5 text-[#aeb0b8]">
-              City Coolies Pvt. Ltd. · No. 117, Village High Road,
-              Sholinganallur, Chennai 600119, India
-            </p>
-          </section>
+            <a href="#top" className="mt-7 inline-block text-xs font-semibold text-[#ef1b23] hover:underline">
+              Back to top ↑
+            </a>
+          </article>
         </div>
       </div>
     </main>
