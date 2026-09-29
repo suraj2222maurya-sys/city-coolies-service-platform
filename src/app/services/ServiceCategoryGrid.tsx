@@ -6,67 +6,67 @@ const services = [
   {
     slug: "deep-cleaning",
     name: "Deep Cleaning",
-    icon: "/service-icons/deep-cleaning.png",
+    icon: "/service-icons/deep-cleaning-display.webp",
   },
   {
     slug: "renovation",
     name: "Renovation",
-    icon: "/service-icons/renovation.png",
+    icon: "/service-icons/renovation-display.webp",
   },
   {
     slug: "electrical-works",
     name: "Electrical Works",
-    icon: "/service-icons/electrical-works.png",
+    icon: "/service-icons/electrical-works-display.webp",
   },
   {
     slug: "plumbing-works",
     name: "Plumbing Works",
-    icon: "/service-icons/plumbing-works.png",
+    icon: "/service-icons/plumbing-works-display.webp",
   },
   {
     slug: "painting-services",
     name: "Painting Services",
-    icon: "/service-icons/painting-services.png",
+    icon: "/service-icons/painting-services-display.webp",
   },
   {
     slug: "civil-construction-maintenance",
     name: "Civil Construction & Maintenance",
-    icon: "/service-icons/civil-construction-maintenance.png",
+    icon: "/service-icons/civil-construction-maintenance-display.webp",
   },
   {
     slug: "appliance-repair",
     name: "Appliance Repair",
-    icon: "/service-icons/appliance-repair.png",
+    icon: "/service-icons/appliance-repair-display.webp",
   },
   {
     slug: "carpentry-interior-works",
     name: "Carpentry & Interior Works",
-    icon: "/service-icons/carpentry-interior-works.png",
+    icon: "/service-icons/carpentry-interior-works-display.webp",
   },
   {
     slug: "packers-movers",
     name: "Packers & Movers",
-    icon: "/service-icons/packers-movers.png",
+    icon: "/service-icons/packers-movers-display.webp",
   },
   {
     slug: "pest-control",
     name: "Pest Control",
-    icon: "/service-icons/pest-control.png",
+    icon: "/service-icons/pest-control-display.webp",
   },
   {
     slug: "spa-salon-services",
     name: "Spa & Salon Services",
-    icon: "/service-icons/spa-salon-services.png",
+    icon: "/service-icons/spa-salon-services-display.webp",
   },
   {
     slug: "fabrication-works",
     name: "Fabrication Works",
-    icon: "/service-icons/fabrication-works.png",
+    icon: "/service-icons/fabrication-works-display.webp",
   },
   {
     slug: "gardening-landscaping",
     name: "Gardening & Landscaping",
-    icon: "/service-icons/gardening-landscaping.png",
+    icon: "/service-icons/gardening-landscaping-display.webp",
   },
 ] as const;
 

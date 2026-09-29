@@ -5,32 +5,32 @@ import styles from "./ServicesMarketplaceHero.module.css";
 
 const heroImages = [
   {
-    src: "/service-icons/services-hero-spa.png",
+    src: "/service-icons/services-hero-spa-display.webp",
     alt: "City Coolies spa and salon professional",
     priority: true,
   },
   {
-    src: "/service-icons/services-hero-plumbing.png",
+    src: "/service-icons/services-hero-plumbing-display.webp",
     alt: "City Coolies plumbing professional",
     priority: true,
   },
   {
-    src: "/service-icons/services-hero-carpentry.png",
+    src: "/service-icons/services-hero-carpentry-display.webp",
     alt: "City Coolies carpentry professional",
     priority: false,
   },
   {
-    src: "/service-icons/services-hero-painting.png",
+    src: "/service-icons/services-hero-painting-display.webp",
     alt: "City Coolies painting professional",
     priority: false,
   },
   {
-    src: "/service-icons/services-hero-ac-repair.png",
+    src: "/service-icons/services-hero-ac-repair-display.webp",
     alt: "City Coolies AC repair professional",
     priority: false,
   },
   {
-    src: "/service-icons/services-hero-cleaning.png",
+    src: "/service-icons/services-hero-cleaning-display.webp",
     alt: "City Coolies cleaning professional",
     priority: false,
   },
