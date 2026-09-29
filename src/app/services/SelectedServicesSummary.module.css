@@ -154,7 +154,9 @@
   }
 }
 /* CITY_COOLIES_PHONE_BAR_WIDTH_END */
-/* CITY_COOLIES_DRAGGABLE_SUMMARY */
+/* Drag from the bar; links and clicks retain their own actions. */
+.bar { cursor: grab; touch-action: none; user-select: none; }
+.bar:active { cursor: grabbing; }
 .bar[data-dragged="true"] {
   left: var(--drag-x) !important;
   top: var(--drag-y) !important;
@@ -162,31 +164,4 @@
   bottom: auto !important;
   transform: none !important;
 }
-
-.dragHandle {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  display: flex;
-  width: 48px;
-  height: 20px;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  transform: translateX(-50%);
-  border: 1px solid #f0d7da;
-  border-bottom: 0;
-  border-radius: 9px 9px 0 0;
-  background: #fff;
-  color: #ef1b23;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  line-height: 1;
-  cursor: grab;
-  touch-action: none;
-  user-select: none;
-}
-
-.dragHandle:active { cursor: grabbing; }
-.dragHandle:focus-visible { outline: 2px solid #ef1b23; outline-offset: 2px; }
+.summary, .viewButton { cursor: pointer; }

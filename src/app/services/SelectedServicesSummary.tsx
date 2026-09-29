@@ -32,6 +32,7 @@ export default function SelectedServicesSummary() {
   const [open, setOpen] = useState(false);
   const [dragPosition, setDragPosition] = useState<{ x: number; y: number } | null>(null);
   const barRef = useRef<HTMLElement>(null);
+  const suppressClickRef = useRef(false);
   const dragRef = useRef<{
     pointerId: number;
     startX: number;
@@ -40,13 +41,17 @@ export default function SelectedServicesSummary() {
     y: number;
     width: number;
     height: number;
+    moved: boolean;
   } | null>(null);
 
-  function startDrag(event: ReactPointerEvent<HTMLButtonElement>) {
+  function startDrag(event: ReactPointerEvent<HTMLElement>) {
     if (event.pointerType === "mouse" && event.button !== 0) return;
+    if ((event.target as Element).closest("a")) return;
+
     const rect = barRef.current?.getBoundingClientRect();
     if (!rect) return;
 
+    suppressClickRef.current = false;
     dragRef.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
@@ -55,32 +60,44 @@ export default function SelectedServicesSummary() {
       y: rect.top,
       width: rect.width,
       height: rect.height,
+      moved: false,
     };
-    setDragPosition({ x: rect.left, y: rect.top });
-    event.currentTarget.setPointerCapture(event.pointerId);
-    event.preventDefault();
   }
 
-  function moveDrag(event: ReactPointerEvent<HTMLButtonElement>) {
+  function moveDrag(event: ReactPointerEvent<HTMLElement>) {
     const drag = dragRef.current;
     if (!drag || drag.pointerId !== event.pointerId) return;
 
-    const maxX = Math.max(8, window.innerWidth - drag.width - 8);
-    const maxY = Math.max(24, window.innerHeight - drag.height - 8);
+    const dx = event.clientX - drag.startX;
+    const dy = event.clientY - drag.startY;
+    if (!drag.moved && Math.hypot(dx, dy) < 6) return;
+
+    if (!drag.moved) {
+      drag.moved = true;
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
+
+    event.preventDefault();
     setDragPosition({
-      x: Math.min(maxX, Math.max(8, drag.x + event.clientX - drag.startX)),
-      y: Math.min(maxY, Math.max(24, drag.y + event.clientY - drag.startY)),
+      x: Math.min(Math.max(8, window.innerWidth - drag.width - 8), Math.max(8, drag.x + dx)),
+      y: Math.min(Math.max(8, window.innerHeight - drag.height - 8), Math.max(8, drag.y + dy)),
     });
   }
 
-  function stopDrag(event: ReactPointerEvent<HTMLButtonElement>) {
-    if (dragRef.current?.pointerId !== event.pointerId) return;
+  function stopDrag(event: ReactPointerEvent<HTMLElement>) {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    if (drag.moved) {
+      suppressClickRef.current = true;
+      window.setTimeout(() => { suppressClickRef.current = false; }, 0);
+    }
+
     dragRef.current = null;
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
   }
-
   useEffect(() => {
     const keepInsideScreen = () => {
       setDragPosition((current) => {
@@ -89,7 +106,7 @@ export default function SelectedServicesSummary() {
         if (!rect) return current;
         return {
           x: Math.min(Math.max(8, window.innerWidth - rect.width - 8), Math.max(8, current.x)),
-          y: Math.min(Math.max(24, window.innerHeight - rect.height - 8), Math.max(24, current.y)),
+          y: Math.min(Math.max(8, window.innerHeight - rect.height - 8), Math.max(8, current.y)),
         };
       });
     };
@@ -142,6 +159,17 @@ export default function SelectedServicesSummary() {
       <div className={styles.spacer} aria-hidden="true" />
       <aside
         ref={barRef}
+        onPointerDown={startDrag}
+        onPointerMove={moveDrag}
+        onPointerUp={stopDrag}
+        onPointerCancel={stopDrag}
+        onClickCapture={(event) => {
+          if (suppressClickRef.current) {
+            event.preventDefault();
+            event.stopPropagation();
+            suppressClickRef.current = false;
+          }
+        }}
         className={styles.bar}
         aria-label="Selected services summary"
         data-dragged={dragPosition ? "true" : undefined}
@@ -150,18 +178,6 @@ export default function SelectedServicesSummary() {
           "--drag-y": `${dragPosition.y}px`,
         } as CSSProperties) : undefined}
       >
-        <button
-          type="button"
-          className={styles.dragHandle}
-          aria-label="Drag selected services bar"
-          title="Drag to move"
-          onPointerDown={startDrag}
-          onPointerMove={moveDrag}
-          onPointerUp={stopDrag}
-          onPointerCancel={stopDrag}
-        >
-          <span aria-hidden="true">•••</span>
-        </button>
         <button type="button" className={styles.summary} onClick={() => setOpen((current) => !current)}
           aria-expanded={open} aria-controls="selected-services-popup"
           aria-label={`${open ? "Close" : "View"} ${items.length} selected services`}>
