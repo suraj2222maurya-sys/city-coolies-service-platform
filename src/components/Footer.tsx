@@ -129,7 +129,7 @@ export default function Footer() {
               })}
 
 <a
-  href="mailto:citycoolicescrm@gmail.com"
+  href="mailto:citycooliescrm@gmail.com"
   aria-label="Gmail"
   className="flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:shadow-[0_12px_28px_-10px_rgba(234,67,53,0.45)]"
 >
@@ -244,7 +244,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="mailto:citycoolicescrm@gmail.com"
+                href="mailto:citycooliescrm@gmail.com"
                 className="group flex items-center gap-4"
               >
 <span className="flex h-8 w-8 shrink-0 items-center justify-center">
@@ -271,7 +271,7 @@ export default function Footer() {
 </span>
 
                 <span className="text-sm text-black transition-colors group-hover:text-[#ef1b23]">
-                  citycoolicescrm@gmail.com
+                  citycooliescrm@gmail.com
                 </span>
               </a>
             </div>

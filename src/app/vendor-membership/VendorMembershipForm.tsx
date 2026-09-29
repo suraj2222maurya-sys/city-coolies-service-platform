@@ -1722,10 +1722,10 @@ export default function VendorMembershipForm() {
                 </a>
 
                 <a
-                  href="mailto:citycoolicescrm@gmail.com"
+                  href="mailto:citycooliescrm@gmail.com"
                   className="block break-all text-[#ef1b23]"
                 >
-                  ✉ citycoolicescrm@gmail.com
+                  ✉ citycooliescrm@gmail.com
                 </a>
               </div>
             </div>

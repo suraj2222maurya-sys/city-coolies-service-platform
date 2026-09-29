@@ -352,10 +352,10 @@ export default function FinalCtaSection() {
           <span>Projects supported across India</span>
           <span className="hidden h-1 w-1 rounded-full bg-red-300 sm:block" />
           <a
-            href="mailto:citycoolicescrm@gmail.com"
+            href="mailto:citycooliescrm@gmail.com"
             className="transition hover:text-red-600"
           >
-            citycoolicescrm@gmail.com
+            citycooliescrm@gmail.com
           </a>
         </div>
       </div>

@@ -137,12 +137,12 @@ export default function Navbar() {
             <span className="h-4 w-px bg-white/35" />
 
             <a
-              href="mailto:citycoolicescrm@gmail.com"
+              href="mailto:citycooliescrm@gmail.com"
               className="hidden items-center gap-2 transition-opacity duration-300 hover:opacity-75 sm:flex"
               aria-label="Email City Coolies"
             >
               <EmailIcon />
-              <span>citycoolicescrm@gmail.com</span>
+              <span>citycooliescrm@gmail.com</span>
             </a>
           </div>
         </div>
@@ -329,11 +329,11 @@ export default function Navbar() {
                 </a>
 
                 <a
-                  href="mailto:citycoolicescrm@gmail.com"
+                  href="mailto:citycooliescrm@gmail.com"
                   className="flex items-center gap-2 font-semibold sm:justify-end"
                 >
                   <EmailIcon />
-                  <span>citycoolicescrm@gmail.com</span>
+                  <span>citycooliescrm@gmail.com</span>
                 </a>
               </div>
             </div>
