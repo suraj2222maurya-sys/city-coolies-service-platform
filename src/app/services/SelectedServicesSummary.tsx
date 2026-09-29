@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import {
   getCommittedServicesServerSnapshot,
   getCommittedServicesSnapshot,
@@ -30,6 +30,72 @@ type Group = {
 
 export default function SelectedServicesSummary() {
   const [open, setOpen] = useState(false);
+  const [dragPosition, setDragPosition] = useState<{ x: number; y: number } | null>(null);
+  const barRef = useRef<HTMLElement>(null);
+  const dragRef = useRef<{
+    pointerId: number;
+    startX: number;
+    startY: number;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  } | null>(null);
+
+  function startDrag(event: ReactPointerEvent<HTMLButtonElement>) {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    const rect = barRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      x: rect.left,
+      y: rect.top,
+      width: rect.width,
+      height: rect.height,
+    };
+    setDragPosition({ x: rect.left, y: rect.top });
+    event.currentTarget.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  }
+
+  function moveDrag(event: ReactPointerEvent<HTMLButtonElement>) {
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== event.pointerId) return;
+
+    const maxX = Math.max(8, window.innerWidth - drag.width - 8);
+    const maxY = Math.max(24, window.innerHeight - drag.height - 8);
+    setDragPosition({
+      x: Math.min(maxX, Math.max(8, drag.x + event.clientX - drag.startX)),
+      y: Math.min(maxY, Math.max(24, drag.y + event.clientY - drag.startY)),
+    });
+  }
+
+  function stopDrag(event: ReactPointerEvent<HTMLButtonElement>) {
+    if (dragRef.current?.pointerId !== event.pointerId) return;
+    dragRef.current = null;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  }
+
+  useEffect(() => {
+    const keepInsideScreen = () => {
+      setDragPosition((current) => {
+        if (!current) return null;
+        const rect = barRef.current?.getBoundingClientRect();
+        if (!rect) return current;
+        return {
+          x: Math.min(Math.max(8, window.innerWidth - rect.width - 8), Math.max(8, current.x)),
+          y: Math.min(Math.max(24, window.innerHeight - rect.height - 8), Math.max(24, current.y)),
+        };
+      });
+    };
+    window.addEventListener("resize", keepInsideScreen);
+    return () => window.removeEventListener("resize", keepInsideScreen);
+  }, []);
   const pathname = usePathname();
   const snapshot = useSyncExternalStore(
     subscribeDeepCleaningCart,
@@ -74,7 +140,28 @@ export default function SelectedServicesSummary() {
   return (
     <>
       <div className={styles.spacer} aria-hidden="true" />
-      <aside className={styles.bar} aria-label="Selected services summary">
+      <aside
+        ref={barRef}
+        className={styles.bar}
+        aria-label="Selected services summary"
+        data-dragged={dragPosition ? "true" : undefined}
+        style={dragPosition ? ({
+          "--drag-x": `${dragPosition.x}px`,
+          "--drag-y": `${dragPosition.y}px`,
+        } as CSSProperties) : undefined}
+      >
+        <button
+          type="button"
+          className={styles.dragHandle}
+          aria-label="Drag selected services bar"
+          title="Drag to move"
+          onPointerDown={startDrag}
+          onPointerMove={moveDrag}
+          onPointerUp={stopDrag}
+          onPointerCancel={stopDrag}
+        >
+          <span aria-hidden="true">•••</span>
+        </button>
         <button type="button" className={styles.summary} onClick={() => setOpen((current) => !current)}
           aria-expanded={open} aria-controls="selected-services-popup"
           aria-label={`${open ? "Close" : "View"} ${items.length} selected services`}>
