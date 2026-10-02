@@ -135,7 +135,49 @@ function GardenLoadImage({
   );
 }
 
+
+const potsWarmImages = new Map<string, HTMLImageElement>();
+
+function warmPotsResources() {
+  const urls = [
+    ...services
+      .find((service) => service.id === "pots")!
+      .jobs.map((job) => "/gardening-landscaping/pot-" + job.id + ".webp"),
+    "/gardening-landscaping/" + serviceImages["pots"]
+  ];
+
+  for (const url of urls) {
+    if (potsWarmImages.has(url)) continue;
+
+    const image = new window.Image();
+    image.decoding = "async";
+    image.fetchPriority = "low";
+    image.onerror = () => potsWarmImages.delete(url);
+    potsWarmImages.set(url, image);
+    image.src = url;
+  }
+}
+
 export default function GardeningMarketplace(){
+  useEffect(() => {
+    const section = document.getElementById("pots");
+    if (!section || !("IntersectionObserver" in window)) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          warmPotsResources();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "800px 0px", threshold: 0 }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+
   const [active,setActive]=useState<Service|null>(null);
   const [quantities,setQuantities]=useState<Record<string,number>>({});
   const [sizes,setSizes]=useState<Record<string,string>>({});
@@ -157,6 +199,7 @@ export default function GardeningMarketplace(){
     return()=>{document.body.style.overflow=previous;window.removeEventListener("keydown",close)};
   },[active]);
   function open(service:Service){
+    if (service.id === "pots") warmPotsResources();
     const existing=cartItems.find((item)=>item.id===cartId(service.id));
     const saved:Record<string,number>={};
     const savedSizes:Record<string,string>={};
@@ -197,16 +240,16 @@ export default function GardeningMarketplace(){
       <div className={styles.selectorViewport}>
         <button type="button" className={styles.selectorPrevious} style={{display:selectorScrolled?undefined:"none"}} aria-label="Previous gardening services" onClick={()=>document.getElementById("gardening-selector")?.scrollBy({left:-320,behavior:"smooth"})}>←</button>
         <nav className={styles.selector} id="gardening-selector" aria-label="Select gardening service" onScroll={(event)=>setSelectorScrolled(event.currentTarget.scrollLeft>4)}>
-          {services.map((service)=><button type="button" key={service.id} className={styles.selectorItem} onClick={()=>document.getElementById(service.id)?.scrollIntoView({behavior:"smooth",block:"start"})}><span className={styles.thumbnail} aria-hidden="true" style={{overflow:"hidden"}}><GardenLoadImage src={`/gardening-landscaping/${serviceThumbnailImages[serviceImages[service.id]] ?? serviceImages[service.id]}`} alt="" width={100} height={100} style={{display:"block",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center"}} /></span><span className={styles.selectorLabel}>{service.title}</span></button>)}
+          {services.map((service)=><button type="button" key={service.id} className={styles.selectorItem} onPointerEnter={() => { if (service.id === "pots") warmPotsResources(); }} onFocus={() => { if (service.id === "pots") warmPotsResources(); }} onTouchStart={() => { if (service.id === "pots") warmPotsResources(); }} onClick={()=>document.getElementById(service.id)?.scrollIntoView({behavior:"smooth",block:"start"})}><span className={styles.thumbnail} aria-hidden="true" style={{overflow:"hidden"}}><GardenLoadImage src={`/gardening-landscaping/${serviceThumbnailImages[serviceImages[service.id]] ?? serviceImages[service.id]}`} alt="" width={100} height={100} style={{display:"block",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center"}} /></span><span className={styles.selectorLabel}>{service.title}</span></button>)}
         </nav>
         <button type="button" className={styles.selectorNext} aria-label="More gardening services" onClick={()=>document.getElementById("gardening-selector")?.scrollBy({left:320,behavior:"smooth"})}>→</button>
       </div>
       {services.map((service)=><section key={service.id} id={service.id} className={styles.serviceGroup}>
         <h2>{service.title}</h2><div className={styles.banner} aria-hidden="true"><GardenLoadImage src={`/gardening-landscaping/${serviceImages[service.id]}`} alt="" width={1942} height={809} style={{display:"block",width:"100%",height:"100%",objectFit:"contain"}} /></div>
         <div className={styles.serviceRow}><div><h3>{service.title}</h3>
-          <div className={styles.rating}><span className={styles.star} aria-hidden="true">★</span><span>{service.rating}</span><span>({formatReviews(service.reviews)} reviews)</span><button type="button" onClick={()=>open(service)}>View details</button></div>
+          <div className={styles.rating}><span className={styles.star} aria-hidden="true">★</span><span>{service.rating}</span><span>({formatReviews(service.reviews)} reviews)</span><button type="button" onPointerEnter={() => { if (service.id === "pots") warmPotsResources(); }} onFocus={() => { if (service.id === "pots") warmPotsResources(); }} onTouchStart={() => { if (service.id === "pots") warmPotsResources(); }} onClick={()=>open(service)}>View details</button></div>
           <strong>{service.id==="landscaping"||service.id==="vertical-garden"?"Site survey from ":"Starts at "}{money(Math.min(...service.jobs.map((job)=>job.price)))}</strong>
-        </div><button type="button" className={styles.addButton} onClick={()=>open(service)}>Add</button></div>
+        </div><button type="button" className={styles.addButton} onPointerEnter={() => { if (service.id === "pots") warmPotsResources(); }} onFocus={() => { if (service.id === "pots") warmPotsResources(); }} onTouchStart={() => { if (service.id === "pots") warmPotsResources(); }} onClick={()=>open(service)}>Add</button></div>
       </section>)}
     </main><aside className={styles.sidebar}><FullHomeRightSidebar/></aside></div></div>
     {active&&<div className={styles.backdrop} onMouseDown={(event)=>{if(event.target===event.currentTarget)setActive(null)}}>
