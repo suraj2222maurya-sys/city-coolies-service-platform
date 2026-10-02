@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import styles from "./ServiceCategoryGrid.module.css";
 
 const services = [
@@ -102,6 +105,12 @@ function getServiceHref(slug: string): string {
 }
 
 export default function ServiceCategoryGrid() {
+  const router = useRouter();
+
+  function prepareServicePage(slug: string) {
+    router.prefetch(getServiceHref(slug));
+  }
+
   return (
     <section
       className={styles.section}
@@ -120,6 +129,10 @@ export default function ServiceCategoryGrid() {
               >
                 <Link
                   href={getServiceHref(service.slug)}
+                  prefetch={false}
+                  onPointerEnter={() => prepareServicePage(service.slug)}
+                  onFocus={() => prepareServicePage(service.slug)}
+                  onTouchStart={() => prepareServicePage(service.slug)}
                   className={styles.card}
                 >
                   <ServiceVisual icon={service.icon} />
