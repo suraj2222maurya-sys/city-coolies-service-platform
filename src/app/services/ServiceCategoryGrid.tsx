@@ -85,6 +85,7 @@ function ServiceVisual({
     >
       <Image
         unoptimized
+        loading="eager" decoding="async"
         src={icon}
         alt=""
         width={80}
