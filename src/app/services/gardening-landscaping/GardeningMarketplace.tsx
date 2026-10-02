@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore, useRef } from "react";
+import Image from "next/image";
 import FullHomeRightSidebar from "../deep-cleaning/FullHomeRightSidebar";
 import { getDeepCleaningCartServerSnapshot, getDeepCleaningCartSnapshot, parseDeepCleaningCartSnapshot, removeDeepCleaningCartItem, subscribeDeepCleaningCart, upsertDeepCleaningCartItem } from "../deep-cleaning/deepCleaningCart";
 import styles from "./GardeningMarketplace.module.css";
@@ -32,16 +33,98 @@ const services: readonly Service[] = [
 const formatReviews=(count:number)=>count>=1000?`${Math.round(count/1000)}K`:String(count);
 const money=(amount:number)=>`₹${amount.toLocaleString("en-IN")}`;
 const serviceImages: Record<string, string> = {
-  "gardener": "gardener_service_banner.png",
-  "lawn-care": "lawn_care_service_banner.png",
-  "landscaping": "landscaping_service_banner.png",
-  "vertical-garden": "vertical_garden_service_banner.png",
-  "nursery": "nursery_service_banner.png",
-  "pots": "pots_service_banner.png",
-  "compost": "compost_soil_service_banner.png",
+  "gardener": "gardener_service_banner.5ccafc6a1a39.webp",
+  "lawn-care": "lawn_care_service_banner.ea4a3ed11216.webp",
+  "landscaping": "landscaping_service_banner.0ca754013979.webp",
+  "vertical-garden": "vertical_garden_service_banner.1a9d348840dd.webp",
+  "nursery": "nursery_service_banner.c969cfe26d72.webp",
+  "pots": "pots_service_banner.b7b432d26a17.webp",
+  "compost": "compost_soil_service_banner.27ba84cfd54f.webp",
 };
 const cartId=(id:string)=>`gardening:${id}`;
 const key=(job:Job,size?:string)=>`${job.id}:${size??"standard"}`;
+
+
+function GardenLoadImage({
+  src, alt, width, height, style
+}: {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  style?: import("react").CSSProperties;
+}) {
+  const element = useRef<HTMLSpanElement>(null);
+  const [request, setRequest] = useState<{
+    ready: boolean;
+    priority: "high" | "low";
+  }>({ ready: false, priority: "low" });
+
+  useEffect(() => {
+    const target = element.current;
+    if (!target) return;
+
+    if (!("IntersectionObserver" in window)) {
+      const timer = setTimeout(() => {
+        setRequest({ ready: true, priority: "high" });
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+
+    const root = target.closest("." + styles.modalBody);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+
+        const box = target.getBoundingClientRect();
+        const boundary = root?.getBoundingClientRect();
+        const top = Math.max(0, boundary?.top ?? 0);
+        const bottom = Math.min(
+          window.innerHeight,
+          boundary?.bottom ?? window.innerHeight
+        );
+        const left = Math.max(0, boundary?.left ?? 0);
+        const right = Math.min(
+          window.innerWidth,
+          boundary?.right ?? window.innerWidth
+        );
+        const visible =
+          box.bottom > top && box.top < bottom &&
+          box.right > left && box.left < right;
+
+        setRequest({
+          ready: true,
+          priority: visible ? "high" : "low"
+        });
+        observer.disconnect();
+      },
+      { root, rootMargin: "300px 0px", threshold: 0 }
+    );
+
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [src]);
+
+  return (
+    <span
+      ref={element}
+      style={{ display: "block", width: "100%", height: "100%" }}
+    >
+      {request.ready && (
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          unoptimized
+          loading="eager"
+          fetchPriority={request.priority}
+          style={style}
+        />
+      )}
+    </span>
+  );
+}
 
 export default function GardeningMarketplace(){
   const [active,setActive]=useState<Service|null>(null);
@@ -105,12 +188,12 @@ export default function GardeningMarketplace(){
       <div className={styles.selectorViewport}>
         <button type="button" className={styles.selectorPrevious} style={{display:selectorScrolled?undefined:"none"}} aria-label="Previous gardening services" onClick={()=>document.getElementById("gardening-selector")?.scrollBy({left:-320,behavior:"smooth"})}>←</button>
         <nav className={styles.selector} id="gardening-selector" aria-label="Select gardening service" onScroll={(event)=>setSelectorScrolled(event.currentTarget.scrollLeft>4)}>
-          {services.map((service)=><button type="button" key={service.id} className={styles.selectorItem} onClick={()=>document.getElementById(service.id)?.scrollIntoView({behavior:"smooth",block:"start"})}><span className={styles.thumbnail} aria-hidden="true" style={{overflow:"hidden"}}><img src={`/gardening-landscaping/${serviceImages[service.id]}`} alt="" width={100} height={100} style={{display:"block",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center"}} /></span><span className={styles.selectorLabel}>{service.title}</span></button>)}
+          {services.map((service)=><button type="button" key={service.id} className={styles.selectorItem} onClick={()=>document.getElementById(service.id)?.scrollIntoView({behavior:"smooth",block:"start"})}><span className={styles.thumbnail} aria-hidden="true" style={{overflow:"hidden"}}><GardenLoadImage src={`/gardening-landscaping/${serviceImages[service.id]}`} alt="" width={100} height={100} style={{display:"block",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center"}} /></span><span className={styles.selectorLabel}>{service.title}</span></button>)}
         </nav>
         <button type="button" className={styles.selectorNext} aria-label="More gardening services" onClick={()=>document.getElementById("gardening-selector")?.scrollBy({left:320,behavior:"smooth"})}>→</button>
       </div>
       {services.map((service)=><section key={service.id} id={service.id} className={styles.serviceGroup}>
-        <h2>{service.title}</h2><div className={styles.banner} aria-hidden="true"><img src={`/gardening-landscaping/${serviceImages[service.id]}`} alt="" width={1942} height={809} style={{display:"block",width:"100%",height:"100%",objectFit:"contain"}} /></div>
+        <h2>{service.title}</h2><div className={styles.banner} aria-hidden="true"><GardenLoadImage src={`/gardening-landscaping/${serviceImages[service.id]}`} alt="" width={1942} height={809} style={{display:"block",width:"100%",height:"100%",objectFit:"contain"}} /></div>
         <div className={styles.serviceRow}><div><h3>{service.title}</h3>
           <div className={styles.rating}><span className={styles.star} aria-hidden="true">★</span><span>{service.rating}</span><span>({formatReviews(service.reviews)} reviews)</span><button type="button" onClick={()=>open(service)}>View details</button></div>
           <strong>{service.id==="landscaping"||service.id==="vertical-garden"?"Site survey from ":"Starts at "}{money(Math.min(...service.jobs.map((job)=>job.price)))}</strong>
@@ -125,16 +208,16 @@ export default function GardeningMarketplace(){
             {active.jobs.map((job)=><div className={styles.option} key={job.id}>
               {active.id==="nursery"
   ? <div className={styles.optionImage} aria-hidden="true" style={{overflow:"hidden"}}>
-      <img src={`/gardening-landscaping/nursery-${job.id}.webp`} alt="" width={640} height={640}
+      <GardenLoadImage src={`/gardening-landscaping/nursery-${job.id}.webp`} alt="" width={640} height={640}
         style={{display:"block",width:"100%",height:"100%",objectFit:"contain"}} />
     </div>
   : active.id==="pots"
   ? <div className={styles.optionImage} aria-hidden="true" style={{overflow:"hidden"}}>
-      <img src={`/gardening-landscaping/pot-${job.id}.webp`} alt="" width={640} height={640}
+      <GardenLoadImage src={`/gardening-landscaping/pot-${job.id}.webp`} alt="" width={640} height={640}
         style={{display:"block",width:"100%",height:"100%",objectFit:"contain"}} />
     </div>
   : active.id==="compost"&&<div className={styles.optionImage} aria-hidden="true" style={{overflow:"hidden"}}>
-  <img src={`/gardening-landscaping/compost-${job.id.replace(/-+$/, "")}.webp`} alt="" width={640} height={640}
+  <GardenLoadImage src={`/gardening-landscaping/compost-${job.id.replace(/-+$/, "")}.webp`} alt="" width={640} height={640}
     style={{display:"block",width:"100%",height:"100%",objectFit:"contain"}} />
 </div>}
               <strong>{job.title}</strong>
