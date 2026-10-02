@@ -1888,19 +1888,19 @@
 }
 
 .section .serviceSelector .selectorItem:nth-child(1) .selectorImage {
-  background-image: url("/deep-cleaning/home_cobweb_cleaning.png") !important;
+  background-image: url("/deep-cleaning/home_cobweb_cleaning.312a74ac64eb.webp") !important;
 }
 
 .section .serviceSelector .selectorItem:nth-child(2) .selectorImage {
-  background-image: url("/deep-cleaning/industrial_cobweb_cleaning.png") !important;
+  background-image: url("/deep-cleaning/industrial_cobweb_cleaning.477e27c16708.webp") !important;
 }
 
 .section .serviceSelector .selectorItem:nth-child(3) .selectorImage {
-  background-image: url("/deep-cleaning/building_cobweb_cleaning.png") !important;
+  background-image: url("/deep-cleaning/building_cobweb_cleaning.d60d614f623d.webp") !important;
 }
 
 .section .serviceSelector .selectorItem:nth-child(4) .selectorImage {
-  background-image: url("/deep-cleaning/commercial_cobweb_cleaning.png") !important;
+  background-image: url("/deep-cleaning/commercial_cobweb_cleaning.37506f4d9078.webp") !important;
 }
 
 /* Show the complete wide image in each direct-page section. */
@@ -1921,19 +1921,19 @@
 }
 
 .section .bannerPlaceholder[data-service-id="home-cobweb-cleaning"] {
-  background-image: url("/deep-cleaning/home_cobweb_cleaning.png") !important;
+  background-image: url("/deep-cleaning/home_cobweb_cleaning.312a74ac64eb.webp") !important;
 }
 
 .section .bannerPlaceholder[data-service-id="industrial-cobweb-cleaning"] {
-  background-image: url("/deep-cleaning/industrial_cobweb_cleaning.png") !important;
+  background-image: url("/deep-cleaning/industrial_cobweb_cleaning.477e27c16708.webp") !important;
 }
 
 .section .bannerPlaceholder[data-service-id="building-cobweb-cleaning"] {
-  background-image: url("/deep-cleaning/building_cobweb_cleaning.png") !important;
+  background-image: url("/deep-cleaning/building_cobweb_cleaning.d60d614f623d.webp") !important;
 }
 
 .section .bannerPlaceholder[data-service-id="commercial-cobweb-cleaning"] {
-  background-image: url("/deep-cleaning/commercial_cobweb_cleaning.png") !important;
+  background-image: url("/deep-cleaning/commercial_cobweb_cleaning.37506f4d9078.webp") !important;
 }
 
 /* CITY_COOLIES_COBWEB_IMAGES_END */

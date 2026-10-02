@@ -68,12 +68,12 @@ const services: readonly Service[] = [
 
 const surveyAmount = 500;
 const serviceImages: Record<string, string> = {
-  "full-home-apartment-construction": "full_home_apartment_construction_service_banner.png",
-  "exterior-civil-work": "exterior_civil_work_service_banner.png",
-  "commercial-industrial-civil-work": "commercial_industrial_civil_work_service_banner.png",
-  "repair-maintenance-civil-work": "repair_maintenance_civil_work_service_banner.png",
-  "rcc-construction": "rcc_construction_service_banner.png",
-  "complete-construction-work": "complete_construction_work_service_banner.png",
+  "full-home-apartment-construction": "full_home_apartment_construction_service_banner.c2624ffe61be.webp",
+  "exterior-civil-work": "exterior_civil_work_service_banner.29764a84c52e.webp",
+  "commercial-industrial-civil-work": "commercial_industrial_civil_work_service_banner.7a55ed58d7b3.webp",
+  "repair-maintenance-civil-work": "repair_maintenance_civil_work_service_banner.1d7a97c7eba5.webp",
+  "rcc-construction": "rcc_construction_service_banner.d4d95a39cbe7.webp",
+  "complete-construction-work": "complete_construction_work_service_banner.adc566f4e0d1.webp",
 };
 const cartId = (id: string) => `civil:${id}`;
 
@@ -133,8 +133,8 @@ export default function CivilConstructionMarketplace() {
                   <button key={service.id} type="button" className={styles.selectorItem}
                     onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}>
                     <span className={styles.thumbnail} aria-hidden="true" style={{ overflow: "hidden" }}>
-                      <img
-                        src={`/civil-construction-maintenance/${serviceImages[service.id]}`}
+                      <img loading="lazy" decoding="async"
+                        src={serviceDisplaySource(`/civil-construction-maintenance/${serviceImages[service.id]}`)}
                         alt=""
                         width={100}
                         height={100}
@@ -155,7 +155,7 @@ export default function CivilConstructionMarketplace() {
               <section className={styles.serviceGroup} id={service.id} key={service.id}>
                 <h2>{service.title}</h2>
                 <div className={styles.banner} aria-hidden="true">
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={`/civil-construction-maintenance/${serviceImages[service.id]}`}
                     alt=""
                     width={1942}
@@ -220,4 +220,25 @@ export default function CivilConstructionMarketplace() {
       )}
     </section>
   );
+}
+
+
+const serviceDisplayImages: Record<string, string> = {
+  "/civil-construction-maintenance/commercial_industrial_civil_work_service_banner.png": "/civil-construction-maintenance/commercial_industrial_civil_work_service_banner_selector.9b73e104e8b1.webp",
+  "/civil-construction-maintenance/commercial_industrial_civil_work_service_banner.7a55ed58d7b3.webp": "/civil-construction-maintenance/commercial_industrial_civil_work_service_banner_selector.9b73e104e8b1.webp",
+  "/civil-construction-maintenance/complete_construction_work_service_banner.png": "/civil-construction-maintenance/complete_construction_work_service_banner_selector.7ffe867bd82c.webp",
+  "/civil-construction-maintenance/complete_construction_work_service_banner.adc566f4e0d1.webp": "/civil-construction-maintenance/complete_construction_work_service_banner_selector.7ffe867bd82c.webp",
+  "/civil-construction-maintenance/exterior_civil_work_service_banner.png": "/civil-construction-maintenance/exterior_civil_work_service_banner_selector.872cacbc4039.webp",
+  "/civil-construction-maintenance/exterior_civil_work_service_banner.29764a84c52e.webp": "/civil-construction-maintenance/exterior_civil_work_service_banner_selector.872cacbc4039.webp",
+  "/civil-construction-maintenance/full_home_apartment_construction_service_banner.png": "/civil-construction-maintenance/full_home_apartment_construction_service_banner_selector.993c8e77a105.webp",
+  "/civil-construction-maintenance/full_home_apartment_construction_service_banner.c2624ffe61be.webp": "/civil-construction-maintenance/full_home_apartment_construction_service_banner_selector.993c8e77a105.webp",
+  "/civil-construction-maintenance/rcc_construction_service_banner.png": "/civil-construction-maintenance/rcc_construction_service_banner_selector.9bf1a60de031.webp",
+  "/civil-construction-maintenance/rcc_construction_service_banner.d4d95a39cbe7.webp": "/civil-construction-maintenance/rcc_construction_service_banner_selector.9bf1a60de031.webp",
+  "/civil-construction-maintenance/repair_maintenance_civil_work_service_banner.png": "/civil-construction-maintenance/repair_maintenance_civil_work_service_banner_selector.67038757d9d1.webp",
+  "/civil-construction-maintenance/repair_maintenance_civil_work_service_banner.1d7a97c7eba5.webp": "/civil-construction-maintenance/repair_maintenance_civil_work_service_banner_selector.67038757d9d1.webp"
+};
+function serviceDisplaySource(src: string): string {
+  const queryAt = src.indexOf("?");
+  const base = queryAt < 0 ? src : src.slice(0, queryAt);
+  return serviceDisplayImages[base] ?? src;
 }

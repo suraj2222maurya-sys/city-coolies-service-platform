@@ -97,13 +97,13 @@ const services: readonly Service[] = [
 
 const money = (amount: number) => `₹${amount.toLocaleString("en-IN")}`;
 const serviceImages: Record<string, string> = {
-  "washing-machine": "washing_machine_repair_installation_service_banner.png",
-  "fridge-cooler": "fridge_cooler_repair_service_banner.png",
-  "geyser": "geyser_installation_repair_service_banner.png",
-  "tv": "tv_fitting_repair_service_banner.png",
-  "chimney": "kitchen_chimney_repair_service_banner.png",
-  "gas-stove-pipe": "gas_stove_gas_pipe_service_banner.png",
-  "exhaust-fan": "exhaust_fan_repair_fitting_service_banner.png",
+  "washing-machine": "washing_machine_repair_installation_service_banner.975d4b602f5c.webp",
+  "fridge-cooler": "fridge_cooler_repair_service_banner.2f14c3292244.webp",
+  "geyser": "geyser_installation_repair_service_banner.7fe613a77a92.webp",
+  "tv": "tv_fitting_repair_service_banner.385a2696ecd8.webp",
+  "chimney": "kitchen_chimney_repair_service_banner.0ba004e43ca9.webp",
+  "gas-stove-pipe": "gas_stove_gas_pipe_service_banner.f129e9bab965.webp",
+  "exhaust-fan": "exhaust_fan_repair_fitting_service_banner.c0fa33c98255.webp",
 };
 const cartId = (id: string) => `appliance:${id}`;
 
@@ -173,7 +173,7 @@ export default function ApplianceRepairMarketplace() {
                   <button key={service.id} type="button" className={styles.selectorItem}
                     onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}>
                     <span className={styles.thumbnail} aria-hidden="true" style={{ overflow: "hidden" }}>
-                      <img src={`/appliance-repair/${serviceImages[service.id]}`} alt="" width={100} height={100}
+                      <img loading="lazy" decoding="async" src={serviceDisplaySource(`/appliance-repair/${serviceImages[service.id]}`)} alt="" width={100} height={100}
                         style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                     </span>
                     <span className={styles.selectorLabel}>{service.title}</span>
@@ -189,7 +189,7 @@ export default function ApplianceRepairMarketplace() {
               <section className={styles.serviceGroup} id={service.id} key={service.id}>
                 <h2>{service.title}</h2>
                 <div className={styles.banner} aria-hidden="true">
-                  <img src={`/appliance-repair/${serviceImages[service.id]}`} alt="" width={1942} height={809}
+                  <img loading="lazy" decoding="async" src={`/appliance-repair/${serviceImages[service.id]}`} alt="" width={1942} height={809}
                     style={{ display: "block", width: "100%", height: "100%", objectFit: "contain" }} />
                 </div>
                 <div className={styles.serviceRow}>
@@ -266,4 +266,27 @@ export default function ApplianceRepairMarketplace() {
       )}
     </section>
   );
+}
+
+
+const serviceDisplayImages: Record<string, string> = {
+  "/appliance-repair/exhaust_fan_repair_fitting_service_banner.png": "/appliance-repair/exhaust_fan_repair_fitting_service_banner_selector.06c8529b7c71.webp",
+  "/appliance-repair/exhaust_fan_repair_fitting_service_banner.c0fa33c98255.webp": "/appliance-repair/exhaust_fan_repair_fitting_service_banner_selector.06c8529b7c71.webp",
+  "/appliance-repair/fridge_cooler_repair_service_banner.png": "/appliance-repair/fridge_cooler_repair_service_banner_selector.8115ac311f01.webp",
+  "/appliance-repair/fridge_cooler_repair_service_banner.2f14c3292244.webp": "/appliance-repair/fridge_cooler_repair_service_banner_selector.8115ac311f01.webp",
+  "/appliance-repair/gas_stove_gas_pipe_service_banner.png": "/appliance-repair/gas_stove_gas_pipe_service_banner_selector.98c920e9c833.webp",
+  "/appliance-repair/gas_stove_gas_pipe_service_banner.f129e9bab965.webp": "/appliance-repair/gas_stove_gas_pipe_service_banner_selector.98c920e9c833.webp",
+  "/appliance-repair/geyser_installation_repair_service_banner.png": "/appliance-repair/geyser_installation_repair_service_banner_selector.05172610b771.webp",
+  "/appliance-repair/geyser_installation_repair_service_banner.7fe613a77a92.webp": "/appliance-repair/geyser_installation_repair_service_banner_selector.05172610b771.webp",
+  "/appliance-repair/kitchen_chimney_repair_service_banner.png": "/appliance-repair/kitchen_chimney_repair_service_banner_selector.904e6a8a3079.webp",
+  "/appliance-repair/kitchen_chimney_repair_service_banner.0ba004e43ca9.webp": "/appliance-repair/kitchen_chimney_repair_service_banner_selector.904e6a8a3079.webp",
+  "/appliance-repair/tv_fitting_repair_service_banner.png": "/appliance-repair/tv_fitting_repair_service_banner_selector.d3bb76924655.webp",
+  "/appliance-repair/tv_fitting_repair_service_banner.385a2696ecd8.webp": "/appliance-repair/tv_fitting_repair_service_banner_selector.d3bb76924655.webp",
+  "/appliance-repair/washing_machine_repair_installation_service_banner.png": "/appliance-repair/washing_machine_repair_installation_service_banner_selector.69d2569c2630.webp",
+  "/appliance-repair/washing_machine_repair_installation_service_banner.975d4b602f5c.webp": "/appliance-repair/washing_machine_repair_installation_service_banner_selector.69d2569c2630.webp"
+};
+function serviceDisplaySource(src: string): string {
+  const queryAt = src.indexOf("?");
+  const base = queryAt < 0 ? src : src.slice(0, queryAt);
+  return serviceDisplayImages[base] ?? src;
 }

@@ -58,9 +58,9 @@ const markingOptions = [
 ] as const;
 const money = (amount: number) => `₹${amount.toLocaleString("en-IN")}`;
 const serviceImages: Record<string, string> = {
-  "full-home-painting": "full_home_painting_service_banner.png",
-  "most-popular-painting": "most_popular_painting_service_banner.png",
-  "marking-safety-painting": "marking_safety_painting_service_banner.png",
+  "full-home-painting": "full_home_painting_service_banner.e5fd0b004622.webp",
+  "most-popular-painting": "most_popular_painting_service_banner.4fcd6c1482ca.webp",
+  "marking-safety-painting": "marking_safety_painting_service_banner.0bd18c675a32.webp",
 };
 const cartId = (id: string) => `painting:${id}`;
 
@@ -144,8 +144,8 @@ export default function PaintingServicesMarketplace() {
                   <button key={service.id} type="button" className={styles.selectorItem}
                     onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}>
                     <span className={styles.thumbnail} aria-hidden="true" style={{ overflow: "hidden" }}>
-                      <img
-                        src={`/painting-services/${serviceImages[service.id]}`}
+                      <img loading="lazy" decoding="async"
+                        src={serviceDisplaySource(`/painting-services/${serviceImages[service.id]}`)}
                         alt=""
                         width={100}
                         height={100}
@@ -165,7 +165,7 @@ export default function PaintingServicesMarketplace() {
               <section className={styles.serviceGroup} id={service.id} key={service.id}>
                 <h2>{service.title}</h2>
                 <div className={styles.banner} aria-hidden="true">
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={`/painting-services/${serviceImages[service.id]}`}
                     alt=""
                     width={1942}
@@ -261,4 +261,19 @@ export default function PaintingServicesMarketplace() {
       )}
     </section>
   );
+}
+
+
+const serviceDisplayImages: Record<string, string> = {
+  "/painting-services/full_home_painting_service_banner.png": "/painting-services/full_home_painting_service_banner_selector.d571f2320c4b.webp",
+  "/painting-services/full_home_painting_service_banner.e5fd0b004622.webp": "/painting-services/full_home_painting_service_banner_selector.d571f2320c4b.webp",
+  "/painting-services/marking_safety_painting_service_banner.png": "/painting-services/marking_safety_painting_service_banner_selector.beee4c4cf939.webp",
+  "/painting-services/marking_safety_painting_service_banner.0bd18c675a32.webp": "/painting-services/marking_safety_painting_service_banner_selector.beee4c4cf939.webp",
+  "/painting-services/most_popular_painting_service_banner.png": "/painting-services/most_popular_painting_service_banner_selector.f1c9dba9c072.webp",
+  "/painting-services/most_popular_painting_service_banner.4fcd6c1482ca.webp": "/painting-services/most_popular_painting_service_banner_selector.f1c9dba9c072.webp"
+};
+function serviceDisplaySource(src: string): string {
+  const queryAt = src.indexOf("?");
+  const base = queryAt < 0 ? src : src.slice(0, queryAt);
+  return serviceDisplayImages[base] ?? src;
 }

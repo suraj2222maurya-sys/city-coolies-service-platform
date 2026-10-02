@@ -29,37 +29,37 @@ const BUNGALOW_CLEANING_VISUALS = [
     id: "floor-deep-cleaning",
     name: "Floor deep cleaning",
     image:
-      "/deep-cleaning/bungalow-floor-deep-cleaning.png",
+      "/deep-cleaning/bungalow-floor-deep-cleaning.04456972ba5b.webp",
   },
   {
     id: "staircase-cleaning",
     name: "Staircase cleaning",
     image:
-      "/deep-cleaning/bungalow-staircase-cleaning.png",
+      "/deep-cleaning/bungalow-staircase-cleaning.fa8b8fc5701a.webp",
   },
   {
     id: "kitchen-deep-cleaning",
     name: "Kitchen deep cleaning",
     image:
-      "/deep-cleaning/bungalow-kitchen-deep-cleaning.png",
+      "/deep-cleaning/bungalow-kitchen-deep-cleaning.ce55af14d09b.webp",
   },
   {
     id: "bathroom-deep-cleaning",
     name: "Bathroom deep cleaning",
     image:
-      "/deep-cleaning/bungalow-bathroom-deep-cleaning.png",
+      "/deep-cleaning/bungalow-bathroom-deep-cleaning.d88a050ffae4.webp",
   },
   {
     id: "window-glass-cleaning",
     name: "Window & glass cleaning",
     image:
-      "/deep-cleaning/bungalow-window-glass-cleaning.png",
+      "/deep-cleaning/bungalow-window-glass-cleaning.13fed8284e7f.webp",
   },
   {
     id: "fan-switch-fixture-cleaning",
     name: "Fan, switch & fixture cleaning",
     image:
-      "/deep-cleaning/bungalow-fan-switch-fixture-cleaning.png",
+      "/deep-cleaning/bungalow-fan-switch-fixture-cleaning.cd8a78e1e2a9.webp",
   },
 ] as const;
 
@@ -332,7 +332,7 @@ export default function BungalowSurveyModal({
                             styles.cleaningVisualItem
                           }
                         >
-                          <img
+                          <img decoding="async"
                             src={item.image}
                             alt={item.name}
                             className={

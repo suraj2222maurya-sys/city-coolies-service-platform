@@ -91,12 +91,12 @@ const services: readonly Service[] = [
 
 const money = (amount: number) => `₹${amount.toLocaleString("en-IN")}`;
 const serviceImages: Record<string, string> = {
-  "local-home-shifting": "local_home_shifting_service_banner.png",
-  "intercity-relocation": "intercity_relocation_service_banner.png",
-  "office-commercial-moving": "office_commercial_moving_service_banner.png",
-  "bike-vehicle-moving": "bike_vehicle_transport_service_banner.png",
-  "packing-unpacking": "packing_unpacking_service_banner.png",
-  "loading-unloading": "loading_unloading_service_banner.png",
+  "local-home-shifting": "local_home_shifting_service_banner.4705d50ab5a5.webp",
+  "intercity-relocation": "intercity_relocation_service_banner.2aea27aaf1dc.webp",
+  "office-commercial-moving": "office_commercial_moving_service_banner.7028f2ad7769.webp",
+  "bike-vehicle-moving": "bike_vehicle_transport_service_banner.a90c48ff4845.webp",
+  "packing-unpacking": "packing_unpacking_service_banner.96a428befeaf.webp",
+  "loading-unloading": "loading_unloading_service_banner.50bb9713e92d.webp",
 };
 const cartId = (id: string) => `moving:${id}`;
 
@@ -164,7 +164,7 @@ export default function PackersMoversMarketplace() {
                   <button key={service.id} type="button" className={styles.selectorItem}
                     onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}>
                     <span className={styles.thumbnail} aria-hidden="true" style={{ overflow: "hidden" }}>
-                      <img src={`/packers-movers/${serviceImages[service.id]}`} alt="" width={100} height={100}
+                      <img loading="lazy" decoding="async" src={serviceDisplaySource(`/packers-movers/${serviceImages[service.id]}`)} alt="" width={100} height={100}
                         style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                     </span>
                     <span className={styles.selectorLabel}>{service.title}</span>
@@ -180,7 +180,7 @@ export default function PackersMoversMarketplace() {
               <section className={styles.serviceGroup} id={service.id} key={service.id}>
                 <h2>{service.title}</h2>
                 <div className={styles.banner} aria-hidden="true">
-                  <img src={`/packers-movers/${serviceImages[service.id]}`} alt="" width={1942} height={809}
+                  <img loading="lazy" decoding="async" src={`/packers-movers/${serviceImages[service.id]}`} alt="" width={1942} height={809}
                     style={{ display: "block", width: "100%", height: "100%", objectFit: "contain" }} />
                 </div>
                 <div className={styles.serviceRow}>
@@ -267,4 +267,25 @@ export default function PackersMoversMarketplace() {
       )}
     </section>
   );
+}
+
+
+const serviceDisplayImages: Record<string, string> = {
+  "/packers-movers/bike_vehicle_transport_service_banner.png": "/packers-movers/bike_vehicle_transport_service_banner_selector.95eba7dc9e15.webp",
+  "/packers-movers/bike_vehicle_transport_service_banner.a90c48ff4845.webp": "/packers-movers/bike_vehicle_transport_service_banner_selector.95eba7dc9e15.webp",
+  "/packers-movers/intercity_relocation_service_banner.png": "/packers-movers/intercity_relocation_service_banner_selector.9ee034470786.webp",
+  "/packers-movers/intercity_relocation_service_banner.2aea27aaf1dc.webp": "/packers-movers/intercity_relocation_service_banner_selector.9ee034470786.webp",
+  "/packers-movers/loading_unloading_service_banner.png": "/packers-movers/loading_unloading_service_banner_selector.07cafb4eba41.webp",
+  "/packers-movers/loading_unloading_service_banner.50bb9713e92d.webp": "/packers-movers/loading_unloading_service_banner_selector.07cafb4eba41.webp",
+  "/packers-movers/local_home_shifting_service_banner.png": "/packers-movers/local_home_shifting_service_banner_selector.fd900b985507.webp",
+  "/packers-movers/local_home_shifting_service_banner.4705d50ab5a5.webp": "/packers-movers/local_home_shifting_service_banner_selector.fd900b985507.webp",
+  "/packers-movers/office_commercial_moving_service_banner.png": "/packers-movers/office_commercial_moving_service_banner_selector.8504327c6716.webp",
+  "/packers-movers/office_commercial_moving_service_banner.7028f2ad7769.webp": "/packers-movers/office_commercial_moving_service_banner_selector.8504327c6716.webp",
+  "/packers-movers/packing_unpacking_service_banner.png": "/packers-movers/packing_unpacking_service_banner_selector.1ecfd3ee4417.webp",
+  "/packers-movers/packing_unpacking_service_banner.96a428befeaf.webp": "/packers-movers/packing_unpacking_service_banner_selector.1ecfd3ee4417.webp"
+};
+function serviceDisplaySource(src: string): string {
+  const queryAt = src.indexOf("?");
+  const base = queryAt < 0 ? src : src.slice(0, queryAt);
+  return serviceDisplayImages[base] ?? src;
 }

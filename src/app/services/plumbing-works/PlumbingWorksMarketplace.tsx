@@ -71,10 +71,10 @@ const installationOptions: Option[] = [
   { id: "tap", title: "Tap / Nal Fitting", price: 249, unit: "fitting" },
 ];
 const serviceImages: Record<string, string> = {
-  "new-home-plumbing": "new_home_plumbing_service_banner.png",
-  "pipe-work": "pipe_work_service_banner.png",
-  "bathroom-plumbing": "bathroom_plumbing_service_banner.png",
-  "plumbing-installation": "plumbing_installation_service_banner.png",
+  "new-home-plumbing": "new_home_plumbing_service_banner.8ab281edaddd.webp",
+  "pipe-work": "pipe_work_service_banner.780853893227.webp",
+  "bathroom-plumbing": "bathroom_plumbing_service_banner.9c54f9ff32ee.webp",
+  "plumbing-installation": "plumbing_installation_service_banner.dfce584c648d.webp",
 };
 const isChoiceService = (id: string) => id === "pipe-work" || id === "plumbing-installation";
 const optionsFor = (id: string): readonly Option[] => id === "pipe-work" ? pipeOptions : installationOptions;
@@ -192,8 +192,8 @@ export default function PlumbingWorksMarketplace() {
                     onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}
                   >
                     <span className={styles.thumbnail} aria-hidden="true" style={{ overflow: "hidden" }}>
-                      <img
-                        src={`/plumbing-works/${serviceImages[service.id]}`}
+                      <img loading="lazy" decoding="async"
+                        src={serviceDisplaySource(`/plumbing-works/${serviceImages[service.id]}`)}
                         alt=""
                         width={100}
                         height={100}
@@ -219,7 +219,7 @@ export default function PlumbingWorksMarketplace() {
               <section className={styles.serviceGroup} id={service.id} key={service.id}>
                 <h2>{service.title}</h2>
                 <div className={styles.banner} aria-hidden="true">
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={`/plumbing-works/${serviceImages[service.id]}`}
                     alt=""
                     width={1942}
@@ -370,4 +370,20 @@ export default function PlumbingWorksMarketplace() {
       )}
     </section>
   );
+}
+
+const serviceDisplayImages: Record<string, string> = {
+  "/plumbing-works/bathroom_plumbing_service_banner.png": "/plumbing-works/bathroom_plumbing_service_banner_selector.750293f343cd.webp",
+  "/plumbing-works/bathroom_plumbing_service_banner.9c54f9ff32ee.webp": "/plumbing-works/bathroom_plumbing_service_banner_selector.750293f343cd.webp",
+  "/plumbing-works/new_home_plumbing_service_banner.png": "/plumbing-works/new_home_plumbing_service_banner_selector.de6602750077.webp",
+  "/plumbing-works/new_home_plumbing_service_banner.8ab281edaddd.webp": "/plumbing-works/new_home_plumbing_service_banner_selector.de6602750077.webp",
+  "/plumbing-works/pipe_work_service_banner.png": "/plumbing-works/pipe_work_service_banner_selector.88f47c328f2a.webp",
+  "/plumbing-works/pipe_work_service_banner.780853893227.webp": "/plumbing-works/pipe_work_service_banner_selector.88f47c328f2a.webp",
+  "/plumbing-works/plumbing_installation_service_banner.png": "/plumbing-works/plumbing_installation_service_banner_selector.211b6a146309.webp",
+  "/plumbing-works/plumbing_installation_service_banner.dfce584c648d.webp": "/plumbing-works/plumbing_installation_service_banner_selector.211b6a146309.webp"
+};
+function serviceDisplaySource(src: string): string {
+  const queryAt = src.indexOf("?");
+  const base = queryAt < 0 ? src : src.slice(0, queryAt);
+  return serviceDisplayImages[base] ?? src;
 }

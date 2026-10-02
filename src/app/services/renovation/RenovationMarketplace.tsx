@@ -229,16 +229,16 @@ export default function RenovationMarketplace() {
                   onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}
                 >
                   <span className={styles.thumbnail} aria-hidden="true" style={{ overflow: "hidden", aspectRatio: "1 / 1" }}>
-                    <img
-                      src={`/renovation/${({
-                        "full-home-renovation": "full_home_renovation_service_banner.png",
-                        "kitchen-renovation": "kitchen_renovation_service_banner.png",
-                        "bathroom-renovation": "bathroom_renovation_service_banner.png",
-                        "villa-independent-house-renovation": "villa_independent_house_renovation_service_banner.png",
-                        "complete-house-electrical-renovation": "complete_house_electrical_renovation_service_banner.png",
-                        "office-renovation": "office_renovation_service_banner.png",
-                        "shop-showroom-renovation": "shop_showroom_renovation_service_banner.png",
-                      } as Record<string, string>)[service.id]}`}
+                    <img loading="lazy" decoding="async"
+                      src={serviceDisplaySource(`/renovation/${({
+                        "full-home-renovation": "full_home_renovation_service_banner.8b6ced871701.webp",
+                        "kitchen-renovation": "kitchen_renovation_service_banner.cd319128c3f0.webp",
+                        "bathroom-renovation": "bathroom_renovation_service_banner.e869a77b073a.webp",
+                        "villa-independent-house-renovation": "villa_independent_house_renovation_service_banner.867c764f4b34.webp",
+                        "complete-house-electrical-renovation": "complete_house_electrical_renovation_service_banner.9e0d87c77623.webp",
+                        "office-renovation": "office_renovation_service_banner.fd47d563fe7d.webp",
+                        "shop-showroom-renovation": "shop_showroom_renovation_service_banner.344e8aa3a7cb.webp",
+                      } as Record<string, string>)[service.id]}`)}
                       alt=""
                       width={138}
                       height={138}
@@ -298,4 +298,26 @@ export default function RenovationMarketplace() {
       )}
     </section>
   );
+}
+
+const serviceDisplayImages: Record<string, string> = {
+  "/renovation/bathroom_renovation_service_banner.png": "/renovation/bathroom_renovation_service_banner_selector.715fd739ecd9.webp",
+  "/renovation/bathroom_renovation_service_banner.e869a77b073a.webp": "/renovation/bathroom_renovation_service_banner_selector.715fd739ecd9.webp",
+  "/renovation/complete_house_electrical_renovation_service_banner.png": "/renovation/complete_house_electrical_renovation_service_banner_selector.0e92c1aa0c1e.webp",
+  "/renovation/complete_house_electrical_renovation_service_banner.9e0d87c77623.webp": "/renovation/complete_house_electrical_renovation_service_banner_selector.0e92c1aa0c1e.webp",
+  "/renovation/full_home_renovation_service_banner.png": "/renovation/full_home_renovation_service_banner_selector.1b6dd169c47f.webp",
+  "/renovation/full_home_renovation_service_banner.8b6ced871701.webp": "/renovation/full_home_renovation_service_banner_selector.1b6dd169c47f.webp",
+  "/renovation/kitchen_renovation_service_banner.png": "/renovation/kitchen_renovation_service_banner_selector.49fb1d722866.webp",
+  "/renovation/kitchen_renovation_service_banner.cd319128c3f0.webp": "/renovation/kitchen_renovation_service_banner_selector.49fb1d722866.webp",
+  "/renovation/office_renovation_service_banner.png": "/renovation/office_renovation_service_banner_selector.9ab33c36fb80.webp",
+  "/renovation/office_renovation_service_banner.fd47d563fe7d.webp": "/renovation/office_renovation_service_banner_selector.9ab33c36fb80.webp",
+  "/renovation/shop_showroom_renovation_service_banner.png": "/renovation/shop_showroom_renovation_service_banner_selector.c9e2bb9cba84.webp",
+  "/renovation/shop_showroom_renovation_service_banner.344e8aa3a7cb.webp": "/renovation/shop_showroom_renovation_service_banner_selector.c9e2bb9cba84.webp",
+  "/renovation/villa_independent_house_renovation_service_banner.png": "/renovation/villa_independent_house_renovation_service_banner_selector.c42655d450a5.webp",
+  "/renovation/villa_independent_house_renovation_service_banner.867c764f4b34.webp": "/renovation/villa_independent_house_renovation_service_banner_selector.c42655d450a5.webp"
+};
+function serviceDisplaySource(src: string): string {
+  const queryAt = src.indexOf("?");
+  const base = queryAt < 0 ? src : src.slice(0, queryAt);
+  return serviceDisplayImages[base] ?? src;
 }

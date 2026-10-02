@@ -1878,15 +1878,15 @@
 }
 
 .section .serviceSelector .selectorItem:nth-child(1) .selectorImage {
-  background-image: url("/deep-cleaning/intense_bathroom_cleaning.png") !important;
+  background-image: url("/deep-cleaning/intense_bathroom_cleaning.e003c44b723b.webp") !important;
 }
 
 .section .serviceSelector .selectorItem:nth-child(2) .selectorImage {
-  background-image: url("/deep-cleaning/move_in_move_out_bathroom_cleaning.png") !important;
+  background-image: url("/deep-cleaning/move_in_move_out_bathroom_cleaning.630e59477543.webp") !important;
 }
 
 .section .serviceSelector .selectorItem:nth-child(3) .selectorImage {
-  background-image: url("/deep-cleaning/commercial_bathroom_cleaning.png") !important;
+  background-image: url("/deep-cleaning/commercial_bathroom_cleaning.e48d17c90be8.webp") !important;
 }
 
 /* Direct page banners: show the complete wide photo on every screen. */
@@ -1907,15 +1907,15 @@
 }
 
 .section .bannerPlaceholder[data-service-id="intense-bathroom-cleaning"] {
-  background-image: url("/deep-cleaning/intense_bathroom_cleaning.png") !important;
+  background-image: url("/deep-cleaning/intense_bathroom_cleaning.e003c44b723b.webp") !important;
 }
 
 .section .bannerPlaceholder[data-service-id="move-in-move-out-bathroom-cleaning"] {
-  background-image: url("/deep-cleaning/move_in_move_out_bathroom_cleaning.png") !important;
+  background-image: url("/deep-cleaning/move_in_move_out_bathroom_cleaning.630e59477543.webp") !important;
 }
 
 .section .bannerPlaceholder[data-service-id="commercial-bathroom-cleaning"] {
-  background-image: url("/deep-cleaning/commercial_bathroom_cleaning.png") !important;
+  background-image: url("/deep-cleaning/commercial_bathroom_cleaning.e48d17c90be8.webp") !important;
 }
 /* CITY_COOLIES_BATHROOM_IMAGES_END */
 
@@ -1936,14 +1936,14 @@
 }
 
 .section .serviceSelector .selectorItem:nth-child(1) .selectorImage {
-  background-image: url("/deep-cleaning/intense_bathroom_cleaning.png") !important;
+  background-image: url("/deep-cleaning/intense_bathroom_cleaning.e003c44b723b.webp") !important;
 }
 
 .section .serviceSelector .selectorItem:nth-child(2) .selectorImage {
-  background-image: url("/deep-cleaning/move_in_move_out_bathroom_cleaning.png") !important;
+  background-image: url("/deep-cleaning/move_in_move_out_bathroom_cleaning.630e59477543.webp") !important;
 }
 
 .section .serviceSelector .selectorItem:nth-child(3) .selectorImage {
-  background-image: url("/deep-cleaning/commercial_bathroom_cleaning.png") !important;
+  background-image: url("/deep-cleaning/commercial_bathroom_cleaning.e48d17c90be8.webp") !important;
 }
 /* BATHROOM_SQUARE_SELECTOR_FIX_END */

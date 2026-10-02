@@ -1889,15 +1889,15 @@
 }
 
 .section .serviceSelector .selectorItem:nth-child(1) .selectorImage {
-  background-image: url("/deep-cleaning/overhead_water_tank_cleaning.png") !important;
+  background-image: url("/deep-cleaning/overhead_water_tank_cleaning.0bf49fa2986b.webp") !important;
 }
 
 .section .serviceSelector .selectorItem:nth-child(2) .selectorImage {
-  background-image: url("/deep-cleaning/underground_sump_cleaning.png") !important;
+  background-image: url("/deep-cleaning/underground_sump_cleaning.c4d9c05fdb7d.webp") !important;
 }
 
 .section .serviceSelector .selectorItem:nth-child(3) .selectorImage {
-  background-image: url("/deep-cleaning/overhead_concrete_water_tank_cleaning.png") !important;
+  background-image: url("/deep-cleaning/overhead_concrete_water_tank_cleaning.d64658253261.webp") !important;
 }
 
 /* Full images in the direct-page service sections. */
@@ -1918,15 +1918,15 @@
 }
 
 .section .bannerPlaceholder[data-service-id="overhead-water-tank-cleaning"] {
-  background-image: url("/deep-cleaning/overhead_water_tank_cleaning.png") !important;
+  background-image: url("/deep-cleaning/overhead_water_tank_cleaning.0bf49fa2986b.webp") !important;
 }
 
 .section .bannerPlaceholder[data-service-id="underground-sump-cleaning"] {
-  background-image: url("/deep-cleaning/underground_sump_cleaning.png") !important;
+  background-image: url("/deep-cleaning/underground_sump_cleaning.c4d9c05fdb7d.webp") !important;
 }
 
 .section .bannerPlaceholder[data-service-id="overhead-concrete-water-tank-cleaning"] {
-  background-image: url("/deep-cleaning/overhead_concrete_water_tank_cleaning.png") !important;
+  background-image: url("/deep-cleaning/overhead_concrete_water_tank_cleaning.d64658253261.webp") !important;
 }
 
 /* CITY_COOLIES_TANK_IMAGES_END */

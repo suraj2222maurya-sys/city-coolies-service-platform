@@ -80,11 +80,11 @@ const services: Service[] = [
 ];
 
 const serviceImages: Record<string, string> = {
-  "full-house-electrical-wiring": "full_house_electrical_wiring_service_banner.png",
-  "electrical-installation": "electrical_installation_service_banner.png",
-  "smart-switch-automation-setup": "smart_switch_automation_setup_service_banner.png",
-  "doorbell-video-doorbell-fitting": "doorbell_video_doorbell_fitting_service_banner.png",
-  "main-meter-box-panel-work": "main_meter_box_wiring_panel_work_service_banner.png",
+  "full-house-electrical-wiring": "full_house_electrical_wiring_service_banner.5cd16f2373c9.webp",
+  "electrical-installation": "electrical_installation_service_banner.012f48e48e80.webp",
+  "smart-switch-automation-setup": "smart_switch_automation_setup_service_banner.2e3291737841.webp",
+  "doorbell-video-doorbell-fitting": "doorbell_video_doorbell_fitting_service_banner.040231054595.webp",
+  "main-meter-box-panel-work": "main_meter_box_wiring_panel_work_service_banner.66c19f84f8c1.webp",
 };
 const quantityServices = [
   "smart-switch-automation-setup",
@@ -237,8 +237,8 @@ export default function ElectricalWorksMarketplace() {
                     onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}
                   >
                     <span className={styles.thumbnail} aria-hidden="true" style={{ overflow: "hidden" }}>
-                      <img
-                        src={`/electrical-works/${serviceImages[service.id]}`}
+                      <img loading="lazy" decoding="async"
+                        src={serviceDisplaySource(`/electrical-works/${serviceImages[service.id]}`)}
                         alt=""
                         width={100}
                         height={100}
@@ -264,7 +264,7 @@ export default function ElectricalWorksMarketplace() {
               <section className={styles.serviceGroup} id={service.id} key={service.id}>
                 <h2>{service.title}</h2>
                 <div className={styles.banner} aria-hidden="true">
-                  <img
+                  <img loading="lazy" decoding="async"
                     src={`/electrical-works/${serviceImages[service.id]}`}
                     alt=""
                     width={1942}
@@ -431,4 +431,22 @@ export default function ElectricalWorksMarketplace() {
       )}
     </section>
   );
+}
+
+const serviceDisplayImages: Record<string, string> = {
+  "/electrical-works/doorbell_video_doorbell_fitting_service_banner.png": "/electrical-works/doorbell_video_doorbell_fitting_service_banner_selector.14ea09212a61.webp",
+  "/electrical-works/doorbell_video_doorbell_fitting_service_banner.040231054595.webp": "/electrical-works/doorbell_video_doorbell_fitting_service_banner_selector.14ea09212a61.webp",
+  "/electrical-works/electrical_installation_service_banner.png": "/electrical-works/electrical_installation_service_banner_selector.ac7da60235d5.webp",
+  "/electrical-works/electrical_installation_service_banner.012f48e48e80.webp": "/electrical-works/electrical_installation_service_banner_selector.ac7da60235d5.webp",
+  "/electrical-works/full_house_electrical_wiring_service_banner.png": "/electrical-works/full_house_electrical_wiring_service_banner_selector.933f63953c86.webp",
+  "/electrical-works/full_house_electrical_wiring_service_banner.5cd16f2373c9.webp": "/electrical-works/full_house_electrical_wiring_service_banner_selector.933f63953c86.webp",
+  "/electrical-works/main_meter_box_wiring_panel_work_service_banner.png": "/electrical-works/main_meter_box_wiring_panel_work_service_banner_selector.a5b56a7d1e51.webp",
+  "/electrical-works/main_meter_box_wiring_panel_work_service_banner.66c19f84f8c1.webp": "/electrical-works/main_meter_box_wiring_panel_work_service_banner_selector.a5b56a7d1e51.webp",
+  "/electrical-works/smart_switch_automation_setup_service_banner.png": "/electrical-works/smart_switch_automation_setup_service_banner_selector.ed94b142e6b0.webp",
+  "/electrical-works/smart_switch_automation_setup_service_banner.2e3291737841.webp": "/electrical-works/smart_switch_automation_setup_service_banner_selector.ed94b142e6b0.webp"
+};
+function serviceDisplaySource(src: string): string {
+  const queryAt = src.indexOf("?");
+  const base = queryAt < 0 ? src : src.slice(0, queryAt);
+  return serviceDisplayImages[base] ?? src;
 }

@@ -725,11 +725,11 @@
 
 /* RENOVATION BANNERS START */
 .banner { width: 100%; height: auto; aspect-ratio: 1942 / 809; background-position: center; background-repeat: no-repeat; background-size: contain; }
-:global(#city-coolies-renovation) .banner[data-service-id="full-home-renovation"] { background-image: url("/renovation/full_home_renovation_service_banner.png"); }
-:global(#city-coolies-renovation) .banner[data-service-id="kitchen-renovation"] { background-image: url("/renovation/kitchen_renovation_service_banner.png"); }
-:global(#city-coolies-renovation) .banner[data-service-id="bathroom-renovation"] { background-image: url("/renovation/bathroom_renovation_service_banner.png"); }
-:global(#city-coolies-renovation) .banner[data-service-id="villa-independent-house-renovation"] { background-image: url("/renovation/villa_independent_house_renovation_service_banner.png"); }
-:global(#city-coolies-renovation) .banner[data-service-id="complete-house-electrical-renovation"] { background-image: url("/renovation/complete_house_electrical_renovation_service_banner.png"); }
-:global(#city-coolies-renovation) .banner[data-service-id="office-renovation"] { background-image: url("/renovation/office_renovation_service_banner.png"); }
-:global(#city-coolies-renovation) .banner[data-service-id="shop-showroom-renovation"] { background-image: url("/renovation/shop_showroom_renovation_service_banner.png"); }
+:global(#city-coolies-renovation) .banner[data-service-id="full-home-renovation"] { background-image: url("/renovation/full_home_renovation_service_banner.8b6ced871701.webp"); }
+:global(#city-coolies-renovation) .banner[data-service-id="kitchen-renovation"] { background-image: url("/renovation/kitchen_renovation_service_banner.cd319128c3f0.webp"); }
+:global(#city-coolies-renovation) .banner[data-service-id="bathroom-renovation"] { background-image: url("/renovation/bathroom_renovation_service_banner.e869a77b073a.webp"); }
+:global(#city-coolies-renovation) .banner[data-service-id="villa-independent-house-renovation"] { background-image: url("/renovation/villa_independent_house_renovation_service_banner.867c764f4b34.webp"); }
+:global(#city-coolies-renovation) .banner[data-service-id="complete-house-electrical-renovation"] { background-image: url("/renovation/complete_house_electrical_renovation_service_banner.9e0d87c77623.webp"); }
+:global(#city-coolies-renovation) .banner[data-service-id="office-renovation"] { background-image: url("/renovation/office_renovation_service_banner.fd47d563fe7d.webp"); }
+:global(#city-coolies-renovation) .banner[data-service-id="shop-showroom-renovation"] { background-image: url("/renovation/shop_showroom_renovation_service_banner.344e8aa3a7cb.webp"); }
 /* RENOVATION BANNERS END */

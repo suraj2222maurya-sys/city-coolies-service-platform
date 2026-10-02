@@ -49,12 +49,12 @@ const services: readonly Service[] = [
 ];
 const surveyAmount = 500;
 const serviceImages: Record<string, string> = {
-  "gate-fabrication": "gate_fabrication_installation_service_banner.png",
-  "grills-railing": "window_grills_railings_service_banner.png",
-  "shed-canopy": "roof_shed_canopy_fabrication_service_banner.png",
-  "steel-structure": "structural_steel_fabrication_service_banner.png",
-  "welding-repair": "welding_metal_repair_service_banner.png",
-  "commercial-custom-fabrication": "custom_commercial_fabrication_service_banner.png",
+  "gate-fabrication": "gate_fabrication_installation_service_banner.86fcfc1f86b7.webp",
+  "grills-railing": "window_grills_railings_service_banner.7fa5b264066e.webp",
+  "shed-canopy": "roof_shed_canopy_fabrication_service_banner.2d38d72dc4d0.webp",
+  "steel-structure": "structural_steel_fabrication_service_banner.3e788807acb7.webp",
+  "welding-repair": "welding_metal_repair_service_banner.45b518bfce7d.webp",
+  "commercial-custom-fabrication": "custom_commercial_fabrication_service_banner.c2943aa7d855.webp",
 };
 const cartId = (id: string) => `fabrication:${id}`;
 
@@ -114,7 +114,7 @@ export default function FabricationWorksMarketplace() {
                   <button key={service.id} type="button" className={styles.selectorItem}
                     onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}>
                     <span className={styles.thumbnail} aria-hidden="true" style={{ overflow: "hidden" }}>
-                      <img src={`/fabrication-works/${serviceImages[service.id]}`} alt="" width={100} height={100}
+                      <img loading="lazy" decoding="async" src={serviceDisplaySource(`/fabrication-works/${serviceImages[service.id]}`)} alt="" width={100} height={100}
                         style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                     </span>
                     <span className={styles.selectorLabel}>{service.title}</span>
@@ -131,7 +131,7 @@ export default function FabricationWorksMarketplace() {
               <section className={styles.serviceGroup} id={service.id} key={service.id}>
                 <h2>{service.title}</h2>
                 <div className={styles.banner} aria-hidden="true">
-                  <img src={`/fabrication-works/${serviceImages[service.id]}`} alt="" width={1942} height={809}
+                  <img loading="lazy" decoding="async" src={`/fabrication-works/${serviceImages[service.id]}`} alt="" width={1942} height={809}
                     style={{ display: "block", width: "100%", height: "100%", objectFit: "contain" }} />
                 </div>
                 <div className={styles.serviceRow}>
@@ -191,4 +191,25 @@ export default function FabricationWorksMarketplace() {
       )}
     </section>
   );
+}
+
+
+const serviceDisplayImages: Record<string, string> = {
+  "/fabrication-works/custom_commercial_fabrication_service_banner.png": "/fabrication-works/custom_commercial_fabrication_service_banner_selector.b8dce9d42f5a.webp",
+  "/fabrication-works/custom_commercial_fabrication_service_banner.c2943aa7d855.webp": "/fabrication-works/custom_commercial_fabrication_service_banner_selector.b8dce9d42f5a.webp",
+  "/fabrication-works/gate_fabrication_installation_service_banner.png": "/fabrication-works/gate_fabrication_installation_service_banner_selector.e17a0d6318c7.webp",
+  "/fabrication-works/gate_fabrication_installation_service_banner.86fcfc1f86b7.webp": "/fabrication-works/gate_fabrication_installation_service_banner_selector.e17a0d6318c7.webp",
+  "/fabrication-works/roof_shed_canopy_fabrication_service_banner.png": "/fabrication-works/roof_shed_canopy_fabrication_service_banner_selector.6dd0b7ca3b16.webp",
+  "/fabrication-works/roof_shed_canopy_fabrication_service_banner.2d38d72dc4d0.webp": "/fabrication-works/roof_shed_canopy_fabrication_service_banner_selector.6dd0b7ca3b16.webp",
+  "/fabrication-works/structural_steel_fabrication_service_banner.png": "/fabrication-works/structural_steel_fabrication_service_banner_selector.fb16439de969.webp",
+  "/fabrication-works/structural_steel_fabrication_service_banner.3e788807acb7.webp": "/fabrication-works/structural_steel_fabrication_service_banner_selector.fb16439de969.webp",
+  "/fabrication-works/welding_metal_repair_service_banner.png": "/fabrication-works/welding_metal_repair_service_banner_selector.4dc5e428b11a.webp",
+  "/fabrication-works/welding_metal_repair_service_banner.45b518bfce7d.webp": "/fabrication-works/welding_metal_repair_service_banner_selector.4dc5e428b11a.webp",
+  "/fabrication-works/window_grills_railings_service_banner.png": "/fabrication-works/window_grills_railings_service_banner_selector.052ffc6a1806.webp",
+  "/fabrication-works/window_grills_railings_service_banner.7fa5b264066e.webp": "/fabrication-works/window_grills_railings_service_banner_selector.052ffc6a1806.webp"
+};
+function serviceDisplaySource(src: string): string {
+  const queryAt = src.indexOf("?");
+  const base = queryAt < 0 ? src : src.slice(0, queryAt);
+  return serviceDisplayImages[base] ?? src;
 }

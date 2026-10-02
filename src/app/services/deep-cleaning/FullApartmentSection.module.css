@@ -49,7 +49,7 @@
       rgba(255, 247, 248, 0.08) 73%,
       rgba(255, 247, 248, 0) 100%
     ),
-    url("/deep-cleaning/sunlit_living_room_cleaning_service.png");
+    url("/deep-cleaning/sunlit_living_room_cleaning_service.e2d3b7768888.webp");
 
   background-repeat: no-repeat, no-repeat;
 
@@ -347,7 +347,7 @@
         rgba(255, 247, 248, 0.18) 75%,
         rgba(255, 247, 248, 0) 100%
       ),
-      url("/deep-cleaning/sunlit_living_room_cleaning_service.png");
+      url("/deep-cleaning/sunlit_living_room_cleaning_service.e2d3b7768888.webp");
   }
 
   .promoContent {
@@ -537,7 +537,7 @@
       rgba(255, 247, 248, 0.08) 73%,
       rgba(255, 247, 248, 0) 100%
     ),
-    url("/deep-cleaning/sunlit_living_room_cleaning_service.png") !important;
+    url("/deep-cleaning/sunlit_living_room_cleaning_service.e2d3b7768888.webp") !important;
 
   background-repeat: no-repeat, no-repeat !important;
 
@@ -603,7 +603,7 @@
         rgba(255, 247, 248, 0.18) 75%,
         rgba(255, 247, 248, 0) 100%
       ),
-      url("/deep-cleaning/sunlit_living_room_cleaning_service.png") !important;
+      url("/deep-cleaning/sunlit_living_room_cleaning_service.e2d3b7768888.webp") !important;
 
     background-repeat: no-repeat, no-repeat !important;
 
@@ -658,7 +658,7 @@
       rgba(255, 247, 248, 0.08) 73%,
       rgba(255, 247, 248, 0) 100%
     ),
-    url("/deep-cleaning/sunlit_living_room_cleaning_service.png") !important;
+    url("/deep-cleaning/sunlit_living_room_cleaning_service.e2d3b7768888.webp") !important;
 
   background-repeat:
     no-repeat,
@@ -696,7 +696,7 @@
         rgba(255, 247, 248, 0.30) 72%,
         rgba(255, 247, 248, 0.06) 100%
       ),
-      url("/deep-cleaning/sunlit_living_room_cleaning_service.png") !important;
+      url("/deep-cleaning/sunlit_living_room_cleaning_service.e2d3b7768888.webp") !important;
 
     background-repeat:
       no-repeat,
@@ -892,7 +892,7 @@
 */
 .promoBanner.imagePending {
   background-color: #fff7f8 !important;
-  background-image: url("/deep-cleaning/sunlit_living_room_cleaning_service.png") !important;
+  background-image: url("/deep-cleaning/sunlit_living_room_cleaning_service.e2d3b7768888.webp") !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
   background-size: cover !important;
@@ -915,7 +915,7 @@
   background-color: #fff7f8 !important;
 
   background-image:
-    url("/deep-cleaning/sunlit_living_room_cleaning_service.png") !important;
+    url("/deep-cleaning/sunlit_living_room_cleaning_service.e2d3b7768888.webp") !important;
 
   background-repeat:
     no-repeat !important;
@@ -930,7 +930,7 @@
 @media (max-width: 760px) {
   .serviceGroup:first-child .promoBanner {
     background-image:
-      url("/deep-cleaning/sunlit_living_room_cleaning_service.png") !important;
+      url("/deep-cleaning/sunlit_living_room_cleaning_service.e2d3b7768888.webp") !important;
 
     background-repeat:
       no-repeat !important;
@@ -985,7 +985,7 @@
   background-color: #fff7f8 !important;
 
   background-image:
-    url("/deep-cleaning/furnished-bungalow-duplex-cleaning-banner.png") !important;
+    url("/deep-cleaning/furnished-bungalow-duplex-cleaning-banner.e2a602b76e96.webp") !important;
 
   background-repeat:
     no-repeat !important;
@@ -1000,7 +1000,7 @@
 @media (max-width: 760px) {
   .serviceGroup + .serviceGroup .promoBanner {
     background-image:
-      url("/deep-cleaning/furnished-bungalow-duplex-cleaning-banner.png") !important;
+      url("/deep-cleaning/furnished-bungalow-duplex-cleaning-banner.e2a602b76e96.webp") !important;
 
     background-repeat:
       no-repeat !important;
@@ -1119,7 +1119,7 @@
     #fff7f8 !important;
 
   background-image:
-    url("/deep-cleaning/villa-cleaning-banner.png") !important;
+    url("/deep-cleaning/villa-cleaning-banner.ab46168d31ab.webp") !important;
 
   background-repeat:
     no-repeat !important;

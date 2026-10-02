@@ -1256,27 +1256,27 @@
 
 /* Sofa Cleaning */
 .selectorItem:nth-child(1) .selectorImage {
-  background-image: url("/deep-cleaning/sofa_cleaning_in_cozy_living_room.png") !important;
+  background-image: url("/deep-cleaning/sofa_cleaning_in_cozy_living_room.8dff80ee95e6.webp") !important;
 }
 
 /* Mattress Cleaning */
 .selectorItem:nth-child(2) .selectorImage {
-  background-image: url("/deep-cleaning/mattress_cleaning.png") !important;
+  background-image: url("/deep-cleaning/mattress_cleaning.26dedee12344.webp") !important;
 }
 
 /* Carpet Cleaning */
 .selectorItem:nth-child(3) .selectorImage {
-  background-image: url("/deep-cleaning/carpet_cleaning.png") !important;
+  background-image: url("/deep-cleaning/carpet_cleaning.8ecd2224c00d.webp") !important;
 }
 
 /* Curtain Cleaning */
 .selectorItem:nth-child(4) .selectorImage {
-  background-image: url("/deep-cleaning/_curtain_cleaning_modern_living_r.png") !important;
+  background-image: url("/deep-cleaning/_curtain_cleaning_modern_living_r.7e6871762ae4.webp") !important;
 }
 
 /* Dining Table Cleaning */
 .selectorItem:nth-child(5) .selectorImage {
-  background-image: url("/deep-cleaning/cleaner_in_cozy_dining_Table.png") !important;
+  background-image: url("/deep-cleaning/cleaner_in_cozy_dining_Table.09eb2b86d81f.webp") !important;
 }
 
 @media (max-width: 1020px) {
@@ -1305,7 +1305,7 @@
  */
 .bannerPlaceholder[data-service-id="fabric-sofa-cleaning"] {
   background-image:
-    url("/deep-cleaning/sofa_cleaning_service_banner.png") !important;
+    url("/deep-cleaning/sofa_cleaning_service_banner.dd84a4808fd7.webp") !important;
 
   background-repeat: no-repeat !important;
   background-position: center center !important;
@@ -1354,7 +1354,7 @@
     padding: 0 !important;
 
     background-image:
-      url("/deep-cleaning/sofa_cleaning_service_banner.png") !important;
+      url("/deep-cleaning/sofa_cleaning_service_banner.dd84a4808fd7.webp") !important;
 
     background-repeat: no-repeat !important;
     background-position: center center !important;
@@ -1591,7 +1591,7 @@
   border-radius: 0 !important;
   box-shadow: none !important;
   background-color: transparent !important;
-  background-image: url("/deep-cleaning/leather_sofa_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/leather_sofa_cleaning_service_banner.87a6adbd7552.webp") !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
   background-size: contain !important;
@@ -1614,7 +1614,7 @@
   border-radius: 0 !important;
   box-shadow: none !important;
   background-color: transparent !important;
-  background-image: url("/deep-cleaning/mattress_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/mattress_cleaning_service_banner.bbdcd57187e2.webp") !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
   background-size: contain !important;
@@ -1637,7 +1637,7 @@
   border-radius: 0 !important;
   box-shadow: none !important;
   background-color: transparent !important;
-  background-image: url("/deep-cleaning/carpet_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/carpet_cleaning_service_banner.cab129326ee8.webp") !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
   background-size: contain !important;
@@ -1660,7 +1660,7 @@
   border-radius: 0 !important;
   box-shadow: none !important;
   background-color: transparent !important;
-  background-image: url("/deep-cleaning/curtain_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/curtain_cleaning_service_banner.3172feba647e.webp") !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
   background-size: contain !important;
@@ -1683,7 +1683,7 @@
   border-radius: 0 !important;
   box-shadow: none !important;
   background-color: transparent !important;
-  background-image: url("/deep-cleaning/dining_table_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/dining_table_cleaning_service_banner.6d661cf70089.webp") !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
   background-size: contain !important;
@@ -1770,19 +1770,19 @@
 }
 
 .bannerPlaceholder[data-service-id="complete-kitchen-cleaning"] {
-  background-image: url("/deep-cleaning/complete_kitchen_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/complete_kitchen_cleaning_service_banner.3451d72ce82a.webp") !important;
 }
 
 .bannerPlaceholder[data-service-id="microwave-cleaning"] {
-  background-image: url("/deep-cleaning/microwave_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/microwave_cleaning_service_banner.62646c58f051.webp") !important;
 }
 
 .bannerPlaceholder[data-service-id="gas-stove-cleaning"] {
-  background-image: url("/deep-cleaning/gas_stove_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/gas_stove_cleaning_service_banner.53ef798b8ca1.webp") !important;
 }
 
 .bannerPlaceholder[data-service-id="chimney-cleaning"] {
-  background-image: url("/deep-cleaning/chimney_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/chimney_cleaning_service_banner.b361de1ce3f3.webp") !important;
 }
 /* KITCHEN_PAGE_BANNERS_END */
 
@@ -1796,19 +1796,19 @@
 }
 
 .section .serviceSelector .selectorItem:nth-child(1) .selectorImage {
-  background-image: url("/deep-cleaning/complete_kitchen_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/complete_kitchen_cleaning_service_banner.3451d72ce82a.webp") !important;
 }
 
 .section .serviceSelector .selectorItem:nth-child(2) .selectorImage {
-  background-image: url("/deep-cleaning/microwave_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/microwave_cleaning_service_banner.62646c58f051.webp") !important;
 }
 
 .section .serviceSelector .selectorItem:nth-child(3) .selectorImage {
-  background-image: url("/deep-cleaning/gas_stove_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/gas_stove_cleaning_service_banner.53ef798b8ca1.webp") !important;
 }
 
 .section .serviceSelector .selectorItem:nth-child(4) .selectorImage {
-  background-image: url("/deep-cleaning/chimney_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/chimney_cleaning_service_banner.b361de1ce3f3.webp") !important;
 }
 /* KITCHEN_SELECTOR_IMAGES_END */
 
@@ -1829,14 +1829,14 @@
   border: 0 !important;
   border-radius: 0 !important;
   background-color: transparent !important;
-  background-image: url("/deep-cleaning/commercial_kitchen_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/commercial_kitchen_cleaning_service_banner.07a5f4aec86e.webp") !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
   background-size: contain !important;
 }
 
 .section .serviceSelector .selectorItem:nth-child(5) .selectorImage {
-  background-image: url("/deep-cleaning/commercial_kitchen_cleaning_service_banner.png") !important;
+  background-image: url("/deep-cleaning/commercial_kitchen_cleaning_service_banner.07a5f4aec86e.webp") !important;
   background-repeat: no-repeat !important;
   background-position: center center !important;
   background-size: cover !important;

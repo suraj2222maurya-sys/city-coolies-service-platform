@@ -47,8 +47,8 @@ const jobs = [
   { id: "custom", title: "Custom Carpentry" },
 ] as const;
 const serviceImages: Record<string, string> = {
-  "carpentry": "carpentry_service_banner.png",
-  "interior-designing": "interior_designing_service_banner.png",
+  "carpentry": "carpentry_service_banner.26c92e768190.webp",
+  "interior-designing": "interior_designing_service_banner.0bf7c4031fd5.webp",
 };
 const cartId = (id: string) => `carpentry:${id}`;
 
@@ -113,7 +113,7 @@ export default function CarpentryInteriorMarketplace() {
                   <button key={service.id} type="button" className={styles.selectorItem}
                     onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}>
                     <span className={styles.thumbnail} aria-hidden="true" style={{ overflow: "hidden" }}>
-                      <img src={`/carpentry-interior-works/${serviceImages[service.id]}`} alt="" width={100} height={100}
+                      <img loading="lazy" decoding="async" src={serviceDisplaySource(`/carpentry-interior-works/${serviceImages[service.id]}`)} alt="" width={100} height={100}
                         style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                     </span>
                     <span className={styles.selectorLabel}>{service.title}</span>
@@ -129,7 +129,7 @@ export default function CarpentryInteriorMarketplace() {
               <section className={styles.serviceGroup} id={service.id} key={service.id}>
                 <h2>{service.title}</h2>
                 <div className={styles.banner} aria-hidden="true">
-                  <img src={`/carpentry-interior-works/${serviceImages[service.id]}`} alt="" width={1942} height={809}
+                  <img loading="lazy" decoding="async" src={`/carpentry-interior-works/${serviceImages[service.id]}`} alt="" width={1942} height={809}
                     style={{ display: "block", width: "100%", height: "100%", objectFit: "contain" }} />
                 </div>
                 <div className={styles.serviceRow}>
@@ -203,4 +203,17 @@ export default function CarpentryInteriorMarketplace() {
       )}
     </section>
   );
+}
+
+
+const serviceDisplayImages: Record<string, string> = {
+  "/carpentry-interior-works/carpentry_service_banner.png": "/carpentry-interior-works/carpentry_service_banner_selector.c5eaf372766a.webp",
+  "/carpentry-interior-works/carpentry_service_banner.26c92e768190.webp": "/carpentry-interior-works/carpentry_service_banner_selector.c5eaf372766a.webp",
+  "/carpentry-interior-works/interior_designing_service_banner.png": "/carpentry-interior-works/interior_designing_service_banner_selector.d68366482b7c.webp",
+  "/carpentry-interior-works/interior_designing_service_banner.0bf7c4031fd5.webp": "/carpentry-interior-works/interior_designing_service_banner_selector.d68366482b7c.webp"
+};
+function serviceDisplaySource(src: string): string {
+  const queryAt = src.indexOf("?");
+  const base = queryAt < 0 ? src : src.slice(0, queryAt);
+  return serviceDisplayImages[base] ?? src;
 }
