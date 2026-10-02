@@ -41,6 +41,15 @@ const serviceImages: Record<string, string> = {
   "pots": "pots_service_banner.b7b432d26a17.webp",
   "compost": "compost_soil_service_banner.27ba84cfd54f.webp",
 };
+const serviceThumbnailImages: Record<string, string> = {
+  "gardener_service_banner.5ccafc6a1a39.webp": "gardener_service_banner_selector.bd9386faf249.webp",
+  "lawn_care_service_banner.ea4a3ed11216.webp": "lawn_care_service_banner_selector.0718746300b2.webp",
+  "landscaping_service_banner.0ca754013979.webp": "landscaping_service_banner_selector.520ff1900074.webp",
+  "vertical_garden_service_banner.1a9d348840dd.webp": "vertical_garden_service_banner_selector.9dd2aa64fbc7.webp",
+  "nursery_service_banner.c969cfe26d72.webp": "nursery_service_banner_selector.465e5c535943.webp",
+  "pots_service_banner.b7b432d26a17.webp": "pots_service_banner_selector.f40cd6adf14b.webp",
+  "compost_soil_service_banner.27ba84cfd54f.webp": "compost_soil_service_banner_selector.8e9c2752fd5d.webp"
+};
 const cartId=(id:string)=>`gardening:${id}`;
 const key=(job:Job,size?:string)=>`${job.id}:${size??"standard"}`;
 
@@ -188,7 +197,7 @@ export default function GardeningMarketplace(){
       <div className={styles.selectorViewport}>
         <button type="button" className={styles.selectorPrevious} style={{display:selectorScrolled?undefined:"none"}} aria-label="Previous gardening services" onClick={()=>document.getElementById("gardening-selector")?.scrollBy({left:-320,behavior:"smooth"})}>←</button>
         <nav className={styles.selector} id="gardening-selector" aria-label="Select gardening service" onScroll={(event)=>setSelectorScrolled(event.currentTarget.scrollLeft>4)}>
-          {services.map((service)=><button type="button" key={service.id} className={styles.selectorItem} onClick={()=>document.getElementById(service.id)?.scrollIntoView({behavior:"smooth",block:"start"})}><span className={styles.thumbnail} aria-hidden="true" style={{overflow:"hidden"}}><GardenLoadImage src={`/gardening-landscaping/${serviceImages[service.id]}`} alt="" width={100} height={100} style={{display:"block",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center"}} /></span><span className={styles.selectorLabel}>{service.title}</span></button>)}
+          {services.map((service)=><button type="button" key={service.id} className={styles.selectorItem} onClick={()=>document.getElementById(service.id)?.scrollIntoView({behavior:"smooth",block:"start"})}><span className={styles.thumbnail} aria-hidden="true" style={{overflow:"hidden"}}><GardenLoadImage src={`/gardening-landscaping/${serviceThumbnailImages[serviceImages[service.id]] ?? serviceImages[service.id]}`} alt="" width={100} height={100} style={{display:"block",width:"100%",height:"100%",objectFit:"cover",objectPosition:"center"}} /></span><span className={styles.selectorLabel}>{service.title}</span></button>)}
         </nav>
         <button type="button" className={styles.selectorNext} aria-label="More gardening services" onClick={()=>document.getElementById("gardening-selector")?.scrollBy({left:320,behavior:"smooth"})}>→</button>
       </div>
