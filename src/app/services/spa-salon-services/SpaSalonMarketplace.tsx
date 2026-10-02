@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { upsertDeepCleaningCartItem } from "../deep-cleaning/deepCleaningCart";
 import FullHomeRightSidebar from "../deep-cleaning/FullHomeRightSidebar";
@@ -13,12 +13,12 @@ const categories: { id: Category; label: string; image: string }[] = [
   { id: "men", label: "Men", image: "/spa-salon/spa-men-icon.png" },
 ];
 const hairOptions = [
-  { id: "haircut", title: "Women's Haircut", price: 549, image: "/spa-salon/haircut.png", duration: "45 min" },
-  { id: "blow-dry", title: "Wash & Blow-Dry", price: 699, image: "/spa-salon/blow_dry.png", duration: "60 min" },
-  { id: "hair-spa", title: "Hair Spa", price: 1299, image: "/spa-salon/hair_spa.png", duration: "75 min" },
-  { id: "root-touch-up", title: "Root Touch-Up", price: 999, image: "/spa-salon/root_touch_up.png", duration: "75 min" },
-  { id: "global-colour", title: "Global Hair Colour", price: 2399, image: "/spa-salon/global_colour.png", duration: "120 min" },
-  { id: "keratin", title: "Keratin Smoothing", price: 3999, image: "/spa-salon/keratin_smoothing.png", duration: "180 min" },
+  { id: "haircut", title: "Women's Haircut", price: 549, image: "/spa-salon/haircut.ec1a2220a849.webp", duration: "45 min" },
+  { id: "blow-dry", title: "Wash & Blow-Dry", price: 699, image: "/spa-salon/blow_dry.720fc6addce0.webp", duration: "60 min" },
+  { id: "hair-spa", title: "Hair Spa", price: 1299, image: "/spa-salon/hair_spa.9117515ea94a.webp", duration: "75 min" },
+  { id: "root-touch-up", title: "Root Touch-Up", price: 999, image: "/spa-salon/root_touch_up.920edef322a9.webp", duration: "75 min" },
+  { id: "global-colour", title: "Global Hair Colour", price: 2399, image: "/spa-salon/global_colour.5efe93de31ab.webp", duration: "120 min" },
+  { id: "keratin", title: "Keratin Smoothing", price: 3999, image: "/spa-salon/keratin_smoothing.4976c0645e48.webp", duration: "180 min" },
 ];
 const waxingImageRatios: Record<string, string> = {
   stomach: "2048 / 1365",
@@ -35,7 +35,7 @@ const waxingImageRatios: Record<string, string> = {
 const waxingOptions = [
   { id: "stomach", title: "Stomach Waxing", price: 399, image: "/spa-salon/stomach_waxing.jpg", duration: "30 min" },
   { id: "full-legs", title: "Full Legs Waxing", price: 549, image: "/spa-salon/full_legs_waxing.jpg", duration: "45 min" },
-  { id: "brazilian", title: "Brazilian Stripless Waxing", price: 1499, image: "/spa-salon/brazilian_waxing.png", duration: "50 min" },
+  { id: "brazilian", title: "Brazilian Stripless Waxing", price: 1499, image: "/spa-salon/brazilian_waxing.3a02f2faa27e.webp", duration: "50 min" },
   { id: "underarms", title: "Underarms Waxing", price: 149, image: "/spa-salon/underarms_waxing.jpg", duration: "15 min" },
   { id: "butt", title: "Butt Waxing", price: 349, image: "/spa-salon/butt_waxing.jpg", duration: "25 min" },
   { id: "bikini", title: "Bikini Waxing", price: 1099, image: "/spa-salon/bikini_waxing.jpg", duration: "40 min" },
@@ -52,31 +52,31 @@ const womenServices: Service[] = [
 ];
 
 const spaOptions = [
-  { id: "stress-relief", title: "Stress Relief", price: 1299, image: "/spa-salon/stress_relief_spa.png" },
-  { id: "deep-tissue", title: "Deep Tissue Massage", price: 1499, image: "/spa-salon/deep_tissue_massage.png" },
-  { id: "deep-tissue-foot", title: "Deep Tissue with Foot Massage", price: 1999, image: "/spa-salon/deep_tissue_foot_massage.png" },
-  { id: "back-relief", title: "Back Relief Massage", price: 929, image: "/spa-salon/back_relief_massage.png" },
-  { id: "vedic-signature", title: "Vedic Signature Massage", price: 1899, image: "/spa-salon/vedic_signature_massage.png" },
-  { id: "abhyangam", title: "Abhyangam Neck-to-Toe Stress Relief Massage", price: 2199, image: "/spa-salon/abhyangam_stress_relief_massage.png" },
-  { id: "body-scrub", title: "Full Body Massage & Scrub", price: 1899, image: "/spa-salon/full_body_massage_scrub.png" },
-  { id: "post-natal", title: "Post Natal Massage", price: 1999, image: "/spa-salon/post_natal_massage.png" },
-  { id: "foot", title: "Foot Massage", price: 699, image: "/spa-salon/foot_massage.png" },
-  { id: "face", title: "Face Massage", price: 599, image: "/spa-salon/face_massage.png" },
-  { id: "hot-bed", title: "Hot Bed", price: 699, image: "/spa-salon/hot_bed.png" },
+  { id: "stress-relief", title: "Stress Relief", price: 1299, image: "/spa-salon/stress_relief_spa.6daac463c1e4.webp" },
+  { id: "deep-tissue", title: "Deep Tissue Massage", price: 1499, image: "/spa-salon/deep_tissue_massage.639e32a4215a.webp" },
+  { id: "deep-tissue-foot", title: "Deep Tissue with Foot Massage", price: 1999, image: "/spa-salon/deep_tissue_foot_massage.995ec0307c7e.webp" },
+  { id: "back-relief", title: "Back Relief Massage", price: 929, image: "/spa-salon/back_relief_massage.b987dcb520fc.webp" },
+  { id: "vedic-signature", title: "Vedic Signature Massage", price: 1899, image: "/spa-salon/vedic_signature_massage.fdb1b4d54c43.webp" },
+  { id: "abhyangam", title: "Abhyangam Neck-to-Toe Stress Relief Massage", price: 2199, image: "/spa-salon/abhyangam_stress_relief_massage.ec4892834ea2.webp" },
+  { id: "body-scrub", title: "Full Body Massage & Scrub", price: 1899, image: "/spa-salon/full_body_massage_scrub.9af85a2552d5.webp" },
+  { id: "post-natal", title: "Post Natal Massage", price: 1999, image: "/spa-salon/post_natal_massage.063f58de672d.webp" },
+  { id: "foot", title: "Foot Massage", price: 699, image: "/spa-salon/foot_massage.27b9a101504c.webp" },
+  { id: "face", title: "Face Massage", price: 599, image: "/spa-salon/face_massage.36aa1caabdd9.webp" },
+  { id: "hot-bed", title: "Hot Bed", price: 699, image: "/spa-salon/hot_bed.ef9319f73122.webp" },
 ];
 const facialOptions = [
-  { id: "korean-glass", title: "Korean Glass Facial", price: 1599, image: "/spa-salon/korean_glass_hydration_facial.png" },
-  { id: "korean-plant", title: "Korean Peptide Facial", price: 1699, image: "/spa-salon/korean_plant_peptide_brightening_facial.png" },
-  { id: "korean-glow", title: "Korean Glow Facial", price: 1299, image: "/spa-salon/korean_glow_facial.png" },
-  { id: "aroma-magic", title: "Aroma Magic Glow", price: 1099, image: "/spa-salon/aroma_magic_instant_glow_facial.png" },
-  { id: "sara-lightening", title: "Sara Glow Facial", price: 1199, image: "/spa-salon/sara_lightening_glow_facial.png" },
-  { id: "o3-shine", title: "O3+ Shine & Glow", price: 1499, image: "/spa-salon/o3_shine_glow_facial.png" },
-  { id: "o3-power", title: "O3+ Power Brightening", price: 1799, image: "/spa-salon/o3_power_brightening_facial.png" },
-  { id: "firming-wine", title: "Wine Glow Facial", price: 1299, image: "/spa-salon/firming_wine_glow_facial.png" },
-  { id: "kumkumadi", title: "Kumkumadi Ubtan", price: 1399, image: "/spa-salon/kumkumadi_ubtan_hydration_facial.png" },
-  { id: "power-cleanup", title: "Power Glow Cleanup", price: 799, image: "/spa-salon/power_glow_cleanup.png" },
-  { id: "sara-fruit", title: "Sara Fruit Cleanup", price: 699, image: "/spa-salon/sara_fruit_cleanup.png" },
-  { id: "anti-tan", title: "Anti Tan Cleanup", price: 899, image: "/spa-salon/anti_tan_brightening_cleanup.png" },
+  { id: "korean-glass", title: "Korean Glass Facial", price: 1599, image: "/spa-salon/korean_glass_hydration_facial.1265a2c6bd14.webp" },
+  { id: "korean-plant", title: "Korean Peptide Facial", price: 1699, image: "/spa-salon/korean_plant_peptide_brightening_facial.b69b22c51f9c.webp" },
+  { id: "korean-glow", title: "Korean Glow Facial", price: 1299, image: "/spa-salon/korean_glow_facial.36fdd7dc3287.webp" },
+  { id: "aroma-magic", title: "Aroma Magic Glow", price: 1099, image: "/spa-salon/aroma_magic_instant_glow_facial.5c12c2b4cfdb.webp" },
+  { id: "sara-lightening", title: "Sara Glow Facial", price: 1199, image: "/spa-salon/sara_lightening_glow_facial.42740ac558b1.webp" },
+  { id: "o3-shine", title: "O3+ Shine & Glow", price: 1499, image: "/spa-salon/o3_shine_glow_facial.3cbb2d34a2f9.webp" },
+  { id: "o3-power", title: "O3+ Power Brightening", price: 1799, image: "/spa-salon/o3_power_brightening_facial.3b234ec140e1.webp" },
+  { id: "firming-wine", title: "Wine Glow Facial", price: 1299, image: "/spa-salon/firming_wine_glow_facial.eb6355c6e56e.webp" },
+  { id: "kumkumadi", title: "Kumkumadi Ubtan", price: 1399, image: "/spa-salon/kumkumadi_ubtan_hydration_facial.2cee60a94dfa.webp" },
+  { id: "power-cleanup", title: "Power Glow Cleanup", price: 799, image: "/spa-salon/power_glow_cleanup.25a2a5e4ee47.webp" },
+  { id: "sara-fruit", title: "Sara Fruit Cleanup", price: 699, image: "/spa-salon/sara_fruit_cleanup.22ed104de4b2.webp" },
+  { id: "anti-tan", title: "Anti Tan Cleanup", price: 899, image: "/spa-salon/anti_tan_brightening_cleanup.eba80b2dda3f.webp" },
 ];
 
 const spaServiceInfo: Record<string, { summary: string; process: string[] }> = {
@@ -98,6 +98,81 @@ const spaServiceInfo: Record<string, { summary: string; process: string[] }> = {
   },
 };
 const spaRatingPercentages = [50, 29, 14, 5, 2];
+
+function SpaOptionImage({
+  src, title, className, aspectRatio
+}: {
+  src: string;
+  title: string;
+  className: string;
+  aspectRatio?: string | number;
+}) {
+  return (
+    <div
+      className={className}
+      style={{
+        position: "relative",
+        backgroundImage: "none",
+        ...(aspectRatio === undefined ? {} : { aspectRatio })
+      }}
+    >
+      <Image
+        src={src}
+        alt={title}
+        fill
+        unoptimized
+        loading="lazy"
+        sizes="(max-width: 600px) 100vw, 472px"
+        style={{ objectFit: "contain" }}
+      />
+    </div>
+  );
+}
+
+
+function LazySpaBackground({
+  eager = false,
+  style,
+  ...props
+}: import("react").ComponentProps<"div"> & { eager?: boolean }) {
+  const element = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(eager);
+
+  useEffect(() => {
+    if (visible || !element.current) return;
+
+    if (!("IntersectionObserver" in window)) {
+      const timer = setTimeout(() => setVisible(true), 0);
+      return () => clearTimeout(timer);
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px 0px" }
+    );
+
+    observer.observe(element.current);
+    return () => observer.disconnect();
+  }, [visible]);
+
+  return (
+    <div
+      {...props}
+      ref={element}
+      style={
+        visible
+          ? style
+          : { ...style, backgroundImage: "none" }
+      }
+    />
+  );
+}
+
 export default function SpaSalonMarketplace() {
   const [selected, setSelected] = useState<Category>("women");
   const [active, setActive] = useState<Service | null>(null);
@@ -251,7 +326,7 @@ export default function SpaSalonMarketplace() {
                     {womenServices.map((service) => (
                       <button key={service.id} type="button" className={styles.serviceSelectorItem}
                         onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}>
-                        <span className={service.id === "salon-for-women" ? `${styles.thumbnail} ${styles.salonImage}` : service.id === "spa-for-women" ? `${styles.thumbnail} ${styles.spaImage}` : styles.thumbnail} style={service.id === "hair-studio-for-women" ? { backgroundImage: 'url("/spa-salon/hair_studio_for_women_service_banner.png?v=4")', backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat" } : service.id === "waxing-for-women" ? { backgroundImage: 'url("/spa-salon/waxing_for_women_service_banner.jpg?v=1")', backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat" } : undefined} aria-hidden="true" />
+                        <span className={service.id === "salon-for-women" ? `${styles.thumbnail} ${styles.salonImage}` : service.id === "spa-for-women" ? `${styles.thumbnail} ${styles.spaImage}` : styles.thumbnail} style={service.id === "hair-studio-for-women" ? { backgroundImage: 'url("/spa-salon/hair_studio_for_women_service_banner.6327a5c68b62.webp?v=4")', backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat" } : service.id === "waxing-for-women" ? { backgroundImage: 'url("/spa-salon/waxing_for_women_service_banner.jpg?v=1")', backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat" } : undefined} aria-hidden="true" />
                         <span>{service.title}</span>
                       </button>
                     ))}
@@ -259,7 +334,7 @@ export default function SpaSalonMarketplace() {
                   {womenServices.map((service) => (
                     <section key={service.id} id={service.id} className={styles.serviceGroup}>
                       <h3>{service.title}</h3>
-                      <div className={service.id === "salon-for-women" ? `${styles.banner} ${styles.salonImage}` : service.id === "spa-for-women" ? `${styles.banner} ${styles.spaImage}` : styles.banner} style={service.id === "hair-studio-for-women" ? { backgroundImage: 'url("/spa-salon/hair_studio_for_women_service_banner.png?v=4")', backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat" } : service.id === "waxing-for-women" ? { backgroundImage: 'url("/spa-salon/waxing_for_women_service_banner.jpg?v=1")', backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat" } : undefined} aria-hidden="true" />
+                      <LazySpaBackground eager={service.id === "salon-for-women"} className={service.id === "salon-for-women" ? `${styles.banner} ${styles.salonImage}` : service.id === "spa-for-women" ? `${styles.banner} ${styles.spaImage}` : styles.banner} style={service.id === "hair-studio-for-women" ? { backgroundImage: 'url("/spa-salon/hair_studio_for_women_service_banner.6327a5c68b62.webp?v=4")', backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat" } : service.id === "waxing-for-women" ? { backgroundImage: 'url("/spa-salon/waxing_for_women_service_banner.jpg?v=1")', backgroundPosition: "center", backgroundSize: "cover", backgroundRepeat: "no-repeat" } : undefined} aria-hidden="true" />
                       <div className={styles.serviceRow}>
                         <div>
                           <h4>{service.title}</h4>
@@ -295,8 +370,7 @@ export default function SpaSalonMarketplace() {
               <div className={styles.waxingGrid}>
                 {waxingOptions.map((option) => (
                   <div className={styles.waxingOption} key={option.id}>
-                    <div className={styles.waxingImage} role="img" aria-label={option.title}
-                      style={{ backgroundImage: `url("${option.image}")`, aspectRatio: waxingImageRatios[option.id] }} />
+                    <SpaOptionImage className={styles.waxingImage} src={option.image} title={option.title} aspectRatio={waxingImageRatios[option.id]} />
                     <div className={styles.waxingDetails}>
                       <strong>{option.title}</strong>
                       <span>{String.fromCodePoint(0x20B9)}{option.price.toLocaleString("en-IN")}</span>
@@ -314,7 +388,7 @@ export default function SpaSalonMarketplace() {
               <div className={styles.hairGrid}>
                 {hairOptions.map((hair) => (
                   <div className={styles.hairOption} key={hair.id}>
-                    <div className={styles.hairImage} role="img" aria-label={hair.title} style={{ backgroundImage: `url("${hair.image}")` }} />
+                    <SpaOptionImage className={styles.hairImage} src={hair.image} title={hair.title} />
                     <div className={styles.hairDetails}>
                       <strong>{hair.title}</strong>
                       <span>{String.fromCodePoint(0x20B9)}{hair.price.toLocaleString("en-IN")}</span>
@@ -332,7 +406,7 @@ export default function SpaSalonMarketplace() {
       <div className={styles.facialGrid}>
         {facialOptions.map((facial) => (
           <div className={styles.facialOption} key={facial.id}>
-            <div className={styles.facialImage} role="img" aria-label={facial.title} style={{ backgroundImage: `url("${facial.image}")` }} />
+            <SpaOptionImage className={styles.facialImage} src={facial.image} title={facial.title} />
             <div className={styles.facialOptionDetails}>
               <strong>{facial.title}</strong>
               <span>{String.fromCodePoint(0x20B9)}{facial.price.toLocaleString("en-IN")}</span>
@@ -352,7 +426,7 @@ export default function SpaSalonMarketplace() {
     <div className={styles.stressGrid}>
       {spaOptions.map((spa) => (
         <div className={styles.stressOption} key={spa.id}>
-          <div className={styles.stressImage} style={{ backgroundImage: `url("${spa.image}")` }} role="img" aria-label={spa.title} />
+          <SpaOptionImage className={styles.stressImage} src={spa.image} title={spa.title} />
           <div className={styles.stressDetails}>
             <strong>{spa.title}</strong>
             <span>{String.fromCodePoint(0x20B9)}{spa.price.toLocaleString("en-IN")}</span>
