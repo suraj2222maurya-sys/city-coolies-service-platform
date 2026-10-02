@@ -338,7 +338,7 @@ export default function BungalowSurveyModal({
                             className={
                               styles.cleaningVisualImage
                             }
-                            loading="lazy"
+                            loading="eager"
                           />
 
                           <figcaption

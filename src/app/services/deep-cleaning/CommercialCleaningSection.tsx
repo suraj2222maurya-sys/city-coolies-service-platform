@@ -68,7 +68,7 @@ function ServiceImage({
   priority?: boolean;
 }) {
   return (
-    <Image
+    <Image loading="eager"
       className="cc-commercial__image"
       src={service.image}
       alt={`City Coolies ${service.name} service`}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore, useRef } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import FullHomeRightSidebar from "../deep-cleaning/FullHomeRightSidebar";
 import { getDeepCleaningCartServerSnapshot, getDeepCleaningCartSnapshot, parseDeepCleaningCartSnapshot, removeDeepCleaningCartItem, subscribeDeepCleaningCart, upsertDeepCleaningCartItem } from "../deep-cleaning/deepCleaningCart";
@@ -55,85 +55,21 @@ const key=(job:Job,size?:string)=>`${job.id}:${size??"standard"}`;
 
 
 function GardenLoadImage({
-  src, alt, width, height, style
-}: {
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-  style?: import("react").CSSProperties;
-}) {
-  const element = useRef<HTMLSpanElement>(null);
-  const [request, setRequest] = useState<{
-    ready: boolean;
-    priority: "high" | "low";
-  }>({ ready: false, priority: "low" });
-
-  useEffect(() => {
-    const target = element.current;
-    if (!target) return;
-
-    if (!("IntersectionObserver" in window)) {
-      const timer = setTimeout(() => {
-        setRequest({ ready: true, priority: "high" });
-      }, 0);
-      return () => clearTimeout(timer);
-    }
-
-    const root = target.closest("." + styles.modalBody);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-
-        const box = target.getBoundingClientRect();
-        const boundary = root?.getBoundingClientRect();
-        const top = Math.max(0, boundary?.top ?? 0);
-        const bottom = Math.min(
-          window.innerHeight,
-          boundary?.bottom ?? window.innerHeight
-        );
-        const left = Math.max(0, boundary?.left ?? 0);
-        const right = Math.min(
-          window.innerWidth,
-          boundary?.right ?? window.innerWidth
-        );
-        const visible =
-          box.bottom > top && box.top < bottom &&
-          box.right > left && box.left < right;
-
-        setRequest({
-          ready: true,
-          priority: visible ? "high" : "low"
-        });
-        observer.disconnect();
-      },
-      { root, rootMargin: "300px 0px", threshold: 0 }
+    src, alt, width, height, style
+  }: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    style?: import("react").CSSProperties;
+  }) {
+    return (
+      <span style={{ display: "block", width: "100%", height: "100%" }}>
+        <Image src={src} alt={alt} width={width} height={height}
+          unoptimized loading="eager" decoding="async" style={style} />
+      </span>
     );
-
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, [src]);
-
-  return (
-    <span
-      ref={element}
-      style={{ display: "block", width: "100%", height: "100%" }}
-    >
-      {request.ready && (
-        <Image
-          src={src}
-          alt={alt}
-          width={width}
-          height={height}
-          unoptimized
-          loading="eager"
-          fetchPriority={request.priority}
-          style={style}
-        />
-      )}
-    </span>
-  );
-}
+  }
 
 
 const potsWarmImages = new Map<string, HTMLImageElement>();

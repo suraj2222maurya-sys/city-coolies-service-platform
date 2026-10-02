@@ -229,7 +229,7 @@ export default function RenovationMarketplace() {
                   onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}
                 >
                   <span className={styles.thumbnail} aria-hidden="true" style={{ overflow: "hidden", aspectRatio: "1 / 1" }}>
-                    <img loading="lazy" decoding="async"
+                    <img loading="eager" decoding="async"
                       src={serviceDisplaySource(`/renovation/${({
                         "full-home-renovation": "full_home_renovation_service_banner.8b6ced871701.webp",
                         "kitchen-renovation": "kitchen_renovation_service_banner.cd319128c3f0.webp",

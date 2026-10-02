@@ -114,7 +114,7 @@ export default function FabricationWorksMarketplace() {
                   <button key={service.id} type="button" className={styles.selectorItem}
                     onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}>
                     <span className={styles.thumbnail} aria-hidden="true" style={{ overflow: "hidden" }}>
-                      <img loading="lazy" decoding="async" src={serviceDisplaySource(`/fabrication-works/${serviceImages[service.id]}`)} alt="" width={100} height={100}
+                      <img loading="eager" decoding="async" src={serviceDisplaySource(`/fabrication-works/${serviceImages[service.id]}`)} alt="" width={100} height={100}
                         style={{ display: "block", width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
                     </span>
                     <span className={styles.selectorLabel}>{service.title}</span>
@@ -131,7 +131,7 @@ export default function FabricationWorksMarketplace() {
               <section className={styles.serviceGroup} id={service.id} key={service.id}>
                 <h2>{service.title}</h2>
                 <div className={styles.banner} aria-hidden="true">
-                  <img loading="lazy" decoding="async" src={`/fabrication-works/${serviceImages[service.id]}`} alt="" width={1942} height={809}
+                  <img loading="eager" decoding="async" src={`/fabrication-works/${serviceImages[service.id]}`} alt="" width={1942} height={809}
                     style={{ display: "block", width: "100%", height: "100%", objectFit: "contain" }} />
                 </div>
                 <div className={styles.serviceRow}>

@@ -209,7 +209,7 @@ useEffect(() => {
                   aria-hidden="true"
                 >
                   {service.icon ? (
-                    <Image loading="lazy"
+                    <Image loading="eager"
                       src={serviceDisplaySource(service.icon)}
                       alt=""
                       width={80}

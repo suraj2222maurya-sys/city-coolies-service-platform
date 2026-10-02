@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { upsertDeepCleaningCartItem } from "../deep-cleaning/deepCleaningCart";
 import FullHomeRightSidebar from "../deep-cleaning/FullHomeRightSidebar";
@@ -101,139 +101,33 @@ const spaRatingPercentages = [50, 29, 14, 5, 2];
 
 
 function SpaOptionImage({
-  src, title, className, aspectRatio
-}: {
-  src: string;
-  title: string;
-  className: string;
-  aspectRatio?: string | number;
-}) {
-  const element = useRef<HTMLDivElement>(null);
-  const [request, setRequest] = useState<{
-    ready: boolean;
-    priority: "high" | "low";
-  }>({ ready: false, priority: "low" });
-
-  useEffect(() => {
-    const target = element.current;
-    if (!target) return;
-
-    if (!("IntersectionObserver" in window)) {
-      const timer = setTimeout(() => {
-        setRequest({ ready: true, priority: "high" });
-      }, 0);
-      return () => clearTimeout(timer);
-    }
-
-    const root = target.closest("." + styles.modalBody);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-
-        const box = target.getBoundingClientRect();
-        const boundary = root?.getBoundingClientRect();
-
-        const top = Math.max(0, boundary?.top ?? 0);
-        const bottom = Math.min(
-          window.innerHeight,
-          boundary?.bottom ?? window.innerHeight
-        );
-        const left = Math.max(0, boundary?.left ?? 0);
-        const right = Math.min(
-          window.innerWidth,
-          boundary?.right ?? window.innerWidth
-        );
-
-        const onScreen =
-          box.bottom > top && box.top < bottom &&
-          box.right > left && box.left < right;
-
-        setRequest({
-          ready: true,
-          priority: onScreen ? "high" : "low"
-        });
-        observer.disconnect();
-      },
-      {
-        root,
-        rootMargin: "300px 0px",
-        threshold: 0
-      }
-    );
-
-    observer.observe(target);
-    return () => observer.disconnect();
-  }, [src]);
-
-  return (
-    <div
-      ref={element}
-      className={className}
-      style={{
+    src, title, className, aspectRatio
+  }: {
+    src: string;
+    title: string;
+    className: string;
+    aspectRatio?: string | number;
+  }) {
+    return (
+      <div className={className} style={{
         position: "relative",
         backgroundImage: "none",
         ...(aspectRatio === undefined ? {} : { aspectRatio })
-      }}
-    >
-      {request.ready && (
-        <Image
-          src={src}
-          alt={title}
-          fill
-          unoptimized
-          loading="eager"
-          fetchPriority={request.priority}
+      }}>
+        <Image src={src} alt={title} fill unoptimized
+          loading="eager" decoding="async"
           sizes="(max-width: 600px) 100vw, 472px"
-          style={{ objectFit: "contain" }}
-        />
-      )}
-    </div>
-  );
-}
+          style={{ objectFit: "contain" }} />
+      </div>
+    );
+  }
 
 function LazySpaBackground({
-  eager = false,
-  style,
-  ...props
-}: import("react").ComponentProps<"div"> & { eager?: boolean }) {
-  const element = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(eager);
-
-  useEffect(() => {
-    if (visible || !element.current) return;
-
-    if (!("IntersectionObserver" in window)) {
-      const timer = setTimeout(() => setVisible(true), 0);
-      return () => clearTimeout(timer);
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "200px 0px" }
-    );
-
-    observer.observe(element.current);
-    return () => observer.disconnect();
-  }, [visible]);
-
-  return (
-    <div
-      {...props}
-      ref={element}
-      style={
-        visible
-          ? style
-          : { ...style, backgroundImage: "none" }
-      }
-    />
-  );
-}
+    eager, style, ...props
+  }: import("react").ComponentProps<"div"> & { eager?: boolean }) {
+    void eager;
+    return <div {...props} style={style} />;
+  }
 
 export default function SpaSalonMarketplace() {
   const [selected, setSelected] = useState<Category>("women");
@@ -345,7 +239,7 @@ export default function SpaSalonMarketplace() {
             <button key={category.id} type="button"
               className={`${styles.category} ${selected === category.id ? styles.active : ""}`}
               aria-pressed={selected === category.id} onClick={() => chooseCategory(category.id)}>
-              <Image src={category.image} alt="" width={100} height={100} />
+              <Image loading="eager" src={category.image} alt="" width={100} height={100} />
               <span>{category.label}</span>
             </button>
           ))}

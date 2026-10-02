@@ -156,7 +156,7 @@ export default function DeepCleaningMarketplace({
                       className={styles.iconArea}
                       aria-hidden="true"
                     >
-                      <Image loading="lazy"
+                      <Image loading="eager"
                         unoptimized
                         src={serviceDisplaySource(categoryIcons[
                             category.id

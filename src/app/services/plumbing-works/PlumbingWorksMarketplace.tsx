@@ -192,7 +192,7 @@ export default function PlumbingWorksMarketplace() {
                     onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}
                   >
                     <span className={styles.thumbnail} aria-hidden="true" style={{ overflow: "hidden" }}>
-                      <img loading="lazy" decoding="async"
+                      <img loading="eager" decoding="async"
                         src={serviceDisplaySource(`/plumbing-works/${serviceImages[service.id]}`)}
                         alt=""
                         width={100}
@@ -219,7 +219,7 @@ export default function PlumbingWorksMarketplace() {
               <section className={styles.serviceGroup} id={service.id} key={service.id}>
                 <h2>{service.title}</h2>
                 <div className={styles.banner} aria-hidden="true">
-                  <img loading="lazy" decoding="async"
+                  <img loading="eager" decoding="async"
                     src={`/plumbing-works/${serviceImages[service.id]}`}
                     alt=""
                     width={1942}

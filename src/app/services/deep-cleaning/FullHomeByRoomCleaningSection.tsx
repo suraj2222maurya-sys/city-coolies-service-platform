@@ -144,7 +144,7 @@ return (
                 }`}
               >
                 {service.image ? (
-                  <Image loading="lazy"
+                  <Image loading="eager"
                     src={serviceDisplaySource(service.image)}
                     alt={service.alt}
                     width={192}

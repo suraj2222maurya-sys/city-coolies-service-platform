@@ -138,7 +138,7 @@ export default function ServicesMarketplaceHero() {
                 alt={image.alt}
                 width={768}
                 height={1024}
-                loading={image.priority ? "eager" : "lazy"}
+                loading="eager"
                 unoptimized
                 sizes="(max-width: 639px) 48vw, (max-width: 1023px) 45vw, (max-width: 1279px) 30vw, 250px"
                 className={styles.image}

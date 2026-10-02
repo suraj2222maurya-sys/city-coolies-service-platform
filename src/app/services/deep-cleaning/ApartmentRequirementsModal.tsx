@@ -678,7 +678,7 @@ setExpandedGroup(
                   <div className={styles.coverageVisualGrid}>
                     <article className={styles.coverageVisualItem}>
                       <div className={styles.coverageVisualImageWrap}>
-                        <img loading="lazy" decoding="async"
+                        <img loading="eager" decoding="async"
                           src="/deep-cleaning/floor-scrubbing.a029f23916f4.webp"
                           alt="Machine floor scrubbing"
                           className={styles.coverageVisualImage}
@@ -691,7 +691,7 @@ setExpandedGroup(
 
                     <article className={styles.coverageVisualItem}>
                       <div className={styles.coverageVisualImageWrap}>
-                        <img loading="lazy" decoding="async"
+                        <img loading="eager" decoding="async"
                           src="/deep-cleaning/-balcony-floor-cleaning.dbfb064731d2.webp"
                           alt="Balcony floor cleaning"
                           className={styles.coverageVisualImage}
@@ -704,7 +704,7 @@ setExpandedGroup(
 
                     <article className={styles.coverageVisualItem}>
                       <div className={styles.coverageVisualImageWrap}>
-                        <img loading="lazy" decoding="async"
+                        <img loading="eager" decoding="async"
                           src="/deep-cleaning/wash-basin-fittings.979c9f7fc89b.webp"
                           alt="Wash basin and fittings"
                           className={styles.coverageVisualImage}
@@ -717,7 +717,7 @@ setExpandedGroup(
 
                     <article className={styles.coverageVisualItem}>
                       <div className={styles.coverageVisualImageWrap}>
-                        <img loading="lazy" decoding="async"
+                        <img loading="eager" decoding="async"
                           src="/deep-cleaning/toilet-bathroom-fixtures.6002a0e529f6.webp"
                           alt="Toilet and bathroom fixtures"
                           className={styles.coverageVisualImage}
@@ -730,7 +730,7 @@ setExpandedGroup(
 
                     <article className={styles.coverageVisualItem}>
                       <div className={styles.coverageVisualImageWrap}>
-                        <img loading="lazy" decoding="async"
+                        <img loading="eager" decoding="async"
                           src="/deep-cleaning/bathroom-floor-scrub.d849e230751c.webp"
                           alt="Bathroom floor scrubbing"
                           className={styles.coverageVisualImage}
@@ -743,7 +743,7 @@ setExpandedGroup(
 
                     <article className={styles.coverageVisualItem}>
                       <div className={styles.coverageVisualImageWrap}>
-                        <img loading="lazy" decoding="async"
+                        <img loading="eager" decoding="async"
                           src="/deep-cleaning/kitchen-surface-cleaning.3b5b882ec6c8.webp"
                           alt="Kitchen surface cleaning"
                           className={styles.coverageVisualImage}
@@ -756,7 +756,7 @@ setExpandedGroup(
 
                     <article className={styles.coverageVisualItem}>
                       <div className={styles.coverageVisualImageWrap}>
-                        <img loading="lazy" decoding="async"
+                        <img loading="eager" decoding="async"
                           src="/deep-cleaning/sink-under-sink.effa6f0bac4a.webp"
                           alt="Sink and under sink cleaning"
                           className={styles.coverageVisualImage}
@@ -769,7 +769,7 @@ setExpandedGroup(
 
                     <article className={styles.coverageVisualItem}>
                       <div className={styles.coverageVisualImageWrap}>
-                        <img loading="lazy" decoding="async"
+                        <img loading="eager" decoding="async"
                           src="/deep-cleaning/kitchen-tiles-counter.5c2e2f639888.webp"
                           alt="Kitchen tiles and counter cleaning"
                           className={styles.coverageVisualImage}
@@ -782,7 +782,7 @@ setExpandedGroup(
 
                     <article className={styles.coverageVisualItem}>
                       <div className={styles.coverageVisualImageWrap}>
-                        <img loading="lazy" decoding="async"
+                        <img loading="eager" decoding="async"
                           src="/deep-cleaning/cabinet-surface-cleaning.c55dddf5595d.webp"
                           alt="Cabinet surface cleaning"
                           className={styles.coverageVisualImage}
@@ -795,7 +795,7 @@ setExpandedGroup(
 
                     <article className={styles.coverageVisualItem}>
                       <div className={styles.coverageVisualImageWrap}>
-                        <img loading="lazy" decoding="async"
+                        <img loading="eager" decoding="async"
                           src="/deep-cleaning/ceiling-fan-dusting.787a2bb736f9.webp"
                           alt="Ceiling fan dusting"
                           className={styles.coverageVisualImage}
@@ -808,7 +808,7 @@ setExpandedGroup(
 
                     <article className={styles.coverageVisualItem}>
                       <div className={styles.coverageVisualImageWrap}>
-                        <img loading="lazy" decoding="async"
+                        <img loading="eager" decoding="async"
                           src="/deep-cleaning/doors-windows-mirrors-cleaning.5dac19e822ef.webp"
                           alt="Doors, windows and mirrors cleaning"
                           className={styles.coverageVisualImage}
@@ -821,7 +821,7 @@ setExpandedGroup(
 
                     <article className={styles.coverageVisualItem}>
                       <div className={styles.coverageVisualImageWrap}>
-                        <img loading="lazy" decoding="async"
+                        <img loading="eager" decoding="async"
                           src="/deep-cleaning/switches-reachable-fixtures-cleaning.410241e96e5e.webp"
                           alt="Switches and reachable fixtures cleaning"
                           className={styles.coverageVisualImage}
