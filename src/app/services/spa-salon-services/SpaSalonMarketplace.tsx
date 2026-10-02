@@ -99,6 +99,7 @@ const spaServiceInfo: Record<string, { summary: string; process: string[] }> = {
 };
 const spaRatingPercentages = [50, 29, 14, 5, 2];
 
+
 function SpaOptionImage({
   src, title, className, aspectRatio
 }: {
@@ -107,8 +108,67 @@ function SpaOptionImage({
   className: string;
   aspectRatio?: string | number;
 }) {
+  const element = useRef<HTMLDivElement>(null);
+  const [request, setRequest] = useState<{
+    ready: boolean;
+    priority: "high" | "low";
+  }>({ ready: false, priority: "low" });
+
+  useEffect(() => {
+    const target = element.current;
+    if (!target) return;
+
+    if (!("IntersectionObserver" in window)) {
+      const timer = setTimeout(() => {
+        setRequest({ ready: true, priority: "high" });
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+
+    const root = target.closest("." + styles.modalBody);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+
+        const box = target.getBoundingClientRect();
+        const boundary = root?.getBoundingClientRect();
+
+        const top = Math.max(0, boundary?.top ?? 0);
+        const bottom = Math.min(
+          window.innerHeight,
+          boundary?.bottom ?? window.innerHeight
+        );
+        const left = Math.max(0, boundary?.left ?? 0);
+        const right = Math.min(
+          window.innerWidth,
+          boundary?.right ?? window.innerWidth
+        );
+
+        const onScreen =
+          box.bottom > top && box.top < bottom &&
+          box.right > left && box.left < right;
+
+        setRequest({
+          ready: true,
+          priority: onScreen ? "high" : "low"
+        });
+        observer.disconnect();
+      },
+      {
+        root,
+        rootMargin: "300px 0px",
+        threshold: 0
+      }
+    );
+
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [src]);
+
   return (
     <div
+      ref={element}
       className={className}
       style={{
         position: "relative",
@@ -116,19 +176,21 @@ function SpaOptionImage({
         ...(aspectRatio === undefined ? {} : { aspectRatio })
       }}
     >
-      <Image
-        src={src}
-        alt={title}
-        fill
-        unoptimized
-        loading="lazy"
-        sizes="(max-width: 600px) 100vw, 472px"
-        style={{ objectFit: "contain" }}
-      />
+      {request.ready && (
+        <Image
+          src={src}
+          alt={title}
+          fill
+          unoptimized
+          loading="eager"
+          fetchPriority={request.priority}
+          sizes="(max-width: 600px) 100vw, 472px"
+          style={{ objectFit: "contain" }}
+        />
+      )}
     </div>
   );
 }
-
 
 function LazySpaBackground({
   eager = false,
