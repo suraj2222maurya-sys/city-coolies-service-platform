@@ -71,6 +71,11 @@ const services = [
     name: "Gardening & Landscaping",
     icon: "/service-icons/gardening-landscaping-display.webp",
   },
+  {
+    slug: "rental-services",
+    name: "Rental Services",
+    icon: "/rental-services/rental-services-icon.webp",
+  },
 ] as const;
 
 function ServiceVisual({
