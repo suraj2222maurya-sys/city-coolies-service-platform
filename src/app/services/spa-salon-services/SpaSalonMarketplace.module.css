@@ -182,7 +182,17 @@
 @media (max-width: 600px) { .waxingGrid { grid-template-columns: minmax(0, 1fr); gap: 20px; } }
 /* WAXING_LARGE_IMAGES_END */
 /* MEN_HAIRCUT_START */
-.menHairThumbnail { display: block; width: 100px; height: 100px; flex: 0 0 100px; background: #fff4f5 url("/spa-salon/men_haircut_service_banner.bcc4722732eb.webp") center / contain no-repeat; }
+.menHairThumbnail {
+  display: block;
+  width: 100px;
+  height: 100px;
+  flex: 0 0 100px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent url("/spa-salon/men_haircut_service_banner.bcc4722732eb.webp") center / cover no-repeat;
+}
 .menHairBanner { display: block; width: 100%; aspect-ratio: 1939 / 811; background: #fff4f5 url("/spa-salon/men_haircut_service_banner.bcc4722732eb.webp") center / contain no-repeat; }
 .menHairInfo { margin-bottom: 16px; color: #526071; font-size: 15px; line-height: 1.5; }
 .menHairInfo h3 { margin: 0 0 8px; color: #171717; font-size: 18px; }
