@@ -32,29 +32,6 @@ type RentalService = {
 
 const services: RentalService[] = [
   {
-    id: "car-rental",
-    title: "Car Rental",
-    symbol: "01",
-    unit: "package",
-    unitLabel: "Packages per selected vehicle",
-    minimum: 1,
-    options: [
-      { id: "mini-car", title: "Mini Car", price: 2200, detail: "Compact hatchback; passenger and luggage capacity confirmed before booking." },
-      { id: "five-seater", title: "5-Seater Car", price: 2600, detail: "Vehicle seating classification; available passenger seats depend on driver arrangement." },
-      { id: "seven-seater", title: "7-Seater Car", price: 3600, detail: "MPV/SUV category; passenger seats and luggage space confirmed before booking." },
-      { id: "mini-van", title: "Mini Van", price: 5500, detail: "Group travel; exact seating, vehicle model and luggage allowance confirmed." },
-    ],
-    description: "Chauffeur-driven local car rental for family travel, meetings and local trips.",
-    note: "Indicative base package: 8 hours / 80 km per vehicle. Extra hours/km, tolls, parking, permits, driver allowance and applicable taxes are confirmed in the final quote. Self-drive is not included. Seating numbers must be confirmed as passenger seats or total seats.",
-    process: [
-      "Share pickup location, destination, date, passenger count and luggage needs.",
-      "Confirm vehicle category, passenger capacity and local or outstation requirements.",
-      "Receive the availability confirmation and written fare with inclusions and extra charges.",
-      "Confirm the booking; receive vehicle and driver details before pickup.",
-      "Complete the trip and reconcile actual hours, distance and approved extras.",
-    ],
-  },
-  {
     id: "lorry-rental",
     title: "Lorry Rental",
     symbol: "02",
@@ -144,29 +121,6 @@ const services: RentalService[] = [
       "Confirm fuel, cabling, delivery, operator and final hire quotation.",
       "Arrange installation and commissioning by qualified personnel.",
       "Record run hours/fuel as agreed and arrange disconnection and collection.",
-    ],
-  },
-  {
-    id: "tent-rental",
-    title: "Tent Rental",
-    symbol: "06",
-    unit: "100 sq ft / day",
-    unitLabel: "100 sq ft-day units per selected tent",
-    minimum: 1,
-    options: [
-      { id: "canopy", title: "Canopy Tent", price: 1200, detail: "Basic covered space; area and site conditions confirmed." },
-      { id: "shamiana", title: "Shamiana Tent", price: 1600, detail: "Traditional event covering; colour and finish confirmed." },
-      { id: "waterproof", title: "Weather-Resistant Tent", price: 2200, detail: "Suitable covering selected after site and weather assessment." },
-      { id: "event-marquee", title: "Event Marquee", price: 3000, detail: "Larger event structure; design and installation requirements assessed." },
-    ],
-    description: "Tent and event-covering rental for gatherings, functions and temporary covered spaces.",
-    note: "Indicative rate per 100 sq ft per day. For example, 500 sq ft for 2 days equals 10 units. Installation, dismantling, flooring, lighting, furniture, transport and taxes are confirmed separately. Availability and weather suitability require confirmation.",
-    process: [
-      "Share event location, date, guest count and required covered area.",
-      "Assess layout, ground conditions, access and weather requirements.",
-      "Confirm tent type, dimensions, installation and additional items.",
-      "Agree the final quotation and installation/dismantling schedule.",
-      "Install and inspect the setup, then dismantle and collect after the event.",
     ],
   },
 ];

@@ -10,6 +10,10 @@ export type DeepCleaningCartItem = {
 const CART_KEY = "city-coolies:deep-cleaning-cart:v1";
 const CART_EVENT = "citycoolies:deep-cleaning-cart-change";
 
+function isAvailableCartItem(item: DeepCleaningCartItem): boolean {
+  return !/^rental:(car-rental|tent-rental):/.test(item?.id ?? "");
+}
+
 function isBrowser(): boolean {
   return typeof window !== "undefined";
 }
@@ -48,7 +52,7 @@ export function readDeepCleaningCart(): DeepCleaningCartItem[] {
         typeof item.priceLabel === "string" &&
         "duration" in item &&
         typeof item.duration === "string",
-    );
+    ).filter(isAvailableCartItem);
   } catch {
     return [];
   }
@@ -122,7 +126,7 @@ export function parseDeepCleaningCartSnapshot(
       return [];
     }
 
-    return parsed as DeepCleaningCartItem[];
+    return (parsed as DeepCleaningCartItem[]).filter(isAvailableCartItem);
   } catch {
     return [];
   }
