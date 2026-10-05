@@ -294,7 +294,6 @@ export default function RentalMarketplace() {
             </header>
 
             <div className={styles.modalBody}>
-              <p className={styles.notice}>Indicative prices. Availability and final quotation must be confirmed before payment. Ratings shown are demo data.</p>
               <div className={styles.rentalOptions}>
                 {active.options.map(option => {
                   const isSelected = selected.includes(option.id);
@@ -314,6 +313,8 @@ export default function RentalMarketplace() {
               </div>
 
 
+
+              <p className={styles.notice}>Indicative prices. Availability and final quotation must be confirmed before payment. Ratings shown are demo data.</p>
 
               {chosen.length > 0 && (
                 <div className={styles.infoBox}>
