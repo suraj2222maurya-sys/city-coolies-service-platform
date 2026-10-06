@@ -676,11 +676,11 @@ export default function SpaSalonMarketplace() {
               </div>
               <div className={styles.menHairReviews}>
                 <div className={styles.menHairReviewHeader}>
-                  <strong><span aria-hidden="true">â˜…</span> 4.20</strong><span>900 reviews</span>
+                  <strong><span aria-hidden="true">{String.fromCodePoint(0x2605)}</span> 4.20</strong><span>900 reviews</span>
                 </div>
                 {[48, 29, 13, 7, 3].map((percentage, index) => (
                   <div className={styles.menHairRatingLine} key={index}>
-                    <span>{5 - index} â˜…</span>
+                    <span>{5 - index} {String.fromCodePoint(0x2605)}</span>
                     <div><i style={{ width: `${percentage}%` }} /></div>
                     <span>{percentage}%</span>
                   </div>
