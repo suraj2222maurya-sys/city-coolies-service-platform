@@ -208,3 +208,38 @@
 .menHairRatingLine i { display: block; height: 100%; background: #ef1b23; }
 @media (max-width:600px) { .menHairInfo { font-size: 14px; } }
 /* MEN_HAIRCUT_END */
+/* Men's spa, facial and colour services */
+.menServiceThumbnail { display: block; width: 100px; height: 100px; flex: 0 0 100px; object-fit: cover; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.menServiceBanner { display: block; width: 100%; height: auto; aspect-ratio: 1939 / 811; object-fit: contain; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.menServiceModal { width: min(560px, calc(100vw - 32px)); }
+.menServiceModal:focus { outline: none; }
+.menServiceBody { overscroll-behavior: contain; }
+.menOptionPrompt { margin: 0 0 16px; color: #526071; font-size: 16px; }
+.menOptionGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; }
+.menOption { min-width: 0; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.menOptionImage { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: contain; border: 0; border-radius: 0; }
+.menOption h3 { margin: 9px 0 4px; color: #171717; font-size: 15px; line-height: 1.35; }
+.menOptionDuration { color: #66707e; font-size: 13px; }
+.menOptionActions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin: 12px 0 8px; }
+.menOptionActions strong { color: #171717; font-size: 16px; }
+.menOptionActions .addButton { min-width: 70px; min-height: 38px; padding: 6px 12px; font-size: 14px; }
+.menOptionActions .menOptionSelected { background: #fff1f2; color: #d9101a; }
+.menOption p { margin: 0; color: #66707e; font-size: 12px; line-height: 1.55; }
+.menSelectedSummary { padding: 16px 0; margin-top: 18px; border-top: 1px solid #f0dfe2; }
+.menSelectedSummary h3, .menServiceInfo h3, .menHairReviews h3 { margin: 0 0 10px; color: #171717; font-size: 18px; }
+.menSelectedSummary p { display: flex; justify-content: space-between; gap: 12px; margin: 8px 0; color: #526071; font-size: 14px; }
+.menSelectedSummary strong { white-space: nowrap; }
+.menServiceInfo { margin-top: 24px; color: #526071; font-size: 14px; line-height: 1.65; }
+.menServiceInfo ol { margin: 0; padding-left: 21px; }
+.menServiceInfo li { margin: 6px 0; }
+.menServiceInfo p { margin: 8px 0 16px; }
+.menServiceModal .menHairReviews { margin-top: 24px; }
+.menDemoNote { font-size: 12px; line-height: 1.5; color: #66707e; }
+.menSampleReview { padding: 12px 0; border-top: 1px solid #eceef2; font-size: 13px; }
+.menSampleReview p { margin: 6px 0 0; line-height: 1.5; }
+.menCartError { color: #bc1020; font-size: 14px; }
+@media (max-width: 380px) {
+  .menOptionGrid { gap: 18px 10px; }
+  .menOption h3 { font-size: 14px; }
+  .menServiceModal .facialFooter button { min-width: 112px; }
+}

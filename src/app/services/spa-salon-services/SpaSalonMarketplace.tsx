@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { upsertDeepCleaningCartItem } from "../deep-cleaning/deepCleaningCart";
+import { readDeepCleaningCart, removeDeepCleaningCartItem, upsertDeepCleaningCartItem } from "../deep-cleaning/deepCleaningCart";
 import FullHomeRightSidebar from "../deep-cleaning/FullHomeRightSidebar";
 import styles from "./SpaSalonMarketplace.module.css";
 
@@ -129,10 +129,182 @@ function LazySpaBackground({
     return <div {...props} style={style} />;
   }
 
+type MenOption = { id: string; title: string; price: number; duration: string; image: string; detail: string };
+type MenService = { id: string; title: string; banner: string; imageAlt: string; options: MenOption[]; process: string[]; summary: string; note: string };
+const menServices: MenService[] = [
+  {
+    id: "men-spa", title: "Spa for Men", banner: "/spa-salon/men-spa-banner.webp",
+    imageAlt: "City Coolies therapist performing a back massage for a male client",
+    options: [
+      { id: "swedish", title: "Swedish Relaxation Massage", price: 1299, duration: "60 min", image: "/spa-salon/men-spa-swedish.webp", detail: "Full-body oil massage with gentle to medium pressure; fresh linen and oil included." },
+      { id: "deep-tissue", title: "Deep Tissue Massage", price: 1499, duration: "60 min", image: "/spa-salon/men-spa-deep-tissue.webp", detail: "Focused, firmer massage with pressure agreed before and during the session." },
+      { id: "head-shoulder", title: "Head, Neck & Shoulder Massage", price: 649, duration: "40 min", image: "/spa-salon/men-spa-head-shoulder.webp", detail: "Seated scalp, neck and shoulder massage with comfortable, agreed pressure." },
+      { id: "foot", title: "Foot & Calf Massage", price: 549, duration: "30 min", image: "/spa-salon/men-spa-foot.webp", detail: "Relaxing foot and lower-leg massage using oil or cream and clean towels." },
+    ],
+    process: ["Confirm selected treatments, duration and preferred pressure.", "Prepare a private space, clean linen and the required equipment.", "Complete the selected massage with regular comfort checks.", "Finish the session, tidy the space and discuss aftercare."],
+    summary: "Choose one or more relaxation services delivered by a male professional. Each selected treatment is a separate session with its own duration. Full-body sessions use appropriate towel draping.",
+    note: "Introductory prices per session. Availability, travel charges if any and final total are confirmed before booking. These are relaxation services, not medical treatment. Tell the professional about any injury or concern before starting.",
+  },
+  {
+    id: "men-facial", title: "Facial for Men", banner: "/spa-salon/men-facial-banner.webp",
+    imageAlt: "City Coolies professional applying facial skincare to a male client",
+    options: [
+      { id: "cleanup", title: "Deep Cleansing Cleanup", price: 599, duration: "35 min", image: "/spa-salon/men-facial-cleanup.webp", detail: "Cleansing, gentle exfoliation, a suitable mask and moisturiser." },
+      { id: "hydrating", title: "Hydrating Facial", price: 999, duration: "60 min", image: "/spa-salon/men-facial-hydrating.webp", detail: "Cleansing, hydrating gel massage, moisture mask and finishing care." },
+      { id: "detan", title: "De-Tan Facial", price: 899, duration: "50 min", image: "/spa-salon/men-facial-detan.webp", detail: "Gentle cleansing and a cosmetic de-tan mask for face and neck. Results vary." },
+      { id: "glow", title: "Glow Facial", price: 1199, duration: "60 min", image: "/spa-salon/men-facial-glow.webp", detail: "Cleansing, facial massage with rollers, mask and finishing moisturiser." },
+    ],
+    process: ["Discuss skin preferences, sensitivities and the selected facial.", "Prepare clean towels and confirm the products before application.", "Cleanse and perform the selected facial steps at a comfortable pace.", "Finish with suitable skincare, explain aftercare and tidy the area."],
+    summary: "Facials and cleanups for refreshed-looking skin. Select the treatment you prefer; each option includes its listed steps and products. Multiple selections are separate treatments, not a combined facial.",
+    note: "Introductory prices per session. Products are selected after consultation. Cosmetic results vary; no permanent skin-lightening or medical result is promised. Avoid treatment on irritated skin and follow the product instructions.",
+  },
+  {
+    id: "men-hair-colour", title: "Hair Colour for Men", banner: "/spa-salon/men-colour-banner.webp",
+    imageAlt: "City Coolies stylist wearing gloves and applying hair colour with a tint brush",
+    options: [
+      { id: "full", title: "Full Hair Colour", price: 799, duration: "60 min", image: "/spa-salon/men-colour-full.webp", detail: "One natural shade for short hair up to 5 cm. Colour product, application, rinse and basic finish included." },
+      { id: "roots", title: "Root Touch-Up", price: 599, duration: "45 min", image: "/spa-salon/men-colour-roots.webp", detail: "Colour application to up to 2 cm of regrowth on short hair. Shade confirmed before service." },
+      { id: "beard", title: "Beard Colour", price: 299, duration: "30 min", image: "/spa-salon/men-colour-beard.webp", detail: "Natural-shade beard colour using a product intended for facial hair; application and cleanup included." },
+    ],
+    process: ["Confirm colour area, current shade, hair length and desired result.", "Check product suitability and complete the manufacturer's required allergy test before the service.", "Protect clothing, wear gloves and apply the agreed product for its specified processing time.", "Rinse as directed, check the finish and explain colour-care instructions."],
+    summary: "Choose full hair colour, root touch-up or beard colour. Natural black and brown shades are discussed before service; the selected product and shade depend on availability. A wash area and water are required for rinsing.",
+    note: "Introductory prices include the listed scope. Longer hair, bleach, highlights and fashion colours are excluded and require a separate quote. Follow the selected product's allergy-test instructions and timing; same-day colouring may not be possible. Do not apply hair dye to eyebrows or eyelashes.",
+  },
+];
+const menMoney = (value: number) => `${String.fromCodePoint(0x20B9)}${value.toLocaleString("en-IN")}`;
+const menCartId = (serviceId: string, optionId: string) => `spa-salon:${serviceId}:${optionId}`;
+
+function MenServiceDialog({ service, onClose }: { service: MenService; onClose: () => void }) {
+  const [selectedIds, setSelectedIds] = useState<string[]>(() => {
+    const saved = readDeepCleaningCart();
+    return service.options.filter(option => saved.some(item => item.id === menCartId(service.id, option.id))).map(option => option.id);
+  });
+  const [hadSavedSelection] = useState(() => selectedIds.length > 0);
+  const [cartError, setCartError] = useState("");
+  const panelRef = useRef<HTMLElement>(null);
+  const chosen = service.options.filter(option => selectedIds.includes(option.id));
+  const total = chosen.reduce((sum, option) => sum + option.price, 0);
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    const trigger = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    document.body.style.overflow = "hidden";
+    const panel = panelRef.current;
+    panel?.focus();
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") { event.preventDefault(); onClose(); return; }
+      if (event.key !== "Tab" || !panel) return;
+      const controls = Array.from(panel.querySelectorAll<HTMLElement>('button:not(:disabled), a[href], input, select, textarea, [tabindex="0"]'));
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (!first || !last) return;
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === panel)) {
+        event.preventDefault(); last.focus();
+      } else if (!event.shiftKey && (document.activeElement === last || document.activeElement === panel)) {
+        event.preventDefault(); first.focus();
+      }
+    }
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+      if (trigger?.isConnected) trigger.focus();
+    };
+  }, [onClose]);
+
+  function continueBooking() {
+    try {
+      const current = readDeepCleaningCart();
+      for (const option of service.options) {
+        const id = menCartId(service.id, option.id);
+        if (selectedIds.includes(option.id)) {
+          upsertDeepCleaningCartItem({ id, serviceTitle: service.title, optionLabel: option.title,
+            price: option.price, priceLabel: menMoney(option.price), duration: option.duration });
+        } else if (current.some(item => item.id === id)) {
+          removeDeepCleaningCartItem(id);
+        }
+      }
+      onClose();
+    } catch {
+      setCartError("Your browser could not save the cart. Please allow site storage and try again.");
+    }
+  }
+
+  return (
+    <div className={styles.backdrop} onMouseDown={event => { if (event.target === event.currentTarget) onClose(); }}>
+      <section ref={panelRef} tabIndex={-1} className={`${styles.modal} ${styles.menServiceModal}`}
+        role="dialog" aria-modal="true" aria-labelledby="men-service-title">
+        <header className={styles.modalHeader}>
+          <h2 id="men-service-title">{service.title}</h2>
+          <button type="button" aria-label="Close details" onClick={onClose}>{String.fromCodePoint(0x00D7)}</button>
+        </header>
+        <div className={`${styles.modalBody} ${styles.menServiceBody}`}>
+          <p className={styles.menOptionPrompt}>Choose your requirements</p>
+          <div className={styles.menOptionGrid}>
+            {service.options.map(option => {
+              const isSelected = selectedIds.includes(option.id);
+              return (
+                <div className={styles.menOption} key={option.id}>
+                  <Image className={styles.menOptionImage} src={option.image} alt={option.title + " service demonstration"}
+                    width={360} height={240} unoptimized loading="lazy" />
+                  <h3>{option.title}</h3>
+                  <span className={styles.menOptionDuration}>{option.duration}</span>
+                  <div className={styles.menOptionActions}>
+                    <strong>{menMoney(option.price)}</strong>
+                    <button type="button" className={`${styles.addButton} ${isSelected ? styles.menOptionSelected : ""}`}
+                      aria-pressed={isSelected} aria-label={`${isSelected ? "Remove" : "Add"} ${option.title}`}
+                      onClick={() => { setSelectedIds(ids => ids.includes(option.id) ? ids.filter(id => id !== option.id) : [...ids, option.id]); setCartError(""); }}>
+                      {isSelected ? "Remove" : "Add"}
+                    </button>
+                  </div>
+                  <p>{option.detail}</p>
+                </div>
+              );
+            })}
+          </div>
+          {chosen.length > 0 && <div className={styles.menSelectedSummary} aria-live="polite">
+            <h3>Selected services</h3>
+            {chosen.map(option => <p key={option.id}><span>{option.title}</span><strong>{menMoney(option.price)}</strong></p>)}
+          </div>}
+          <section className={styles.menServiceInfo}>
+            <h3>Work process</h3>
+            <ol>{service.process.map(step => <li key={step}>{step}</li>)}</ol>
+          </section>
+          <section className={styles.menServiceInfo}>
+            <h3>About this service</h3><p>{service.summary}</p><p>{service.note}</p>
+          </section>
+          <section className={styles.menHairReviews} aria-label="Demo rating overview">
+            <h3>Rating overview</h3>
+            <div className={styles.menHairReviewHeader}>
+              <strong><span aria-hidden="true">{String.fromCodePoint(0x2605)}</span> 4.20</strong>
+              <span>900 demo reviews</span>
+            </div>
+            <p className={styles.menDemoNote}>Illustrative rating and sample reviews, not verified customer feedback.</p>
+            {[50, 29, 14, 5, 2].map((percentage, index) => <div className={styles.menHairRatingLine} key={index}>
+              <span>{5 - index} {String.fromCodePoint(0x2605)}</span>
+              <div><i style={{ width: `${percentage}%` }} /></div><span>{percentage}%</span>
+            </div>)}
+            <div className={styles.menSampleReview}><strong>Sample review (demo)</strong><p>The professional explained each step and kept the work area clean.</p></div>
+            <div className={styles.menSampleReview}><strong>Sample review (demo)</strong><p>Clear service options and a comfortable session from start to finish.</p></div>
+          </section>
+          {cartError && <p role="alert" className={styles.menCartError}>{cartError}</p>}
+        </div>
+        <footer className={styles.facialFooter}>
+          <div aria-live="polite"><span>Selected total</span><strong>{menMoney(total)}</strong></div>
+          <button type="button" disabled={chosen.length === 0 && !hadSavedSelection} onClick={continueBooking}>
+            {chosen.length === 0 && hadSavedSelection ? "Update cart" : "Continue"}
+          </button>
+        </footer>
+      </section>
+    </div>
+  );
+}
+
 export default function SpaSalonMarketplace() {
   const [selected, setSelected] = useState<Category>("women");
   const [active, setActive] = useState<Service | null>(null);
   const [showMenDetails, setShowMenDetails] = useState(false);
+  const [activeMenService, setActiveMenService] = useState<MenService | null>(null);
   const [menHaircutAdded, setMenHaircutAdded] = useState(false);
   const [selectedWaxingIds, setSelectedWaxingIds] = useState<string[]>([]);
   const [selectedHairIds, setSelectedHairIds] = useState<string[]>([]);
@@ -228,7 +400,7 @@ export default function SpaSalonMarketplace() {
     window.addEventListener("keydown", onKeyDown);
     return () => { document.body.style.overflow = previous; window.removeEventListener("keydown", onKeyDown); };
   }, [showMenDetails]);
-  function chooseCategory(category: Category) { setSelected(category); setActive(null); setShowMenDetails(false); }
+  function chooseCategory(category: Category) { setSelected(category); setActive(null); setShowMenDetails(false); setActiveMenService(null); }
 
   return (
     <main className={styles.section}>
@@ -255,6 +427,13 @@ export default function SpaSalonMarketplace() {
         <span className={styles.menHairThumbnail} aria-hidden="true" />
         <span>Men&apos;s Haircut</span>
       </button>
+      {menServices.map(service => (
+        <button type="button" className={styles.serviceSelectorItem} key={service.id}
+          onClick={() => document.getElementById(service.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}>
+          <Image src={service.options[0].image} alt="" width={100} height={100} unoptimized className={styles.menServiceThumbnail} />
+          <span>{service.title}</span>
+        </button>
+      ))}
     </nav>
     <section id="men-haircut" className={styles.serviceGroup}>
       <h3>Men&apos;s Haircut</h3>
@@ -269,11 +448,30 @@ export default function SpaSalonMarketplace() {
           </div>
           <strong>{String.fromCodePoint(0x20B9)}299</strong>
         </div>
-        <button type="button" className={styles.addButton} onClick={addMenHaircut}>
+        <button type="button" className={styles.addButton} onClick={() => setShowMenDetails(true)}>
           {menHaircutAdded ? "Added" : "Add"}
         </button>
       </div>
     </section>
+    {menServices.map(service => (
+      <section id={service.id} className={styles.serviceGroup} key={service.id}>
+        <h3>{service.title}</h3>
+        <Image src={service.banner} alt={service.imageAlt} width={1939} height={811}
+          unoptimized loading="lazy" className={styles.menServiceBanner} />
+        <div className={styles.serviceRow}>
+          <div>
+            <h4>{service.title}</h4>
+            <div className={styles.rating}>
+              <span className={styles.star} aria-hidden="true">{String.fromCodePoint(0x2605)}</span>
+              <span>4.20</span><span className={styles.reviewCount}>(900 demo reviews)</span>
+              <button type="button" onClick={() => setActiveMenService(service)}>View details</button>
+            </div>
+            <strong>Starting from {menMoney(Math.min(...service.options.map(option => option.price)))}</strong>
+          </div>
+          <button type="button" className={styles.addButton} onClick={() => setActiveMenService(service)}>Add</button>
+        </div>
+      </section>
+    ))}
   </>
 )}
               {selected === "women" && (
@@ -454,6 +652,7 @@ export default function SpaSalonMarketplace() {
           </section>
         </div>
       )}
+      {activeMenService && <MenServiceDialog key={activeMenService.id} service={activeMenService} onClose={() => setActiveMenService(null)} />}
       {showMenDetails && (
         <div className={styles.backdrop} onMouseDown={(event) => { if (event.target === event.currentTarget) setShowMenDetails(false); }}>
           <section className={styles.modal} role="dialog" aria-modal="true" aria-labelledby="men-haircut-dialog-title">
