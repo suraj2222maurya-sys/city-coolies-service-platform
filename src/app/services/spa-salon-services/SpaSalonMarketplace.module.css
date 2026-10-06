@@ -243,3 +243,100 @@
   .menOption h3 { font-size: 14px; }
   .menServiceModal .facialFooter button { min-width: 112px; }
 }
+
+/* MEN_POPUP_COMPACT_LAYOUT */
+.menServiceModal {
+  width: min(472px, calc(100vw - 32px));
+}
+.menOptionPrompt {
+  margin-bottom: 4px;
+}
+.menOptionGrid {
+  column-gap: 16px;
+  row-gap: 20px;
+  align-items: start;
+}
+.menOption {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  column-gap: 7px;
+  row-gap: 7px;
+  align-items: center;
+}
+.menOptionImage {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+}
+.menOption h3 {
+  grid-column: 1;
+  grid-row: 2;
+  min-width: 0;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.menOptionActions {
+  display: contents;
+}
+.menOptionActions strong {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.menOptionActions .addButton {
+  grid-column: 3;
+  grid-row: 2;
+  min-width: 61px;
+  min-height: 35px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.25;
+}
+.menOptionDuration {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  font-size: 12px;
+}
+.menOption > p {
+  grid-column: 1 / -1;
+  grid-row: 4;
+  font-size: 12px;
+}
+@media (max-width: 600px) {
+  .menOptionGrid {
+    gap: 14px 10px;
+  }
+  .menOption {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .menOption h3 {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    font-size: 13px;
+  }
+  .menOptionActions strong {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .menOptionActions .addButton {
+    grid-column: 2;
+    grid-row: 3;
+    min-width: 0;
+    padding: 7px 8px;
+  }
+  .menOptionDuration {
+    grid-row: 4;
+  }
+  .menOption > p {
+    grid-row: 5;
+  }
+}
