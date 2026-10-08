@@ -29,10 +29,11 @@ type Group = {
 };
 
 export default function SelectedServicesSummary() {
-  const [open, setOpen] = useState(false);
+
   const [dragPosition, setDragPosition] = useState<{ x: number; y: number } | null>(null);
   const barRef = useRef<HTMLElement>(null);
   const suppressClickRef = useRef(false);
+  const summaryPointerDownRef = useRef(false);
   const dragRef = useRef<{
     pointerId: number;
     startX: number;
@@ -114,6 +115,46 @@ export default function SelectedServicesSummary() {
     return () => window.removeEventListener("resize", keepInsideScreen);
   }, []);
   const pathname = usePathname();
+
+  const [openState, setOpenState] = useState<{
+    pathname: string;
+    open: boolean;
+  }>(() => ({
+    pathname,
+    open: false,
+  }));
+
+  if (openState.pathname !== pathname) {
+    setOpenState({
+      pathname,
+      open: false,
+    });
+  }
+
+  const open =
+    openState.pathname === pathname &&
+    openState.open;
+
+  function setOpen(
+    next:
+      | boolean
+      | ((current: boolean) => boolean),
+  ) {
+    setOpenState((current) => {
+      const currentOpen =
+        current.pathname === pathname
+          ? current.open
+          : false;
+
+      return {
+        pathname,
+        open:
+          typeof next === "function"
+            ? next(currentOpen)
+            : next,
+      };
+    });
+  }
   const snapshot = useSyncExternalStore(
     subscribeDeepCleaningCart,
     getCommittedServicesSnapshot,
@@ -178,25 +219,56 @@ export default function SelectedServicesSummary() {
           "--drag-y": `${dragPosition.y}px`,
         } as CSSProperties) : undefined}
       >
-        <button type="button" className={styles.summary} onClick={() => setOpen((current) => !current)}
-          aria-expanded={open} aria-controls="selected-services-popup"
-          aria-label={`${open ? "Close" : "View"} ${items.length} selected services`}>
+        <button
+          type="button"
+          className={styles.summary}
+          onPointerDown={(event) => {
+            summaryPointerDownRef.current = true;
+            event.stopPropagation();
+          }}
+          onPointerCancel={() => {
+            summaryPointerDownRef.current = false;
+          }}
+          onClick={(event) => {
+            const keyboardActivation = event.detail === 0;
+
+            if (!keyboardActivation && !summaryPointerDownRef.current) {
+              return;
+            }
+
+            summaryPointerDownRef.current = false;
+            setOpen((current) => !current);
+          }}
+          aria-expanded={open}
+          aria-controls="selected-services-popup"
+          aria-label={`${open ? "Close" : "View"} ${items.length} selected services`}
+        >
           <span className={styles.icon} aria-hidden="true">✓</span>
-          <span><strong>{items.length} {items.length === 1 ? "service" : "services"} selected</strong>
-            <small>Estimated total ₹{total.toLocaleString("en-IN")}</small></span>
+          <span>
+            <strong>
+              {items.length} {items.length === 1 ? "service" : "services"} selected
+            </strong>
+            <small>
+              Estimated total ₹{total.toLocaleString("en-IN")}
+            </small>
+          </span>
           <span className={styles.chevron} aria-hidden="true">
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path
-      d={open ? "M3 10L8 5L13 10" : "M3 6L8 11L13 6"}
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-</span>
-        </button>
-        <Link href="/services/cart" className={styles.viewButton}>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+            >
+              <path
+                d={open ? "M3 10L8 5L13 10" : "M3 6L8 11L13 6"}
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+        </button><Link href="/services/cart" className={styles.viewButton}>
           Go to Cart
         </Link>
       </aside>

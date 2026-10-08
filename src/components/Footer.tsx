@@ -88,7 +88,7 @@ export default function Footer() {
      <div className="mx-auto max-w-[1480px] px-5 pb-8 pt-12 sm:px-8 sm:pb-10 sm:pt-16 lg:px-10 lg:pt-20">
         <div className="grid gap-12 md:grid-cols-2 xl:grid-cols-[1.3fr_0.75fr_0.9fr_1.2fr]">
           <div>
-            <Link href="/" className="inline-flex" aria-label="City Coolies home">
+            <Link href="/" className="group relative inline-flex" aria-label="City Coolies home">
               <Image
   src="/city-coolies-logo(2).png"
   alt="City Coolies"
@@ -97,6 +97,12 @@ export default function Footer() {
   className="h-auto w-[320px] object-contain drop-shadow-[0_10px_28px_rgba(239,27,35,0.28)] transition-all duration-500 hover:-translate-y-1 hover:scale-[1.03]"
     loading="eager"
 />
+              <span
+                aria-label="Registered trademark"
+                className="pointer-events-none absolute -right-1 top-[31%] z-20 origin-center text-[10px] font-black leading-none text-[#ef1b23] transition-transform duration-500 ease-out group-hover:translate-x-1.5 group-hover:-translate-y-1 group-hover:scale-[1.035] sm:text-[11px] lg:text-[12px]"
+              >
+                {"\u00AE"}
+              </span>
             </Link>
 
             <p className="mt-6 max-w-md text-[15px] leading-7 text-black">

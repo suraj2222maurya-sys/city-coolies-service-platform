@@ -150,7 +150,7 @@ export default function Navbar() {
 
       <nav
   aria-label="Main navigation"
-  className={`relative isolate overflow-hidden border-b border-[#ef1b23]/20 bg-white transition-all duration-500 ${
+  className={`relative isolate overflow-visible border-b border-[#ef1b23]/20 bg-white transition-all duration-500 ${
     isScrolled
       ? "shadow-[0_22px_60px_-28px_rgba(239,27,35,0.55)]"
       : "shadow-[0_18px_50px_-30px_rgba(239,27,35,0.38)]"
