@@ -4974,6 +4974,28 @@ function CartIcon({
   );
 }
 
+function AccountIcon({
+  className = "h-5 w-5",
+}: IconProps) {
+  return (
+    <svg
+      aria-hidden="true"
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth="1.8"
+    >
+      <circle cx="12" cy="8" r="4" />
+
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M4.5 21a7.5 7.5 0 0 1 15 0"
+      />
+    </svg>
+  );
+}
 
 function ChevronIcon({
   expanded = false,

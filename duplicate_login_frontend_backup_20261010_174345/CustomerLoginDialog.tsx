@@ -45,9 +45,6 @@ type AuthenticatedResponse = {
 
 type AccountStatusResponse = {
   exists: boolean;
-  channel?: Channel;
-  user_id?: string;
-  message?: string;
 };
 
 const OTP_LENGTH = 6;
@@ -284,7 +281,6 @@ export default function CustomerLoginDialog({
     const query = new URLSearchParams({
       channel: identityChannel,
       identifier: identityIdentifier,
-      _: String(Date.now()),
     });
 
     const response = await fetch(
@@ -292,10 +288,6 @@ export default function CustomerLoginDialog({
       {
         method: "GET",
         credentials: "include",
-        cache: "no-store",
-        headers: {
-          "Cache-Control": "no-cache",
-        },
       }
     );
 
@@ -344,9 +336,9 @@ export default function CustomerLoginDialog({
       setShowPassword(false);
 
       if (exists) {
-        setStep("login");
+        setStep("signin");
         setError(
-          "Account already exists. Sign in."
+          "This User ID already has a City Coolies account. Please sign in."
         );
         return;
       }
@@ -417,17 +409,6 @@ export default function CustomerLoginDialog({
       const data = await readJson(response);
 
       if (!response.ok) {
-        if (response.status === 409) {
-          setPassword("");
-          setConfirmPassword("");
-          setShowPassword(false);
-          setStep("login");
-          setError(
-            "Account already exists. Sign in."
-          );
-          return;
-        }
-
         throw new Error(
           getApiErrorMessage(
             data,
@@ -470,7 +451,7 @@ export default function CustomerLoginDialog({
           : "Unable to send OTP. Please try again.";
 
       if (/account already exists/i.test(message)) {
-        setStep("login");
+        setStep("signin");
       }
 
       setError(message);
@@ -1091,7 +1072,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Back
+            ← Back
           </button>
 
           <h2
@@ -1295,7 +1276,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Back to Sign In
+            ← Back to Sign In
           </button>
 
           <h2
@@ -1509,7 +1490,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Change {channel === "phone" ? "phone number" : "email"}
+            ← Change {channel === "phone" ? "phone number" : "email"}
           </button>
 
           <h2

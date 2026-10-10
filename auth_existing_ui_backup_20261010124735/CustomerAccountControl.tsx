@@ -241,7 +241,7 @@ function getCustomerName(user: AccountUser) {
     user.identifier.replace(/\D/g, "");
 
   return digits.length >= 4
-    ? `Customer ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢${digits.slice(-4)}`
+    ? `Customer Ã¢â‚¬Â¢${digits.slice(-4)}`
     : "Customer";
 }
 
@@ -294,7 +294,7 @@ export default function CustomerAccountControl({
   async function loadSession() {
     try {
       const response = await fetch(
-        `${API_BASE_URL}/auth/account/me`,
+        `${API_BASE_URL}/auth/me`,
         {
           method: "GET",
           credentials: "include",
@@ -326,9 +326,7 @@ export default function CustomerAccountControl({
   }
 
   useEffect(() => {
-    const initialLoadTimer = window.setTimeout(() => {
-      void loadSession();
-    }, 0);
+    void loadSession();
 
     const handleAuthChanged = () => {
       setLoading(true);
@@ -341,8 +339,6 @@ export default function CustomerAccountControl({
     );
 
     return () => {
-      window.clearTimeout(initialLoadTimer);
-
       window.removeEventListener(
         "city-coolies-auth-changed",
         handleAuthChanged
@@ -415,7 +411,7 @@ export default function CustomerAccountControl({
 
     try {
       const response = await fetch(
-        `${API_BASE_URL}/auth/account/logout`,
+        `${API_BASE_URL}/auth/logout`,
         {
           method: "POST",
           credentials: "include",

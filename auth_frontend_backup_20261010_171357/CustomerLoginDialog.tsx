@@ -12,7 +12,6 @@ import {
 
 type Channel = "phone" | "email";
 type Step = "login" | "signin" | "forgot-password" | "create-password" | "otp";
-type OtpPurpose = "register" | "reset";
 
 type Props = {
   onClose: () => void;
@@ -22,8 +21,8 @@ type Props = {
 type OtpRequestResponse = {
   challenge_id: string;
   sent: boolean;
-  channel?: Channel;
-  destination?: string;
+  channel: Channel;
+  destination: string;
   expires_in: number;
   resend_after: number;
 };
@@ -34,20 +33,13 @@ type OtpResendResponse = {
   resend_after: number;
 };
 
-type AuthenticatedResponse = {
+type OtpVerifyResponse = {
+  verified: boolean;
   authenticated: boolean;
   user: {
     channel: Channel;
     identifier: string;
   };
-  notification_sent?: boolean;
-};
-
-type AccountStatusResponse = {
-  exists: boolean;
-  channel?: Channel;
-  user_id?: string;
-  message?: string;
 };
 
 const OTP_LENGTH = 6;
@@ -56,9 +48,6 @@ const DEFAULT_RESEND_SECONDS = 60;
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_CITY_COOLIES_API_URL?.replace(/\/$/, "") ||
   "http://localhost:8001";
-
-const REGISTER_VERIFY_PATH = "/auth/register/verify";
-const PASSWORD_RESET_VERIFY_PATH = "/auth/password-reset/verify";
 
 function getApiErrorMessage(data: unknown, fallback: string): string {
   if (
@@ -97,35 +86,6 @@ async function readJson(response: Response): Promise<unknown> {
   }
 }
 
-function resolveIdentity(value: string): {
-  channel: Channel;
-  identifier: string;
-} | null {
-  const trimmed = value.trim();
-
-  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
-    return {
-      channel: "email",
-      identifier: trimmed,
-    };
-  }
-
-  let digits = trimmed.replace(/\D/g, "");
-
-  if (digits.startsWith("91") && digits.length === 12) {
-    digits = digits.slice(2);
-  }
-
-  if (/^[6-9]\d{9}$/.test(digits)) {
-    return {
-      channel: "phone",
-      identifier: digits,
-    };
-  }
-
-  return null;
-}
-
 export default function CustomerLoginDialog({
   onClose,
   embedded = false,
@@ -152,12 +112,9 @@ export default function CustomerLoginDialog({
   );
 
   const [error, setError] = useState("");
-  const [checkingAccount, setCheckingAccount] = useState(false);
-  const [signingIn, setSigningIn] = useState(false);
   const [sendingOtp, setSendingOtp] = useState(false);
   const [verifyingOtp, setVerifyingOtp] = useState(false);
   const [resendingOtp, setResendingOtp] = useState(false);
-  const [otpPurpose, setOtpPurpose] = useState<OtpPurpose>("register");
 
   // CITY_COOLIES_FORGOT_PASSWORD_DEV_PREVIEW
   useEffect(() => {
@@ -269,7 +226,7 @@ export default function CustomerLoginDialog({
   function editDetails() {
     if (sendingOtp || verifyingOtp || resendingOtp) return;
 
-    setStep(otpPurpose === "reset" ? "forgot-password" : "create-password");
+    setStep("login");
     resetOtpInputs();
     setChallengeId("");
     setServerDestination("");
@@ -277,90 +234,26 @@ export default function CustomerLoginDialog({
     setError("");
   }
 
-  async function checkAccount(
-    identityChannel: Channel,
-    identityIdentifier: string
-  ): Promise<boolean> {
-    const query = new URLSearchParams({
-      channel: identityChannel,
-      identifier: identityIdentifier,
-      _: String(Date.now()),
-    });
-
-    const response = await fetch(
-      `${API_BASE_URL}/auth/account/status?${query.toString()}`,
-      {
-        method: "GET",
-        credentials: "include",
-        cache: "no-store",
-        headers: {
-          "Cache-Control": "no-cache",
-        },
-      }
-    );
-
-    const data = await readJson(response);
-
-    if (!response.ok) {
-      throw new Error(
-        getApiErrorMessage(
-          data,
-          "Unable to check your account. Please try again."
-        )
-      );
-    }
-
-    return Boolean((data as AccountStatusResponse)?.exists);
-  }
-
-  async function handleContinue(
+  function handleContinue(
     event: FormEvent<HTMLFormElement>
   ) {
     event.preventDefault();
 
-    if (!canContinue || checkingAccount) {
-      if (!canContinue) {
-        setError(
-          channel === "phone"
-            ? "Enter a valid 10-digit Indian mobile number."
-            : "Enter a valid email address."
-        );
-      }
+    if (!canContinue) {
+      setError(
+        channel === "phone"
+          ? "Enter a valid 10-digit Indian mobile number."
+          : "Enter a valid email address."
+      );
 
       return;
     }
 
-    setCheckingAccount(true);
+    setPassword("");
+    setConfirmPassword("");
+    setShowPassword(false);
     setError("");
-
-    try {
-      const exists = await checkAccount(
-        channel,
-        channel === "phone" ? cleanPhone : identifier.trim()
-      );
-
-      setPassword("");
-      setConfirmPassword("");
-      setShowPassword(false);
-
-      if (exists) {
-        setStep("login");
-        setError(
-          "Account already exists. Sign in."
-        );
-        return;
-      }
-
-      setStep("create-password");
-    } catch (requestError) {
-      setError(
-        requestError instanceof Error
-          ? requestError.message
-          : "Unable to check your account. Please try again."
-      );
-    } finally {
-      setCheckingAccount(false);
-    }
+    setStep("create-password");
   }
 
   async function handleSendOtp(
@@ -395,7 +288,7 @@ export default function CustomerLoginDialog({
 
     try {
       const response = await fetch(
-        `${API_BASE_URL}/auth/register/request`,
+        `${API_BASE_URL}/auth/otp/request`,
         {
           method: "POST",
           credentials: "include",
@@ -408,8 +301,6 @@ export default function CustomerLoginDialog({
               channel === "phone"
                 ? cleanPhone
                 : identifier.trim(),
-            pin: password,
-            confirm_pin: confirmPassword,
           }),
         }
       );
@@ -417,17 +308,6 @@ export default function CustomerLoginDialog({
       const data = await readJson(response);
 
       if (!response.ok) {
-        if (response.status === 409) {
-          setPassword("");
-          setConfirmPassword("");
-          setShowPassword(false);
-          setStep("login");
-          setError(
-            "Account already exists. Sign in."
-          );
-          return;
-        }
-
         throw new Error(
           getApiErrorMessage(
             data,
@@ -452,7 +332,6 @@ export default function CustomerLoginDialog({
       setServerDestination(
         result.destination || localDestination
       );
-      setOtpPurpose("register");
 
       resetOtpInputs();
 
@@ -464,220 +343,10 @@ export default function CustomerLoginDialog({
 
       setStep("otp");
     } catch (requestError) {
-      const message =
-        requestError instanceof Error
-          ? requestError.message
-          : "Unable to send OTP. Please try again.";
-
-      if (/account already exists/i.test(message)) {
-        setStep("login");
-      }
-
-      setError(message);
-    } finally {
-      setSendingOtp(false);
-    }
-  }
-
-  async function handleSignIn(
-    event: FormEvent<HTMLFormElement>
-  ) {
-    event.preventDefault();
-
-    const identity = resolveIdentity(identifier);
-
-    if (!identity) {
-      setError("Enter your registered User ID.");
-      return;
-    }
-
-    if (!/^\d{4}$/.test(password)) {
-      setError("Enter your 4-digit password.");
-      return;
-    }
-
-    if (signingIn) return;
-
-    setSigningIn(true);
-    setError("");
-
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/auth/login`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            channel: identity.channel,
-            identifier: identity.identifier,
-            pin: password,
-          }),
-        }
-      );
-
-      const data = await readJson(response);
-
-      if (!response.ok) {
-        throw new Error(
-          getApiErrorMessage(
-            data,
-            "Unable to sign in. Check your User ID and password."
-          )
-        );
-      }
-
-      const result = data as AuthenticatedResponse;
-
-      if (!result?.authenticated) {
-        throw new Error("Sign in was not confirmed.");
-      }
-
-      window.location.assign("/services");
-    } catch (requestError) {
       setError(
         requestError instanceof Error
           ? requestError.message
-          : "Unable to sign in. Please try again."
-      );
-    } finally {
-      setSigningIn(false);
-    }
-  }
-
-  async function handleForgotPasswordOpen() {
-    const identity = resolveIdentity(identifier);
-
-    if (!identity) {
-      setError(
-        identifier.trim()
-          ? "Enter a valid User ID."
-          : "Enter User ID first."
-      );
-      return;
-    }
-
-    if (checkingAccount) return;
-
-    setCheckingAccount(true);
-    setError("");
-
-    try {
-      const exists = await checkAccount(
-        identity.channel,
-        identity.identifier
-      );
-
-      if (!exists) {
-        setError(
-          "No City Coolies account was found for this User ID."
-        );
-        return;
-      }
-
-      setChannel(identity.channel);
-      setIdentifier(identity.identifier);
-      setPassword("");
-      setConfirmPassword("");
-      setShowPassword(false);
-      setStep("forgot-password");
-    } catch (requestError) {
-      setError(
-        requestError instanceof Error
-          ? requestError.message
-          : "Unable to check your account. Please try again."
-      );
-    } finally {
-      setCheckingAccount(false);
-    }
-  }
-
-  async function handleForgotPassword(
-    event: FormEvent<HTMLFormElement>
-  ) {
-    event.preventDefault();
-
-    const identity = resolveIdentity(identifier);
-
-    if (!identity) {
-      setError("User ID is invalid.");
-      return;
-    }
-
-    if (!/^\d{4}$/.test(password)) {
-      setError("Create a 4-digit new password.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError(
-        "New password and confirm password do not match."
-      );
-      return;
-    }
-
-    if (sendingOtp) return;
-
-    setSendingOtp(true);
-    setError("");
-
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/auth/password-reset/request`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            channel: identity.channel,
-            identifier: identity.identifier,
-            pin: password,
-            confirm_pin: confirmPassword,
-          }),
-        }
-      );
-
-      const data = await readJson(response);
-
-      if (!response.ok) {
-        throw new Error(
-          getApiErrorMessage(
-            data,
-            "Unable to send password reset OTP."
-          )
-        );
-      }
-
-      const result = data as OtpRequestResponse;
-
-      if (!result?.sent || !result.challenge_id) {
-        throw new Error("Password reset OTP was not confirmed.");
-      }
-
-      setChannel(identity.channel);
-      setChallengeId(result.challenge_id);
-      setServerDestination(
-        identity.channel === "phone"
-          ? `+91-${identity.identifier}`
-          : identity.identifier
-      );
-      setOtpPurpose("reset");
-      resetOtpInputs();
-      setSecondsLeft(
-        Number.isFinite(result.resend_after)
-          ? Math.max(0, result.resend_after)
-          : DEFAULT_RESEND_SECONDS
-      );
-      setStep("otp");
-    } catch (requestError) {
-      setError(
-        requestError instanceof Error
-          ? requestError.message
-          : "Unable to send password reset OTP."
+          : "Unable to send OTP. Please try again."
       );
     } finally {
       setSendingOtp(false);
@@ -875,13 +544,8 @@ export default function CustomerLoginDialog({
     setError("");
 
     try {
-      const verifyPath =
-        otpPurpose === "reset"
-          ? PASSWORD_RESET_VERIFY_PATH
-          : REGISTER_VERIFY_PATH;
-
       const response = await fetch(
-        `${API_BASE_URL}${verifyPath}`,
+        `${API_BASE_URL}/auth/otp/verify`,
         {
           method: "POST",
           credentials: "include",
@@ -906,9 +570,13 @@ export default function CustomerLoginDialog({
         );
       }
 
-      const result = data as AuthenticatedResponse;
+      const result = data as OtpVerifyResponse;
 
-      if (!result || !result.authenticated) {
+      if (
+        !result ||
+        !result.verified ||
+        !result.authenticated
+      ) {
         throw new Error(
           "OTP verification failed."
         );
@@ -1069,11 +737,11 @@ export default function CustomerLoginDialog({
 
             <button
               type="submit"
-              disabled={!canContinue || checkingAccount}
+              disabled={!canContinue || sendingOtp}
               className="mt-5 min-h-[46px] w-full rounded-[4px] bg-[#ef1b23] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-[#c4c4c4] md:mt-6 md:min-h-[42px] md:rounded-[2px]"
             >
-              {checkingAccount
-                ? "Checking account..."
+              {sendingOtp
+                ? "Sending OTP..."
                 : "Continue"}
             </button>
           </form>
@@ -1091,7 +759,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Back
+            ← Back
           </button>
 
           <h2
@@ -1106,7 +774,40 @@ export default function CustomerLoginDialog({
           </p>
 
           <form
-            onSubmit={handleSignIn}
+            onSubmit={(event) => {
+              event.preventDefault();
+
+              const signInValue = identifier.trim();
+
+              const validSignInEmail =
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+                  signInValue
+                );
+
+              const validSignInPhone =
+                /^[6-9]\d{9}$/.test(
+                  signInValue.replace(/\D/g, "")
+                );
+
+              if (
+                !validSignInEmail &&
+                !validSignInPhone
+              ) {
+                setError(
+                  "Enter your registered User ID."
+                );
+                return;
+              }
+
+              if (!/^\d{4}$/.test(password)) {
+                setError("Enter your 4-digit password.");
+                return;
+              }
+
+              setError(
+                "Password Sign In backend will be connected in the next step."
+              );
+            }}
             className="mt-5 flex flex-col md:flex-1"
           >
             <div className="relative rounded-[3px] border border-[#ef1b23] focus-within:ring-1 focus-within:ring-[#ef1b23]">
@@ -1238,7 +939,43 @@ export default function CustomerLoginDialog({
               <button
                 type="button"
                 onClick={() => {
-                  void handleForgotPasswordOpen();
+                  const userId =
+                    identifier.trim();
+
+                  if (!userId) {
+                    setError(
+                      "Enter User ID first."
+                    );
+                    return;
+                  }
+
+                  const validEmail =
+                    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+                      userId
+                    );
+
+                  const phoneDigits =
+                    userId.replace(/\D/g, "");
+
+                  const validPhone =
+                    /^[6-9]\d{9}$/.test(
+                      phoneDigits
+                    );
+
+                  if (
+                    !validEmail &&
+                    !validPhone
+                  ) {
+                    setError(
+                      "Enter a valid User ID."
+                    );
+                    return;
+                  }
+
+                  setPassword("");
+                  setShowPassword(false);
+                  setError("");
+                  setStep("forgot-password");
                 }}
                 className="text-[12px] font-semibold text-[#ef1b23] hover:underline"
               >
@@ -1261,12 +998,11 @@ export default function CustomerLoginDialog({
               type="submit"
               disabled={
                 !identifier.trim() ||
-                password.length !== 4 ||
-                signingIn
+                password.length !== 4
               }
               className="mt-5 min-h-[46px] w-full rounded-[4px] bg-[#ef1b23] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-[#c4c4c4] md:mt-6 md:min-h-[42px] md:rounded-[2px]"
             >
-              {signingIn ? "Signing In..." : "Sign In"}
+              Sign In
             </button>
 
             <button
@@ -1295,7 +1031,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Back to Sign In
+            ← Back to Sign In
           </button>
 
           <h2
@@ -1310,7 +1046,37 @@ export default function CustomerLoginDialog({
           </p>
 
           <form
-            onSubmit={handleForgotPassword}
+            onSubmit={(event) => {
+              event.preventDefault();
+
+              if (!identifier.trim()) {
+                setError(
+                  "User ID is required."
+                );
+                return;
+              }
+
+              if (!/^\d{4}$/.test(password)) {
+                setError(
+                  "Create a 4-digit new password."
+                );
+                return;
+              }
+
+              if (
+                password !==
+                confirmPassword
+              ) {
+                setError(
+                  "New password and confirm password do not match."
+                );
+                return;
+              }
+
+              setError(
+                "Password reset OTP backend will be connected in the next step."
+              );
+            }}
             className="mt-5 flex flex-col md:flex-1"
           >
             <div className="relative rounded-[3px] border border-[#ef1b23] bg-[#fafafa]">
@@ -1487,12 +1253,11 @@ export default function CustomerLoginDialog({
               type="submit"
               disabled={
                 password.length !== 4 ||
-                confirmPassword.length !== 4 ||
-                sendingOtp
+                confirmPassword.length !== 4
               }
               className="mt-5 min-h-[46px] w-full rounded-[4px] bg-[#ef1b23] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-[#c4c4c4] md:min-h-[42px] md:rounded-[2px]"
             >
-              {sendingOtp ? "Sending OTP..." : "Send OTP"}
+              Send OTP
             </button>
           </form>
         </>
@@ -1509,7 +1274,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Change {channel === "phone" ? "phone number" : "email"}
+            ← Change {channel === "phone" ? "phone number" : "email"}
           </button>
 
           <h2

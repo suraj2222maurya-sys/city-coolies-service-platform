@@ -344,9 +344,9 @@ export default function CustomerLoginDialog({
       setShowPassword(false);
 
       if (exists) {
-        setStep("login");
+        setStep("signin");
         setError(
-          "Account already exists. Sign in."
+          "Account already exists for this User ID. Enter your 4-digit password to Sign In."
         );
         return;
       }
@@ -421,9 +421,9 @@ export default function CustomerLoginDialog({
           setPassword("");
           setConfirmPassword("");
           setShowPassword(false);
-          setStep("login");
+          setStep("signin");
           setError(
-            "Account already exists. Sign in."
+            "This User ID already has a City Coolies account. Please sign in."
           );
           return;
         }
@@ -470,7 +470,7 @@ export default function CustomerLoginDialog({
           : "Unable to send OTP. Please try again.";
 
       if (/account already exists/i.test(message)) {
-        setStep("login");
+        setStep("signin");
       }
 
       setError(message);
@@ -1091,7 +1091,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Back
+            ← Back
           </button>
 
           <h2
@@ -1295,7 +1295,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Back to Sign In
+            ← Back to Sign In
           </button>
 
           <h2
@@ -1509,7 +1509,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Change {channel === "phone" ? "phone number" : "email"}
+            ← Change {channel === "phone" ? "phone number" : "email"}
           </button>
 
           <h2

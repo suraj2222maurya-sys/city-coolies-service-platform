@@ -346,7 +346,7 @@ export default function CustomerLoginDialog({
       if (exists) {
         setStep("login");
         setError(
-          "Account already exists. Sign in."
+          "Account already exists for this User ID. Click Sign In and enter your 4-digit password."
         );
         return;
       }
@@ -423,7 +423,7 @@ export default function CustomerLoginDialog({
           setShowPassword(false);
           setStep("login");
           setError(
-            "Account already exists. Sign in."
+            "Account already exists for this User ID. Click Sign In and enter your 4-digit password."
           );
           return;
         }
@@ -1091,7 +1091,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Back
+            ← Back
           </button>
 
           <h2
@@ -1295,7 +1295,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Back to Sign In
+            ← Back to Sign In
           </button>
 
           <h2
@@ -1509,7 +1509,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Change {channel === "phone" ? "phone number" : "email"}
+            ← Change {channel === "phone" ? "phone number" : "email"}
           </button>
 
           <h2
