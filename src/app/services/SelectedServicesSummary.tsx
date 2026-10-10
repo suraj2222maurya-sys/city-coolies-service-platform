@@ -268,7 +268,7 @@ export default function SelectedServicesSummary() {
               />
             </svg>
           </span>
-        </button><Link href="/services/cart" className={styles.viewButton}>
+        </button><Link href="/login" className={styles.viewButton}>
           Go to Cart
         </Link>
       </aside>
@@ -306,7 +306,7 @@ export default function SelectedServicesSummary() {
                 <span>Estimated total</span>
                 <strong>₹{total.toLocaleString("en-IN")}</strong>
               </div>
-              <Link href="/services/cart" className={styles.panelCartLink}>Go to Cart</Link>
+              <Link href="/login" className={styles.panelCartLink}>Go to Cart</Link>
             </footer>
           </section>
         </div>

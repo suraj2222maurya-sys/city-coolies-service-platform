@@ -16,8 +16,9 @@ import {
   parseDeepCleaningCartSnapshot,
   subscribeDeepCleaningCart,
 } from "../app/services/deep-cleaning/deepCleaningCart";
+import CustomerAccountControl from "./CustomerAccountControl";
 
-type OpenPanel = "location" | "cart" | "account" | null;
+type OpenPanel = "location" | "cart" | null;
 
 type IconProps = {
   className?: string;
@@ -5389,8 +5390,6 @@ export default function ServicesMarketplaceNavbar() {
   const cartExpanded =
     openPanel === "cart";
 
-  const accountExpanded =
-    openPanel === "account";
 
   return (
     <section
@@ -5543,15 +5542,7 @@ export default function ServicesMarketplaceNavbar() {
           <CartIcon className="h-4 w-4 sm:h-5 sm:w-5" />
         </ToolButton>
 
-        <ToolButton
-          label="Open customer account"
-          expanded={accountExpanded}
-          onClick={() =>
-            togglePanel("account")
-          }
-        >
-          <AccountIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-        </ToolButton>
+        <CustomerAccountControl variant="icon" />
       </div>
 
       {locationExpanded && (
@@ -5676,8 +5667,7 @@ export default function ServicesMarketplaceNavbar() {
           </div>
         </div>
       )}
-      {(cartExpanded ||
-        accountExpanded) && (
+      {cartExpanded && (
         <div
           id="services-marketplace-panel"
           className="absolute inset-x-0 top-full border-t border-red-100 bg-white shadow-[0_24px_45px_-24px_rgba(35,35,35,0.28)]"
@@ -5707,23 +5697,7 @@ export default function ServicesMarketplaceNavbar() {
               </div>
             )}
 
-            {accountExpanded && (
-              <div className="flex min-h-24 items-center gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-50 text-[#ef1b23]">
-                  <AccountIcon />
-                </div>
 
-                <div>
-                  <p className="text-[16px] font-semibold text-[#202124]">
-                    Customer account
-                  </p>
-
-                  <p className="mt-1 text-[13px] text-[#666]">
-                    Sign-in and booking history will be connected during the backend stage.
-                  </p>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       )}

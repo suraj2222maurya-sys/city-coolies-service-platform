@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import ServicesMarketplaceNavbar from "./ServicesMarketplaceNavbar";
+import CustomerAccountControl from "./CustomerAccountControl";
 
 const navigationLinks = [
   { label: "Home", href: "/" },
@@ -252,6 +253,9 @@ export default function Navbar() {
             }`}
           >
             
+            {/* CITY_COOLIES_ACCOUNT_CONTROL_DESKTOP */}
+            <CustomerAccountControl variant="pill" />
+
             <Link
               href="/services"
               className="group relative isolate hidden min-h-13 items-center gap-2 overflow-hidden rounded-full border border-[#ef1b23] bg-[#ef1b23] px-6 text-[13px] font-extrabold tracking-[0.06em] text-white uppercase shadow-[0_14px_30px_-12px_rgba(239,27,35,0.65)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_40px_-14px_rgba(239,27,35,0.8)] xl:flex"
