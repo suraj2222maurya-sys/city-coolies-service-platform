@@ -456,7 +456,7 @@ export default function CustomerAccountControl({
             disabled={loading}
             aria-label="Customer login"
             onClick={handleAccountClick}
-            className="flex min-h-12 items-center justify-center rounded-full border border-[#dedede] bg-white px-6 text-[14px] font-bold text-[#202124] transition-all duration-200 hover:border-[#ef1b23] hover:bg-red-50 hover:text-[#ef1b23] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef1b23] disabled:cursor-wait disabled:opacity-70"
+            className="flex min-h-12 items-center justify-center rounded-full border border-[#ef1b23] bg-[#ef1b23] px-8 text-[14px] font-extrabold tracking-[0.01em] text-white shadow-[0_10px_26px_-12px_rgba(239,27,35,0.8)] animate-[loginBlink_0.85s_ease-in-out_infinite] transition-all duration-200 hover:bg-[#d8171f] hover:shadow-[0_14px_32px_-12px_rgba(239,27,35,0.95)] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef1b23] disabled:cursor-wait disabled:opacity-70"
           >
             Login
           </button>

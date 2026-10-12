@@ -439,3 +439,27 @@ html {
 }
 
 /* CITY_COOLIES_POPUP_SCROLLBAR_HIDE_END */
+
+
+
+
+
+@keyframes loginBlink {
+  0%,
+  100% {
+    transform: scale(1);
+    background-color: #ef1b23;
+    box-shadow:
+      0 8px 20px -10px rgba(239, 27, 35, 0.45);
+    filter: brightness(1);
+  }
+
+  50% {
+    transform: scale(1.025);
+    background-color: #f4252d;
+    box-shadow:
+      0 10px 24px -10px rgba(239, 27, 35, 0.65),
+      0 0 12px rgba(239, 27, 35, 0.22);
+    filter: brightness(1.08);
+  }
+}
