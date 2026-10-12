@@ -458,53 +458,34 @@ export default function CustomerAccountControl({
       className="relative shrink-0"
     >
       {variant === "pill" ? (
-        <button
-          type="button"
-          disabled={loading}
-          aria-haspopup="menu"
-          aria-expanded={open}
-          onClick={handleAccountClick}
-          className={`group flex min-h-12 items-center gap-2.5 rounded-full border bg-white px-4 transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef1b23] disabled:cursor-wait disabled:opacity-70 ${
-            loggedIn
-              ? "border-[#ef1b23]/35 text-[#202124] shadow-[0_10px_24px_-18px_rgba(239,27,35,0.7)] hover:border-[#ef1b23] hover:bg-red-50"
-              : "border-[#dedede] text-[#202124] hover:border-[#ef1b23] hover:text-[#ef1b23]"
-          }`}
-        >
-          <span className="relative flex h-8 w-8 items-center justify-center rounded-full bg-red-50 text-[#ef1b23]">
-            <UserIcon className="h-[18px] w-[18px]" />
-
-            {loggedIn && (
-              <span
-                aria-label="Logged in"
-                className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-emerald-500"
-              />
-            )}
-          </span>
-
-          <span className="hidden min-w-0 text-left 2xl:block">
-            <span className="block max-w-[105px] truncate text-[12px] font-bold leading-4">
-              {loggedIn
-                ? customerName
-                : "Login"}
-            </span>
+        loggedIn ? (
+          <button
+            type="button"
+            disabled={loading}
+            aria-label="Open customer account"
+            aria-haspopup="menu"
+            aria-expanded={open}
+            onClick={handleAccountClick}
+            className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#dedede] bg-white text-[#202124] transition-all duration-200 hover:border-[#ef1b23] hover:bg-red-50 hover:text-[#ef1b23] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef1b23] disabled:cursor-wait disabled:opacity-70"
+          >
+            <UserIcon className="h-5 w-5" />
 
             <span
-              className={`block text-[9px] font-semibold leading-3 ${
-                loggedIn
-                  ? "text-emerald-600"
-                  : "text-[#777]"
-              }`}
-            >
-              {loggedIn
-                ? "Logged in"
-                : "Customer account"}
-            </span>
-          </span>
-
-          {loggedIn && (
-            <ChevronIcon open={open} />
-          )}
-        </button>
+              aria-label="Logged in"
+              className="absolute right-0 top-0 h-3 w-3 rounded-full border-2 border-white bg-emerald-500"
+            />
+          </button>
+        ) : (
+          <button
+            type="button"
+            disabled={loading}
+            aria-label="Customer login"
+            onClick={handleAccountClick}
+            className="flex min-h-12 items-center justify-center rounded-full border border-[#dedede] bg-white px-6 text-[14px] font-bold text-[#202124] transition-all duration-200 hover:border-[#ef1b23] hover:bg-red-50 hover:text-[#ef1b23] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ef1b23] disabled:cursor-wait disabled:opacity-70"
+          >
+            Login
+          </button>
+        )
       ) : (
         <button
           type="button"
