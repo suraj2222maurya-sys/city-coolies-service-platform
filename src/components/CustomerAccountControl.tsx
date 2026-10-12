@@ -241,7 +241,7 @@ function getCustomerName(user: AccountUser) {
     user.identifier.replace(/\D/g, "");
 
   return digits.length >= 4
-    ? `Customer ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢${digits.slice(-4)}`
+    ? `Customer \u2022${digits.slice(-4)}`
     : "Customer";
 }
 

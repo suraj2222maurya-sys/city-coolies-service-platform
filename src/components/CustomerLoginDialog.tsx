@@ -1065,7 +1065,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            Ã¢â€ Â Back
+            {"\u2190"} Back
           </button>
 
           <h2
@@ -1267,7 +1267,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            Ã¢â€ Â Back to Sign In
+            {"\u2190"} Back to Sign In
           </button>
 
           <h2
