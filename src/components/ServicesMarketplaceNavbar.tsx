@@ -5520,7 +5520,7 @@ export default function ServicesMarketplaceNavbar() {
           <CartIcon className="h-4 w-4 sm:h-5 sm:w-5" />
         </ToolButton>
 
-        <CustomerAccountControl variant="icon" />
+        <CustomerAccountControl variant="pill" />
       </div>
 
       {locationExpanded && (
