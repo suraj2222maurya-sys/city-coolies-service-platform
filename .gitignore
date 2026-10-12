@@ -83,3 +83,5 @@ install-*.mjs
 *.backup-*
 /public/*-IMAGE-AUDIT.txt
 /public/*-IMAGE-FILENAMES.txt
+*backup*/
+*BACKUP*/
