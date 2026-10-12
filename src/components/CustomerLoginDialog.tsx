@@ -547,7 +547,7 @@ export default function CustomerLoginDialog({
     }
   }
 
-  async function handleForgotPasswordOpen() {
+  function handleForgotPasswordOpen() {
     const identity = resolveIdentity(identifier);
 
     if (!identity) {
@@ -559,39 +559,13 @@ export default function CustomerLoginDialog({
       return;
     }
 
-    if (checkingAccount) return;
-
-    setCheckingAccount(true);
+    setChannel(identity.channel);
+    setIdentifier(identity.identifier);
+    setPassword("");
+    setConfirmPassword("");
+    setShowPassword(false);
     setError("");
-
-    try {
-      const exists = await checkAccount(
-        identity.channel,
-        identity.identifier
-      );
-
-      if (!exists) {
-        setError(
-          "No City Coolies account was found for this User ID."
-        );
-        return;
-      }
-
-      setChannel(identity.channel);
-      setIdentifier(identity.identifier);
-      setPassword("");
-      setConfirmPassword("");
-      setShowPassword(false);
-      setStep("forgot-password");
-    } catch (requestError) {
-      setError(
-        requestError instanceof Error
-          ? requestError.message
-          : "Unable to check your account. Please try again."
-      );
-    } finally {
-      setCheckingAccount(false);
-    }
+    setStep("forgot-password");
   }
 
   async function handleForgotPassword(
@@ -1091,7 +1065,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Back
+            Ã¢â€ Â Back
           </button>
 
           <h2
@@ -1237,9 +1211,7 @@ export default function CustomerLoginDialog({
             <div className="mt-3 text-right">
               <button
                 type="button"
-                onClick={() => {
-                  void handleForgotPasswordOpen();
-                }}
+                onClick={handleForgotPasswordOpen}
                 className="text-[12px] font-semibold text-[#ef1b23] hover:underline"
               >
                 Forgot Password?
@@ -1295,7 +1267,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Back to Sign In
+            Ã¢â€ Â Back to Sign In
           </button>
 
           <h2
@@ -1509,7 +1481,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            â† Change {channel === "phone" ? "phone number" : "email"}
+            Ã¢â€ Â Change {channel === "phone" ? "phone number" : "email"}
           </button>
 
           <h2
