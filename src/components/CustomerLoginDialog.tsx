@@ -1481,7 +1481,7 @@ export default function CustomerLoginDialog({
             }}
             className="mb-4 inline-flex w-fit items-center gap-1 text-[12px] font-semibold text-[#ef1b23] hover:underline"
           >
-            Ã¢â€ Â Change {channel === "phone" ? "phone number" : "email"}
+            {"\u2190"} Change {channel === "phone" ? "phone number" : "email"}
           </button>
 
           <h2
