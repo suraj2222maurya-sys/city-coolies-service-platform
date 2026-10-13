@@ -53,10 +53,8 @@ type AccountStatusResponse = {
 const OTP_LENGTH = 6;
 const DEFAULT_RESEND_SECONDS = 60;
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_CITY_COOLIES_API_URL?.replace(/\/$/, "") ||
-  "http://localhost:8001";
-
+// CITY_COOLIES_AUTH_SAME_ORIGIN
+const API_BASE_URL = process.env.NEXT_PUBLIC_CITY_COOLIES_API_URL ?? "";
 const REGISTER_VERIFY_PATH = "/auth/register/verify";
 const PASSWORD_RESET_VERIFY_PATH = "/auth/password-reset/verify";
 
@@ -346,7 +344,9 @@ export default function CustomerLoginDialog({
       if (exists) {
         setStep("login");
         setError(
-          "Account already exists. Sign in."
+          channel === "email"
+  ? "This email is already registered. Click Sign In to log in."
+  : "This phone number is already registered. Click Sign In to log in."
         );
         return;
       }

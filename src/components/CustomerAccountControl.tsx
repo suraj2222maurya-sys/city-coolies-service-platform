@@ -23,11 +23,8 @@ type Props = {
   variant?: Variant;
 };
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_CITY_COOLIES_API_URL
-    ?.replace(/\/$/, "") ||
-  "http://localhost:8001";
-
+// CITY_COOLIES_AUTH_SAME_ORIGIN
+const API_BASE_URL = process.env.NEXT_PUBLIC_CITY_COOLIES_API_URL ?? "";
 function UserIcon({
   className = "h-5 w-5",
 }: {
