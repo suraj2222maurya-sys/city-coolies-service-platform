@@ -28,7 +28,7 @@ export default async function DeepCleaningPage({
 
   return (
     <main>
-      <DeepCleaningMarketplace initialCategory={category} />
+      <DeepCleaningMarketplace key={category ?? "full-home-by-room"} initialCategory={category} />
     </main>
   );
 }

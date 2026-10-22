@@ -1,10 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useState } from "react";
 import {
   usePathname,
   useRouter,
@@ -85,9 +82,7 @@ export default function DeepCleaningMarketplace({
       resolvedInitialCategory,
     );
 
-  useEffect(() => {
-    setActiveCategory(resolvedInitialCategory);
-  }, [resolvedInitialCategory]);
+
 
   const selectCategory = (
     category: DeepCleaningCategoryId,

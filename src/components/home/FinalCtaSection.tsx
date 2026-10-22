@@ -309,7 +309,7 @@ export default function FinalCtaSection() {
               style={{ "--delay": "420ms" } as CSSProperties}
             >
               <div className="grid gap-3">
-                {trustItems.map((item, index) => (
+                {trustItems.map((item) => (
                   <div
                     key={item.title}
                     className="group flex items-center gap-4 rounded-[20px] border border-white/15 bg-white/10 px-4 py-4 transition duration-300 hover:-translate-y-0.5 hover:bg-white/15"

@@ -368,7 +368,7 @@ export default function CustomerLoginDialog({
   ) {
     event.preventDefault();
 
-    if (!/^\d{4}$/.test(password)) {
+    if (!/^\d{6}$/.test(password)) {
       setError("Create a 4-digit password.");
       return;
     }
@@ -491,7 +491,7 @@ export default function CustomerLoginDialog({
       return;
     }
 
-    if (!/^\d{4}$/.test(password)) {
+    if (!/^\d{6}$/.test(password)) {
       setError("Enter your 4-digit password.");
       return;
     }
@@ -580,7 +580,7 @@ export default function CustomerLoginDialog({
       return;
     }
 
-    if (!/^\d{4}$/.test(password)) {
+    if (!/^\d{6}$/.test(password)) {
       setError("Create a 4-digit new password.");
       return;
     }
@@ -1130,13 +1130,13 @@ export default function CustomerLoginDialog({
                   }
                   inputMode="numeric"
                   autoComplete="current-password"
-                  maxLength={4}
+                  maxLength={6}
                   value={password}
                   onChange={(event) => {
                     setPassword(
                       event.target.value
                         .replace(/\D/g, "")
-                        .slice(0, 4)
+                        .slice(0, 6)
                     );
 
                     setError("");
@@ -1233,7 +1233,7 @@ export default function CustomerLoginDialog({
               type="submit"
               disabled={
                 !identifier.trim() ||
-                password.length !== 4 ||
+                password.length !== 6 ||
                 signingIn
               }
               className="mt-5 min-h-[46px] w-full rounded-[4px] bg-[#ef1b23] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-[#c4c4c4] md:mt-6 md:min-h-[42px] md:rounded-[2px]"
@@ -1320,13 +1320,13 @@ export default function CustomerLoginDialog({
                   }
                   inputMode="numeric"
                   autoComplete="new-password"
-                  maxLength={4}
+                  maxLength={6}
                   value={password}
                   onChange={(event) => {
                     setPassword(
                       event.target.value
                         .replace(/\D/g, "")
-                        .slice(0, 4)
+                        .slice(0, 6)
                     );
 
                     setError("");
@@ -1423,13 +1423,13 @@ export default function CustomerLoginDialog({
                   }
                   inputMode="numeric"
                   autoComplete="new-password"
-                  maxLength={4}
+                  maxLength={6}
                   value={confirmPassword}
                   onChange={(event) => {
                     setConfirmPassword(
                       event.target.value
                         .replace(/\D/g, "")
-                        .slice(0, 4)
+                        .slice(0, 6)
                     );
 
                     setError("");
@@ -1458,8 +1458,8 @@ export default function CustomerLoginDialog({
             <button
               type="submit"
               disabled={
-                password.length !== 4 ||
-                confirmPassword.length !== 4 ||
+                password.length !== 6 ||
+                confirmPassword.length !== 6 ||
                 sendingOtp
               }
               className="mt-5 min-h-[46px] w-full rounded-[4px] bg-[#ef1b23] px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-[#c4c4c4] md:min-h-[42px] md:rounded-[2px]"
@@ -1519,18 +1519,18 @@ export default function CustomerLoginDialog({
                   type={showPassword ? "text" : "password"}
                   inputMode="numeric"
                   autoComplete="new-password"
-                  maxLength={4}
+                  maxLength={6}
                   value={password}
                   disabled={sendingOtp}
                   onChange={(event) => {
                     setPassword(
                       event.target.value
                         .replace(/\D/g, "")
-                        .slice(0, 4)
+                        .slice(0, 6)
                     );
                     setError("");
                   }}
-                  placeholder="Enter 4 digits"
+                  placeholder="enter 6 digits"
                   className="min-w-0 flex-1 border-0 bg-transparent py-3 text-[15px] tracking-[0.3em] text-[#212121] outline-none disabled:cursor-not-allowed disabled:opacity-70"
                 />
 
@@ -1622,18 +1622,18 @@ export default function CustomerLoginDialog({
                   type={showPassword ? "text" : "password"}
                   inputMode="numeric"
                   autoComplete="new-password"
-                  maxLength={4}
+                  maxLength={6}
                   value={confirmPassword}
                   disabled={sendingOtp}
                   onChange={(event) => {
                     setConfirmPassword(
                       event.target.value
                         .replace(/\D/g, "")
-                        .slice(0, 4)
+                        .slice(0, 6)
                     );
                     setError("");
                   }}
-                  placeholder="Re-enter 4 digits"
+                  placeholder="Re-enter 6 digits"
                   className="min-w-0 flex-1 border-0 bg-transparent py-3 text-[15px] tracking-[0.3em] text-[#212121] outline-none disabled:cursor-not-allowed disabled:opacity-70"
                 />
               </div>

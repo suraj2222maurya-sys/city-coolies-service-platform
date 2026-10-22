@@ -8,7 +8,7 @@ import {
   FaXTwitter,
   FaYoutube,
 } from "react-icons/fa6";
-import { MdEmail, MdLocationOn, MdPhone } from "react-icons/md";
+import { MdPhone } from "react-icons/md";
 
 
 const services = [

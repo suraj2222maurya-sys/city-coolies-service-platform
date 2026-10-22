@@ -197,7 +197,13 @@ export default function ContactReviewsSection() {
     );
 
   useEffect(() => {
-    void loadReviews();
+    const initialTimer =
+      window.setTimeout(
+        () => {
+          void loadReviews();
+        },
+        0,
+      );
 
     const refreshTimer =
       window.setInterval(
@@ -208,6 +214,10 @@ export default function ContactReviewsSection() {
       );
 
     return () => {
+      window.clearTimeout(
+        initialTimer,
+      );
+
       window.clearInterval(
         refreshTimer,
       );
@@ -215,7 +225,10 @@ export default function ContactReviewsSection() {
   }, [loadReviews]);
 
   const reviews =
-    data?.reviews ?? [];
+    useMemo(
+      () => data?.reviews ?? [],
+      [data?.reviews],
+    );
 
   const hasRealRating =
     typeof data?.rating ===
